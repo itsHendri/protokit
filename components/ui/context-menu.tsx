@@ -96,13 +96,10 @@ function ContextMenuContent({
     <ContextMenuPrimitive.Portal hostName={portalHost}>
       <FullWindowOverlay>
         <ContextMenuPrimitive.Overlay
-          style={Platform.select({
+          style={Platform.select<StyleProp<ViewStyle>>({
             web: overlayStyle ?? undefined,
             native: overlayStyle
-              ? StyleSheet.flatten([
-                StyleSheet.absoluteFill,
-                overlayStyle as typeof StyleSheet.absoluteFill,
-              ])
+              ? StyleSheet.flatten([StyleSheet.absoluteFill, overlayStyle])
               : StyleSheet.absoluteFill,
           })}
           className={overlayClassName}
