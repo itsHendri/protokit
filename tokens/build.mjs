@@ -8,6 +8,7 @@
  *   global.css                        CSS variables for NativeWind (:root light, .dark:root dark)
  *   lib/theme.ts                      TS mirror (hex) for the few places className can't reach
  *   tokens/generated/tailwind.theme.js  colours + radius for tailwind.config.js
+ *   tokens/generated/figma-theme.mjs    input for tokens/push-figma.mjs
  *
  * Style Dictionary resolves {references}; this script handles the light/dark modes
  * (a semantic colour's $value is { light, dark }) and the output formats.
@@ -215,6 +216,29 @@ export const NAV_THEME: Record<'light' | 'dark', Theme> = {
 };
 `;
 writeFileSync(join(root, 'lib/theme.ts'), ts);
+
+// 4. tokens/generated/figma-theme.mjs — what push-figma.mjs mirrors into Figma Variables
+const figmaColors = Object.fromEntries(
+  semLight.filter(isColor).map((t, i) => [cssName(t), { light: t.$value.toLowerCase(), dark: semDark.filter(isColor)[i].$value.toLowerCase() }])
+);
+const num = (prefix, code) =>
+  Object.fromEntries(
+    prim
+      .filter((t) => t.path.slice(1, 1 + prefix.length).join(".") === prefix.join(".") && typeof t.$value === "number")
+      .map((t) => {
+        const key = t.path.slice(1 + prefix.length).join("-");
+        return [key, { value: t.$value, code: code(key) }];
+      })
+  );
+const figmaNumbers = {
+  radius: num(["radius"], (k) => `rounded-${k}`),
+  space: num(["space"], (k) => `p-${k}`),
+  "font-size": num(["font", "size"], (k) => `text-${k}`),
+};
+writeFileSync(
+  join(root, "tokens/generated/figma-theme.mjs"),
+  `// ${HEADER}\nexport const COLORS = ${JSON.stringify(figmaColors, null, 2)};\nexport const NUMBERS = ${JSON.stringify(figmaNumbers, null, 2)};\n`
+);
 
 console.log(
   `tokens:build → global.css (${semLight.length} vars × 2 modes), lib/theme.ts, tokens/generated/tailwind.theme.js`

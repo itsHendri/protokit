@@ -30,6 +30,12 @@ Then open **Components** in the app.
 5. `eas init` under your account; `eas update:configure`.
 6. Build your prototype as its own route group in `app/` (see `AGENTS.md › Building a prototype`).
 
+## Figma
+
+`npm run tokens:figma` writes `tokens/generated/figma-variables.json` (a Variables collection with Light/Dark
+modes and `var(--name)` code syntax). With `FIGMA_TOKEN` and `FIGMA_FILE_KEY` set it POSTs to the Variables REST
+API (Enterprise seat); otherwise import the JSON through the Figma MCP (`use_figma`) or a variables plugin.
+
 ## Sharing
 
 - Phones: `eas build --profile development` once per platform, then `npm run share -- "what changed"`.
