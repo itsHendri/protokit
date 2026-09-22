@@ -41,21 +41,25 @@ export function Sheet({ open, onClose, title, description, children, className }
     <Modal visible={open} transparent animationType="fade" statusBarTranslucent onRequestClose={onClose}>
       <View className="flex-1 justify-end">
         <Pressable className="absolute inset-0 bg-black/50" onPress={onClose} accessibilityLabel="Close" />
-        <Animated.View
-          className={cn('bg-card max-h-[85%] rounded-t-2xl', className)}
-          style={{ paddingBottom: Math.max(insets.bottom, 16), transform: [{ translateY }] }}>
-          <View className="items-center pb-3 pt-3">
-            <View className="bg-border h-1 w-9 rounded-full" />
-          </View>
-          {title || description ? (
-            <View className="gap-0.5 px-5 pb-3">
-              {title ? <Text className="text-lg font-semibold">{title}</Text> : null}
-              {description ? <Text className="text-muted-foreground text-sm">{description}</Text> : null}
+        {/* The surface lives on a plain View: NativeWind classNames are dropped on
+            Animated.View on web, which left the panel transparent in the preview. */}
+        <Animated.View style={{ maxHeight: '85%', transform: [{ translateY }] }}>
+          <View
+            className={cn('bg-card rounded-t-2xl', className)}
+            style={{ paddingBottom: Math.max(insets.bottom, 16) }}>
+            <View className="items-center pb-3 pt-3">
+              <View className="bg-border h-1 w-9 rounded-full" />
             </View>
-          ) : null}
-          <ScrollView bounces={false} keyboardShouldPersistTaps="handled">
-            {children}
-          </ScrollView>
+            {title || description ? (
+              <View className="gap-0.5 px-5 pb-3">
+                {title ? <Text className="text-lg font-semibold">{title}</Text> : null}
+                {description ? <Text className="text-muted-foreground text-sm">{description}</Text> : null}
+              </View>
+            ) : null}
+            <ScrollView bounces={false} keyboardShouldPersistTaps="handled">
+              {children}
+            </ScrollView>
+          </View>
         </Animated.View>
       </View>
     </Modal>
