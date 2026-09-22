@@ -37,7 +37,30 @@
         }
       ],
       "expo-status-bar",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to use the camera to scan codes and take photos in this prototype.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos so you can add one to this prototype.",
+          "cameraPermission": "Allow $(PRODUCT_NAME) to use the camera to take a photo for this prototype.",
+          "microphonePermission": false
+        }
+      ],
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID to unlock this prototype."
+        }
+      ],
+      "expo-notifications"
     ],
     "experiments": {
       "typedRoutes": true
