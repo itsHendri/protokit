@@ -1,0 +1,24 @@
+# Runs on every push to main: typecheck + lint, then a web export deployed to EAS Hosting.
+# Docs: https://docs.expo.dev/eas/workflows/get-started/
+name: Check and deploy web
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  check:
+    type: doctor
+  typecheck:
+    steps:
+      - uses: eas/checkout
+      - uses: eas/install_node_modules
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Lint
+        run: npm run lint -- --max-warnings 0
+  deploy_web:
+    needs: [typecheck]
+    type: deploy
+    params:
+      prod: false
