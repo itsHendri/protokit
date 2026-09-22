@@ -93,5 +93,5 @@ export const KIT_ACTIONS_SECTIONS: ComponentSection[] = [
     caption: 'For irreversible actions (submit, delete, pay). Reset by changing its key.',
     Demo: SwipeToConfirmDemo,
   },
-  { id: 'action-grid', title: 'Action grid', category: 'actions', aliases: ['quick actions', 'shortcuts', 'tiles', 'icon buttons'], api: '<ActionGrid items={[{icon,label,onPress,badge?}]} columns={3|4} />', caption: 'The row of shortcuts under a screen hero. Keep it to one row — the last tile should be "More", not a second row.', Demo: ActionGridDemo },
+  { id: 'action-grid', title: 'Action grid', category: 'actions', aliases: ['quick actions', 'shortcuts', 'tiles', 'icon buttons'], api: '<ActionGrid items={[{icon,label,onPress,badge?}]} />', caption: 'The row of shortcuts under a screen hero. Keep it to one row — the last tile should be "More", not a second row.', Demo: ActionGridDemo },
 ];

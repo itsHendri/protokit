@@ -86,7 +86,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | ToggleGroup | `components/ui/toggle-group.tsx` | `type` single/multiple |
 | FAB | `components/kit/fab.tsx` | `icon label? variant position` · one per screen |
 | IconBadge | `components/kit/icon-badge.tsx` | icon button with unread count/dot · always labelled |
-| ActionGrid | `components/kit/action-grid.tsx` | the row of shortcuts under a screen hero · `items` · one row only, last tile is "More" |
+| ActionGrid | `components/kit/action-grid.tsx` | the row of shortcuts under a screen hero · 3–4 `items`, one row only, last tile is "More" |
 | SwipeToConfirm | `components/kit/swipe-to-confirm.tsx` | drag past 85% commits · `tone` primary/destructive · reset via `key` |
 
 ### Inputs & selection

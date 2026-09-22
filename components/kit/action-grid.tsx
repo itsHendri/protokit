@@ -15,9 +15,8 @@ export type ActionTileItem = {
 };
 
 type Props = {
+  /** 3 or 4. They share the width equally; more than 4 gets cramped. */
   items: ActionTileItem[];
-  /** Tiles per row. Default 4. */
-  columns?: 3 | 4;
   className?: string;
 };
 
@@ -26,7 +25,7 @@ type Props = {
  *
  * Keep to one row: the last tile should be "More" rather than a second row of tiles.
  */
-export function ActionGrid({ items, columns = 4, className }: Props) {
+export function ActionGrid({ items, className }: Props) {
   return (
     <View className={cn('flex-row gap-3', className)}>
       {items.map((item) => (
@@ -40,7 +39,6 @@ export function ActionGrid({ items, columns = 4, className }: Props) {
           accessibilityRole="button"
           accessibilityLabel={item.label}
           accessibilityState={{ disabled: !!item.disabled }}
-          style={{ width: `${100 / columns}%` }}
           className={cn('flex-1 items-center gap-2 active:opacity-70', item.disabled && 'opacity-50')}>
           <View className="bg-muted aspect-square w-full items-center justify-center rounded-2xl">
             <Icon as={item.icon} size={24} className="text-foreground" />
