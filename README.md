@@ -26,7 +26,7 @@ Then open **Components** in the app.
 2. Brand: edit `tokens/tokens.json` (brand ramp + semantic colours + radius), run `npm run tokens:build`.
    Add a font with the `expo-font` config plugin and set `primitive.font.family.sans`.
 3. Replace `assets/images/*` (icon, splash, favicon).
-4. Delete the sample: `app/(sample)` and `components/sample`, and the "Open the sample app" button on the kit home.
+4. Delete the samples: `app/(shop)`, `app/(habits)`, `components/shop`, `components/habits`, and the "Sample apps" card on the kit home.
 5. `eas init` under your account; `eas update:configure`.
 6. Build your prototype as its own route group in `app/` (see `AGENTS.md › Building a prototype`).
 

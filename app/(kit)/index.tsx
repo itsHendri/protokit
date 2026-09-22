@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { Link } from 'expo-router';
-import { BlocksIcon, BookOpenIcon, SmartphoneIcon, SwatchBookIcon } from 'lucide-react-native';
+import { BlocksIcon, BookOpenIcon, ShoppingBagIcon, SwatchBookIcon, TargetIcon } from 'lucide-react-native';
 import { ScrollView, View } from 'react-native';
 
 export default function KitHome() {
@@ -34,12 +34,22 @@ export default function KitHome() {
             <ListRow leading={<Icon as={SwatchBookIcon} size={22} className="text-primary" />} title="Foundations" subtitle="Colour, spacing, radius, type, motion" chevron onPress={() => {}} />
           </Link>
           <Link href="/(kit)/kitchen-sink" asChild>
-            <ListRow leading={<Icon as={BlocksIcon} size={22} className="text-primary" />} title="Components" subtitle={`${SECTIONS.length} previews in ${CATEGORIES.length} categories`} chevron onPress={() => {}} />
-          </Link>
-          <Link href="/(sample)/(tabs)" asChild>
-            <ListRow leading={<Icon as={SmartphoneIcon} size={22} className="text-primary" />} title="Sample app" subtitle="A worked example built only from the kit" chevron onPress={() => {}} last />
+            <ListRow leading={<Icon as={BlocksIcon} size={22} className="text-primary" />} title="Components" subtitle={`${SECTIONS.length} previews in ${CATEGORIES.length} categories`} chevron onPress={() => {}} last />
           </Link>
         </Card>
+      </View>
+
+      <View className="gap-3">
+        <SectionHeader title="Sample apps" />
+        <Card className="w-full gap-0 px-4 py-0">
+          <Link href="/(shop)/(tabs)" asChild>
+            <ListRow leading={<Icon as={ShoppingBagIcon} size={22} className="text-primary" />} title="Shop and orders" subtitle="Browse, cart, checkout, track an order" chevron onPress={() => {}} />
+          </Link>
+          <Link href="/(habits)/(tabs)" asChild>
+            <ListRow leading={<Icon as={TargetIcon} size={22} className="text-primary" />} title="Habit tracker" subtitle="Daily goals, streaks and insights" chevron onPress={() => {}} last />
+          </Link>
+        </Card>
+        <Text className="text-muted-foreground text-xs">Both are built only from the kit. Use the floating Kit chip to come back.</Text>
       </View>
 
       <View className="gap-3">

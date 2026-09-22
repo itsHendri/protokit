@@ -121,6 +121,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | PagerDots | `components/kit/pager-dots.tsx` | |
 | HorizontalPager | `components/kit/horizontal-pager.tsx` | snap pager + dots |
 | TabBar / TabBarItem / tabIcon | `components/kit/tab-bar.tsx` | custom bottom tab bar: opaque tints, label, active dot under the label |
+| KitChip | `components/kit/kit-chip.tsx` | floating pill over a hosted prototype that returns to the kit |
 | App tabs / stack | Expo Router | `app/(kit)/_layout.tsx` shows the pattern; prototypes own their `app/` routes |
 
 ### Data display

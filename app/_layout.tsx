@@ -33,7 +33,8 @@ function AppShell() {
       <ToastProvider>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(kit)" />
-          <Stack.Screen name="(sample)" />
+          <Stack.Screen name="(shop)" />
+          <Stack.Screen name="(habits)" />
         </Stack>
         <PortalHost />
       </ToastProvider>

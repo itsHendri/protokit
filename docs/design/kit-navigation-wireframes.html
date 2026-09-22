@@ -1,0 +1,25 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Kit navigation wireframes</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3/dist/tabler-icons.min.css">
+<style>
+:root{--bg:#fff;--card:#fff;--muted:#f4f4f5;--fg:#09090b;--fg2:#71717a;--border:#e4e4e7;--primary:#2563eb;--on:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#09090b;--card:#18181b;--muted:#27272a;--fg:#fafafa;--fg2:#a1a1aa;--border:#27272a;--primary:#3b82f6}}
+body{font-family:-apple-system,system-ui,sans-serif;background:var(--bg);color:var(--fg);margin:0;padding:32px;line-height:1.5}
+h1{font-size:22px;font-weight:600}h2{font-size:16px;font-weight:600;margin:32px 0 6px}p.rule{color:var(--fg2);font-size:13px;margin:0 0 12px;max-width:640px}
+.row{display:flex;gap:20px;flex-wrap:wrap}
+.ph{width:220px;background:var(--card);border:1px solid var(--border);border-radius:20px;height:440px;position:relative;overflow:hidden;font-size:11px}
+.hdr{height:44px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);font-weight:600}
+.tabs{position:absolute;bottom:0;left:0;right:0;height:56px;border-top:1px solid var(--border);display:flex}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--fg2)}.tab.on{color:var(--primary)}
+.dot{width:4px;height:4px;border-radius:2px;background:var(--primary)}
+.card{margin:10px 12px;border:1px solid var(--border);border-radius:10px;height:56px}
+.chip{position:absolute;top:8px;right:8px;background:var(--fg);color:var(--bg);border-radius:999px;padding:6px 10px;font-weight:600}
+.disc{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--border)}.badge{margin-left:auto;background:var(--muted);border-radius:999px;padding:2px 8px}
+.search{margin:10px 12px;height:32px;border:1px solid var(--border);border-radius:8px}
+</style></head><body>
+<h1>Kit navigation — agreed wireframes</h1>
+<h2>Hosted prototype: floating Kit chip</h2><p class="rule">One chip, top-right, safe-area aware, on every screen of a hosted prototype. The prototype owns all other chrome.</p>
+<div class="row"><div class="ph"><div class="hdr">Shop</div><span class="chip"><i class="ti ti-arrow-left"></i> Kit</span><div class="card"></div><div class="card"></div><div class="tabs"><div class="tab on"><i class="ti ti-shopping-bag"></i>Shop<span class="dot"></span></div><div class="tab"><i class="ti ti-shopping-cart"></i>Cart</div><div class="tab"><i class="ti ti-package"></i>Orders</div><div class="tab"><i class="ti ti-user"></i>Account</div></div></div>
+<div class="ph"><div class="hdr">Today</div><span class="chip"><i class="ti ti-arrow-left"></i> Kit</span><div class="card"></div><div class="card"></div><div class="tabs"><div class="tab on"><i class="ti ti-target"></i>Today<span class="dot"></span></div><div class="tab"><i class="ti ti-chart-bar"></i>Insights</div><div class="tab"><i class="ti ti-calendar"></i>Calendar</div><div class="tab"><i class="ti ti-settings"></i>Settings</div></div></div></div>
+<h2>Components hub</h2><p class="rule">Search on top; categories as disclosures, collapsed by default, one open at a time; count in a badge; icons never tint.</p>
+<div class="row"><div class="ph"><div class="hdr">Components</div><div class="search"></div><div class="disc"><i class="ti ti-pointer"></i>Actions<span class="badge">6</span></div><div class="disc" style="background:var(--muted)"><i class="ti ti-pencil"></i>Inputs & selection<span class="badge">18</span></div><div class="card"></div><div class="card"></div><div class="disc"><i class="ti ti-compass"></i>Navigation<span class="badge">7</span></div><div class="tabs"><div class="tab"><i class="ti ti-home"></i>Kit</div><div class="tab"><i class="ti ti-palette"></i>Foundations</div><div class="tab on"><i class="ti ti-components"></i>Components<span class="dot"></span></div><div class="tab"><i class="ti ti-settings"></i>Settings</div></div></div></div>
+</body></html>

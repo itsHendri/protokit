@@ -11,6 +11,17 @@ import { HouseIcon, ListIcon, SettingsIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { Pressable, View } from 'react-native';
 
+function KitChipDemo() {
+  return (
+    <View className="bg-muted/40 border-border h-24 w-full overflow-hidden rounded-lg border">
+      <View className="bg-foreground/90 absolute right-3 top-3 h-9 flex-row items-center gap-1.5 rounded-full pl-2.5 pr-3.5">
+        <Text className="text-background text-xs font-semibold">← Kit</Text>
+      </View>
+      <Text className="text-muted-foreground p-3 text-sm">Any prototype screen</Text>
+    </View>
+  );
+}
+
 function TabBarDemo() {
   const { scheme } = useKitTheme();
   const c = THEME[scheme];
@@ -79,6 +90,7 @@ function HorizontalPagerDemo() {
 }
 
 export const KIT_NAVIGATION_SECTIONS: ComponentSection[] = [
+  { id: 'kit-chip', title: 'Kit chip', category: 'navigation', aliases: ['back to kit', 'exit prototype', 'floating pill'], caption: 'Floating pill that lives over a hosted prototype and returns to the kit. Render once in the prototype root layout, after its Stack.', api: '<KitChip label? />', Demo: KitChipDemo },
   { id: 'tab-bar', title: 'Tab bar', category: 'navigation', aliases: ['bottom tabs', 'tab bar', 'active dot', 'navigation bar', 'tab icon'], api: '<Tabs tabBar={(p) => <TabBar {...p} />}><Tabs.Screen options={{ title, tabBarIcon: tabIcon(HouseIcon) }} /></Tabs>', caption: 'The kit tab bar: opaque tints, label, and an active dot under the label so selection is not colour-only. TabBarItem is exported for custom bars.', Demo: TabBarDemo },
   { id: 'stepper', title: 'Stepper', category: 'navigation', aliases: ['progress steps', 'wizard', 'onboarding progress'], api: '<Stepper current total labels? variant="numbered|compact" />', Demo: StepperDemo },
   { id: 'section-header', title: 'Section header', category: 'navigation', aliases: ['title', 'see all', 'heading row'], api: '<SectionHeader title action? onAction? />', caption: 'Sits outside the card it introduces.', Demo: SectionHeaderDemo },

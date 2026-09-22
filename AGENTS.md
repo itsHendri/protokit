@@ -20,11 +20,11 @@ and the hallucination guard. This file covers engineering, workflows and gotchas
 ```
 app/_layout.tsx         providers (theme, toast, portal, nav theme) + root Stack
 app/(kit)/              the kit shell: Home · Components (kitchen sink) · Foundations · Settings
-app/(sample)/           sample app (4 screens). DELETE on a real project.
+app/(shop)/, app/(habits)/  two sample apps. DELETE on a real project.
 components/ui/          reusables — install more with the add-component skill
 components/kit/         ported/custom components
 components/devkit/      registry + previews (sections/<category>.tsx, sections/kit-<category>.tsx)
-components/sample/      sample data. DELETE with app/(sample).
+components/shop/, components/habits/  sample data + stores. DELETE with the samples.
 lib/                    theme.ts (generated), theme-context, haptics, utils(cn)
 tokens/                 tokens.json (edit), build.mjs, generated/
 .claude/skills/         add-component, qc-pass, transcript-to-prototype
@@ -50,7 +50,7 @@ npx expo run:ios       # build + install the dev client on the simulator (needs 
 1. A prototype lives in `app/` as its own route group, e.g. `app/(acme)/…`, with its own Tabs/Stack.
    Point the root `Stack` at it and, when it is the product, make it the initial route.
 2. Screens compose ONLY registry components. Screen skeleton, multi-step flow and success patterns
-   are in `DESIGN_SYSTEM.md › Patterns`. The sample app (`app/(sample)`) is the worked example.
+   are in `DESIGN_SYSTEM.md › Patterns`. The sample apps (`app/(shop)`, `app/(habits)`) are the worked examples; `KitChip` in their root layouts is the way back to the kit.
 3. Mock data lives beside the prototype (`components/<slug>/data.ts`). Never call real APIs.
 4. New component needed? Use the `add-component` skill — it must land in the registry and the docs.
 5. Before saying "done": run the `qc-pass` skill (typecheck, lint, guards, simulator look in both themes).

@@ -10,7 +10,7 @@ type Props = {
   value: number;
   size?: number;
   strokeWidth?: number;
-  tone?: 'primary' | 'success' | 'warning' | 'destructive';
+  tone?: 'primary' | 'success' | 'warning' | 'destructive' | 'info';
   /** Centre content, e.g. a percentage Text. */
   children?: React.ReactNode;
   className?: string;
