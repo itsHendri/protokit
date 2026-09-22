@@ -10,7 +10,8 @@ export type CategoryId =
   | 'feedback'
   | 'layout'
   | 'overlays'
-  | 'media';
+  | 'media'
+  | 'native';
 
 /** Foundation buckets for the Foundations screen. */
 export type FoundationId = 'color' | 'metrics' | 'type' | 'motion';

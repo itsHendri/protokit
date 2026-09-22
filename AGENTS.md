@@ -94,3 +94,13 @@ npx expo run:ios       # build + install the dev client on the simulator (needs 
   the dev client as the truth.
 - When upgrading the SDK: delete `package-lock.json`, `npm install expo@latest`, `npx expo install --fix`,
   then `npx expo-doctor`.
+- Device capabilities degrade rather than fail — see `lib/native.ts`. Reality: the iOS Simulator has no
+  camera; **Face ID does not work in Expo Go** (its Info.plist has no `NSFaceIDUsageDescription`), so use
+  the dev client; remote push left Expo Go in SDK 53; the web notification scheduler is a stub.
+- `expo-notifications` warns and registers a push-token side effect on *import* under Expo Go — it is
+  lazily `require`d inside `lib/native.ts` and `components/kit/notify.tsx`. Keep it that way.
+- `ios/` is a build artifact (gitignored). After changing `app.json` plugins or permission strings, run
+  `LANG=en_US.UTF-8 npx expo prebuild -p ios --clean` — the diff will not show Info.plist.
+- NativeWind classNames are **dropped on `Animated.View` on web**. Put the surface (`bg-*`, radius) on a
+  plain `View` inside it, as `sheet.tsx` and `toast.tsx` do, or the panel renders transparent in the
+  web preview. `segmented-control.tsx` and `swipe-to-confirm.tsx` still carry this bug.

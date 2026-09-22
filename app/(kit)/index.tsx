@@ -1,25 +1,25 @@
 import { CATEGORIES } from '@/components/devkit/categories';
 import { FOUNDATION_SECTIONS, SECTIONS } from '@/components/devkit/registry';
+import { Footnote } from '@/components/kit/footnote';
+import { ListGroup } from '@/components/kit/list-group';
 import { ListRow } from '@/components/kit/list-row';
+import { ScreenHeader } from '@/components/kit/screen-header';
 import { SectionHeader } from '@/components/kit/section-header';
 import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { Link } from 'expo-router';
-import { BlocksIcon, BookOpenIcon, ShoppingBagIcon, SwatchBookIcon, TargetIcon } from 'lucide-react-native';
+import { BlocksIcon, ShoppingBagIcon, SwatchBookIcon, TargetIcon } from 'lucide-react-native';
 import { ScrollView, View } from 'react-native';
 
 export default function KitHome() {
   return (
     <ScrollView className="bg-background flex-1" contentContainerClassName="gap-6 p-5 pb-16" contentInsetAdjustmentBehavior="automatic">
-      <View className="gap-2">
-        <Text variant="h2" className="border-0 pb-0">
-          Prototype Kit
-        </Text>
-        <Text className="text-muted-foreground">
-          A themeable Expo starter for mobile prototypes. Everything a screen needs is already here and previewed live.
-        </Text>
-      </View>
+      <ScreenHeader
+        title="Prototype Kit"
+        size="large"
+        subtitle="A themeable Expo starter for mobile prototypes. Everything a screen needs is already here and previewed live."
+      />
 
       <View className="flex-row gap-3">
         <Stat label="Components" value={SECTIONS.length} />
@@ -27,30 +27,23 @@ export default function KitHome() {
         <Stat label="Token groups" value={FOUNDATION_SECTIONS.length} />
       </View>
 
-      <View className="gap-3">
-        <SectionHeader title="Browse" />
-        <Card className="w-full gap-0 px-4 py-0">
-          <Link href="/(kit)/foundations" asChild>
-            <ListRow leading={<Icon as={SwatchBookIcon} size={22} className="text-primary" />} title="Foundations" subtitle="Colour, spacing, radius, type, motion" chevron onPress={() => {}} />
-          </Link>
-          <Link href="/(kit)/kitchen-sink" asChild>
-            <ListRow leading={<Icon as={BlocksIcon} size={22} className="text-primary" />} title="Components" subtitle={`${SECTIONS.length} previews in ${CATEGORIES.length} categories`} chevron onPress={() => {}} last />
-          </Link>
-        </Card>
-      </View>
+      <ListGroup title="Browse">
+        <Link href="/(kit)/foundations" asChild>
+          <ListRow leading={<Icon as={SwatchBookIcon} size={22} className="text-primary" />} title="Foundations" subtitle="Colour, spacing, radius, type, motion" chevron onPress={() => {}} />
+        </Link>
+        <Link href="/(kit)/kitchen-sink" asChild>
+          <ListRow leading={<Icon as={BlocksIcon} size={22} className="text-primary" />} title="Components" subtitle={`${SECTIONS.length} previews in ${CATEGORIES.length} categories`} chevron onPress={() => {}} />
+        </Link>
+      </ListGroup>
 
-      <View className="gap-3">
-        <SectionHeader title="Sample apps" />
-        <Card className="w-full gap-0 px-4 py-0">
-          <Link href="/(shop)/(tabs)" asChild>
-            <ListRow leading={<Icon as={ShoppingBagIcon} size={22} className="text-primary" />} title="Shop and orders" subtitle="Browse, cart, checkout, track an order" chevron onPress={() => {}} />
-          </Link>
-          <Link href="/(habits)/(tabs)" asChild>
-            <ListRow leading={<Icon as={TargetIcon} size={22} className="text-primary" />} title="Habit tracker" subtitle="Daily goals, streaks and insights" chevron onPress={() => {}} last />
-          </Link>
-        </Card>
-        <Text className="text-muted-foreground text-xs">Both are built only from the kit. Use the floating Kit chip to come back.</Text>
-      </View>
+      <ListGroup title="Sample apps" footnote="Both are built only from the kit. Use the floating Kit chip to come back.">
+        <Link href="/(shop)/(tabs)" asChild>
+          <ListRow leading={<Icon as={ShoppingBagIcon} size={22} className="text-primary" />} title="Shop and orders" subtitle="Browse, cart, checkout, track an order" chevron onPress={() => {}} />
+        </Link>
+        <Link href="/(habits)/(tabs)" asChild>
+          <ListRow leading={<Icon as={TargetIcon} size={22} className="text-primary" />} title="Habit tracker" subtitle="Daily goals, streaks and insights" chevron onPress={() => {}} />
+        </Link>
+      </ListGroup>
 
       <View className="gap-3">
         <SectionHeader title="How it works" />
@@ -61,10 +54,7 @@ export default function KitHome() {
         </Card>
       </View>
 
-      <View className="flex-row items-center gap-2 px-1">
-        <Icon as={BookOpenIcon} size={14} className="text-muted-foreground" />
-        <Text className="text-muted-foreground text-xs">DESIGN_SYSTEM.md and AGENTS.md hold the full rules.</Text>
-      </View>
+      <Footnote>DESIGN_SYSTEM.md and AGENTS.md hold the full rules.</Footnote>
     </ScrollView>
   );
 }

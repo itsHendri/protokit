@@ -86,6 +86,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | ToggleGroup | `components/ui/toggle-group.tsx` | `type` single/multiple |
 | FAB | `components/kit/fab.tsx` | `icon label? variant position` · one per screen |
 | IconBadge | `components/kit/icon-badge.tsx` | icon button with unread count/dot · always labelled |
+| ActionGrid | `components/kit/action-grid.tsx` | the row of shortcuts under a screen hero · `items` · one row only, last tile is "More" |
 | SwipeToConfirm | `components/kit/swipe-to-confirm.tsx` | drag past 85% commits · `tone` primary/destructive · reset via `key` |
 
 ### Inputs & selection
@@ -100,6 +101,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | Select | `components/ui/select.tsx` | pass safe-area `insets` to `SelectContent` |
 | FilterChip / FilterChipRow | `components/kit/filter-chip.tsx` | neutral-active chips |
 | SegmentedControl | `components/kit/segmented-control.tsx` | 2–4 options, animated thumb |
+| RangeSelector | `components/kit/range-selector.tsx` | trackless chart range (1D·1W·1M·1Y·ALL), active is a filled disc |
 | SearchField | `components/kit/search-field.tsx` | Input + search icon + clear |
 | QuantityStepper | `components/kit/quantity-stepper.tsx` | `min max step` |
 | AmountInput | `components/kit/amount-input.tsx` | hero money field · `editable={false}` with keypad |
@@ -117,6 +119,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | Tabs | `components/ui/tabs.tsx` | in-page content switching |
 | Menubar | `components/ui/menubar.tsx` | web/desktop pattern |
 | Stepper | `components/kit/stepper.tsx` | `numbered` / `compact` flow progress |
+| ScreenHeader | `components/kit/screen-header.tsx` | the in-body page title + intro · one per screen, first child of the ScrollView |
 | SectionHeader | `components/kit/section-header.tsx` | title + action, outside the card |
 | PagerDots | `components/kit/pager-dots.tsx` | |
 | HorizontalPager | `components/kit/horizontal-pager.tsx` | snap pager + dots |
@@ -131,8 +134,10 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | Avatar | `components/ui/avatar.tsx` | image + fallback initials |
 | Badge | `components/ui/badge.tsx` | tag/pill/count · tint with semantic classes |
 | Separator | `components/ui/separator.tsx` | |
-| ListRow | `components/kit/list-row.tsx` | canonical row · `last` on the final row |
-| IconCircle | `components/kit/icon-circle.tsx` | leading icon well |
+| ListRow | `components/kit/list-row.tsx` | canonical row · `last` on the final row · `select={{mode,selected}}` makes it a radio/checkbox row |
+| ListGroup | `components/kit/list-group.tsx` | wraps ListRows and sets `last` for you · `variant` card/plain (plain = settings look) |
+| ValueHeader | `components/kit/value-header.tsx` | hero figure + caption · `maskable` adds the eye toggle |
+| IconCircle | `components/kit/icon-circle.tsx` | leading icon well, row scale (≤44px) · `shape` circle/square · `tone` |
 | KeyValueList / SummaryCard | `components/kit/key-value-list.tsx` | label/value rows, optionally in a Card |
 | StatTile | `components/kit/stat-tile.tsx` | KPI tile with delta |
 | PercentChange | `components/kit/percent-change.tsx` | signed % with trend icon |
@@ -146,7 +151,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 ### Feedback & status
 | Component | Path | Notes |
 |---|---|---|
-| Alert | `components/ui/alert.tsx` | inline, persistent · `variant` default/info/success/warning/destructive · `icon` |
+| Alert | `components/ui/alert.tsx` | inline, persistent · `variant` default/info/success/warning/destructive · `icon` · `onDismiss`/`action` make it a nudge |
 | Progress | `components/ui/progress.tsx` | 0–100 |
 | Skeleton | `components/ui/skeleton.tsx` | |
 | Tooltip | `components/ui/tooltip.tsx` | |
@@ -162,6 +167,8 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | Accordion | `components/ui/accordion.tsx` | |
 | Collapsible | `components/ui/collapsible.tsx` | |
 | StickyBottomBar | `components/kit/sticky-bottom-bar.tsx` | safe-area action bar under a ScrollView (`pb-32`) |
+| PromoCard | `components/kit/promo-card.tsx` | tinted offer/nudge card · circular arrow CTA, dismiss X, generated art · one per screen |
+| Footnote | `components/kit/footnote.tsx` | small print / disclosure, last in the scroll |
 
 ### Overlays
 | Component | Path | Notes |
@@ -181,7 +188,28 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 |---|---|---|
 | Icon | `components/ui/icon.tsx` | lucide wrapper |
 | AspectRatio | `components/ui/aspect-ratio.tsx` | |
-| ImageTile | `components/kit/image-tile.tsx` | rounded image with muted placeholder |
+| ImageTile | `components/kit/image-tile.tsx` | rounded image · `seed` draws generated art when there is no `source` |
+| Placeholder | `components/kit/placeholder.tsx` | deterministic abstract SVG art from a `seed` · the kit ships no raster imagery |
+| Spot | `components/kit/spot.tsx` | an icon at illustration scale (≥64px) · EmptyState, SuccessScreen and PermissionPrimer all use it |
+
+### Device capabilities
+
+Everything here resolves through `lib/native.ts` + `useCapability()`: when the real thing cannot
+run — the web preview, a simulator, Expo Go, a denied permission — the component draws a simulated
+version instead of an error. `simulate` forces the fallback; the kit-wide switch is in Settings.
+
+| Component | Path | Notes |
+|---|---|---|
+| PhotoCapture | `components/kit/photo-capture.tsx` | camera + library · falls back to a seeded `Placeholder` |
+| CodeScanner | `components/kit/code-scanner.tsx` | QR/barcode viewfinder · simulated emits a sample payload |
+| BiometricGate / `useBiometricAuth` | `components/kit/biometric-gate.tsx` | Face ID gate, or the hook for a single action · real only in a dev build |
+| PermissionPrimer | `components/kit/permission-primer.tsx` | shown BEFORE the OS dialog · the skip is not optional |
+| `useShare` | `components/kit/share.ts` | OS share sheet · copies to the clipboard on web |
+| `useNotify` / NotifyProvider | `components/kit/notify.tsx` | in-app banner now (`delay: 0`), real OS notification when scheduled |
+
+Reality check: photos, camera, scanning and local notifications work in Expo Go on a phone.
+The iOS Simulator has no camera. Face ID does **not** work in Expo Go — use the dev client.
+Remote push is gone from Expo Go since SDK 53.
 
 ## Patterns
 
@@ -192,7 +220,11 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 - **Pickers:** `OptionSheet` on phones; `Select` when the list is short and the field sits in a form.
 - **Confirmations:** `AlertDialog` for reversible, `SwipeToConfirm` for money or deletion.
 - **Success:** `SuccessScreen` + `StickyBottomBar` with "Done". Always.
-- **Loading:** `Skeleton` for content shapes, `Spinner` inside buttons, `Progress` when determinate.
+- **Loading:** `Skeleton` for content shapes, `Spinner` inside buttons (`tone="primary-foreground"` on a filled one), `Progress` when determinate.
+- **Permission:** `PermissionPrimer` before the OS dialog, always with a skip that runs the simulated
+  path. Never show a raw denied state. Keep its copy in step with the strings in `app.json`.
+- **Imagery:** the kit ships no raster art. `Placeholder` (seeded, themed) fills image slots;
+  `Spot` is the illustration for empty, success and permission screens.
 
 ## Anti-patterns
 

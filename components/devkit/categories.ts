@@ -11,6 +11,7 @@ import {
   PaletteIcon,
   PenLineIcon,
   RulerIcon,
+  SmartphoneIcon,
   TypeIcon,
 } from 'lucide-react-native';
 
@@ -24,6 +25,7 @@ export const CATEGORIES: CategoryDef<CategoryId>[] = [
   { id: 'layout', label: 'Containers & layout', blurb: 'Cards, accordions, collapsibles', icon: BlocksIcon },
   { id: 'overlays', label: 'Overlays', blurb: 'Dialogs, popovers, menus', icon: LayersIcon },
   { id: 'media', label: 'Media & icons', blurb: 'Icons, images, ratios', icon: ImageIcon },
+  { id: 'native', label: 'Device capabilities', blurb: 'Camera, photos, Face ID, alerts', icon: SmartphoneIcon },
 ];
 
 /** Foundation categories, in display order. */

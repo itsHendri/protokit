@@ -23,6 +23,8 @@ import { KIT_DATA_SECTIONS } from './sections/kit-data';
 import { KIT_FEEDBACK_SECTIONS } from './sections/kit-feedback';
 import { KIT_LAYOUT_SECTIONS } from './sections/kit-layout';
 import { KIT_OVERLAYS_SECTIONS } from './sections/kit-overlays';
+import { KIT_MEDIA_SECTIONS } from './sections/kit-media';
+import { KIT_NATIVE_SECTIONS } from './sections/kit-native';
 
 /** ui/ (reusables) previews live in <category>.tsx; kit/ previews in kit-<category>.tsx. */
 const RAW_SECTIONS: ComponentSection[] = [
@@ -41,6 +43,8 @@ const RAW_SECTIONS: ComponentSection[] = [
   ...OVERLAYS_SECTIONS,
   ...KIT_OVERLAYS_SECTIONS,
   ...MEDIA_SECTIONS,
+  ...KIT_MEDIA_SECTIONS,
+  ...KIT_NATIVE_SECTIONS,
 ];
 
 /** Honour `after`: move a section directly behind the one it names. */
