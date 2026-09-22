@@ -57,7 +57,7 @@ export default function Today() {
           </Card>
         </View>
       </ScrollView>
-      <FAB icon={PlusIcon} label="Add habit" position="bottom-right" onPress={() => router.push('/(habits)/new')} />
+      <FAB icon={PlusIcon} accessibilityLabel="Add habit" position="bottom-right" onPress={() => router.push('/(habits)/new')} />
     </View>
   );
 }

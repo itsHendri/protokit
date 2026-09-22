@@ -56,7 +56,7 @@ function DialogDemo() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" className="w-full">
           <Text>Open dialog</Text>
         </Button>
       </DialogTrigger>
@@ -88,7 +88,7 @@ function AlertDialogDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">
+        <Button variant="destructive" className="w-full">
           <Text>Delete account</Text>
         </Button>
       </AlertDialogTrigger>
@@ -116,20 +116,21 @@ function PopoverDemo() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" className="w-full">
           <Text>Open popover</Text>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-72" side="top">
+      <PopoverContent className="w-80" side="bottom">
         <View className="gap-3">
-          <Text className="font-medium leading-none">Dimensions</Text>
-          <Text className="text-muted-foreground text-sm">Set the size for the layer.</Text>
-          <View className="flex-row items-center gap-3">
-            <Label className="w-16" htmlFor="pop-width">
-              Width
-            </Label>
-            <Input id="pop-width" defaultValue="100%" className="flex-1" />
+          <Text className="font-semibold">Rename list</Text>
+          <Text className="text-muted-foreground text-sm">A quick edit next to the thing it changes.</Text>
+          <View className="gap-2">
+            <Label htmlFor="pop-name">Name</Label>
+            <Input id="pop-name" defaultValue="Weekend plans" />
           </View>
+          <Button size="sm">
+            <Text>Save</Text>
+          </Button>
         </View>
       </PopoverContent>
     </Popover>
@@ -141,8 +142,8 @@ function DropdownMenuDemo() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">
-          <Text>Account</Text>
+        <Button variant="outline" className="w-full">
+          <Text>Account menu</Text>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent insets={insets} sideOffset={4} className="w-56" align="start">
@@ -198,8 +199,8 @@ function HoverCardDemo() {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <Button variant="link">
-          <Text>@expo</Text>
+        <Button variant="outline" className="w-full">
+          <Text>Show profile card</Text>
         </Button>
       </HoverCardTrigger>
       <HoverCardContent insets={insets} className="w-80">

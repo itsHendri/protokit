@@ -62,11 +62,8 @@ export function DevKitHub<Id extends string>({ categories, sections, searchPlace
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
       contentInsetAdjustmentBehavior="automatic">
-      <View className="gap-2 px-5 pb-2 pt-3">
+      <View className="px-5 pb-3 pt-3">
         <SearchField value={query} onChangeText={setQuery} placeholder={searchPlaceholder} />
-        <Text className="text-muted-foreground text-xs">
-          {trimmed ? `${results.length} match${results.length === 1 ? '' : 'es'} for “${trimmed}”` : `${sections.length} items in ${categories.length} categories`}
-        </Text>
       </View>
 
       {trimmed ? (

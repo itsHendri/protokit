@@ -5,6 +5,7 @@ import { Separator } from '@/components/ui/separator';
 import { Text } from '@/components/ui/text';
 import type { ComponentSection } from '../types';
 import { BadgeCheckIcon } from 'lucide-react-native';
+import * as React from 'react';
 import { View } from 'react-native';
 
 function TextDemo() {
@@ -30,38 +31,21 @@ function TextDemo() {
 }
 
 function AvatarDemo() {
+  const items: { label: string; node: React.ReactNode }[] = [
+    { label: 'Image', node: (<Avatar alt="Expo"><AvatarImage source={{ uri: 'https://github.com/expo.png' }} /><AvatarFallback><Text>EX</Text></AvatarFallback></Avatar>) },
+    { label: 'Initials', node: (<Avatar alt="Jane Doe"><AvatarFallback><Text>JD</Text></AvatarFallback></Avatar>) },
+    { label: 'Small 32', node: (<Avatar alt="Sam" className="size-8"><AvatarFallback><Text className="text-xs">SO</Text></AvatarFallback></Avatar>) },
+    { label: 'Large 64', node: (<Avatar alt="Mei" className="size-16"><AvatarFallback><Text className="text-lg">MT</Text></AvatarFallback></Avatar>) },
+    { label: 'Square', node: (<Avatar alt="Team" className="rounded-lg"><AvatarFallback><Text>TM</Text></AvatarFallback></Avatar>) },
+  ];
   return (
-    <View className="flex-row flex-wrap items-center gap-6">
-      <Avatar alt="Expo">
-        <AvatarImage source={{ uri: 'https://github.com/expo.png' }} />
-        <AvatarFallback>
-          <Text>EX</Text>
-        </AvatarFallback>
-      </Avatar>
-      <Avatar alt="Initials only">
-        <AvatarFallback>
-          <Text>JD</Text>
-        </AvatarFallback>
-      </Avatar>
-      <Avatar alt="Small" className="size-8">
-        <AvatarFallback>
-          <Text className="text-xs">SM</Text>
-        </AvatarFallback>
-      </Avatar>
-      <Avatar alt="Square" className="rounded-lg">
-        <AvatarFallback>
-          <Text>SQ</Text>
-        </AvatarFallback>
-      </Avatar>
-      <View className="flex-row">
-        {['AB', 'CD', 'EF'].map((i) => (
-          <Avatar key={i} alt={i} className="border-background -mr-2 border-2">
-            <AvatarFallback>
-              <Text>{i}</Text>
-            </AvatarFallback>
-          </Avatar>
-        ))}
-      </View>
+    <View className="flex-row flex-wrap items-end gap-5">
+      {items.map((it) => (
+        <View key={it.label} className="items-center gap-1.5">
+          {it.node}
+          <Text className="text-muted-foreground text-xs">{it.label}</Text>
+        </View>
+      ))}
     </View>
   );
 }
@@ -134,6 +118,7 @@ export const DATA_SECTIONS: ComponentSection[] = [
     category: 'data',
     aliases: ['profile', 'user', 'initials'],
     api: '<Avatar alt><AvatarImage source /><AvatarFallback><Text /></AvatarFallback></Avatar>',
+    caption: 'Default 48px. Image with initials fallback; size with size-8 / size-16; rounded-lg for a square.',
     Demo: AvatarDemo,
   },
   {

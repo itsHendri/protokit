@@ -32,6 +32,8 @@ export type Section<Cat extends string = string> = {
   /** Display title + primary search key. */
   title: string;
   category: Cat;
+  /** Place this section right after another section id within its category. */
+  after?: string;
   /** Extra search terms ("toggle" → Switch). */
   aliases?: string[];
   /** One-line API hint for docs (not rendered in the preview). */

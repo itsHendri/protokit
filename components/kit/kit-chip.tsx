@@ -4,31 +4,34 @@ import { haptic } from '@/lib/haptics';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'expo-router';
 import { ArrowLeftIcon } from 'lucide-react-native';
-import { Pressable } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Props = { label?: string; className?: string };
 
+const TAB_BAR_HEIGHT = 56;
+
 /**
- * Floating "back to kit" pill that sits over a hosted prototype on every screen, whatever
- * chrome the prototype owns. Render it once in the prototype's root layout, after the Stack.
+ * Floating "Back to kit" pill, bottom centre just above the tab bar, on every screen of a
+ * hosted prototype whatever chrome it owns. Render it once in the prototype root layout, after the Stack.
  * Delete it (or the whole kit shell) when the prototype becomes the product.
  */
-export function KitChip({ label = 'Kit', className }: Props) {
+export function KitChip({ label = 'Back to kit', className }: Props) {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel="Back to the kit"
-      onPress={() => {
-        haptic('selection');
-        router.replace('/(kit)');
-      }}
-      className={cn('bg-foreground/90 absolute right-4 h-9 flex-row items-center gap-1.5 rounded-full pl-2.5 pr-3.5 shadow-md shadow-black/20 active:opacity-80', className)}
-      style={{ top: insets.top + 6 }}>
-      <Icon as={ArrowLeftIcon} size={14} className="text-background" />
-      <Text className="text-background text-xs font-semibold">{label}</Text>
-    </Pressable>
+    <View pointerEvents="box-none" className="absolute left-0 right-0 items-center" style={{ bottom: Math.max(insets.bottom, 8) + TAB_BAR_HEIGHT + 12 }}>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Back to the kit"
+        onPress={() => {
+          haptic('selection');
+          router.replace('/(kit)');
+        }}
+        className={cn('bg-foreground/90 h-10 flex-row items-center gap-2 rounded-full pl-3 pr-4 shadow-md shadow-black/20 active:opacity-80', className)}>
+        <Icon as={ArrowLeftIcon} size={16} className="text-background" />
+        <Text className="text-background text-sm font-semibold">{label}</Text>
+      </Pressable>
+    </View>
   );
 }

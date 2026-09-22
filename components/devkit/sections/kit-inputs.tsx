@@ -21,7 +21,7 @@ function FilterChipDemo() {
   const [sel, setSel] = React.useState<string[]>(['all']);
   const toggle = (v: string) => setSel((s) => (s.includes(v) ? s.filter((x) => x !== v) : [...s, v]));
   return (
-    <View className="-mx-5">
+    <View className="-mx-5 self-stretch">
       <FilterChipRow>
         {['all', 'favourites', 'recent', 'archived', 'shared'].map((v) => (
           <FilterChip key={v} label={v[0].toUpperCase() + v.slice(1)} selected={sel.includes(v)} onPress={() => toggle(v)} icon={v === 'favourites' ? StarIcon : undefined} />
@@ -61,7 +61,7 @@ function QuantityStepperDemo() {
 function AmountInputDemo() {
   const [v, setV] = React.useState('');
   return (
-    <AmountInput value={v} onChangeText={setV} symbol="$" helper="≈ 0.0021 BTC · Balance $1,240.00" onMax={() => setV('1240')} onToggleCurrency={() => {}} className="w-full" />
+    <AmountInput value={v} onChangeText={setV} symbol="$" helper="Up to $500.00 available" onMax={() => setV('500')} onToggleCurrency={() => {}} className="w-full" />
   );
 }
 
@@ -69,7 +69,7 @@ function NumericKeypadDemo() {
   const [v, setV] = React.useState('');
   return (
     <View className="w-full gap-4">
-      <AmountInput value={v} onChangeText={setV} symbol="€" editable={false} placeholder="0" className="w-full" />
+      <AmountInput value={v} onChangeText={setV} symbol="min" symbolPosition="trailing" editable={false} placeholder="0" helper="How long did it take?" className="w-full" />
       <NumericKeypad value={v} onChange={setV} />
     </View>
   );
@@ -131,7 +131,7 @@ export const KIT_INPUTS_SECTIONS: ComponentSection[] = [
   { id: 'segmented-control', title: 'Segmented control', category: 'inputs', aliases: ['segment', 'ios', 'switcher'], api: '<SegmentedControl segments={[{value,label}]} value onChange />', caption: '2–4 mutually exclusive options. For content panes use Tabs.', Demo: SegmentedControlDemo },
   { id: 'search-field', title: 'Search field', category: 'inputs', aliases: ['search bar', 'find'], api: '<SearchField value onChangeText placeholder />', Demo: SearchFieldDemo },
   { id: 'quantity-stepper', title: 'Quantity stepper', category: 'inputs', aliases: ['plus minus', 'counter', 'increment'], api: '<QuantityStepper value onChange min max step />', Demo: QuantityStepperDemo },
-  { id: 'amount-input', title: 'Amount input', category: 'inputs', aliases: ['money', 'currency', 'hero field', 'send'], api: '<AmountInput value onChangeText symbol helper? onMax? onToggleCurrency? error? editable? />', caption: 'Hero numeric entry. Set editable={false} when a NumericKeypad drives it.', Demo: AmountInputDemo },
+  { id: 'amount-input', title: 'Amount input', category: 'inputs', aliases: ['money', 'currency', 'quantity', 'hero field', 'large number'], api: '<AmountInput value onChangeText symbol helper? onMax? onToggleCurrency? error? editable? />', caption: 'Hero numeric entry. Set editable={false} when a NumericKeypad drives it.', Demo: AmountInputDemo },
   { id: 'numeric-keypad', title: 'Numeric keypad', category: 'inputs', aliases: ['keypad', 'pin pad', 'digits'], api: '<NumericKeypad value onChange maxLength? allowDecimal? />', caption: 'Replaces the system keyboard on full-screen amount entry. Long-press ⌫ clears.', Demo: NumericKeypadDemo },
   { id: 'otp-input', title: 'OTP input', category: 'inputs', aliases: ['code', 'verification', 'pin', '2fa', 'passcode'], api: '<OtpInput length value onChange onComplete error? />', caption: 'Try 123456. Handles paste and backspace across cells.', Demo: OtpInputDemo },
   { id: 'password-input', title: 'Password input', category: 'inputs', aliases: ['secure', 'show hide', 'login'], api: '<PasswordInput value onChangeText />', Demo: PasswordInputDemo },

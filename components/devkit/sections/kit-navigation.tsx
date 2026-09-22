@@ -1,5 +1,4 @@
 import { HorizontalPager } from '@/components/kit/horizontal-pager';
-import { PagerDots } from '@/components/kit/pager-dots';
 import { SectionHeader } from '@/components/kit/section-header';
 import { Stepper } from '@/components/kit/stepper';
 import { TabBarItem, tabIcon } from '@/components/kit/tab-bar';
@@ -9,13 +8,13 @@ import { Text } from '@/components/ui/text';
 import type { ComponentSection } from '../types';
 import { HouseIcon, ListIcon, SettingsIcon } from 'lucide-react-native';
 import * as React from 'react';
-import { Pressable, View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 
 function KitChipDemo() {
   return (
     <View className="bg-muted/40 border-border h-24 w-full overflow-hidden rounded-lg border">
-      <View className="bg-foreground/90 absolute right-3 top-3 h-9 flex-row items-center gap-1.5 rounded-full pl-2.5 pr-3.5">
-        <Text className="text-background text-xs font-semibold">← Kit</Text>
+      <View className="bg-foreground/90 absolute bottom-3 h-10 flex-row items-center gap-2 self-center rounded-full px-4">
+        <Text className="text-background text-sm font-semibold">← Back to kit</Text>
       </View>
       <Text className="text-muted-foreground p-3 text-sm">Any prototype screen</Text>
     </View>
@@ -61,26 +60,29 @@ function SectionHeaderDemo() {
 }
 
 function PagerDotsDemo() {
-  const [i, setI] = React.useState(0);
-  const slides = ['Welcome', 'Set up your profile', 'Invite your team', 'Done'];
+  const { width } = useWindowDimensions();
+  const slides = ['Welcome', 'Set up your profile', 'Invite your team', 'You are ready'];
   return (
-    <View className="w-full items-center gap-3">
-      <Pressable accessibilityRole="button" accessibilityLabel="Next slide" onPress={() => setI((n) => (n + 1) % slides.length)} className="bg-card border-border h-28 w-full items-center justify-center rounded-xl border active:opacity-80">
-        <Text className="text-lg font-semibold">{slides[i]}</Text>
-        <Text className="text-muted-foreground text-sm">Tap to advance · {i + 1} of {slides.length}</Text>
-      </Pressable>
-      <PagerDots count={slides.length} activeIndex={i} />
+    <View className="-mx-5 self-stretch">
+      <HorizontalPager itemWidth={width - 40} gap={0}>
+        {slides.map((t, i) => (
+          <View key={t} className="bg-card border-border h-40 items-center justify-center rounded-xl border px-6">
+            <Text className="text-lg font-semibold">{t}</Text>
+            <Text className="text-muted-foreground text-sm">Swipe · slide {i + 1} of {slides.length}</Text>
+          </View>
+        ))}
+      </HorizontalPager>
     </View>
   );
 }
 
 function HorizontalPagerDemo() {
   return (
-    <View className="-mx-5">
+    <View className="-mx-5 self-stretch">
       <HorizontalPager itemWidth={280}>
-        {['Welcome', 'Track spending', 'Set goals'].map((t, i) => (
+        {['Getting started', 'Tips and tricks', 'What is new'].map((t, i) => (
           <View key={t} className="bg-card border-border h-36 justify-end rounded-xl border p-4">
-            <Text className="text-muted-foreground text-xs">Slide {i + 1}</Text>
+            <Text className="text-muted-foreground text-xs">Card {i + 1}</Text>
             <Text className="text-lg font-semibold">{t}</Text>
           </View>
         ))}
@@ -90,10 +92,10 @@ function HorizontalPagerDemo() {
 }
 
 export const KIT_NAVIGATION_SECTIONS: ComponentSection[] = [
-  { id: 'kit-chip', title: 'Kit chip', category: 'navigation', aliases: ['back to kit', 'exit prototype', 'floating pill'], caption: 'Floating pill that lives over a hosted prototype and returns to the kit. Render once in the prototype root layout, after its Stack.', api: '<KitChip label? />', Demo: KitChipDemo },
+  { id: 'kit-chip', title: 'Kit chip', category: 'navigation', aliases: ['back to kit', 'exit prototype', 'floating pill'], caption: 'Floating pill, bottom centre above the tab bar, that returns to the kit from any screen of a hosted prototype. Render once in the prototype root layout, after its Stack.', api: '<KitChip label? />', Demo: KitChipDemo },
   { id: 'tab-bar', title: 'Tab bar', category: 'navigation', aliases: ['bottom tabs', 'tab bar', 'active dot', 'navigation bar', 'tab icon'], api: '<Tabs tabBar={(p) => <TabBar {...p} />}><Tabs.Screen options={{ title, tabBarIcon: tabIcon(HouseIcon) }} /></Tabs>', caption: 'The kit tab bar: opaque tints, label, and an active dot under the label so selection is not colour-only. TabBarItem is exported for custom bars.', Demo: TabBarDemo },
   { id: 'stepper', title: 'Stepper', category: 'navigation', aliases: ['progress steps', 'wizard', 'onboarding progress'], api: '<Stepper current total labels? variant="numbered|compact" />', Demo: StepperDemo },
   { id: 'section-header', title: 'Section header', category: 'navigation', aliases: ['title', 'see all', 'heading row'], api: '<SectionHeader title action? onAction? />', caption: 'Sits outside the card it introduces.', Demo: SectionHeaderDemo },
-  { id: 'pager-dots', title: 'Pager dots', category: 'navigation', aliases: ['page indicator', 'carousel dots'], api: '<PagerDots count activeIndex />', Demo: PagerDotsDemo },
-  { id: 'horizontal-pager', title: 'Horizontal pager', category: 'navigation', aliases: ['carousel', 'swipe', 'slides', 'banner'], api: '<HorizontalPager itemWidth gap? showDots? onIndexChange?>{cards}</HorizontalPager>', Demo: HorizontalPagerDemo },
+  { id: 'pager-dots', title: 'Pager dots', category: 'navigation', aliases: ['page indicator', 'carousel dots', 'onboarding slides', 'full-width pager'], api: '<PagerDots count activeIndex /> — HorizontalPager renders them for you', caption: 'Full-width slides: HorizontalPager with itemWidth = screen width. The dots are bound to the pager; use PagerDots alone only for a custom pager.', Demo: PagerDotsDemo },
+  { id: 'horizontal-pager', title: 'Horizontal pager', category: 'navigation', aliases: ['carousel', 'swipe', 'slides', 'banner'], api: '<HorizontalPager itemWidth gap? showDots? onIndexChange?>{cards}</HorizontalPager>', caption: 'Peeking cards: itemWidth smaller than the screen shows the next card. Dots included.', Demo: HorizontalPagerDemo },
 ];

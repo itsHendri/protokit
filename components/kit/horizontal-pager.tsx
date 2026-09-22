@@ -18,8 +18,9 @@ export function HorizontalPager({ children, itemWidth, gap = 12, sidePadding = 2
   const [active, setActive] = React.useState(0);
   const stride = itemWidth + gap;
   return (
-    <View>
+    <View className="self-stretch">
       <ScrollView
+        className="flex-grow-0"
         horizontal
         snapToInterval={stride}
         decelerationRate="fast"

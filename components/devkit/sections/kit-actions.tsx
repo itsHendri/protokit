@@ -34,7 +34,7 @@ function SwipeToConfirmDemo() {
   const [key, setKey] = React.useState(0);
   return (
     <View className="w-full gap-3">
-      <SwipeToConfirm key={key} label="Slide to send $120.50" onConfirm={() => setCount((c) => c + 1)} />
+      <SwipeToConfirm key={key} label="Slide to proceed" onConfirm={() => setCount((c) => c + 1)} />
       <SwipeToConfirm key={key + 1000} label="Slide to delete" confirmLabel="Deleted" tone="destructive" onConfirm={() => setCount((c) => c + 1)} />
       <View className="flex-row items-center gap-3">
         <Button size="sm" variant="outline" onPress={() => setKey((k) => k + 1)}>
@@ -71,7 +71,7 @@ export const KIT_ACTIONS_SECTIONS: ComponentSection[] = [
     category: 'actions',
     aliases: ['slide', 'drag', 'commit', 'high stakes'],
     api: '<SwipeToConfirm label onConfirm confirmLabel? tone="primary|destructive" />',
-    caption: 'For irreversible actions (send money, delete account). Reset by changing its key.',
+    caption: 'For irreversible actions (submit, delete, pay). Reset by changing its key.',
     Demo: SwipeToConfirmDemo,
   },
 ];

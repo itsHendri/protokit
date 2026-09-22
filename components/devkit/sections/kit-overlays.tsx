@@ -10,7 +10,7 @@ function SheetDemo() {
   const [open, setOpen] = React.useState(false);
   return (
     <>
-      <Button variant="outline" onPress={() => setOpen(true)}>
+      <Button variant="outline" className="w-full" onPress={() => setOpen(true)}>
         <Text>Open sheet</Text>
       </Button>
       <Sheet open={open} onClose={() => setOpen(false)} title="Custom content" description="Anything goes in here.">
@@ -36,7 +36,7 @@ function OptionSheetDemo() {
   const [v, setV] = React.useState<'one' | 'two' | 'three'>('one');
   return (
     <>
-      <Button variant="outline" onPress={() => setOpen(true)}>
+      <Button variant="outline" className="w-full" onPress={() => setOpen(true)}>
         <Text>Selected: {OPTIONS.find((o) => o.value === v)?.label}</Text>
       </Button>
       <OptionSheet open={open} onClose={() => setOpen(false)} title="Choose an option" options={OPTIONS} value={v} onChange={setV} />
@@ -48,8 +48,8 @@ function ActionSheetDemo() {
   const [open, setOpen] = React.useState(false);
   const [last, setLast] = React.useState('');
   return (
-    <View className="gap-2">
-      <Button variant="outline" onPress={() => setOpen(true)}>
+    <View className="w-full gap-2">
+      <Button variant="outline" className="w-full" onPress={() => setOpen(true)}>
         <Text>Manage item</Text>
       </Button>
       {last ? <Text className="text-muted-foreground text-sm">Last action: {last}</Text> : null}

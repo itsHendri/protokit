@@ -42,7 +42,7 @@ type RowProps = { children: React.ReactNode; className?: string };
 /** Horizontal, scrollable row of FilterChips. */
 export function FilterChipRow({ children, className }: RowProps) {
   return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} className={className} contentContainerClassName="gap-2 px-5">
+    <ScrollView horizontal showsHorizontalScrollIndicator={false} className={cn('flex-grow-0 self-stretch', className)} contentContainerClassName="gap-2 px-5">
       <View className="flex-row gap-2">{children}</View>
     </ScrollView>
   );

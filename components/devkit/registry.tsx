@@ -25,7 +25,7 @@ import { KIT_LAYOUT_SECTIONS } from './sections/kit-layout';
 import { KIT_OVERLAYS_SECTIONS } from './sections/kit-overlays';
 
 /** ui/ (reusables) previews live in <category>.tsx; kit/ previews in kit-<category>.tsx. */
-export const SECTIONS: ComponentSection[] = [
+const RAW_SECTIONS: ComponentSection[] = [
   ...ACTIONS_SECTIONS,
   ...KIT_ACTIONS_SECTIONS,
   ...INPUTS_SECTIONS,
@@ -42,6 +42,18 @@ export const SECTIONS: ComponentSection[] = [
   ...KIT_OVERLAYS_SECTIONS,
   ...MEDIA_SECTIONS,
 ];
+
+/** Honour `after`: move a section directly behind the one it names. */
+function placeAfter(list: ComponentSection[]): ComponentSection[] {
+  const out = list.filter((s) => !s.after);
+  for (const s of list.filter((s) => s.after)) {
+    const i = out.findIndex((o) => o.id === s.after);
+    out.splice(i === -1 ? out.length : i + 1, 0, s);
+  }
+  return out;
+}
+
+export const SECTIONS: ComponentSection[] = placeAfter(RAW_SECTIONS);
 
 export { FOUNDATION_SECTIONS };
 export type { ComponentSection, FoundationSection };
