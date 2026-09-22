@@ -31,7 +31,24 @@ function AlertDemo() {
       <Alert icon={InfoIcon}>
         <AlertTitle>Neutral, title only</AlertTitle>
       </Alert>
+      <DismissibleAlertDemo />
     </View>
+  );
+}
+
+function DismissibleAlertDemo() {
+  const [shown, setShown] = React.useState(true);
+  if (!shown)
+    return (
+      <Button size="sm" variant="outline" onPress={() => setShown(true)}>
+        <Text>Bring the nudge back</Text>
+      </Button>
+    );
+  return (
+    <Alert icon={InfoIcon} onDismiss={() => setShown(false)} action={{ label: 'Confirm your details', onPress: () => {} }}>
+      <AlertTitle>Time to update your profile</AlertTitle>
+      <AlertDescription>Tell us a bit more so we can keep your account current.</AlertDescription>
+    </Alert>
   );
 }
 
@@ -86,8 +103,8 @@ export const FEEDBACK_SECTIONS: ComponentSection[] = [
     title: 'Alert',
     category: 'feedback',
     aliases: ['inline message', 'banner', 'callout', 'error', 'success'],
-    api: '<Alert icon variant="default|info|success|warning|destructive"><AlertTitle /><AlertDescription /></Alert>',
-    caption: 'Inline and persistent, tinted by tone. For transient messages use Toast.',
+    api: '<Alert icon variant="default|info|success|warning|destructive" onDismiss? action?><AlertTitle /><AlertDescription /></Alert>',
+    caption: 'Inline and persistent, tinted by tone. For transient messages use Toast. `onDismiss` and `action` turn it into a nudge — never dismissible for an error the user must act on.',
     Demo: AlertDemo,
   },
   {

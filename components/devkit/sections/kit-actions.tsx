@@ -1,10 +1,11 @@
+import { ActionGrid } from '@/components/kit/action-grid';
 import { FAB } from '@/components/kit/fab';
 import { IconBadge } from '@/components/kit/icon-badge';
 import { SwipeToConfirm } from '@/components/kit/swipe-to-confirm';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
+import { ArrowUpRightIcon, BellIcon, EllipsisIcon, FileTextIcon, MailIcon, PlusIcon, ShoppingCartIcon } from 'lucide-react-native';
 import type { ComponentSection } from '../types';
-import { BellIcon, MailIcon, PlusIcon, ShoppingCartIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
 
@@ -46,6 +47,24 @@ function SwipeToConfirmDemo() {
   );
 }
 
+
+function ActionGridDemo() {
+  const [last, setLast] = React.useState('nothing yet');
+  return (
+    <View className="w-full gap-3">
+      <ActionGrid
+        items={[
+          { icon: PlusIcon, label: 'Add funds', onPress: () => setLast('Add funds') },
+          { icon: FileTextIcon, label: 'Pay a bill', onPress: () => setLast('Pay a bill') },
+          { icon: ArrowUpRightIcon, label: 'Send', onPress: () => setLast('Send') },
+          { icon: EllipsisIcon, label: 'More', badge: true, onPress: () => setLast('More') },
+        ]}
+      />
+      <Text className="text-muted-foreground text-sm">Tapped: {last}</Text>
+    </View>
+  );
+}
+
 export const KIT_ACTIONS_SECTIONS: ComponentSection[] = [
   {
     id: 'fab',
@@ -74,4 +93,5 @@ export const KIT_ACTIONS_SECTIONS: ComponentSection[] = [
     caption: 'For irreversible actions (submit, delete, pay). Reset by changing its key.',
     Demo: SwipeToConfirmDemo,
   },
+  { id: 'action-grid', title: 'Action grid', category: 'actions', aliases: ['quick actions', 'shortcuts', 'tiles', 'icon buttons'], api: '<ActionGrid items={[{icon,label,onPress,badge?}]} columns={3|4} />', caption: 'The row of shortcuts under a screen hero. Keep it to one row — the last tile should be "More", not a second row.', Demo: ActionGridDemo },
 ];

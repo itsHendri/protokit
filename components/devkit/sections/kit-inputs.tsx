@@ -1,3 +1,4 @@
+import { RangeSelector } from '@/components/kit/range-selector';
 import { AmountInput } from '@/components/kit/amount-input';
 import { Calendar } from '@/components/kit/calendar';
 import { DatePicker } from '@/components/kit/date-picker';
@@ -126,6 +127,25 @@ function CalendarDemo() {
   return <Calendar value={d} onChange={setD} className="w-full" />;
 }
 
+
+const RANGES = [
+  { value: '1d', label: '1D' },
+  { value: '1w', label: '1W' },
+  { value: '1m', label: '1M' },
+  { value: '1y', label: '1Y' },
+  { value: 'all', label: 'ALL' },
+] as const;
+
+function RangeSelectorDemo() {
+  const [range, setRange] = React.useState<(typeof RANGES)[number]['value']>('1m');
+  return (
+    <View className="w-full gap-3">
+      <RangeSelector options={RANGES} value={range} onChange={setRange} />
+      <Text className="text-muted-foreground text-sm">Showing: {range.toUpperCase()}</Text>
+    </View>
+  );
+}
+
 export const KIT_INPUTS_SECTIONS: ComponentSection[] = [
   { id: 'filter-chip', title: 'Filter chip', category: 'inputs', aliases: ['chip', 'tag filter', 'pill'], api: '<FilterChipRow><FilterChip label selected onPress icon? /></FilterChipRow>', caption: 'Selected state is inverted neutral, never the brand colour.', Demo: FilterChipDemo },
   { id: 'segmented-control', title: 'Segmented control', category: 'inputs', aliases: ['segment', 'ios', 'switcher'], api: '<SegmentedControl segments={[{value,label}]} value onChange />', caption: '2–4 mutually exclusive options. For content panes use Tabs.', Demo: SegmentedControlDemo },
@@ -139,4 +159,5 @@ export const KIT_INPUTS_SECTIONS: ComponentSection[] = [
   { id: 'slider', title: 'Slider', category: 'inputs', aliases: ['range', 'drag', 'percentage'], api: '<Slider value onChange min max step? tone? onChangeComplete? />', Demo: SliderDemo },
   { id: 'date-picker', title: 'Date picker', category: 'inputs', aliases: ['date', 'calendar field'], api: '<DatePicker value onChange placeholder? />', caption: 'Input-shaped trigger that opens a Calendar in a Sheet.', Demo: DatePickerDemo },
   { id: 'calendar', title: 'Calendar', category: 'inputs', aliases: ['month', 'day grid'], api: '<Calendar value onChange />', Demo: CalendarDemo },
+  { id: 'range-selector', title: 'Range selector', category: 'inputs', aliases: ['time range', 'chart range', '1D 1W 1M', 'period'], api: '<RangeSelector options value onChange />', caption: 'For the time window over a chart. Use SegmentedControl instead when the options switch content rather than a period.', Demo: RangeSelectorDemo },
 ];

@@ -1,13 +1,15 @@
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { cn } from '@/lib/utils';
-import { ChevronRightIcon } from 'lucide-react-native';
+import { CheckIcon, ChevronRightIcon } from 'lucide-react-native';
 import type { ReactNode } from 'react';
 import { Pressable, View } from 'react-native';
 
 type Props = {
   /** Leading visual — usually an IconCircle or Avatar. */
   leading?: ReactNode;
+  /** Turns the row into a choice. The whole row is the control, so pass `onPress` too. */
+  select?: { mode: 'radio' | 'checkbox'; selected: boolean };
   title: string;
   subtitle?: string;
   /** Right-aligned value. */
@@ -33,6 +35,7 @@ type Props = {
  */
 export function ListRow({
   leading,
+  select,
   title,
   subtitle,
   value,
@@ -66,13 +69,34 @@ export function ListRow({
             {sublabel ? <Text className={cn('text-muted-foreground text-sm', sublabelClassName)}>{sublabel}</Text> : null}
           </View>
         ) : null)}
+      {select ? (
+        <View
+          className={cn(
+            'size-6 items-center justify-center border-2',
+            select.mode === 'radio' ? 'rounded-full' : 'rounded-md',
+            select.selected ? 'border-foreground bg-foreground' : 'border-border'
+          )}>
+          {select.selected ? (
+            select.mode === 'radio' ? (
+              <View className="bg-background size-2 rounded-full" />
+            ) : (
+              <Icon as={CheckIcon} size={14} className="text-background" />
+            )
+          ) : null}
+        </View>
+      ) : null}
       {chevron ? <Icon as={ChevronRightIcon} className="text-muted-foreground" size={18} /> : null}
     </>
   );
   const base = cn('min-h-14 flex-row items-center gap-3 py-3', !last && 'border-border border-b', disabled && 'opacity-50', className);
   if (onPress) {
     return (
-      <Pressable accessibilityRole="button" onPress={onPress} disabled={disabled} className={cn(base, 'active:opacity-70')}>
+      <Pressable
+        accessibilityRole={select ? (select.mode === 'radio' ? 'radio' : 'checkbox') : 'button'}
+        accessibilityState={select ? { checked: select.selected, disabled: !!disabled } : { disabled: !!disabled }}
+        onPress={onPress}
+        disabled={disabled}
+        className={cn(base, 'active:opacity-70')}>
         {body}
       </Pressable>
     );

@@ -1,3 +1,5 @@
+import { Badge } from '@/components/ui/badge';
+import { ScreenHeader } from '@/components/kit/screen-header';
 import { HorizontalPager } from '@/components/kit/horizontal-pager';
 import { SectionHeader } from '@/components/kit/section-header';
 import { Stepper } from '@/components/kit/stepper';
@@ -91,6 +93,19 @@ function HorizontalPagerDemo() {
   );
 }
 
+
+function ScreenHeaderDemo() {
+  return (
+    <View className="w-full gap-6">
+      <ScreenHeader
+        title="Quick access"
+        subtitle="If you have left the app for more than 15 minutes you will need to sign in again. Make it easy with a quick access option."
+      />
+      <ScreenHeader title="Accounts" size="large" action={<Badge variant="secondary"><Text>4 open</Text></Badge>} />
+    </View>
+  );
+}
+
 export const KIT_NAVIGATION_SECTIONS: ComponentSection[] = [
   { id: 'kit-chip', title: 'Kit chip', category: 'navigation', aliases: ['back to kit', 'exit prototype', 'floating pill'], caption: 'Floating pill, bottom centre above the tab bar, that returns to the kit from any screen of a hosted prototype. Render once in the prototype root layout, after its Stack.', api: '<KitChip label? />', Demo: KitChipDemo },
   { id: 'tab-bar', title: 'Tab bar', category: 'navigation', aliases: ['bottom tabs', 'tab bar', 'active dot', 'navigation bar', 'tab icon'], api: '<Tabs tabBar={(p) => <TabBar {...p} />}><Tabs.Screen options={{ title, tabBarIcon: tabIcon(HouseIcon) }} /></Tabs>', caption: 'The kit tab bar: opaque tints, label, and an active dot under the label so selection is not colour-only. TabBarItem is exported for custom bars.', Demo: TabBarDemo },
@@ -98,4 +113,5 @@ export const KIT_NAVIGATION_SECTIONS: ComponentSection[] = [
   { id: 'section-header', title: 'Section header', category: 'navigation', aliases: ['title', 'see all', 'heading row'], api: '<SectionHeader title action? onAction? />', caption: 'Sits outside the card it introduces.', Demo: SectionHeaderDemo },
   { id: 'pager-dots', title: 'Pager dots', category: 'navigation', aliases: ['page indicator', 'carousel dots', 'onboarding slides', 'full-width pager'], api: '<PagerDots count activeIndex /> — HorizontalPager renders them for you', caption: 'Full-width slides: HorizontalPager with itemWidth = screen width. The dots are bound to the pager; use PagerDots alone only for a custom pager.', Demo: PagerDotsDemo },
   { id: 'horizontal-pager', title: 'Horizontal pager', category: 'navigation', aliases: ['carousel', 'swipe', 'slides', 'banner'], api: '<HorizontalPager itemWidth gap? showDots? onIndexChange?>{cards}</HorizontalPager>', caption: 'Peeking cards: itemWidth smaller than the screen shows the next card. Dots included.', Demo: HorizontalPagerDemo },
+  { id: 'screen-header', title: 'Screen header', category: 'navigation', after: 'section-header', aliases: ['page title', 'heading', 'hero title', 'intro'], api: '<ScreenHeader title subtitle? action? size="default|large" />', caption: 'One per screen, as the first child of the ScrollView. Section titles further down the page are SectionHeader, not this.', Demo: ScreenHeaderDemo },
 ];

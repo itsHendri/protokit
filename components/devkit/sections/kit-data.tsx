@@ -1,3 +1,5 @@
+import { ListGroup } from '@/components/kit/list-group';
+import { ValueHeader } from '@/components/kit/value-header';
 import { AvatarGroup } from '@/components/kit/avatar-group';
 import { BarChart } from '@/components/kit/bar-chart';
 import { ChartLegend, DonutChart } from '@/components/kit/donut-chart';
@@ -13,7 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Text } from '@/components/ui/text';
 import type { ComponentSection } from '../types';
-import { BellIcon, CreditCardIcon, FolderIcon, ShoppingCartIcon, UsersIcon, WalletIcon } from 'lucide-react-native';
+import { BellIcon, CreditCardIcon, FolderIcon, LockIcon, ScanFaceIcon, ShoppingCartIcon, UsersIcon, WalletIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
 
@@ -43,10 +45,15 @@ function IconCircleDemo() {
       </View>
       <View className="flex-row items-center gap-4">
         <IconCircle as={WalletIcon} size={48} />
-        <IconCircle as={WalletIcon} size={48} className="bg-primary/15" iconClassName="text-primary" />
-        <IconCircle as={ShoppingCartIcon} size={48} className="bg-success/15" iconClassName="text-success" />
-        <IconCircle as={ShoppingCartIcon} size={48} className="bg-warning/15" iconClassName="text-warning" />
-        <IconCircle as={ShoppingCartIcon} size={48} className="bg-destructive/15" iconClassName="text-destructive" />
+        <IconCircle as={WalletIcon} size={48} tone="primary" />
+        <IconCircle as={ShoppingCartIcon} size={48} tone="success" />
+        <IconCircle as={ShoppingCartIcon} size={48} tone="warning" />
+        <IconCircle as={ShoppingCartIcon} size={48} tone="destructive" />
+      </View>
+      <View className="flex-row items-center gap-4">
+        <IconCircle as={LockIcon} size={48} shape="square" />
+        <IconCircle as={ScanFaceIcon} size={48} shape="square" tone="primary" />
+        <IconCircle as={WalletIcon} size={48} shape="square" tone="info" />
       </View>
     </View>
   );
@@ -182,9 +189,48 @@ function DonutChartDemo() {
   );
 }
 
+
+function ListGroupDemo() {
+  const [quick, setQuick] = React.useState('face');
+  return (
+    <View className="w-full gap-6">
+      <ListGroup title="Settings" variant="plain" footnote="Plain groups run straight on the background — the settings look.">
+        <ListRow title="Accounts" chevron onPress={() => {}} />
+        <ListRow title="Login and security" subtitle="Face ID · Two-step on" chevron onPress={() => {}} />
+        <ListRow title="Notifications" chevron onPress={() => {}} />
+      </ListGroup>
+      <ListGroup title="Quick access">
+        <ListRow
+          leading={<IconCircle as={ScanFaceIcon} shape="square" />}
+          title="Face ID"
+          subtitle="Open the app with Face ID"
+          select={{ mode: 'radio', selected: quick === 'face' }}
+          onPress={() => setQuick('face')}
+        />
+        <ListRow
+          leading={<IconCircle as={LockIcon} shape="square" />}
+          title="Passcode"
+          subtitle="Open the app with a 4-digit passcode"
+          select={{ mode: 'radio', selected: quick === 'code' }}
+          onPress={() => setQuick('code')}
+        />
+      </ListGroup>
+    </View>
+  );
+}
+
+function ValueHeaderDemo() {
+  return (
+    <View className="w-full gap-6">
+      <ValueHeader value="$4,182.00" caption="+$60.00 all time" captionTone="positive" maskable />
+      <ValueHeader label="Available to trade" value="$60.00" caption="$20.00 not available" />
+    </View>
+  );
+}
+
 export const KIT_DATA_SECTIONS: ComponentSection[] = [
   { id: 'list-row', title: 'List row', category: 'data', aliases: ['row', 'cell', 'setting', 'menu item', 'list item'], api: '<ListRow leading title subtitle? value? sublabel? trailing? chevron? onPress? last? />', caption: 'The canonical row. Put rows inside a Card with px-4 py-0; mark the last one `last`.', Demo: ListRowDemo },
-  { id: 'icon-circle', title: 'Icon circle', category: 'data', aliases: ['icon well', 'avatar icon', 'leading icon'], api: '<IconCircle as size? className? iconClassName? />', caption: 'Sizes 32–64 in neutral; tone with bg-<tone>/15 + text-<tone> (brand, success, warning, destructive).', Demo: IconCircleDemo },
+  { id: 'icon-circle', title: 'Icon circle', category: 'data', aliases: ['icon well', 'avatar icon', 'leading icon'], api: '<IconCircle as size? shape="circle|square" tone? />', caption: 'Row scale only — 32–64px. `square` is the rounded-square well. At illustration scale (64px and up) use Spot instead.', Demo: IconCircleDemo },
   { id: 'summary-card', title: 'Summary card', category: 'data', aliases: ['key value', 'receipt', 'details', 'summary', 'confirmation'], api: '<SummaryCard title? rows={[{label,value}]} /> · <KeyValueList rows />', Demo: SummaryDemo },
   { id: 'stat-tile', title: 'Stat tile', category: 'data', aliases: ['kpi', 'metric', 'dashboard'], api: '<StatTile label value delta? icon? />', Demo: StatTileDemo },
   { id: 'percent-change', title: 'Percent change', category: 'data', aliases: ['delta', 'trend', 'up down'], api: '<PercentChange value decimals? showIcon? />', Demo: PercentChangeDemo },
@@ -194,4 +240,6 @@ export const KIT_DATA_SECTIONS: ComponentSection[] = [
   { id: 'line-chart', title: 'Line chart', category: 'data', aliases: ['sparkline', 'trend', 'time series', 'graph'], api: '<LineChart data variant="interactive|sparkline" height tone area? onPointerChange? />', caption: 'Interactive variant reports the scrubbed point; render your own header from it.', Demo: LineChartDemo },
   { id: 'bar-chart', title: 'Bar chart', category: 'data', aliases: ['bars', 'histogram', 'weekly'], api: '<BarChart data={[{label,value,className?}]} height showValues? />', Demo: BarChartDemo },
   { id: 'donut-chart', title: 'Donut chart', category: 'data', aliases: ['pie', 'ring', 'allocation', 'breakdown'], api: '<DonutChart data size>{centre}</DonutChart> + <ChartLegend data />', Demo: DonutChartDemo },
+  { id: 'list-group', title: 'List group', category: 'data', after: 'list-row', aliases: ['rows', 'settings list', 'grouped list', 'plain list', 'choice rows'], api: '<ListGroup title? footnote? variant="card|plain">{rows}</ListGroup>', caption: 'Wraps ListRows and sets `last` on the final one for you. `plain` drops the card for the settings look; pair with ListRow `select` for radio or checkbox rows.', Demo: ListGroupDemo },
+  { id: 'value-header', title: 'Value header', category: 'data', aliases: ['balance', 'hero number', 'total', 'amount', 'mask', 'hide balance'], api: '<ValueHeader value label? caption? captionTone? maskable? align? />', caption: 'The hero figure at the top of a screen. `maskable` adds the eye toggle for anything someone might not want visible over their shoulder.', Demo: ValueHeaderDemo },
 ];
