@@ -118,7 +118,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | SectionHeader | `components/kit/section-header.tsx` | title + action, outside the card |
 | PagerDots | `components/kit/pager-dots.tsx` | |
 | HorizontalPager | `components/kit/horizontal-pager.tsx` | snap pager + dots |
-| TabIcon | `components/kit/tab-icon.tsx` | tab bar icon with active dot; pair with explicit tab tints |
+| TabBar / TabBarItem / tabIcon | `components/kit/tab-bar.tsx` | custom bottom tab bar: opaque tints, label, active dot under the label |
 | App tabs / stack | Expo Router | `app/(kit)/_layout.tsx` shows the pattern; prototypes own their `app/` routes |
 
 ### Data display
