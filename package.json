@@ -10,7 +10,8 @@
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
     "lint": "expo lint",
-    "clean": "rm -rf .expo node_modules"
+    "clean": "rm -rf .expo node_modules",
+    "tokens:build": "node tokens/build.mjs"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",
@@ -69,6 +70,8 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@types/react": "~19.2.10",
+    "eslint": "^9.39.5",
+    "eslint-config-expo": "^57.0.2",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "style-dictionary": "^5.5.5",
