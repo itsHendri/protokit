@@ -45,6 +45,12 @@ export default function KitHome() {
               <Icon as={ArrowRightIcon} />
             </Button>
           </Link>
+          <Link href="/(sample)/(tabs)" asChild>
+            <Button className="justify-between">
+              <Text>Open the sample app</Text>
+              <Icon as={ArrowRightIcon} className="text-primary-foreground" />
+            </Button>
+          </Link>
         </CardContent>
       </Card>
 

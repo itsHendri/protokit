@@ -1,73 +1,44 @@
-# Minimal Template
+# Mobile app prototype kit
 
-This is a [React Native](https://reactnative.dev/) project built with [Expo](https://expo.dev/) and [React Native Reusables](https://reactnativereusables.com).
+A brand-agnostic, themeable **Expo** starter for mobile prototypes. Every component the kit ships is
+previewed live inside the app, so a designer can browse what exists, copy the exact token names, and
+build screens only from those parts. Feed it a brief or a client transcript and get a first prototype
+that already looks and feels coherent.
 
-It was initialized using the following command, then the `Minimal (Nativewind)` template was selected when prompted:
+- **Expo SDK 57** · Expo Router · React Native 0.86 · TypeScript
+- **react-native-reusables** (shadcn for React Native) + our own kit components, styled with **NativeWind**
+- **Design tokens** in one JSON file → CSS variables + TypeScript, light and dark
+- **Kitchen Sink** and **Foundations** screens, searchable, tap-to-copy
+- Ships to phones with a **development build + EAS Update**, and to a **web URL** with EAS Hosting
 
-```bash
-npx @react-native-reusables/cli@latest init
-```
-
-## Getting Started
-
-To run the development server:
-
-```bash
-    npm run dev
-    # or
-    yarn dev
-    # or
-    pnpm dev
-    # or
-    bun dev
-```
-
-This will start the Expo Dev Server. Open the app in:
-
-- **iOS**: press `i` to launch in the iOS simulator _(Mac only)_
-- **Android**: press `a` to launch in the Android emulator
-- **Web**: press `w` to run in a browser
-
-You can also scan the QR code using the [Expo Go](https://expo.dev/go) app on your device. This project fully supports running in Expo Go for quick testing on physical devices.
-
-## Adding components
-
-You can add more reusable components using the CLI:
+## Quick start
 
 ```bash
-npx react-native-reusables/cli@latest add [...components]
+npm install
+npm run ios        # iOS Simulator (Expo Go) — or `npm run web`
 ```
 
-> e.g. `npx react-native-reusables/cli@latest add input textarea`
+Then open **Components** in the app.
 
-If you don't specify any component names, you'll be prompted to select which components to add interactively. Use the `--all` flag to install all available components at once.
+## Start a real project
 
-## Project Features
+1. Rename: `name`, `slug`, `scheme`, `ios.bundleIdentifier`, `android.package` in `app.json`; `name` in `package.json`.
+2. Brand: edit `tokens/tokens.json` (brand ramp + semantic colours + radius), run `npm run tokens:build`.
+   Add a font with the `expo-font` config plugin and set `primitive.font.family.sans`.
+3. Replace `assets/images/*` (icon, splash, favicon).
+4. Delete the sample: `app/(sample)` and `components/sample`, and the "Open the sample app" button on the kit home.
+5. `eas init` under your account; `eas update:configure`.
+6. Build your prototype as its own route group in `app/` (see `AGENTS.md › Building a prototype`).
 
-- ⚛️ Built with [Expo Router](https://expo.dev/router)
-- 🎨 Styled with [Tailwind CSS](https://tailwindcss.com/) via [Nativewind](https://www.nativewind.dev/)
-- 📦 UI powered by [React Native Reusables](https://github.com/founded-labs/react-native-reusables)
-- 🚀 New Architecture enabled
-- 🔥 Edge to Edge enabled
-- 📱 Runs on iOS, Android, and Web
+## Sharing
 
-## Learn More
+- Phones: `eas build --profile development` once per platform, then `npm run share -- "what changed"`.
+- Browser: `npm run export:web && eas deploy` → preview URL.
+- Expo Go still works on simulators; on a physical iPhone it requires signing in to the same Expo account.
 
-To dive deeper into the technologies used:
+## Docs
 
-- [React Native Docs](https://reactnative.dev/docs/getting-started)
-- [Expo Docs](https://docs.expo.dev/)
-- [Nativewind Docs](https://www.nativewind.dev/)
-- [React Native Reusables](https://reactnativereusables.com)
-
-## Deploy with EAS
-
-The easiest way to deploy your app is with [Expo Application Services (EAS)](https://expo.dev/eas).
-
-- [EAS Build](https://docs.expo.dev/build/introduction/)
-- [EAS Updates](https://docs.expo.dev/eas-update/introduction/)
-- [EAS Submit](https://docs.expo.dev/submit/introduction/)
-
----
-
-If you enjoy using React Native Reusables, please consider giving it a ⭐ on [GitHub](https://github.com/founded-labs/react-native-reusables). Your support means a lot!
+- [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md) — tokens, registry, patterns, anti-patterns. Read before writing UI.
+- [`AGENTS.md`](./AGENTS.md) — engineering conventions, workflows, gotchas (also what Claude Code reads).
+- [`BACKLOG.md`](./BACKLOG.md) — deferred work.
+- `.claude/skills/` — `add-component`, `qc-pass`, `transcript-to-prototype`.

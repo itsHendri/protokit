@@ -20,11 +20,11 @@ npm run tokens:build && git diff --quiet -- global.css lib/theme.ts tokens/gener
 
 ```bash
 # no hard-coded colours in components or screens
-grep -rnE "#[0-9a-fA-F]{3,8}\b|rgba?\(" app components prototype --include=*.tsx --include=*.ts | grep -v "lib/theme"
-# lucide only through the Icon atom
-grep -rln "from 'lucide-react-native'" app components prototype | grep -vE "components/ui/icon.tsx|components/devkit|/sections/"
+grep -rnE "#[0-9a-fA-F]{3,8}\b|rgba?\(" app components --include="*.tsx" --include="*.ts" | grep -v "lib/theme"
+# no other icon libraries (lucide icon refs are fine anywhere; they render through <Icon as>)
+grep -rln "@expo/vector-icons\|react-native-vector-icons" app components || true
 # react-native Text must not be used directly (use components/ui/text)
-grep -rnE "import \{[^}]*\bText\b[^}]*\} from 'react-native'" app components/kit prototype
+grep -rnE "import \{[^}]*\bText\b[^}]*\} from 'react-native'" app components/kit
 # every components/ui + components/kit file has a registry section
 for f in components/ui/*.tsx components/kit/*.tsx; do n=$(basename "$f" .tsx); grep -rqi "id: '$n'" components/devkit/sections || echo "UNREGISTERED: $f"; done 2>/dev/null
 ```
