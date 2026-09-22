@@ -1,3 +1,4 @@
+import { Placeholder } from '@/components/kit/placeholder';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { cn } from '@/lib/utils';
@@ -11,14 +12,24 @@ type Props = {
   ratio?: number;
   /** Shown while loading or when there is no source. */
   fallbackIcon?: LucideIcon;
+  /** With no `source`, draw generated art from this seed instead of a grey box. */
+  seed?: string;
   caption?: string;
   className?: string;
 };
 
 /** Rounded image with a muted placeholder — product shots, covers, attachments. */
-export function ImageTile({ source, ratio = 4 / 3, fallbackIcon = ImageIcon, caption, className }: Props) {
+export function ImageTile({ source, ratio = 4 / 3, fallbackIcon = ImageIcon, seed, caption, className }: Props) {
   const [failed, setFailed] = React.useState(false);
   const showImage = !!source && !failed;
+  if (!showImage && seed) {
+    return (
+      <View className={cn('gap-2', className)}>
+        <Placeholder seed={seed} ratio={ratio} icon={fallbackIcon} />
+        {caption ? <Text className="text-muted-foreground text-sm">{caption}</Text> : null}
+      </View>
+    );
+  }
   return (
     <View className={cn('gap-2', className)}>
       <View className="bg-muted w-full items-center justify-center overflow-hidden rounded-lg" style={{ aspectRatio: ratio }}>

@@ -1,3 +1,4 @@
+import { Spot } from '@/components/kit/spot';
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
@@ -33,11 +34,7 @@ export function EmptyState({ icon, title, subtitle, action, variant = 'default',
   }
   return (
     <View className={cn('items-center justify-center px-6 py-12', className)}>
-      {icon ? (
-        <View className="bg-muted mb-6 size-20 items-center justify-center rounded-full">
-          <Icon as={icon} size={36} className="text-muted-foreground" />
-        </View>
-      ) : null}
+      {icon ? <Spot icon={icon} size="lg" className="mb-6" /> : null}
       <View className="w-full max-w-xs items-center gap-2">
         <Text variant="h4" className="text-center">
           {title}
