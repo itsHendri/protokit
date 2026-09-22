@@ -5,7 +5,7 @@ import { Stack } from 'expo-router';
 export default function ShopLayout() {
   return (
     <>
-      <Stack screenOptions={{ headerShown: false }}>
+      <Stack screenOptions={{ headerShown: false, headerBackButtonDisplayMode: 'minimal' }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="product/[id]" options={{ headerShown: true, title: '' }} />
         <Stack.Screen name="order/[id]" options={{ headerShown: true, title: 'Order' }} />

@@ -5,7 +5,7 @@ import { Stack } from 'expo-router';
 export default function HabitsLayout() {
   return (
     <>
-      <Stack screenOptions={{ headerShown: false }}>
+      <Stack screenOptions={{ headerShown: false, headerBackButtonDisplayMode: 'minimal' }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="habit/[id]" options={{ headerShown: true, title: '' }} />
         <Stack.Screen name="new" options={{ presentation: 'modal', headerShown: true, title: 'New habit' }} />
