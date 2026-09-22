@@ -1,5 +1,6 @@
 import '@/global.css';
 
+import { ToastProvider } from '@/components/kit/toast';
 import { KitThemeProvider, useKitTheme } from '@/lib/theme-context';
 import { NAV_THEME } from '@/lib/theme';
 import { PortalHost } from '@rn-primitives/portal';
@@ -26,10 +27,12 @@ function AppShell() {
   return (
     <NavThemeProvider value={NAV_THEME[scheme]}>
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(kit)" />
-      </Stack>
-      <PortalHost />
+      <ToastProvider>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(kit)" />
+        </Stack>
+        <PortalHost />
+      </ToastProvider>
     </NavThemeProvider>
   );
 }

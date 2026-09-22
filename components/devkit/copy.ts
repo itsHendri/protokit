@@ -1,3 +1,4 @@
+import { useToast } from '@/components/kit/toast';
 import * as Clipboard from 'expo-clipboard';
 import * as React from 'react';
 
@@ -6,17 +7,19 @@ import * as React from 'react';
  * moment) so a tile can show a "Copied" state without a toast dependency.
  */
 export function useCopy(timeoutMs = 1200) {
+  const toast = useToast();
   const [copied, setCopied] = React.useState<string | null>(null);
   const timer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const copy = React.useCallback(
     (key: string, value: string) => {
       Clipboard.setStringAsync(value).catch(() => {});
+      toast.success(`Copied ${value}`);
       setCopied(key);
       if (timer.current) clearTimeout(timer.current);
       timer.current = setTimeout(() => setCopied(null), timeoutMs);
     },
-    [timeoutMs]
+    [timeoutMs, toast]
   );
 
   React.useEffect(() => () => {

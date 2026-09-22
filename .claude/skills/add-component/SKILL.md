@@ -38,8 +38,9 @@ Styling rules (enforced by `qc-pass`):
 
 ## 2. Register it
 
-1. Add a section to the matching file in `components/devkit/sections/` (`actions`, `inputs`,
-   `navigation`, `data`, `feedback`, `layout`, `overlays`, `media`) with `id`, `title`,
+1. Add a section to the matching file in `components/devkit/sections/`: `<category>.tsx` for
+   `components/ui` (reusables) components, `kit-<category>.tsx` for `components/kit` ones
+   (`actions`, `inputs`, `navigation`, `data`, `feedback`, `layout`, `overlays`, `media`) with `id`, `title`,
    `category`, `aliases` (how a designer would search for it), a one-line `api`, a `caption`
    (when to use it / the one rule people get wrong), and a self-contained `Demo` showing every
    variant and state. Keep the demo's own state inside `Demo`.

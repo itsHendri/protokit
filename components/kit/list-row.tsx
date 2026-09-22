@@ -1,0 +1,81 @@
+import { Icon } from '@/components/ui/icon';
+import { Text } from '@/components/ui/text';
+import { cn } from '@/lib/utils';
+import { ChevronRightIcon } from 'lucide-react-native';
+import type { ReactNode } from 'react';
+import { Pressable, View } from 'react-native';
+
+type Props = {
+  /** Leading visual — usually an IconCircle or Avatar. */
+  leading?: ReactNode;
+  title: string;
+  subtitle?: string;
+  /** Right-aligned value. */
+  value?: string;
+  valueClassName?: string;
+  /** Small line under the value. */
+  sublabel?: string;
+  sublabelClassName?: string;
+  /** Custom trailing content; replaces value/sublabel. */
+  trailing?: ReactNode;
+  /** Show a chevron (navigation rows). */
+  chevron?: boolean;
+  onPress?: () => void;
+  disabled?: boolean;
+  /** Suppress the bottom divider (last row in a card). */
+  last?: boolean;
+  className?: string;
+};
+
+/**
+ * The canonical list row: leading · title/subtitle · value/sublabel or trailing.
+ * 12px vertical padding, hairline divider. Never rebuild this inline.
+ */
+export function ListRow({
+  leading,
+  title,
+  subtitle,
+  value,
+  valueClassName,
+  sublabel,
+  sublabelClassName,
+  trailing,
+  chevron,
+  onPress,
+  disabled,
+  last,
+  className,
+}: Props) {
+  const body = (
+    <>
+      {leading}
+      <View className="flex-1">
+        <Text className="font-medium" numberOfLines={1}>
+          {title}
+        </Text>
+        {subtitle ? (
+          <Text className="text-muted-foreground text-sm" numberOfLines={1}>
+            {subtitle}
+          </Text>
+        ) : null}
+      </View>
+      {trailing ??
+        (value || sublabel ? (
+          <View className="items-end">
+            {value ? <Text className={cn('font-semibold', valueClassName)}>{value}</Text> : null}
+            {sublabel ? <Text className={cn('text-muted-foreground text-sm', sublabelClassName)}>{sublabel}</Text> : null}
+          </View>
+        ) : null)}
+      {chevron ? <Icon as={ChevronRightIcon} className="text-muted-foreground" size={18} /> : null}
+    </>
+  );
+  const base = cn('min-h-14 flex-row items-center gap-3 py-3', !last && 'border-border border-b', disabled && 'opacity-50', className);
+  if (onPress) {
+    return (
+      <Pressable accessibilityRole="button" onPress={onPress} disabled={disabled} className={cn(base, 'active:opacity-70')}>
+        {body}
+      </Pressable>
+    );
+  }
+  return <View className={base}>{body}</View>;
+}

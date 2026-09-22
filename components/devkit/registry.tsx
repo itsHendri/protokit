@@ -16,15 +16,30 @@ import { LAYOUT_SECTIONS } from './sections/layout';
 import { OVERLAYS_SECTIONS } from './sections/overlays';
 import { MEDIA_SECTIONS } from './sections/media';
 import { FOUNDATION_SECTIONS } from './foundations';
+import { KIT_ACTIONS_SECTIONS } from './sections/kit-actions';
+import { KIT_INPUTS_SECTIONS } from './sections/kit-inputs';
+import { KIT_NAVIGATION_SECTIONS } from './sections/kit-navigation';
+import { KIT_DATA_SECTIONS } from './sections/kit-data';
+import { KIT_FEEDBACK_SECTIONS } from './sections/kit-feedback';
+import { KIT_LAYOUT_SECTIONS } from './sections/kit-layout';
+import { KIT_OVERLAYS_SECTIONS } from './sections/kit-overlays';
 
+/** ui/ (reusables) previews live in <category>.tsx; kit/ previews in kit-<category>.tsx. */
 export const SECTIONS: ComponentSection[] = [
   ...ACTIONS_SECTIONS,
+  ...KIT_ACTIONS_SECTIONS,
   ...INPUTS_SECTIONS,
+  ...KIT_INPUTS_SECTIONS,
   ...NAVIGATION_SECTIONS,
+  ...KIT_NAVIGATION_SECTIONS,
   ...DATA_SECTIONS,
+  ...KIT_DATA_SECTIONS,
   ...FEEDBACK_SECTIONS,
+  ...KIT_FEEDBACK_SECTIONS,
   ...LAYOUT_SECTIONS,
+  ...KIT_LAYOUT_SECTIONS,
   ...OVERLAYS_SECTIONS,
+  ...KIT_OVERLAYS_SECTIONS,
   ...MEDIA_SECTIONS,
 ];
 
