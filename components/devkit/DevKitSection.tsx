@@ -12,7 +12,7 @@ export function DevKitSection({ section }: { section: Section }) {
     <View className="border-border gap-3 border-t px-5 py-5">
       <Text className="text-muted-foreground text-xs font-semibold uppercase tracking-widest">{section.title}</Text>
       <TextClassContext.Provider value={undefined}>
-        <View className="items-stretch">
+        <View className="items-start">
           <Demo />
         </View>
       </TextClassContext.Provider>
