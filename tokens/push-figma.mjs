@@ -14,7 +14,7 @@
  * generated JSON is still useful: paste it into a `use_figma` (Figma MCP) call, or import it with a
  * variables plugin.
  */
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
