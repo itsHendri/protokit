@@ -11,8 +11,8 @@ type Props = {
 };
 
 /**
- * Safe-area-aware action bar pinned under a scroll view. One child fills the width;
- * several children split it evenly. Give the ScrollView ~pb-32 so content clears the bar.
+ * Safe-area-aware action bar pinned under a scroll view. Children always share the width
+ * equally (one child fills it). Give the ScrollView ~pb-32 so content clears the bar.
  */
 export function StickyBottomBar({ children, transparent, className }: Props) {
   const insets = useSafeAreaInsets();
@@ -21,7 +21,11 @@ export function StickyBottomBar({ children, transparent, className }: Props) {
     <View
       className={cn('flex-row gap-3 px-5 pt-3', !transparent && 'bg-background border-border border-t', className)}
       style={{ paddingBottom: insets.bottom + 12 }}>
-      {kids.length > 1 ? kids.map((k, i) => <View key={i} className="flex-1">{k}</View>) : kids}
+      {kids.map((k, i) => (
+        <View key={i} className="flex-1">
+          {k}
+        </View>
+      ))}
     </View>
   );
 }

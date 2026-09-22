@@ -100,7 +100,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | SearchField | `components/kit/search-field.tsx` | Input + search icon + clear |
 | QuantityStepper | `components/kit/quantity-stepper.tsx` | `min max step` |
 | AmountInput | `components/kit/amount-input.tsx` | hero money field · `editable={false}` with keypad |
-| NumericKeypad | `components/kit/numeric-keypad.tsx` | 3×4 in-app keypad |
+| NumericKeypad | `components/kit/numeric-keypad.tsx` | 3×4 in-app keypad, keys on `bg-muted` |
 | OtpInput | `components/kit/otp-input.tsx` | N-digit code, paste-aware |
 | Slider | `components/kit/slider.tsx` | continuous/stepped · `tone` |
 | DatePicker | `components/kit/date-picker.tsx` | field trigger → Calendar in a Sheet |

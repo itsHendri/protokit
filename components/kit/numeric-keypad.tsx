@@ -97,7 +97,7 @@ function Key({
       accessibilityLabel={accessibilityLabel ?? label}
       onPress={onPress}
       onLongPress={onLongPress}
-      className="bg-card h-14 items-center justify-center rounded-lg active:opacity-60"
+      className="bg-muted h-14 items-center justify-center rounded-lg active:opacity-60"
       style={{ width: width || undefined, flex: width ? undefined : 1 }}>
       {children ?? <Text className="text-2xl font-medium">{label}</Text>}
     </Pressable>

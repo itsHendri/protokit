@@ -23,5 +23,5 @@ function StickyBottomBarDemo() {
 }
 
 export const KIT_LAYOUT_SECTIONS: ComponentSection[] = [
-  { id: 'sticky-bottom-bar', title: 'Sticky bottom bar', category: 'layout', aliases: ['cta bar', 'footer actions', 'safe area'], api: '<StickyBottomBar transparent?>{buttons}</StickyBottomBar>', caption: 'Render after the ScrollView; give the scroll content pb-32. One child = full width, several = equal split.', Demo: StickyBottomBarDemo },
+  { id: 'sticky-bottom-bar', title: 'Sticky bottom bar', category: 'layout', aliases: ['cta bar', 'footer actions', 'safe area'], api: '<StickyBottomBar transparent?>{buttons}</StickyBottomBar>', caption: 'Render after the ScrollView; give the scroll content pb-32. Children share the width equally.', Demo: StickyBottomBarDemo },
 ];
