@@ -60,7 +60,7 @@ export function SwipeToConfirm({ label, onConfirm, confirmLabel = 'Confirmed', t
 
 
   const promptOpacity = maxX > 0 ? translateX.interpolate({ inputRange: [0, maxX * 0.5], outputRange: [1, 0], extrapolate: 'clamp' }) : 1;
-  const fillScale = maxX > 0 ? translateX.interpolate({ inputRange: [0, maxX], outputRange: [0, 1], extrapolate: 'clamp' }) : 0;
+  const fillWidth = Animated.add(translateX, new Animated.Value(THUMB + (TRACK_H - THUMB) / 2));
   const bg = tone === 'destructive' ? 'bg-destructive' : 'bg-primary';
   const fg = tone === 'destructive' ? 'text-destructive-foreground' : 'text-primary-foreground';
 
@@ -74,8 +74,8 @@ export function SwipeToConfirm({ label, onConfirm, confirmLabel = 'Confirmed', t
       accessibilityHint="Swipe right to confirm">
       <Animated.View
         pointerEvents="none"
-        className={cn('absolute bottom-0 left-0 right-0 top-0', tone === 'destructive' ? 'bg-destructive/20' : 'bg-primary/20')}
-        style={{ transform: [{ scaleX: fillScale }], transformOrigin: 'left center' }}
+        className={cn('absolute bottom-0 left-0 top-0 rounded-full', tone === 'destructive' ? 'bg-destructive/15' : 'bg-primary/15')}
+        style={{ width: fillWidth }}
       />
       <Animated.View pointerEvents="none" className="absolute left-0 right-0 items-center" style={{ opacity: completed ? 0 : promptOpacity }}>
         <Text className="text-muted-foreground font-semibold">{label}</Text>

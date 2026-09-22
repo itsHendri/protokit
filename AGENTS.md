@@ -57,8 +57,8 @@ npx expo run:ios       # build + install the dev client on the simulator (needs 
 ## Workflows
 
 - **Preview:** `kit-web` (http://localhost:8090) and `kit-ios` (Expo Go on the booted simulator, port 8091)
-  launch configs. Deep link a section: `xcrun simctl openurl booted "exp://localhost:8091/--/kitchen-sink/inputs"`
-  (Expo Go) or `protokit://kitchen-sink/inputs` (dev client).
+  launch configs. Deep link a section: `xcrun simctl openurl booted "exp://localhost:8091/--/kitchen-sink?open=inputs"`
+  (Expo Go) or `protokit://kitchen-sink?open=inputs` (dev client).
 - **Dev client:** `LANG=en_US.UTF-8 npx expo run:ios --no-bundler` builds `Prototype Kit` for the simulator; then
   `xcrun simctl openurl booted "exp+mobile-app-prototype-kit://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8091"`.
   For phones: `eas build --profile development` (needs Apple credentials, interactive).

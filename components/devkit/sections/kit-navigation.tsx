@@ -2,10 +2,33 @@ import { HorizontalPager } from '@/components/kit/horizontal-pager';
 import { PagerDots } from '@/components/kit/pager-dots';
 import { SectionHeader } from '@/components/kit/section-header';
 import { Stepper } from '@/components/kit/stepper';
+import { TabIcon } from '@/components/kit/tab-icon';
+import { THEME } from '@/lib/theme';
+import { useKitTheme } from '@/lib/theme-context';
 import { Text } from '@/components/ui/text';
 import type { ComponentSection } from '../types';
+import { HouseIcon, ListIcon, SettingsIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
+
+function TabIconDemo() {
+  const { scheme } = useKitTheme();
+  const c = THEME[scheme];
+  return (
+    <View className="bg-card border-border w-full flex-row justify-around rounded-lg border py-3">
+      {[
+        ['Home', HouseIcon, true],
+        ['Activity', ListIcon, false],
+        ['Settings', SettingsIcon, false],
+      ].map(([label, icon, focused]) => (
+        <View key={label as string} className="items-center gap-1">
+          <TabIcon icon={icon as typeof HouseIcon} color={focused ? c.primary : c.mutedForeground} size={24} focused={focused as boolean} />
+          <Text className={(focused ? "text-primary" : "text-muted-foreground") + " text-[11px] font-medium"}>{label as string}</Text>
+        </View>
+      ))}
+    </View>
+  );
+}
 
 function StepperDemo() {
   return (
@@ -53,6 +76,7 @@ function HorizontalPagerDemo() {
 }
 
 export const KIT_NAVIGATION_SECTIONS: ComponentSection[] = [
+  { id: 'tab-icon', title: 'Tab bar icon', category: 'navigation', aliases: ['bottom tabs', 'tab bar', 'active dot', 'navigation bar'], api: '<Tabs.Screen options={{ tabBarIcon: (p) => <TabIcon {...p} icon={HouseIcon} /> }} />', caption: 'Use with Expo Router Tabs and explicit tabBarActiveTintColor / tabBarInactiveTintColor (see app/(kit)/_layout.tsx). The dot marks the active tab without relying on colour alone.', Demo: TabIconDemo },
   { id: 'stepper', title: 'Stepper', category: 'navigation', aliases: ['progress steps', 'wizard', 'onboarding progress'], api: '<Stepper current total labels? variant="numbered|compact" />', Demo: StepperDemo },
   { id: 'section-header', title: 'Section header', category: 'navigation', aliases: ['title', 'see all', 'heading row'], api: '<SectionHeader title action? onAction? />', caption: 'Sits outside the card it introduces.', Demo: SectionHeaderDemo },
   { id: 'pager-dots', title: 'Pager dots', category: 'navigation', aliases: ['page indicator', 'carousel dots'], api: '<PagerDots count activeIndex />', Demo: PagerDotsDemo },

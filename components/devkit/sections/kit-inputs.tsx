@@ -4,13 +4,16 @@ import { DatePicker } from '@/components/kit/date-picker';
 import { FilterChip, FilterChipRow } from '@/components/kit/filter-chip';
 import { NumericKeypad } from '@/components/kit/numeric-keypad';
 import { OtpInput } from '@/components/kit/otp-input';
+import { PasswordInput } from '@/components/kit/password-input';
 import { QuantityStepper } from '@/components/kit/quantity-stepper';
 import { SearchField } from '@/components/kit/search-field';
 import { SegmentedControl } from '@/components/kit/segmented-control';
+import { SelectableCard } from '@/components/kit/selectable-card';
 import { Slider } from '@/components/kit/slider';
+import { Label } from '@/components/ui/label';
 import { Text } from '@/components/ui/text';
 import type { ComponentSection } from '../types';
-import { StarIcon } from 'lucide-react-native';
+import { StarIcon, TruckIcon, ZapIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
 
@@ -90,6 +93,29 @@ function SliderDemo() {
   );
 }
 
+function PasswordInputDemo() {
+  const [v, setV] = React.useState("hunter22");
+  return (
+    <View className="w-full gap-2">
+      <Label htmlFor="ks-password">Password</Label>
+      <PasswordInput id="ks-password" value={v} onChangeText={setV} />
+    </View>
+  );
+}
+
+function SelectableCardDemo() {
+  const [plan, setPlan] = React.useState("standard");
+  const [extras, setExtras] = React.useState<string[]>(["insurance"]);
+  const toggle = (v: string) => setExtras((s) => (s.includes(v) ? s.filter((x) => x !== v) : [...s, v]));
+  return (
+    <View className="w-full gap-2">
+      <SelectableCard icon={TruckIcon} title="Standard delivery" description="3–5 business days" detail="Free" selected={plan === "standard"} onPress={() => setPlan("standard")} />
+      <SelectableCard icon={ZapIcon} title="Express delivery" description="Tomorrow before noon" detail="$9.90" selected={plan === "express"} onPress={() => setPlan("express")} />
+      <SelectableCard mode="checkbox" title="Add insurance" description="Covers loss and damage" detail="$2.00" selected={extras.includes("insurance")} onPress={() => toggle("insurance")} />
+    </View>
+  );
+}
+
 function DatePickerDemo() {
   const [d, setD] = React.useState<Date | undefined>();
   return <DatePicker value={d} onChange={setD} className="w-full" />;
@@ -108,6 +134,8 @@ export const KIT_INPUTS_SECTIONS: ComponentSection[] = [
   { id: 'amount-input', title: 'Amount input', category: 'inputs', aliases: ['money', 'currency', 'hero field', 'send'], api: '<AmountInput value onChangeText symbol helper? onMax? onToggleCurrency? error? editable? />', caption: 'Hero numeric entry. Set editable={false} when a NumericKeypad drives it.', Demo: AmountInputDemo },
   { id: 'numeric-keypad', title: 'Numeric keypad', category: 'inputs', aliases: ['keypad', 'pin pad', 'digits'], api: '<NumericKeypad value onChange maxLength? allowDecimal? />', caption: 'Replaces the system keyboard on full-screen amount entry. Long-press ⌫ clears.', Demo: NumericKeypadDemo },
   { id: 'otp-input', title: 'OTP input', category: 'inputs', aliases: ['code', 'verification', 'pin', '2fa', 'passcode'], api: '<OtpInput length value onChange onComplete error? />', caption: 'Try 123456. Handles paste and backspace across cells.', Demo: OtpInputDemo },
+  { id: 'password-input', title: 'Password input', category: 'inputs', aliases: ['secure', 'show hide', 'login'], api: '<PasswordInput value onChangeText />', Demo: PasswordInputDemo },
+  { id: 'selectable-card', title: 'Selectable card', category: 'inputs', aliases: ['radio card', 'option card', 'plan', 'choice'], api: '<SelectableCard title description? icon? detail? selected onPress mode="radio|checkbox" />', caption: 'A whole card as a choice. Selection shows as a ring/check plus a tinted border, not colour alone.', Demo: SelectableCardDemo },
   { id: 'slider', title: 'Slider', category: 'inputs', aliases: ['range', 'drag', 'percentage'], api: '<Slider value onChange min max step? tone? onChangeComplete? />', Demo: SliderDemo },
   { id: 'date-picker', title: 'Date picker', category: 'inputs', aliases: ['date', 'calendar field'], api: '<DatePicker value onChange placeholder? />', caption: 'Input-shaped trigger that opens a Calendar in a Sheet.', Demo: DatePickerDemo },
   { id: 'calendar', title: 'Calendar', category: 'inputs', aliases: ['month', 'day grid'], api: '<Calendar value onChange />', Demo: CalendarDemo },

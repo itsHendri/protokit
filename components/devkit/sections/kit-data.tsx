@@ -1,3 +1,4 @@
+import { AvatarGroup } from '@/components/kit/avatar-group';
 import { BarChart } from '@/components/kit/bar-chart';
 import { ChartLegend, DonutChart } from '@/components/kit/donut-chart';
 import { IconCircle } from '@/components/kit/icon-circle';
@@ -5,6 +6,7 @@ import { KeyValueList, SummaryCard } from '@/components/kit/key-value-list';
 import { LineChart } from '@/components/kit/line-chart';
 import { ListRow } from '@/components/kit/list-row';
 import { PercentChange } from '@/components/kit/percent-change';
+import { ProgressRing } from '@/components/kit/progress-ring';
 import { StatTile } from '@/components/kit/stat-tile';
 import { StatusDot } from '@/components/kit/status-dot';
 import { Badge } from '@/components/ui/badge';
@@ -69,6 +71,35 @@ function PercentChangeDemo() {
       <PercentChange value={-0.8} />
       <PercentChange value={0} />
       <PercentChange value={12} decimals={0} showIcon={false} />
+    </View>
+  );
+}
+
+function AvatarGroupDemo() {
+  const people = [
+    { id: "1", initials: "AR" },
+    { id: "2", initials: "SO", uri: "https://github.com/expo.png" },
+    { id: "3", initials: "JL" },
+    { id: "4", initials: "MT" },
+    { id: "5", initials: "KP" },
+    { id: "6", initials: "DN" },
+  ];
+  return (
+    <View className="gap-4">
+      <AvatarGroup items={people} />
+      <AvatarGroup items={people.slice(0, 3)} size={40} />
+    </View>
+  );
+}
+
+function ProgressRingDemo() {
+  return (
+    <View className="flex-row items-center gap-6">
+      <ProgressRing value={72}>
+        <Text className="text-sm font-semibold">72%</Text>
+      </ProgressRing>
+      <ProgressRing value={35} tone="warning" size={48} strokeWidth={5} />
+      <ProgressRing value={100} tone="success" size={40} strokeWidth={4} />
     </View>
   );
 }
@@ -145,6 +176,8 @@ export const KIT_DATA_SECTIONS: ComponentSection[] = [
   { id: 'summary-card', title: 'Summary card', category: 'data', aliases: ['key value', 'receipt', 'details', 'order summary'], api: '<SummaryCard title? rows={[{label,value}]} /> · <KeyValueList rows />', Demo: SummaryDemo },
   { id: 'stat-tile', title: 'Stat tile', category: 'data', aliases: ['kpi', 'metric', 'dashboard'], api: '<StatTile label value delta? icon? />', Demo: StatTileDemo },
   { id: 'percent-change', title: 'Percent change', category: 'data', aliases: ['delta', 'trend', 'up down'], api: '<PercentChange value decimals? showIcon? />', Demo: PercentChangeDemo },
+  { id: 'avatar-group', title: 'Avatar group', category: 'data', aliases: ['members', 'participants', 'stack', '+n'], api: '<AvatarGroup items={[{id,initials,uri?}]} max? size? />', Demo: AvatarGroupDemo },
+  { id: 'progress-ring', title: 'Progress ring', category: 'data', aliases: ['circular progress', 'goal', 'percent', 'donut'], api: '<ProgressRing value size? tone?>{centre}</ProgressRing>', Demo: ProgressRingDemo },
   { id: 'status-dot', title: 'Status dot', category: 'data', aliases: ['indicator', 'online', 'presence'], api: '<StatusDot tone size />', Demo: StatusDotDemo },
   { id: 'line-chart', title: 'Line chart', category: 'data', aliases: ['sparkline', 'price', 'time series', 'graph'], api: '<LineChart data variant="interactive|sparkline" height tone area? onPointerChange? />', caption: 'Interactive variant reports the scrubbed point; render your own header from it.', Demo: LineChartDemo },
   { id: 'bar-chart', title: 'Bar chart', category: 'data', aliases: ['bars', 'histogram', 'weekly'], api: '<BarChart data={[{label,value,className?}]} height showValues? />', Demo: BarChartDemo },

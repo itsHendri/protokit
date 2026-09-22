@@ -12,29 +12,26 @@ import { View } from 'react-native';
 function ButtonDemo() {
   return (
     <View className="w-full gap-3">
-      <View className="flex-row flex-wrap items-center gap-2">
-        <Button>
+      <View className="flex-row items-center gap-2">
+        <Button className="flex-1">
           <Text>Primary</Text>
         </Button>
-        <Button variant="secondary">
+        <Button variant="secondary" className="flex-1">
           <Text>Secondary</Text>
         </Button>
-        <Button variant="outline">
+        <Button variant="outline" className="flex-1">
           <Text>Outline</Text>
         </Button>
-        <Button variant="ghost">
+      </View>
+      <View className="flex-row items-center gap-2">
+        <Button variant="ghost" className="flex-1">
           <Text>Ghost</Text>
         </Button>
-      </View>
-      <View className="flex-row flex-wrap items-center gap-2">
-        <Button variant="destructive">
-          <Text>Destructive</Text>
-        </Button>
-        <Button variant="link">
+        <Button variant="link" className="flex-1">
           <Text>Link</Text>
         </Button>
-        <Button variant="outline" size="icon" accessibilityLabel="Next">
-          <Icon as={ChevronRightIcon} />
+        <Button variant="destructive" className="flex-1">
+          <Text>Destructive</Text>
         </Button>
       </View>
       <View className="flex-row flex-wrap items-center gap-2">
@@ -53,6 +50,9 @@ function ButtonDemo() {
             <Icon as={Loader2Icon} className="text-primary-foreground" />
           </View>
           <Text>Loading</Text>
+        </Button>
+        <Button variant="outline" size="icon" accessibilityLabel="Next">
+          <Icon as={ChevronRightIcon} />
         </Button>
       </View>
     </View>

@@ -83,6 +83,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | Toggle | `components/ui/toggle.tsx` | pressed two-state button |
 | ToggleGroup | `components/ui/toggle-group.tsx` | `type` single/multiple |
 | FAB | `components/kit/fab.tsx` | `icon label? variant position` · one per screen |
+| IconBadge | `components/kit/icon-badge.tsx` | icon button with unread count/dot · always labelled |
 | SwipeToConfirm | `components/kit/swipe-to-confirm.tsx` | drag past 85% commits · `tone` primary/destructive · reset via `key` |
 
 ### Inputs & selection
@@ -102,6 +103,8 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | AmountInput | `components/kit/amount-input.tsx` | hero money field · `editable={false}` with keypad |
 | NumericKeypad | `components/kit/numeric-keypad.tsx` | 3×4 in-app keypad, keys on `bg-muted` |
 | OtpInput | `components/kit/otp-input.tsx` | N-digit code, paste-aware |
+| PasswordInput | `components/kit/password-input.tsx` | Input + show/hide |
+| SelectableCard | `components/kit/selectable-card.tsx` | card as a radio/checkbox choice |
 | Slider | `components/kit/slider.tsx` | continuous/stepped · `tone` |
 | DatePicker | `components/kit/date-picker.tsx` | field trigger → Calendar in a Sheet |
 | Calendar | `components/kit/calendar.tsx` | month grid |
@@ -115,6 +118,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | SectionHeader | `components/kit/section-header.tsx` | title + action, outside the card |
 | PagerDots | `components/kit/pager-dots.tsx` | |
 | HorizontalPager | `components/kit/horizontal-pager.tsx` | snap pager + dots |
+| TabIcon | `components/kit/tab-icon.tsx` | tab bar icon with active dot; pair with explicit tab tints |
 | App tabs / stack | Expo Router | `app/(kit)/_layout.tsx` shows the pattern; prototypes own their `app/` routes |
 
 ### Data display
@@ -130,6 +134,8 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | StatTile | `components/kit/stat-tile.tsx` | KPI tile with delta |
 | PercentChange | `components/kit/percent-change.tsx` | signed % with trend icon |
 | StatusDot | `components/kit/status-dot.tsx` | |
+| AvatarGroup | `components/kit/avatar-group.tsx` | overlapping avatars + "+N" |
+| ProgressRing | `components/kit/progress-ring.tsx` | circular determinate progress |
 | LineChart | `components/kit/line-chart.tsx` | interactive/sparkline · `area` · `onPointerChange` |
 | BarChart | `components/kit/bar-chart.tsx` | plain Views |
 | DonutChart / ChartLegend | `components/kit/donut-chart.tsx` | ring + legend |

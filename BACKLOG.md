@@ -15,6 +15,18 @@ _Last updated: 2026-09-22_
 - **Figma:** `tokens/push-figma.mjs` (one-way Variables push with code syntax) and Code Connect once the component
   set is stable.
 
+## Component gap analysis (vs. Material 3, HIG, gluestack, HeroUI — 2026-09-22)
+Present: 69 previews across 8 categories. Still missing, roughly in order of how often prototypes need them:
+- **Top app bar variants** — large title, search-in-header, segmented header. Today: Expo Router headers only.
+- **Onboarding slide** (illustration + title + body) and **Coachmark/tooltip tour**.
+- **Time picker** (Calendar covers dates) and **Range slider** (two thumbs).
+- **Phone field** with country code, **Chip input** (tags), **Rating** (stars).
+- **Banner** (full-width persistent, above content) — Alert is inline; **Snackbar with action** — Toast has no action yet.
+- **Pull-to-refresh** wrapper, **Infinite list** footer loader, **Section list** with sticky headers.
+- **Carousel** with images, **Lightbox**, **Image placeholder/upload tile**, **Video/audio placeholders**.
+- **Data table**, **Timeline/status steps**, **Countdown**, **Copyable field**, **QR code**.
+- **Drawer / side menu**, **Permission prompt**, **Paywall/plan cards** (SelectableCard covers the rows).
+
 ## Upgrades to schedule
 - Expo SDK 58 (stable ~Oct 2026): native tabs at the stable path, data loaders, SSR. Run `npx expo install expo@next --fix` on a branch.
 - NativeWind 5 + Tailwind 4 when NativeWind 5 reaches `latest` (RC since 2026-09-13). Tokens layer survives it.

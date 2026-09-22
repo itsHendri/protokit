@@ -1,23 +1,23 @@
 import { CATEGORIES } from '@/components/devkit/categories';
 import { FOUNDATION_SECTIONS, SECTIONS } from '@/components/devkit/registry';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ListRow } from '@/components/kit/list-row';
+import { SectionHeader } from '@/components/kit/section-header';
+import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { Link } from 'expo-router';
-import { ArrowRightIcon } from 'lucide-react-native';
+import { BlocksIcon, BookOpenIcon, SmartphoneIcon, SwatchBookIcon } from 'lucide-react-native';
 import { ScrollView, View } from 'react-native';
 
 export default function KitHome() {
   return (
-    <ScrollView className="bg-background flex-1" contentContainerClassName="gap-5 p-5 pb-16">
+    <ScrollView className="bg-background flex-1" contentContainerClassName="gap-6 p-5 pb-16" contentInsetAdjustmentBehavior="automatic">
       <View className="gap-2">
         <Text variant="h2" className="border-0 pb-0">
           Prototype Kit
         </Text>
         <Text className="text-muted-foreground">
-          A themeable Expo starter for mobile prototypes. Browse the components, copy token names
-          from Foundations, then build screens only from what is here.
+          A themeable Expo starter for mobile prototypes. Everything a screen needs is already here and previewed live.
         </Text>
       </View>
 
@@ -27,51 +27,33 @@ export default function KitHome() {
         <Stat label="Token groups" value={FOUNDATION_SECTIONS.length} />
       </View>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Start here</CardTitle>
-          <CardDescription>Everything a screen needs, in one place.</CardDescription>
-        </CardHeader>
-        <CardContent className="gap-2">
+      <View className="gap-3">
+        <SectionHeader title="Browse" />
+        <Card className="w-full gap-0 px-4 py-0">
           <Link href="/(kit)/kitchen-sink" asChild>
-            <Button variant="outline" className="justify-between">
-              <Text>Browse components</Text>
-              <Icon as={ArrowRightIcon} />
-            </Button>
+            <ListRow leading={<Icon as={BlocksIcon} size={22} className="text-primary" />} title="Components" subtitle={`${SECTIONS.length} previews in ${CATEGORIES.length} categories`} chevron onPress={() => {}} />
           </Link>
           <Link href="/(kit)/foundations" asChild>
-            <Button variant="outline" className="justify-between">
-              <Text>Colours, spacing, type</Text>
-              <Icon as={ArrowRightIcon} />
-            </Button>
+            <ListRow leading={<Icon as={SwatchBookIcon} size={22} className="text-primary" />} title="Foundations" subtitle="Colour, spacing, radius, type, motion" chevron onPress={() => {}} />
           </Link>
           <Link href="/(sample)/(tabs)" asChild>
-            <Button className="justify-between">
-              <Text>Open the sample app</Text>
-              <Icon as={ArrowRightIcon} className="text-primary-foreground" />
-            </Button>
+            <ListRow leading={<Icon as={SmartphoneIcon} size={22} className="text-primary" />} title="Sample app" subtitle="A worked example built only from the kit" chevron onPress={() => {}} last />
           </Link>
-        </CardContent>
-      </Card>
+        </Card>
+      </View>
 
-      <View className="gap-2">
-        <Text className="text-muted-foreground text-xs font-semibold uppercase tracking-widest">
-          Categories
-        </Text>
-        {CATEGORIES.map((cat) => (
-          <Link key={cat.id} href={{ pathname: '/(kit)/kitchen-sink/[category]', params: { category: cat.id } }} asChild>
-            <Button variant="ghost" className="h-auto justify-start gap-3 px-2 py-2">
-              <Icon as={cat.icon} className="text-primary" size={20} />
-              <View className="flex-1">
-                <Text className="font-medium">{cat.label}</Text>
-                <Text className="text-muted-foreground text-sm">{cat.blurb}</Text>
-              </View>
-              <Text className="text-muted-foreground text-sm">
-                {SECTIONS.filter((s) => s.category === cat.id).length}
-              </Text>
-            </Button>
-          </Link>
-        ))}
+      <View className="gap-3">
+        <SectionHeader title="How it works" />
+        <Card className="w-full gap-4 px-4 py-4">
+          <Step n={1} title="Pick from what exists" body="Screens are composed only from registry components. Search Components, tap a title to copy its API." />
+          <Step n={2} title="Copy token names, not values" body="Foundations tiles copy the Tailwind class (bg-primary, p-4, rounded-lg). Colours follow light and dark automatically." />
+          <Step n={3} title="Hand it a brief" body="The transcript-to-prototype skill turns a conversation into screens, using the same rules." />
+        </Card>
+      </View>
+
+      <View className="flex-row items-center gap-2 px-1">
+        <Icon as={BookOpenIcon} size={14} className="text-muted-foreground" />
+        <Text className="text-muted-foreground text-xs">DESIGN_SYSTEM.md and AGENTS.md hold the full rules.</Text>
       </View>
     </ScrollView>
   );
@@ -82,6 +64,20 @@ function Stat({ label, value }: { label: string; value: number }) {
     <View className="bg-card border-border flex-1 gap-0.5 rounded-lg border p-3">
       <Text className="text-2xl font-semibold">{value}</Text>
       <Text className="text-muted-foreground text-xs">{label}</Text>
+    </View>
+  );
+}
+
+function Step({ n, title, body }: { n: number; title: string; body: string }) {
+  return (
+    <View className="flex-row gap-3">
+      <View className="bg-primary/15 size-6 items-center justify-center rounded-full">
+        <Text className="text-primary text-xs font-semibold">{n}</Text>
+      </View>
+      <View className="flex-1 gap-0.5">
+        <Text className="font-medium">{title}</Text>
+        <Text className="text-muted-foreground text-sm">{body}</Text>
+      </View>
     </View>
   );
 }

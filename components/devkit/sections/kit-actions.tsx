@@ -1,9 +1,10 @@
 import { FAB } from '@/components/kit/fab';
+import { IconBadge } from '@/components/kit/icon-badge';
 import { SwipeToConfirm } from '@/components/kit/swipe-to-confirm';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 import type { ComponentSection } from '../types';
-import { PlusIcon } from 'lucide-react-native';
+import { BellIcon, MailIcon, PlusIcon, ShoppingCartIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
 
@@ -13,6 +14,17 @@ function FABDemo() {
       <FAB icon={PlusIcon} accessibilityLabel="Add" />
       <FAB icon={PlusIcon} label="New item" />
       <FAB icon={PlusIcon} label="Secondary" variant="secondary" />
+    </View>
+  );
+}
+
+function IconBadgeDemo() {
+  return (
+    <View className="flex-row items-center gap-2">
+      <IconBadge icon={BellIcon} count={3} accessibilityLabel="Notifications" />
+      <IconBadge icon={MailIcon} count={120} accessibilityLabel="Inbox" />
+      <IconBadge icon={ShoppingCartIcon} dot accessibilityLabel="Cart" />
+      <IconBadge icon={BellIcon} accessibilityLabel="Notifications, none" />
     </View>
   );
 }
@@ -43,6 +55,15 @@ export const KIT_ACTIONS_SECTIONS: ComponentSection[] = [
     api: '<FAB icon label? variant="primary|secondary" position="inline|bottom-right|bottom-center" />',
     caption: 'One per screen, for the single most important action.',
     Demo: FABDemo,
+  },
+  {
+    id: 'icon-badge',
+    title: 'Icon badge',
+    category: 'actions',
+    aliases: ['notification', 'bell', 'cart', 'unread count', 'icon button'],
+    api: '<IconBadge icon count? dot? accessibilityLabel />',
+    caption: 'Header icon button with an unread count. The label announces the count for screen readers.',
+    Demo: IconBadgeDemo,
   },
   {
     id: 'swipe-to-confirm',
