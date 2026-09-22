@@ -1,6 +1,6 @@
 import { useCopy } from './copy';
 import type { Section } from './types';
-import { Text } from '@/components/ui/text';
+import { Text, TextClassContext } from '@/components/ui/text';
 import { Pressable, View } from 'react-native';
 
 /**
@@ -21,9 +21,12 @@ export function DevKitSection({ section }: { section: Section }) {
         <Text className="text-muted-foreground text-xs font-semibold uppercase tracking-widest">{section.title}</Text>
         {section.api ? <Text className="text-primary text-xs">{copied === section.id ? 'Copied' : 'Copy API'}</Text> : null}
       </Pressable>
-      <View className="items-start">
-        <Demo />
-      </View>
+      {/* AccordionContent sets a text-sm context; previews must render at their own sizes. */}
+      <TextClassContext.Provider value={undefined}>
+        <View className="items-start">
+          <Demo />
+        </View>
+      </TextClassContext.Provider>
       {section.api ? (
         <View className="bg-muted rounded-md px-3 py-2">
           <Text className="text-muted-foreground font-mono text-xs">{section.api}</Text>

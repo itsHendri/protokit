@@ -83,8 +83,7 @@ export function DevKitHub<Id extends string>({ categories, sections, searchPlace
             const items = byCategory.get(cat.id) ?? [];
             const isOpen = open.includes(cat.id);
             return (
-              <View key={cat.id} onLayout={(e: LayoutChangeEvent) => (offsets.current[cat.id] = e.nativeEvent.layout.y)}>
-                <AccordionItem value={cat.id} className="px-5">
+              <AccordionItem key={cat.id} value={cat.id} className="px-5" onLayout={(e: LayoutChangeEvent) => (offsets.current[cat.id] = e.nativeEvent.layout.y)}>
                   <AccordionTrigger>
                     <View className="flex-1 flex-row items-center gap-3">
                       <View className={isOpen ? 'bg-primary/15 size-9 items-center justify-center rounded-lg' : 'bg-muted size-9 items-center justify-center rounded-lg'}>
@@ -103,7 +102,6 @@ export function DevKitHub<Id extends string>({ categories, sections, searchPlace
                     ))}
                   </AccordionContent>
                 </AccordionItem>
-              </View>
             );
           })}
         </Accordion>
