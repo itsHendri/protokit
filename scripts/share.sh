@@ -12,7 +12,7 @@ cd "$(dirname "$0")/.."
 MESSAGE="${1:-update}"
 PROJECT_ID=$(node -p "require('./app.json').expo.extra.eas.projectId")
 
-eas update --branch main --channel main --message "$MESSAGE" --environment production --non-interactive
+eas update --channel main --message "$MESSAGE" --environment production --non-interactive
 
 cat <<LINKS
 
