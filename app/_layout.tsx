@@ -1,6 +1,8 @@
 import '@/global.css';
 
+import { NotifyProvider } from '@/components/kit/notify';
 import { ToastProvider } from '@/components/kit/toast';
+import { NativeModeProvider } from '@/lib/native-context';
 import { KitThemeProvider, useKitTheme } from '@/lib/theme-context';
 import { NAV_THEME } from '@/lib/theme';
 import { PortalHost } from '@rn-primitives/portal';
@@ -18,7 +20,9 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <KitThemeProvider>
-        <AppShell />
+        <NativeModeProvider>
+          <AppShell />
+        </NativeModeProvider>
       </KitThemeProvider>
     </GestureHandlerRootView>
   );
@@ -31,12 +35,14 @@ function AppShell() {
     <NavThemeProvider value={NAV_THEME[scheme]}>
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
       <ToastProvider>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(kit)" />
-          <Stack.Screen name="(shop)" />
-          <Stack.Screen name="(habits)" />
-        </Stack>
-        <PortalHost />
+        <NotifyProvider>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(kit)" />
+            <Stack.Screen name="(shop)" />
+            <Stack.Screen name="(habits)" />
+          </Stack>
+          <PortalHost />
+        </NotifyProvider>
       </ToastProvider>
     </NavThemeProvider>
   );
