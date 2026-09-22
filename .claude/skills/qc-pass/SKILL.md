@@ -1,0 +1,52 @@
+---
+name: qc-pass
+description: Quality gate for the prototype kit — typecheck, lint, token/hex/icon guards, then a real look at the affected screens on the iOS simulator (and web) in light and dark. Use after adding or changing components, screens, tokens, or before committing/publishing. Never report "done" without running this.
+---
+
+# QC pass
+
+Run everything; do not stop at the first failure. Report each check as pass/fail with the
+exact output for failures.
+
+## 1. Static checks
+
+```bash
+npm run typecheck
+npm run lint -- --max-warnings 0
+npm run tokens:build && git diff --quiet -- global.css lib/theme.ts tokens/generated || echo "TOKENS OUT OF DATE: commit the regenerated files"
+```
+
+## 2. Guards (must print nothing)
+
+```bash
+# no hard-coded colours in components or screens
+grep -rnE "#[0-9a-fA-F]{3,8}\b|rgba?\(" app components prototype --include=*.tsx --include=*.ts | grep -v "lib/theme"
+# lucide only through the Icon atom
+grep -rln "from 'lucide-react-native'" app components prototype | grep -vE "components/ui/icon.tsx|components/devkit|/sections/"
+# react-native Text must not be used directly (use components/ui/text)
+grep -rnE "import \{[^}]*\bText\b[^}]*\} from 'react-native'" app components/kit prototype
+# every components/ui + components/kit file has a registry section
+for f in components/ui/*.tsx components/kit/*.tsx; do n=$(basename "$f" .tsx); grep -rqi "id: '$n'" components/devkit/sections || echo "UNREGISTERED: $f"; done 2>/dev/null
+```
+
+Known exemptions: `native-only-animated-view`, `icon`, `text`, `label` are helpers and are
+registered indirectly. Everything else must appear.
+
+## 3. On-device look
+
+Start the servers with the `kit-ios` (Expo Go on the booted simulator) and `kit-web` launch
+configs. For each affected section:
+
+1. Open it: `xcrun simctl openurl booted "exp://localhost:8091/--/kitchen-sink/<category>"`.
+2. Screenshot in the current scheme, flip the theme (header button), screenshot again.
+3. Tap the interactive parts: open overlays, toggle switches, type in inputs, long-press
+   context menus. Confirm sheets clear the home indicator and nothing is clipped.
+4. On web (`http://localhost:8090/kitchen-sink/<category>`) confirm the same section renders
+   and the console has no errors.
+
+Expo Go note: haptics and blur render on the simulator; a physical device is only needed for
+feel, not layout.
+
+## 4. Report
+
+List: checks run, results, screenshots taken, anything deferred (and why) added to BACKLOG.md.

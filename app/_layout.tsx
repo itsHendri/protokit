@@ -26,7 +26,9 @@ function AppShell() {
   return (
     <NavThemeProvider value={NAV_THEME[scheme]}>
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
-      <Stack />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(kit)" />
+      </Stack>
       <PortalHost />
     </NavThemeProvider>
   );
