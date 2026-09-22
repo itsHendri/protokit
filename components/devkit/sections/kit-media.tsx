@@ -31,7 +31,7 @@ function PlaceholderDemo() {
         <Button size="sm" variant="outline" onPress={() => setRound((r) => r + 1)}>
           <Text>New seeds</Text>
         </Button>
-        <Text className="text-muted-foreground text-sm">The same seed always draws the same art.</Text>
+        <Text className="text-muted-foreground flex-1 text-sm">The same seed always draws the same art.</Text>
       </View>
     </View>
   );
