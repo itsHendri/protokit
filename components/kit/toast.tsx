@@ -1,5 +1,6 @@
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
+import { haptic } from '@/lib/haptics';
 import { TOKENS } from '@/lib/theme';
 import { cn } from '@/lib/utils';
 import { CircleAlertIcon, CircleCheckIcon, InfoIcon, TriangleAlertIcon } from 'lucide-react-native';
@@ -41,6 +42,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     (message: string, options: ToastOptions = {}) => {
       const id = ++idRef.current;
       const t: ToastState = { id, message, tone: options.tone ?? 'info', duration: options.duration ?? 2400 };
+      haptic(t.tone === 'success' ? 'success' : t.tone === 'error' ? 'error' : t.tone === 'warning' ? 'warning' : 'light');
       setToasts((prev) => [...prev.slice(-2), t]);
       if (t.duration > 0) setTimeout(() => dismiss(id), t.duration);
     },

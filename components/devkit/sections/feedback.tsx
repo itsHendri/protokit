@@ -5,23 +5,31 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Text } from '@/components/ui/text';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import type { ComponentSection } from '../types';
-import { CircleAlertIcon, CircleCheckIcon, InfoIcon } from 'lucide-react-native';
+import { CircleAlertIcon, CircleCheckIcon, InfoIcon, TriangleAlertIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { Platform, View } from 'react-native';
 
 function AlertDemo() {
   return (
     <View className="w-full gap-3">
-      <Alert icon={CircleCheckIcon}>
-        <AlertTitle>Saved</AlertTitle>
-        <AlertDescription>Your changes have been saved.</AlertDescription>
+      <Alert variant="success" icon={CircleCheckIcon}>
+        <AlertTitle>Changes saved</AlertTitle>
+        <AlertDescription>Everything is up to date.</AlertDescription>
       </Alert>
-      <Alert icon={InfoIcon}>
-        <AlertTitle>Title only, no description.</AlertTitle>
+      <Alert variant="info" icon={InfoIcon}>
+        <AlertTitle>Scheduled maintenance tonight</AlertTitle>
+        <AlertDescription>Some features pause between 02:00 and 03:00.</AlertDescription>
+      </Alert>
+      <Alert variant="warning" icon={TriangleAlertIcon}>
+        <AlertTitle>Storage almost full</AlertTitle>
+        <AlertDescription>Free up space to keep syncing.</AlertDescription>
       </Alert>
       <Alert variant="destructive" icon={CircleAlertIcon}>
-        <AlertTitle>Payment failed</AlertTitle>
-        <AlertDescription>Check your card details and try again.</AlertDescription>
+        <AlertTitle>Upload failed</AlertTitle>
+        <AlertDescription>Check your connection and try again.</AlertDescription>
+      </Alert>
+      <Alert icon={InfoIcon}>
+        <AlertTitle>Neutral, title only</AlertTitle>
       </Alert>
     </View>
   );
@@ -78,8 +86,8 @@ export const FEEDBACK_SECTIONS: ComponentSection[] = [
     title: 'Alert',
     category: 'feedback',
     aliases: ['inline message', 'banner', 'callout', 'error', 'success'],
-    api: '<Alert icon variant="default|destructive"><AlertTitle /><AlertDescription /></Alert>',
-    caption: 'Inline, persistent. For transient messages use Toast (coming in the kit layer).',
+    api: '<Alert icon variant="default|info|success|warning|destructive"><AlertTitle /><AlertDescription /></Alert>',
+    caption: 'Inline and persistent, tinted by tone. For transient messages use Toast.',
     Demo: AlertDemo,
   },
   {

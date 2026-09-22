@@ -21,7 +21,7 @@ function FilterChipDemo() {
   const [sel, setSel] = React.useState<string[]>(['all']);
   const toggle = (v: string) => setSel((s) => (s.includes(v) ? s.filter((x) => x !== v) : [...s, v]));
   return (
-    <View className="-mx-5 w-[calc(100%+40px)]">
+    <View className="-mx-5">
       <FilterChipRow>
         {['all', 'favourites', 'recent', 'archived', 'shared'].map((v) => (
           <FilterChip key={v} label={v[0].toUpperCase() + v.slice(1)} selected={sel.includes(v)} onPress={() => toggle(v)} icon={v === 'favourites' ? StarIcon : undefined} />

@@ -80,7 +80,7 @@ function AccordionTrigger({
   return (
     <TextClassContext.Provider
       value={cn(
-        'text-left text-sm font-medium',
+        'text-left text-base font-semibold',
         Platform.select({ web: 'group-hover:underline' })
       )}>
       <AccordionPrimitive.Header>

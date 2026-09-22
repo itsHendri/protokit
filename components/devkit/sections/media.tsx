@@ -1,3 +1,4 @@
+import { ImageTile } from '@/components/kit/image-tile';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
@@ -35,13 +36,22 @@ const SAMPLE_ICONS = [
 
 function IconDemo() {
   return (
-    <View className="w-full flex-row flex-wrap gap-4">
+    <View className="w-full flex-row flex-wrap">
       {SAMPLE_ICONS.map(([name, as]) => (
-        <View key={name} className="w-16 items-center gap-1">
+        <View key={name} className="w-1/4 items-center gap-1 py-3">
           <Icon as={as} size={24} />
           <Text className="text-muted-foreground text-xs">{name}</Text>
         </View>
       ))}
+    </View>
+  );
+}
+
+function ImageTileDemo() {
+  return (
+    <View className="w-full flex-row gap-3">
+      <ImageTile className="flex-1" source={{ uri: 'https://picsum.photos/seed/kit1/400/300' }} caption="From a URL" />
+      <ImageTile className="flex-1" caption="Placeholder" />
     </View>
   );
 }
@@ -64,6 +74,7 @@ export const MEDIA_SECTIONS: ComponentSection[] = [
     caption: 'Lucide has 1,500+ icons. Colour with a text-* class; never import lucide outside this atom.',
     Demo: IconDemo,
   },
+  { id: 'image-tile', title: 'Image tile', category: 'media', aliases: ['image', 'photo', 'thumbnail', 'placeholder', 'cover'], api: '<ImageTile source? ratio? caption? fallbackIcon? />', caption: 'Rounded image with a muted placeholder while loading or when there is nothing to show.', Demo: ImageTileDemo },
   {
     id: 'aspect-ratio',
     title: 'Aspect ratio',

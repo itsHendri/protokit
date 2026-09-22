@@ -59,7 +59,7 @@ function EmptyStateDemo() {
 function SuccessScreenDemo() {
   return (
     <Card className="w-full py-2">
-      <SuccessScreen title="Money sent" amount="$120.00" amountSubtitle="to Alex Rivera" body="It will arrive within a few seconds." className="py-6" />
+      <SuccessScreen title="You are all set" body="Your changes are saved and everything is ready to go." className="py-6" />
     </Card>
   );
 }
@@ -68,5 +68,5 @@ export const KIT_FEEDBACK_SECTIONS: ComponentSection[] = [
   { id: 'toast', title: 'Toast', category: 'feedback', aliases: ['snackbar', 'notification', 'message', 'copied'], api: 'const toast = useToast(); toast.success("Saved") · .error · .warning · .info', caption: 'Transient, bottom-anchored, tap to dismiss. Persistent messages use Alert.', Demo: ToastDemo },
   { id: 'spinner', title: 'Spinner', category: 'feedback', aliases: ['loading', 'activity indicator'], api: '<Spinner size="small|large" tone="primary|foreground|muted" />', Demo: SpinnerDemo },
   { id: 'empty-state', title: 'Empty state', category: 'feedback', aliases: ['no results', 'nothing here', 'zero state'], api: '<EmptyState icon title subtitle? action? variant="default|compact" />', Demo: EmptyStateDemo },
-  { id: 'success-screen', title: 'Success screen', category: 'feedback', aliases: ['done', 'confirmation', 'checkmark', 'complete'], api: '<SuccessScreen title body? amount? amountSubtitle? loading?>{extra}</SuccessScreen>', caption: 'Use for EVERY success state. Actions go in a StickyBottomBar below it.', Demo: SuccessScreenDemo },
+  { id: 'success-screen', title: 'Success screen', category: 'feedback', aliases: ['done', 'confirmation', 'checkmark', 'complete'], api: '<SuccessScreen title body? amount? amountSubtitle? loading?>{extra}</SuccessScreen>', caption: 'Use for EVERY success state: signup done, booking confirmed, order placed. Optional amount/subtitle for money flows. Actions go in a StickyBottomBar below it.', Demo: SuccessScreenDemo },
 ];

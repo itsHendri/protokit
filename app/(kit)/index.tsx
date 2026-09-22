@@ -30,11 +30,11 @@ export default function KitHome() {
       <View className="gap-3">
         <SectionHeader title="Browse" />
         <Card className="w-full gap-0 px-4 py-0">
-          <Link href="/(kit)/kitchen-sink" asChild>
-            <ListRow leading={<Icon as={BlocksIcon} size={22} className="text-primary" />} title="Components" subtitle={`${SECTIONS.length} previews in ${CATEGORIES.length} categories`} chevron onPress={() => {}} />
-          </Link>
           <Link href="/(kit)/foundations" asChild>
             <ListRow leading={<Icon as={SwatchBookIcon} size={22} className="text-primary" />} title="Foundations" subtitle="Colour, spacing, radius, type, motion" chevron onPress={() => {}} />
+          </Link>
+          <Link href="/(kit)/kitchen-sink" asChild>
+            <ListRow leading={<Icon as={BlocksIcon} size={22} className="text-primary" />} title="Components" subtitle={`${SECTIONS.length} previews in ${CATEGORIES.length} categories`} chevron onPress={() => {}} />
           </Link>
           <Link href="/(sample)/(tabs)" asChild>
             <ListRow leading={<Icon as={SmartphoneIcon} size={22} className="text-primary" />} title="Sample app" subtitle="A worked example built only from the kit" chevron onPress={() => {}} last />

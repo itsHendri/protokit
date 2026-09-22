@@ -37,7 +37,7 @@ export function Stepper({ current, total, labels, variant = 'numbered', classNam
           const done = n < step;
           const active = n === step;
           return (
-            <View key={n} className="flex-1 flex-row items-center">
+            <View key={n} className={cn('flex-row items-center', i < total - 1 && 'flex-1')}>
               <View
                 className={cn(
                   'size-6 items-center justify-center rounded-full',

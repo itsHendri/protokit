@@ -15,7 +15,6 @@ export default function KitchenSink() {
       categories={CATEGORIES}
       sections={SECTIONS}
       searchPlaceholder="Search components"
-      initialOpen={[isCategoryId(open) ? open : 'actions']}
       focus={isCategoryId(open) ? open : undefined}
     />
   );

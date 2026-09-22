@@ -32,6 +32,8 @@ Use the shadcn vocabulary through Tailwind classes. Each name works as `bg-`, `t
 | `border`, `input`, `ring` | hairlines, field borders, focus |
 | `chart-1` … `chart-5` | data series |
 
+Sizing: controls are 48px tall (`h-12`): inputs, selects, default buttons; `sm` buttons 40, `lg` 56. Switch 51×31, radio and checkbox 24.
+
 Rules:
 - **Never a hex literal or `rgb()` in `app/`, `components/` or `prototype/`.** The only escape hatch is
   `THEME[scheme].<name>` from `lib/theme.ts` for SVG fills and native props (charts, StatusBar).
@@ -143,7 +145,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 ### Feedback & status
 | Component | Path | Notes |
 |---|---|---|
-| Alert | `components/ui/alert.tsx` | inline, persistent · `variant` default/destructive · `icon` |
+| Alert | `components/ui/alert.tsx` | inline, persistent · `variant` default/info/success/warning/destructive · `icon` |
 | Progress | `components/ui/progress.tsx` | 0–100 |
 | Skeleton | `components/ui/skeleton.tsx` | |
 | Tooltip | `components/ui/tooltip.tsx` | |
@@ -178,6 +180,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 |---|---|---|
 | Icon | `components/ui/icon.tsx` | lucide wrapper |
 | AspectRatio | `components/ui/aspect-ratio.tsx` | |
+| ImageTile | `components/kit/image-tile.tsx` | rounded image with muted placeholder |
 
 ## Patterns
 

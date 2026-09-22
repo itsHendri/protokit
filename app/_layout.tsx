@@ -7,6 +7,7 @@ import { PortalHost } from '@rn-primitives/portal';
 import { Stack } from 'expo-router';
 import { ThemeProvider as NavThemeProvider } from 'expo-router/react-navigation';
 import { StatusBar } from 'expo-status-bar';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -15,9 +16,11 @@ export {
 
 export default function RootLayout() {
   return (
-    <KitThemeProvider>
-      <AppShell />
-    </KitThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <KitThemeProvider>
+        <AppShell />
+      </KitThemeProvider>
+    </GestureHandlerRootView>
   );
 }
 

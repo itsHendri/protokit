@@ -9,7 +9,7 @@ import { Text } from '@/components/ui/text';
 import type { ComponentSection } from '../types';
 import { HouseIcon, ListIcon, SettingsIcon } from 'lucide-react-native';
 import * as React from 'react';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 function TabBarDemo() {
   const { scheme } = useKitTheme();
@@ -50,20 +50,22 @@ function SectionHeaderDemo() {
 }
 
 function PagerDotsDemo() {
-  const [i, setI] = React.useState(1);
+  const [i, setI] = React.useState(0);
+  const slides = ['Welcome', 'Set up your profile', 'Invite your team', 'Done'];
   return (
-    <View className="items-center gap-3">
-      <PagerDots count={4} activeIndex={i} />
-      <Text className="text-muted-foreground text-sm" onPress={() => setI((n) => (n + 1) % 4)}>
-        Tap to advance
-      </Text>
+    <View className="w-full items-center gap-3">
+      <Pressable accessibilityRole="button" accessibilityLabel="Next slide" onPress={() => setI((n) => (n + 1) % slides.length)} className="bg-card border-border h-28 w-full items-center justify-center rounded-xl border active:opacity-80">
+        <Text className="text-lg font-semibold">{slides[i]}</Text>
+        <Text className="text-muted-foreground text-sm">Tap to advance · {i + 1} of {slides.length}</Text>
+      </Pressable>
+      <PagerDots count={slides.length} activeIndex={i} />
     </View>
   );
 }
 
 function HorizontalPagerDemo() {
   return (
-    <View className="-mx-5 w-[calc(100%+40px)]">
+    <View className="-mx-5">
       <HorizontalPager itemWidth={280}>
         {['Welcome', 'Track spending', 'Set goals'].map((t, i) => (
           <View key={t} className="bg-card border-border h-36 justify-end rounded-xl border p-4">

@@ -160,7 +160,7 @@ function DropdownMenuDemo() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem variant="destructive">
           <Text>Log out</Text>
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -244,6 +244,7 @@ export const OVERLAYS_SECTIONS: ComponentSection[] = [
     category: 'overlays',
     aliases: ['bubble', 'anchored'],
     api: '<Popover><PopoverTrigger asChild /><PopoverContent side /></Popover>',
+    caption: 'A small anchored panel for a quick edit or extra detail next to its trigger. For a full form use Dialog; for a list of actions use DropdownMenu.',
     Demo: PopoverDemo,
   },
   {

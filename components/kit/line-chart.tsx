@@ -17,6 +17,8 @@ type Props = {
   tone?: ChartTone;
   strokeWidth?: number;
   area?: boolean;
+  /** Faint horizontal guides at 25/50/75%. Default true for interactive. */
+  grid?: boolean;
   domain?: { min: number; max: number };
   onPointerChange?: (point: LinePoint | null) => void;
 };
@@ -27,7 +29,7 @@ function toPoints(data: number[] | LinePoint[]): LinePoint[] {
 }
 
 /** SVG line chart. Colours come from THEME (the one place hex is allowed: SVG props). */
-export function LineChart({ data, variant = 'interactive', height = 160, width: widthProp, tone = 'primary', strokeWidth = 2, area = false, domain, onPointerChange }: Props) {
+export function LineChart({ data, variant = 'interactive', height = 160, width: widthProp, tone = 'primary', strokeWidth = 2.5, area = false, grid, domain, onPointerChange }: Props) {
   const { scheme } = useKitTheme();
   const colors = THEME[scheme];
   const color = colors[tone];
@@ -126,6 +128,9 @@ export function LineChart({ data, variant = 'interactive', height = 160, width: 
       style={{ width: widthProp ?? '100%', height: H }}>
       {W > 0 && points.length > 0 ? (
         <Svg width={W} height={H}>
+          {(grid ?? variant === 'interactive')
+            ? [0.25, 0.5, 0.75].map((f) => <Line key={f} x1={0} x2={W} y1={H * f} y2={H * f} stroke={colors.border} strokeWidth={1} strokeDasharray="2 4" />)
+            : null}
           {area ? (
             <Defs>
               <LinearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">

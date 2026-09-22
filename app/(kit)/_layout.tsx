@@ -11,8 +11,8 @@ export default function KitLayout() {
   return (
     <Tabs tabBar={(props) => <TabBar {...props} />} screenOptions={{ headerRight: () => <ThemeToggle /> }}>
       <Tabs.Screen name="index" options={{ title: 'Kit', tabBarIcon: tabIcon(HouseIcon) }} />
-      <Tabs.Screen name="kitchen-sink" options={{ title: 'Components', tabBarIcon: tabIcon(BlocksIcon) }} />
       <Tabs.Screen name="foundations" options={{ title: 'Foundations', tabBarIcon: tabIcon(SwatchBookIcon) }} />
+      <Tabs.Screen name="kitchen-sink" options={{ title: 'Components', tabBarIcon: tabIcon(BlocksIcon) }} />
       <Tabs.Screen name="settings" options={{ title: 'Settings', tabBarIcon: tabIcon(SettingsIcon) }} />
     </Tabs>
   );

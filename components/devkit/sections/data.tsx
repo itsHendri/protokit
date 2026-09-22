@@ -43,6 +43,11 @@ function AvatarDemo() {
           <Text>JD</Text>
         </AvatarFallback>
       </Avatar>
+      <Avatar alt="Small" className="size-8">
+        <AvatarFallback>
+          <Text className="text-xs">SM</Text>
+        </AvatarFallback>
+      </Avatar>
       <Avatar alt="Square" className="rounded-lg">
         <AvatarFallback>
           <Text>SQ</Text>

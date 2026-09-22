@@ -25,21 +25,21 @@ function SheetDemo() {
   );
 }
 
-const CURRENCIES = [
-  { value: 'usd', label: 'US Dollar', description: 'USD' },
-  { value: 'eur', label: 'Euro', description: 'EUR' },
-  { value: 'gbp', label: 'British Pound', description: 'GBP' },
+const OPTIONS = [
+  { value: 'one', label: 'Option one', description: 'A short description' },
+  { value: 'two', label: 'Option two', description: 'Another description' },
+  { value: 'three', label: 'Option three' },
 ] as const;
 
 function OptionSheetDemo() {
   const [open, setOpen] = React.useState(false);
-  const [v, setV] = React.useState<'usd' | 'eur' | 'gbp'>('usd');
+  const [v, setV] = React.useState<'one' | 'two' | 'three'>('one');
   return (
     <>
       <Button variant="outline" onPress={() => setOpen(true)}>
-        <Text>Currency: {v.toUpperCase()}</Text>
+        <Text>Selected: {OPTIONS.find((o) => o.value === v)?.label}</Text>
       </Button>
-      <OptionSheet open={open} onClose={() => setOpen(false)} title="Display currency" options={CURRENCIES} value={v} onChange={setV} />
+      <OptionSheet open={open} onClose={() => setOpen(false)} title="Choose an option" options={OPTIONS} value={v} onChange={setV} />
     </>
   );
 }
@@ -56,10 +56,10 @@ function ActionSheetDemo() {
       <ActionSheet
         open={open}
         onClose={() => setOpen(false)}
-        title="Manage transaction"
+        title="Manage item"
         items={[
-          { label: 'Share receipt', icon: ShareIcon, onPress: () => setLast('share') },
-          { label: 'Edit note', icon: PencilIcon, onPress: () => setLast('edit') },
+          { label: 'Share', icon: ShareIcon, onPress: () => setLast('share') },
+          { label: 'Edit', icon: PencilIcon, onPress: () => setLast('edit') },
           { label: 'Delete', icon: Trash2Icon, destructive: true, onPress: () => setLast('delete') },
         ]}
       />

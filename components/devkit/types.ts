@@ -34,7 +34,7 @@ export type Section<Cat extends string = string> = {
   category: Cat;
   /** Extra search terms ("toggle" → Switch). */
   aliases?: string[];
-  /** One-line API hint, shown in monospace under the demo. */
+  /** One-line API hint for docs (not rendered in the preview). */
   api?: string;
   /** Usage guidance shown under the demo. */
   caption?: string;

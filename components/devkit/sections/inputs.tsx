@@ -128,10 +128,10 @@ function SelectDemo() {
   };
   return (
     <Select>
-      <SelectTrigger className="w-[200px]">
+      <SelectTrigger className="w-full">
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>
-      <SelectContent insets={contentInsets} className="w-[200px]">
+      <SelectContent insets={contentInsets} className="w-[calc(100vw-40px)]">
         <SelectGroup>
           <SelectLabel>Fruits</SelectLabel>
           {FRUITS.map((f) => (

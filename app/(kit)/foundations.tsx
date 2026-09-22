@@ -14,7 +14,6 @@ export default function Foundations() {
       categories={FOUNDATIONS}
       sections={FOUNDATION_SECTIONS}
       searchPlaceholder="Search tokens"
-      initialOpen={[valid ?? 'color']}
       focus={valid}
     />
   );

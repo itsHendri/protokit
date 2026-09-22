@@ -17,7 +17,7 @@ import { ArrowDownLeftIcon, ArrowUpRightIcon, CreditCardIcon, ShoppingCartIcon, 
 import * as React from 'react';
 import { View } from 'react-native';
 
-const PRICES = [42, 44, 43, 47, 49, 46, 51, 55, 53, 58, 57, 61, 60, 64, 63, 68, 66, 70, 72, 71];
+const PRICES = [42, 44, 43, 47, 49, 46, 51, 55, 53, 58, 57, 61, 60, 64, 63, 68, 66, 70, 72, 71, 69, 74, 73, 77, 75, 80, 78, 83, 82, 86];
 
 function ListRowDemo() {
   return (
@@ -32,10 +32,22 @@ function ListRowDemo() {
 
 function IconCircleDemo() {
   return (
-    <View className="flex-row items-center gap-4">
-      <IconCircle as={WalletIcon} />
-      <IconCircle as={WalletIcon} size={48} className="bg-primary/15" iconClassName="text-primary" />
-      <IconCircle as={ShoppingCartIcon} size={56} className="bg-success/15" iconClassName="text-success" />
+    <View className="gap-4">
+      <View className="flex-row items-end gap-4">
+        {[32, 40, 48, 56, 64].map((s) => (
+          <View key={s} className="items-center gap-1">
+            <IconCircle as={WalletIcon} size={s} />
+            <Text className="text-muted-foreground text-xs">{s}</Text>
+          </View>
+        ))}
+      </View>
+      <View className="flex-row items-center gap-4">
+        <IconCircle as={WalletIcon} size={48} />
+        <IconCircle as={WalletIcon} size={48} className="bg-primary/15" iconClassName="text-primary" />
+        <IconCircle as={ShoppingCartIcon} size={48} className="bg-success/15" iconClassName="text-success" />
+        <IconCircle as={ShoppingCartIcon} size={48} className="bg-warning/15" iconClassName="text-warning" />
+        <IconCircle as={ShoppingCartIcon} size={48} className="bg-destructive/15" iconClassName="text-destructive" />
+      </View>
     </View>
   );
 }
@@ -172,7 +184,7 @@ function DonutChartDemo() {
 
 export const KIT_DATA_SECTIONS: ComponentSection[] = [
   { id: 'list-row', title: 'List row', category: 'data', aliases: ['row', 'cell', 'transaction', 'menu item'], api: '<ListRow leading title subtitle? value? sublabel? trailing? chevron? onPress? last? />', caption: 'The canonical row. Put rows inside a Card with px-4 py-0; mark the last one `last`.', Demo: ListRowDemo },
-  { id: 'icon-circle', title: 'Icon circle', category: 'data', aliases: ['icon well', 'avatar icon', 'leading icon'], api: '<IconCircle as size? className? iconClassName? />', caption: 'Tint with bg-<tone>/15 + text-<tone>.', Demo: IconCircleDemo },
+  { id: 'icon-circle', title: 'Icon circle', category: 'data', aliases: ['icon well', 'avatar icon', 'leading icon'], api: '<IconCircle as size? className? iconClassName? />', caption: 'Sizes 32–64 in neutral; tone with bg-<tone>/15 + text-<tone> (brand, success, warning, destructive).', Demo: IconCircleDemo },
   { id: 'summary-card', title: 'Summary card', category: 'data', aliases: ['key value', 'receipt', 'details', 'order summary'], api: '<SummaryCard title? rows={[{label,value}]} /> · <KeyValueList rows />', Demo: SummaryDemo },
   { id: 'stat-tile', title: 'Stat tile', category: 'data', aliases: ['kpi', 'metric', 'dashboard'], api: '<StatTile label value delta? icon? />', Demo: StatTileDemo },
   { id: 'percent-change', title: 'Percent change', category: 'data', aliases: ['delta', 'trend', 'up down'], api: '<PercentChange value decimals? showIcon? />', Demo: PercentChangeDemo },
