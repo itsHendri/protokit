@@ -34,8 +34,9 @@ tokens/                 tokens.json (edit), build.mjs, generated/
 ## Commands
 
 ```bash
-npm run dev            # expo start -c (Expo Go on simulator / dev client)
-npm run ios            # expo start --ios (add --go for Expo Go)
+npm run dev            # expo start -c --go (Expo Go: scan the QR with the phone camera)
+npm run dev:client     # expo start -c (development build)
+npm run ios            # expo start --ios --go (simulator)
 npm run web            # expo start --web
 npm run typecheck && npm run lint -- --max-warnings 0
 npm run tokens:build   # after editing tokens/tokens.json

@@ -3,9 +3,9 @@
   "main": "expo-router/entry",
   "version": "0.1.0",
   "scripts": {
-    "start": "expo start",
-    "dev": "expo start -c",
-    "ios": "expo run:ios",
+    "start": "expo start --go",
+    "dev": "expo start -c --go",
+    "ios": "expo start --ios --go",
     "android": "expo run:android",
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
@@ -14,7 +14,8 @@
     "tokens:build": "node tokens/build.mjs",
     "share": "bash scripts/share.sh",
     "export:web": "expo export --platform web",
-    "tokens:figma": "node tokens/push-figma.mjs"
+    "tokens:figma": "node tokens/push-figma.mjs",
+    "dev:client": "expo start -c"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",
