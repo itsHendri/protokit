@@ -102,7 +102,7 @@ export function Slider({ value, onChange, min = 0, max = 1, step = 0, tone = 'pr
         <View style={{ height: THUMB }} className="justify-center">
           <View className="bg-muted absolute left-0 right-0 h-1.5 rounded-full" />
           <View className={cn('absolute left-0 h-1.5 rounded-full', fill)} style={{ width: thumbX + THUMB / 2 }} />
-          <View className={cn('bg-background absolute rounded-full border-2 shadow-sm shadow-black/25', ring)} style={{ left: thumbX, width: THUMB, height: THUMB }} />
+          <View className={cn('bg-card absolute rounded-full border-2 shadow-sm shadow-black/25', ring)} style={{ left: thumbX, width: THUMB, height: THUMB }} />
         </View>
       </View>
     </GestureDetector>

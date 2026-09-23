@@ -20,7 +20,7 @@ function Switch({
       {...props}>
       <SwitchPrimitives.Thumb
         className={cn(
-          'bg-background size-7 rounded-full shadow-sm shadow-black/20 transition-transform',
+          'bg-card size-7 rounded-full shadow-sm shadow-black/20 transition-transform',
           Platform.select({
             web: 'pointer-events-none block ring-0',
           }),
