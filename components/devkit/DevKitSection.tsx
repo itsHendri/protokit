@@ -3,8 +3,9 @@ import { Text, TextClassContext } from '@/components/ui/text';
 import { View } from 'react-native';
 
 /**
- * One labelled preview: uppercase title, the demo, an optional usage caption.
- * The API line stays in the registry data for docs; the preview shows the component, not code.
+ * One labelled preview: uppercase title, then the demo.
+ * `api` and `caption` stay in the registry data for the docs and for agents reading the
+ * registry — the preview shows the component, not prose about it.
  */
 export function DevKitSection({ section }: { section: Section }) {
   const { Demo } = section;
@@ -16,7 +17,6 @@ export function DevKitSection({ section }: { section: Section }) {
           <Demo />
         </View>
       </TextClassContext.Provider>
-      {section.caption ? <Text className="text-muted-foreground text-sm">{section.caption}</Text> : null}
     </View>
   );
 }
