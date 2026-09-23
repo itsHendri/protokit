@@ -60,6 +60,7 @@ function ToggleDemo() {
   return (
     <Toggle
       variant="outline"
+      className="self-start"
       aria-label="Toggle bold"
       pressed={pressed}
       onPressedChange={(next) => {
