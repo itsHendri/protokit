@@ -105,6 +105,10 @@ npx expo run:ios       # build + install the dev client on the simulator (needs 
   lazily `require`d inside `lib/native.ts` and `components/kit/notify.tsx`. Keep it that way.
 - `ios/` is a build artifact (gitignored). After changing `app.json` plugins or permission strings, run
   `LANG=en_US.UTF-8 npx expo prebuild -p ios --clean` — the diff will not show Info.plist.
+- The kit's animations use React Native `Animated`, which ignores reanimated's `ReduceMotion.System`
+  that `components/ui` relies on. Anything that moves must call `useMotion()` from
+  `lib/reduced-motion.ts` — `sheet`, `toast`, `notify`, `segmented-control` and `swipe-to-confirm`
+  all do; copy one of them.
 - NativeWind classNames are **dropped on `Animated.View` on web**. Put the surface (`bg-*`, radius) on a
   plain `View` inside it, as `sheet.tsx` and `toast.tsx` do, or the panel renders transparent in the
   web preview. `sheet.tsx`, `segmented-control.tsx`, `swipe-to-confirm.tsx` and `notify.tsx` all

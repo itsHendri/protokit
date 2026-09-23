@@ -2,6 +2,7 @@ import { Text } from '@/components/ui/text';
 import { haptic } from '@/lib/haptics';
 import { TOKENS } from '@/lib/theme';
 import { cn } from '@/lib/utils';
+import { useMotion } from '@/lib/reduced-motion';
 import * as React from 'react';
 import { Animated, Easing, type LayoutChangeEvent, Pressable, View } from 'react-native';
 
@@ -23,15 +24,16 @@ export function SegmentedControl<T extends string>({ segments, value, onChange, 
   );
   const [anim] = React.useState(() => new Animated.Value(activeIndex));
   const segW = trackW > 0 ? (trackW - INSET * 2) / segments.length : 0;
+  const motion = useMotion();
 
   React.useEffect(() => {
     Animated.timing(anim, {
       toValue: activeIndex,
-      duration: TOKENS.duration.base,
+      duration: motion(TOKENS.duration.base),
       easing: Easing.out(Easing.cubic),
       useNativeDriver: true,
     }).start();
-  }, [activeIndex, anim]);
+  }, [activeIndex, anim, motion]);
 
   const onLayout = (e: LayoutChangeEvent) => setTrackW(e.nativeEvent.layout.width);
 

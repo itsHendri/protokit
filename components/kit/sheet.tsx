@@ -3,6 +3,7 @@ import { Text } from '@/components/ui/text';
 import { haptic } from '@/lib/haptics';
 import { TOKENS } from '@/lib/theme';
 import { cn } from '@/lib/utils';
+import { useMotion } from '@/lib/reduced-motion';
 import { CheckIcon, type LucideIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { Animated, Easing, Modal, Pressable, ScrollView, View } from 'react-native';
@@ -25,17 +26,18 @@ type SheetProps = {
 export function Sheet({ open, onClose, title, description, children, className }: SheetProps) {
   const insets = useSafeAreaInsets();
   const [translateY] = React.useState(() => new Animated.Value(400));
+  const motion = useMotion();
 
   React.useEffect(() => {
     if (!open) return;
     translateY.setValue(400);
     Animated.timing(translateY, {
       toValue: 0,
-      duration: TOKENS.duration.slow,
+      duration: motion(TOKENS.duration.slow),
       easing: Easing.out(Easing.cubic),
       useNativeDriver: true,
     }).start();
-  }, [open, translateY]);
+  }, [open, translateY, motion]);
 
   return (
     <Modal visible={open} transparent animationType="fade" statusBarTranslucent onRequestClose={onClose}>

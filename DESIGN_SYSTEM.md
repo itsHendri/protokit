@@ -226,6 +226,10 @@ Remote push is gone from Expo Go since SDK 53.
 - **Confirmations:** `AlertDialog` for reversible, `SwipeToConfirm` for money or deletion.
 - **Success:** `SuccessScreen` + `StickyBottomBar` with "Done". Always.
 - **Loading:** `Skeleton` for content shapes, `Spinner` inside buttons (`tone="primary-foreground"` on a filled one), `Progress` when determinate.
+- **Motion:** anything that slides, springs or moves calls `useMotion()` / `useReducedMotion()`
+  from `lib/reduced-motion.ts` and collapses to 0ms when the OS asks. `components/ui` gets this
+  from reanimated's `ReduceMotion.System`; the kit's `Animated` code has no equivalent, so it is
+  not optional — a new animated component without it is a bug.
 - **Permission:** `PermissionPrimer` before the OS dialog, always with a skip that runs the simulated
   path. Never show a raw denied state. Keep its copy in step with the strings in `app.json`.
 - **Imagery:** the kit ships no raster art. `Placeholder` (seeded, themed) fills image slots;
