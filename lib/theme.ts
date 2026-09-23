@@ -95,7 +95,7 @@ export const TOKENS = {
     sm: 6,
     md: 8,
     lg: 10,
-    xl: 14,
+    xl: 16,
     '2xl': 20,
     full: 9999,
     base: 10,

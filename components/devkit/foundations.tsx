@@ -22,7 +22,9 @@ function ColorTokens() {
         const cls = `bg-${kebab(name)}`;
         return (
           <Pressable key={name} onPress={() => copy(name, cls)} className="w-[30%] min-w-[96px] flex-1 gap-1">
-            <View className={cn('border-border h-14 rounded-lg border', cls)} />
+            {/* Painted from the hex, not `bg-${name}`: a class assembled at runtime is
+                never seen by Tailwind, so chart-1..5 and ring rendered blank. */}
+            <View className="border-border h-14 rounded-lg border" style={{ backgroundColor: hex }} />
             <Text className="text-xs font-semibold" numberOfLines={1}>
               {copied === name ? 'Copied ✓' : kebab(name)}
             </Text>
@@ -41,7 +43,7 @@ function SpacingTokens() {
     <View className="w-full gap-2">
       {entries.map(([step, px]) => (
         <Pressable key={step} onPress={() => copy(step, `p-${step}`)} className="flex-row items-center gap-3">
-          <View className="bg-primary h-4 rounded-sm" style={{ width: Math.max(px, 2) }} />
+          <View className="bg-foreground h-4 rounded-sm" style={{ width: Math.max(px, 2) }} />
           <Text className="w-12 font-medium">{copied === step ? '✓' : step}</Text>
           <Text className="text-muted-foreground text-sm">
             {px}px · p-{step} / gap-{step} / m-{step}

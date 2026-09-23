@@ -136,7 +136,7 @@ export const NUMBERS = {
       "code": "rounded-lg"
     },
     "xl": {
-      "value": 14,
+      "value": 16,
       "code": "rounded-xl"
     },
     "2xl": {
