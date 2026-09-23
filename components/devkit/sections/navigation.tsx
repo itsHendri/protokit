@@ -49,6 +49,11 @@ function TabsDemo() {
               <CardTitle>Activity</CardTitle>
               <CardDescription>A list of recent events would go here.</CardDescription>
             </CardHeader>
+            <CardContent>
+              <Button variant="outline">
+                <Text>See all activity</Text>
+              </Button>
+            </CardContent>
           </Card>
         </TabsContent>
       </Tabs>

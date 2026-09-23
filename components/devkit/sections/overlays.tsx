@@ -120,7 +120,7 @@ function PopoverDemo() {
           <Text>Open popover</Text>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80" side="bottom">
+      <PopoverContent className="w-[calc(100%-40px)]" side="bottom">
         <View className="gap-3">
           <Text className="font-semibold">Rename list</Text>
           <Text className="text-muted-foreground text-sm">A quick edit next to the thing it changes.</Text>
