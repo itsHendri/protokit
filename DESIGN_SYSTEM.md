@@ -84,7 +84,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | Button | `components/ui/button.tsx` | `variant` default/secondary/outline/ghost/link/destructive · `size` sm/default/lg/icon · children are `<Text>`/`<Icon>` |
 | Toggle | `components/ui/toggle.tsx` | pressed two-state button |
 | ToggleGroup | `components/ui/toggle-group.tsx` | `type` single/multiple |
-| FAB | `components/kit/fab.tsx` | `icon label? variant position` · one per screen |
+| FAB | `components/kit/fab.tsx` | floats OVER the scroll (a Button flows with it) · `icon label? variant position` · one per screen |
 | IconBadge | `components/kit/icon-badge.tsx` | icon button with unread count/dot · always labelled |
 | ActionGrid | `components/kit/action-grid.tsx` | the row of shortcuts under a screen hero · 3–4 `items`, one row only, last tile is "More" |
 | SwipeToConfirm | `components/kit/swipe-to-confirm.tsx` | drag past 85% commits · `tone` primary/destructive · reset via `key` |
@@ -229,6 +229,7 @@ Remote push is gone from Expo Go since SDK 53.
 ## Anti-patterns
 
 - ✗ Cards inside cards. ✗ Section titles inside the card. ✗ Everything centred.
+- ✗ Radio and checkbox choices in one group — split them; one picks one, the other picks any.
 - ✗ Identical card grids (same icon + heading + body repeated).
 - ✗ Same padding on every element; vary it to create rhythm.
 - ✗ Modals as the default home for secondary content.

@@ -31,18 +31,14 @@ function IconBadgeDemo() {
 }
 
 function SwipeToConfirmDemo() {
-  const [count, setCount] = React.useState(0);
   const [key, setKey] = React.useState(0);
   return (
     <View className="w-full gap-3">
-      <SwipeToConfirm key={key} label="Slide to proceed" onConfirm={() => setCount((c) => c + 1)} />
-      <SwipeToConfirm key={key + 1000} label="Slide to delete" confirmLabel="Deleted" tone="destructive" onConfirm={() => setCount((c) => c + 1)} />
-      <View className="flex-row items-center gap-3">
-        <Button size="sm" variant="outline" onPress={() => setKey((k) => k + 1)}>
-          <Text>Reset</Text>
-        </Button>
-        <Text className="text-muted-foreground text-sm">Confirmed {count}×</Text>
-      </View>
+      <SwipeToConfirm key={key} label="Slide to proceed" onConfirm={() => {}} />
+      <SwipeToConfirm key={key + 1000} label="Slide to delete" confirmLabel="Deleted" tone="destructive" onConfirm={() => {}} />
+      <Button variant="outline" onPress={() => setKey((k) => k + 1)}>
+        <Text>Reset</Text>
+      </Button>
     </View>
   );
 }
@@ -70,9 +66,9 @@ export const KIT_ACTIONS_SECTIONS: ComponentSection[] = [
     id: 'fab',
     title: 'FAB',
     category: 'actions',
-    aliases: ['floating action button', 'plus', 'extended'],
+    aliases: ['floating action button', 'plus', 'extended', 'fab'],
     api: '<FAB icon label? variant="primary|secondary" position="inline|bottom-right|bottom-center" />',
-    caption: 'One per screen, for the single most important action.',
+    caption: 'Floating action button — it floats over the scroll instead of sitting in it, so the screen\u2019s one creative action stays reachable however far you scroll. A Button flows with content; a FAB does not. One per screen.',
     Demo: FABDemo,
   },
   {

@@ -10,7 +10,7 @@ import { View } from 'react-native';
 
 function TextDemo() {
   return (
-    <View className="w-full gap-2">
+    <View className="w-full gap-4">
       <Text variant="h1" className="text-left">
         Heading 1
       </Text>

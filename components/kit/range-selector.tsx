@@ -13,12 +13,12 @@ type Props<T extends string> = {
 /**
  * Trackless range picker for a chart — 1D · 1W · 1M · 1Y · ALL.
  *
- * No track and no sliding thumb: the selected option is a filled disc. Use
+ * Equal-width pills so every option reads as tappable; the selected one inverts. Use
  * `SegmentedControl` instead when the options switch content rather than a time window.
  */
 export function RangeSelector<T extends string>({ options, value, onChange, className }: Props<T>) {
   return (
-    <View className={cn('flex-row items-center justify-between', className)} accessibilityRole="tablist">
+    <View className={cn('flex-row items-center gap-2', className)} accessibilityRole="tablist">
       {options.map((option) => {
         const selected = option.value === value;
         return (
@@ -32,8 +32,8 @@ export function RangeSelector<T extends string>({ options, value, onChange, clas
             accessibilityState={{ selected }}
             accessibilityLabel={option.label}
             className={cn(
-              'min-h-11 min-w-11 items-center justify-center rounded-full px-3 active:opacity-70',
-              selected && 'bg-foreground'
+              'h-11 flex-1 items-center justify-center rounded-full px-2 active:opacity-70',
+              selected ? 'bg-foreground' : 'bg-muted'
             )}>
             <Text className={cn('text-sm font-semibold', selected ? 'text-background' : 'text-muted-foreground')}>
               {option.label}

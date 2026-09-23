@@ -66,7 +66,7 @@ function PagerDotsDemo() {
   const slides = ['Welcome', 'Set up your profile', 'Invite your team', 'You are ready'];
   return (
     <View className="-mx-5 self-stretch">
-      <HorizontalPager itemWidth={width - 40} gap={0}>
+      <HorizontalPager itemWidth={width - 52} gap={12}>
         {slides.map((t, i) => (
           <View key={t} className="bg-card border-border h-40 items-center justify-center rounded-xl border px-6">
             <Text className="text-lg font-semibold">{t}</Text>
@@ -81,7 +81,7 @@ function PagerDotsDemo() {
 function HorizontalPagerDemo() {
   return (
     <View className="-mx-5 self-stretch">
-      <HorizontalPager itemWidth={280}>
+      <HorizontalPager itemWidth={280} showDots={false}>
         {['Getting started', 'Tips and tricks', 'What is new'].map((t, i) => (
           <View key={t} className="bg-card border-border h-36 justify-end rounded-xl border p-4">
             <Text className="text-muted-foreground text-xs">Card {i + 1}</Text>

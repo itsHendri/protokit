@@ -94,7 +94,7 @@ function AlertDialogDemo() {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>Delete your account?</AlertDialogTitle>
           <AlertDialogDescription>
             This cannot be undone. Your account and data will be permanently removed.
           </AlertDialogDescription>
@@ -103,8 +103,8 @@ function AlertDialogDemo() {
           <AlertDialogCancel>
             <Text>Cancel</Text>
           </AlertDialogCancel>
-          <AlertDialogAction>
-            <Text>Continue</Text>
+          <AlertDialogAction className="bg-destructive">
+            <Text className="text-destructive-foreground">Delete account</Text>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -119,6 +119,7 @@ function SwitchDemo() {
 const FRUITS = ['Apple', 'Banana', 'Blueberry', 'Grapes', 'Pineapple'];
 
 function SelectDemo() {
+  const [triggerWidth, setTriggerWidth] = React.useState(0);
   const insets = useSafeAreaInsets();
   const contentInsets = {
     top: insets.top,
@@ -128,10 +129,11 @@ function SelectDemo() {
   };
   return (
     <Select>
-      <SelectTrigger className="w-full">
+      <SelectTrigger className="w-full" onLayout={(e) => setTriggerWidth(e.nativeEvent.layout.width)}>
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>
-      <SelectContent insets={contentInsets} className="w-[calc(100vw-40px)]">
+      {/* Match the trigger so the open list lines up with the field it belongs to. */}
+      <SelectContent insets={contentInsets} style={triggerWidth ? { width: triggerWidth } : undefined}>
         <SelectGroup>
           <SelectLabel>Fruits</SelectLabel>
           {FRUITS.map((f) => (

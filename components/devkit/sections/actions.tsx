@@ -12,44 +12,40 @@ import { View } from 'react-native';
 function ButtonDemo() {
   return (
     <View className="w-full gap-3">
-      <View className="flex-row flex-wrap items-center gap-2">
-        <Button>
-          <Text>Primary</Text>
-        </Button>
-        <Button variant="secondary">
-          <Text>Secondary</Text>
-        </Button>
-        <Button variant="outline">
-          <Text>Outline</Text>
-        </Button>
-      </View>
-      <View className="flex-row flex-wrap items-center gap-2">
-        <Button variant="ghost">
-          <Text>Ghost</Text>
-        </Button>
-        <Button variant="link">
-          <Text>Link</Text>
-        </Button>
-        <Button variant="destructive">
-          <Text>Destructive</Text>
-        </Button>
-      </View>
-      <View className="flex-row flex-wrap items-center gap-2">
+      <Button>
+        <Text>Primary</Text>
+      </Button>
+      <Button variant="secondary">
+        <Text>Secondary</Text>
+      </Button>
+      <Button variant="outline">
+        <Text>Outline</Text>
+      </Button>
+      <Button variant="ghost">
+        <Text>Ghost</Text>
+      </Button>
+      <Button variant="destructive">
+        <Text>Destructive</Text>
+      </Button>
+      <Button>
+        <Icon as={MailIcon} className="text-primary-foreground" />
+        <Text>With icon</Text>
+      </Button>
+      <Button disabled>
+        <View className="pointer-events-none animate-spin">
+          <Icon as={Loader2Icon} className="text-primary-foreground" />
+        </View>
+        <Text>Loading</Text>
+      </Button>
+      <View className="flex-row items-center gap-2">
         <Button size="sm">
           <Text>Small</Text>
         </Button>
         <Button size="lg">
           <Text>Large</Text>
         </Button>
-        <Button>
-          <Icon as={MailIcon} className="text-primary-foreground" />
-          <Text>With icon</Text>
-        </Button>
-        <Button disabled>
-          <View className="pointer-events-none animate-spin">
-            <Icon as={Loader2Icon} className="text-primary-foreground" />
-          </View>
-          <Text>Loading</Text>
+        <Button variant="link">
+          <Text>Link</Text>
         </Button>
         <Button variant="outline" size="icon" accessibilityLabel="Next">
           <Icon as={ChevronRightIcon} />
@@ -62,15 +58,17 @@ function ButtonDemo() {
 function ToggleDemo() {
   const [pressed, setPressed] = React.useState(false);
   return (
-    <Toggle
-      aria-label="Toggle bold"
-      pressed={pressed}
-      onPressedChange={(next) => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        setPressed(next);
-      }}>
-      <ToggleIcon as={BoldIcon} />
-    </Toggle>
+    <View className="bg-muted flex-row items-center gap-1 self-start rounded-lg p-1">
+      <Toggle
+        aria-label="Toggle bold"
+        pressed={pressed}
+        onPressedChange={(next) => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          setPressed(next);
+        }}>
+        <ToggleIcon as={BoldIcon} />
+      </Toggle>
+    </View>
   );
 }
 

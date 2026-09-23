@@ -88,7 +88,7 @@ function SliderDemo() {
     <View className="w-full gap-2">
       <Slider value={a} onChange={setA} />
       <Text className="text-muted-foreground text-sm">Continuous · {Math.round(a * 100)}%</Text>
-      <Slider value={b} onChange={setB} min={0} max={10} step={1} tone="warning" />
+      <Slider value={b} onChange={setB} min={0} max={10} step={1} />
       <Text className="text-muted-foreground text-sm">Stepped 0–10 · {b}</Text>
     </View>
   );
@@ -109,10 +109,17 @@ function SelectableCardDemo() {
   const [extras, setExtras] = React.useState<string[]>(["insurance"]);
   const toggle = (v: string) => setExtras((s) => (s.includes(v) ? s.filter((x) => x !== v) : [...s, v]));
   return (
-    <View className="w-full gap-2">
-      <SelectableCard icon={TruckIcon} title="Standard delivery" description="3–5 business days" detail="Free" selected={plan === "standard"} onPress={() => setPlan("standard")} />
-      <SelectableCard icon={ZapIcon} title="Express delivery" description="Tomorrow before noon" detail="$9.90" selected={plan === "express"} onPress={() => setPlan("express")} />
-      <SelectableCard mode="checkbox" title="Add insurance" description="Covers loss and damage" detail="$2.00" selected={extras.includes("insurance")} onPress={() => toggle("insurance")} />
+    <View className="w-full gap-5">
+      {/* One choice: radio cards. */}
+      <View className="gap-2">
+        <SelectableCard icon={TruckIcon} title="Standard delivery" description="3–5 business days" detail="Free" selected={plan === "standard"} onPress={() => setPlan("standard")} />
+        <SelectableCard icon={ZapIcon} title="Express delivery" description="Tomorrow before noon" detail="$9.90" selected={plan === "express"} onPress={() => setPlan("express")} />
+      </View>
+      {/* Any number: checkbox cards. Never mix the two in one group. */}
+      <View className="gap-2">
+        <SelectableCard mode="checkbox" title="Add insurance" description="Covers loss and damage" detail="$2.00" selected={extras.includes("insurance")} onPress={() => toggle("insurance")} />
+        <SelectableCard mode="checkbox" title="Signature on delivery" description="Someone must sign for it" detail="$1.50" selected={extras.includes("signature")} onPress={() => toggle("signature")} />
+      </View>
     </View>
   );
 }

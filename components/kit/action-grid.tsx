@@ -40,7 +40,7 @@ export function ActionGrid({ items, className }: Props) {
           accessibilityLabel={item.label}
           accessibilityState={{ disabled: !!item.disabled }}
           className={cn('flex-1 items-center gap-2 active:opacity-70', item.disabled && 'opacity-50')}>
-          <View className="bg-muted aspect-square w-full items-center justify-center rounded-2xl">
+          <View className="bg-muted aspect-square w-full items-center justify-center rounded-full">
             <Icon as={item.icon} size={24} className="text-foreground" />
             {typeof item.badge === 'number' ? (
               <View className="bg-destructive border-background absolute right-1.5 top-1.5 min-w-5 items-center justify-center rounded-full border-2 px-1">
