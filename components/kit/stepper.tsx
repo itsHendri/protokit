@@ -41,10 +41,10 @@ export function Stepper({ current, total, labels, variant = 'numbered', classNam
           return (
             <React.Fragment key={n}>
               {i > 0 ? (
-                <View className={cn('mx-1 mt-3 h-0.5 flex-1 rounded-full', n <= step ? 'bg-primary' : 'bg-border')} />
+                <View className={cn('mx-1.5 mt-3 h-0.5 flex-1 rounded-full', n <= step ? 'bg-primary' : 'bg-border')} />
               ) : null}
               {/* One column per step so the label sits under its own circle. */}
-              <View className="items-center" style={{ width: hasLabels ? 72 : 24 }}>
+              <View className="items-center" style={{ width: hasLabels ? 60 : 24 }}>
                 <View
                   className={cn(
                     'size-6 items-center justify-center rounded-full',

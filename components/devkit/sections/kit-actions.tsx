@@ -11,9 +11,9 @@ import { View } from 'react-native';
 
 function FloatingButtonDemo() {
   return (
-    <View className="flex-row flex-wrap items-center gap-4">
+    <View className="flex-row items-center gap-3">
       <FloatingButton icon={PlusIcon} accessibilityLabel="Add" />
-      <FloatingButton icon={PlusIcon} label="New item" />
+      <FloatingButton icon={PlusIcon} label="Primary" />
       <FloatingButton icon={PlusIcon} label="Secondary" variant="secondary" />
     </View>
   );

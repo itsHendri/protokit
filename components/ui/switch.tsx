@@ -9,7 +9,7 @@ function Switch({
   return (
     <SwitchPrimitives.Root
       className={cn(
-        'flex h-8 w-16 shrink-0 flex-row items-center rounded-full border border-transparent shadow-sm shadow-black/5',
+        'flex h-8 w-16 shrink-0 flex-row items-center rounded-full border border-transparent p-px shadow-sm shadow-black/5',
         Platform.select({
           web: 'focus-visible:border-ring focus-visible:ring-ring/50 peer inline-flex outline-none transition-all focus-visible:ring-[3px] disabled:cursor-not-allowed',
         }),
@@ -25,7 +25,7 @@ function Switch({
             web: 'pointer-events-none block ring-0',
           }),
           props.checked
-            ? 'dark:bg-foreground translate-x-[34px]'
+            ? 'dark:bg-foreground translate-x-[32px]'
             : 'dark:bg-foreground translate-x-0'
         )}
       />

@@ -1,5 +1,6 @@
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
+import { haptic } from '@/lib/haptics';
 import { cn } from '@/lib/utils';
 import { ArrowUpDownIcon } from 'lucide-react-native';
 import { Pressable, TextInput, View } from 'react-native';
@@ -57,12 +58,24 @@ export function AmountInput({
           </Pressable>
         ) : null}
         {onMax ? (
-          <Pressable accessibilityRole="button" accessibilityLabel="Use maximum" onPress={onMax} hitSlop={8} className="bg-muted h-8 justify-center rounded-full px-3">
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Use maximum"
+            onPress={() => {
+              haptic('selection');
+              onMax();
+            }}
+            hitSlop={8}
+            className="bg-muted h-8 justify-center rounded-full px-3">
             <Text className="text-primary text-xs font-bold">MAX</Text>
           </Pressable>
         ) : null}
       </View>
-      {error || helper ? <Text className={cn('mt-2 text-sm', error ? 'text-destructive' : 'text-muted-foreground')}>{error ?? helper}</Text> : null}
+      {error || helper ? (
+        <Text className={cn('mt-2 text-sm', error ? 'text-destructive' : 'text-muted-foreground text-right')}>
+          {error ?? helper}
+        </Text>
+      ) : null}
     </View>
   );
 }

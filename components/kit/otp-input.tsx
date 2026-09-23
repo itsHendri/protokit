@@ -60,7 +60,7 @@ export function OtpInput({ length = 6, value, onChange, onComplete, error, autoF
 
   return (
     <View className={className}>
-      <View className="flex-row justify-center gap-2">
+      <View className="flex-row gap-2">
         {digits.map((d, idx) => (
           <TextInput
             key={idx}
@@ -78,8 +78,12 @@ export function OtpInput({ length = 6, value, onChange, onComplete, error, autoF
             textContentType="oneTimeCode"
             autoComplete="one-time-code"
             accessibilityLabel={`Digit ${idx + 1} of ${length}`}
+            // textAlignVertical + no font padding: without these the digit rides high
+            // in a fixed-height TextInput on Android.
+            textAlignVertical="center"
+            style={{ includeFontPadding: false }}
             className={cn(
-              'bg-card text-foreground h-14 w-12 rounded-lg border text-center text-2xl font-bold',
+              'bg-card text-foreground h-14 flex-1 rounded-lg border p-0 text-center text-2xl font-bold',
               error ? 'border-destructive' : focusIdx === idx ? 'border-primary' : 'border-border'
             )}
           />

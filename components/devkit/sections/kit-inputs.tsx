@@ -52,17 +52,26 @@ function SearchFieldDemo() {
 function QuantityStepperDemo() {
   const [n, setN] = React.useState(1);
   return (
-    <View className="flex-row items-center gap-4">
-      <QuantityStepper value={n} onChange={setN} min={0} max={10} />
-      <Text className="text-muted-foreground text-sm">0–10</Text>
-    </View>
+    <QuantityStepper value={n} onChange={setN} min={0} max={10} />
   );
 }
 
+const CURRENCIES = ['$', '£', '€'] as const;
+
 function AmountInputDemo() {
   const [v, setV] = React.useState('');
+  const [cur, setCur] = React.useState(0);
+  const symbol = CURRENCIES[cur];
   return (
-    <AmountInput value={v} onChangeText={setV} symbol="$" helper="Up to $500.00 available" onMax={() => setV('500')} onToggleCurrency={() => {}} className="w-full" />
+    <AmountInput
+      value={v}
+      onChangeText={setV}
+      symbol={symbol}
+      helper={`Up to ${symbol}500.00 available`}
+      onMax={() => setV('500')}
+      onToggleCurrency={() => setCur((c) => (c + 1) % CURRENCIES.length)}
+      className="w-full"
+    />
   );
 }
 
@@ -110,13 +119,14 @@ function SelectableCardDemo() {
   const toggle = (v: string) => setExtras((s) => (s.includes(v) ? s.filter((x) => x !== v) : [...s, v]));
   return (
     <View className="w-full gap-5">
-      {/* One choice: radio cards. */}
       <View className="gap-2">
+        <Text className="text-muted-foreground text-xs font-semibold uppercase tracking-wide">Single select</Text>
         <SelectableCard icon={TruckIcon} title="Standard delivery" description="3–5 business days" detail="Free" selected={plan === "standard"} onPress={() => setPlan("standard")} />
         <SelectableCard icon={ZapIcon} title="Express delivery" description="Tomorrow before noon" detail="$9.90" selected={plan === "express"} onPress={() => setPlan("express")} />
       </View>
-      {/* Any number: checkbox cards. Never mix the two in one group. */}
+      {/* Never mix the two in one group. */}
       <View className="gap-2">
+        <Text className="text-muted-foreground text-xs font-semibold uppercase tracking-wide">Multi select</Text>
         <SelectableCard mode="checkbox" title="Add insurance" description="Covers loss and damage" detail="$2.00" selected={extras.includes("insurance")} onPress={() => toggle("insurance")} />
         <SelectableCard mode="checkbox" title="Signature on delivery" description="Someone must sign for it" detail="$1.50" selected={extras.includes("signature")} onPress={() => toggle("signature")} />
       </View>
