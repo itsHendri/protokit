@@ -19,7 +19,7 @@ export default function HabitSettings() {
   const [start, setStart] = React.useState<'mon' | 'sun'>('mon');
   const [open, setOpen] = React.useState(false);
   return (
-    <ScrollView className="bg-background flex-1" contentContainerClassName="gap-5 p-5 pb-16">
+    <ScrollView className="bg-background flex-1" contentContainerClassName="gap-5 p-5 pb-32">
       <View className="gap-3">
         <SectionHeader title="Preferences" />
         <Card className="w-full gap-0 px-4 py-0">

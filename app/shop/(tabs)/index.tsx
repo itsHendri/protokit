@@ -17,7 +17,7 @@ export default function ShopHome() {
   const items = PRODUCTS.filter((p) => (cat === 'all' || p.category === cat) && p.name.toLowerCase().includes(query.trim().toLowerCase()));
 
   return (
-    <ScrollView className="bg-background flex-1" contentContainerClassName="gap-4 pb-16 pt-3" keyboardShouldPersistTaps="handled">
+    <ScrollView className="bg-background flex-1" contentContainerClassName="gap-4 pb-32 pt-3" keyboardShouldPersistTaps="handled">
       <View className="px-5">
         <SearchField value={query} onChangeText={setQuery} placeholder="Search products" />
       </View>
@@ -30,7 +30,7 @@ export default function ShopHome() {
         <View className="flex-row flex-wrap gap-3 px-5">
           {items.map((p) => (
             <Pressable key={p.id} accessibilityRole="button" onPress={() => router.push({ pathname: '/shop/product/[id]', params: { id: p.id } })} className="w-[47.5%] gap-1 active:opacity-80">
-              <ImageTile fallbackIcon={iconFor(p)} ratio={1} />
+              <ImageTile seed={p.seed} fallbackIcon={iconFor(p)} ratio={1} />
               <Text className="font-medium" numberOfLines={1}>
                 {p.name}
               </Text>

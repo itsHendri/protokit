@@ -10,7 +10,7 @@ export default function HabitCalendar() {
   const [day, setDay] = React.useState<Date | undefined>(new Date());
   const complete = day ? COMPLETED_DAYS.includes(day.getDate()) : false;
   return (
-    <ScrollView className="bg-background flex-1" contentContainerClassName="gap-5 p-5 pb-16">
+    <ScrollView className="bg-background flex-1" contentContainerClassName="gap-5 p-5 pb-32">
       <Card className="w-full px-4 py-4">
         <Calendar value={day} onChange={setDay} />
       </Card>

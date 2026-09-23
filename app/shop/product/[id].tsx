@@ -32,7 +32,7 @@ export default function ProductDetail() {
     <View className="bg-background flex-1">
       <Stack.Screen options={{ title: p.name }} />
       <ScrollView contentContainerClassName="gap-5 p-5 pb-32">
-        <ImageTile fallbackIcon={iconFor(p)} ratio={4 / 3} />
+        <ImageTile seed={p.seed} fallbackIcon={iconFor(p)} ratio={4 / 3} />
         <View className="gap-1">
           <View className="flex-row items-center gap-2">
             <Badge variant="secondary">

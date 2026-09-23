@@ -33,7 +33,7 @@ export default function Cart() {
             if (!p) return null;
             return (
               <View key={line.productId} className={i < cart.length - 1 ? 'border-border flex-row items-center gap-3 border-b py-3' : 'flex-row items-center gap-3 py-3'}>
-                <ImageTile fallbackIcon={iconFor(p)} ratio={1} className="w-16" />
+                <ImageTile seed={p.seed} fallbackIcon={iconFor(p)} ratio={1} className="w-16" />
                 <View className="flex-1">
                   <Text className="font-medium" numberOfLines={1}>
                     {p.name}

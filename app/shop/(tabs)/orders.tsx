@@ -23,7 +23,7 @@ export default function Orders() {
     );
   }
   return (
-    <ScrollView className="bg-background flex-1" contentContainerClassName="gap-4 p-5 pb-16">
+    <ScrollView className="bg-background flex-1" contentContainerClassName="gap-4 p-5 pb-32">
       <Card className="w-full gap-0 px-4 py-0">
         {orders.map((o, i) => (
           <ListRow

@@ -17,7 +17,7 @@ const RANGES = [
 export default function Insights() {
   const [range, setRange] = React.useState<'w' | 'm'>('w');
   return (
-    <ScrollView className="bg-background flex-1" contentContainerClassName="gap-5 p-5 pb-16">
+    <ScrollView className="bg-background flex-1" contentContainerClassName="gap-5 p-5 pb-32">
       <SegmentedControl segments={RANGES} value={range} onChange={setRange} />
       <View className="flex-row gap-3">
         <StatTile label="Completion" value={range === 'w' ? '74%' : '82%'} delta={range === 'w' ? -3 : 4} />

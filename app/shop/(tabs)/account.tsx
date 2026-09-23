@@ -14,7 +14,7 @@ export default function Account() {
   const toast = useToast();
   const [promos, setPromos] = React.useState(false);
   return (
-    <ScrollView className="bg-background flex-1" contentContainerClassName="gap-5 p-5 pb-16">
+    <ScrollView className="bg-background flex-1" contentContainerClassName="gap-5 p-5 pb-32">
       <View className="flex-row items-center gap-4">
         <Avatar alt="Jane Doe" className="size-14">
           <AvatarFallback>
@@ -22,7 +22,7 @@ export default function Account() {
           </AvatarFallback>
         </Avatar>
         <View>
-          <Text className="text-lg font-semibold">Jane Doe</Text>
+          <Text variant="large">Jane Doe</Text>
           <Text className="text-muted-foreground text-sm">jane@example.com</Text>
         </View>
       </View>
