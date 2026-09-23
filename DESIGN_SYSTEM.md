@@ -14,6 +14,11 @@ Single source of truth: `tokens/tokens.json` (DTCG). `npm run tokens:build` rege
 `global.css` (CSS variables), `lib/theme.ts` (TS mirror) and `tokens/generated/tailwind.theme.js`.
 Never edit the generated files. To re-brand a project, change `tokens.json` and rebuild.
 
+**The build enforces contrast.** Every `X` / `X-foreground` pairing, and muted text on every
+surface it sits on, must clear WCAG AA (4.5:1) in both themes or `tokens:build` fails and names
+the ratio. A brightened accent needs dark text on it, not white — that is why the dark
+`*-foreground` tokens are `neutral.950` while the light ones are `neutral.0`.
+
 ### Colour — semantic names only
 
 Use the shadcn vocabulary through Tailwind classes. Each name works as `bg-`, `text-`, `border-`.

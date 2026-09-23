@@ -217,6 +217,59 @@ export const NAV_THEME: Record<'light' | 'dark', Theme> = {
 `;
 writeFileSync(join(root, 'lib/theme.ts'), ts);
 
+// ---------- contrast gate ----------------------------------------------------
+// Re-branding this file is the documented workflow, and a pleasant-looking brand
+// colour will happily fail WCAG without anyone noticing. Every pairing the kit
+// actually renders is checked here, and a failure stops the build.
+
+const AA = 4.5; // WCAG 2.1 AA, normal text. Kit labels are 16px — not "large text".
+
+function relativeLuminance(hex) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
+  if (!m) throw new Error(`Expected a 6-digit hex colour, got "${hex}"`);
+  const n = parseInt(m[1], 16);
+  const channel = (c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+  const r = channel(((n >> 16) & 255) / 255);
+  const g = channel(((n >> 8) & 255) / 255);
+  const b = channel((n & 255) / 255);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function contrast(a, b) {
+  const [hi, lo] = [relativeLuminance(a), relativeLuminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+/**
+ * Pairings the kit renders as text. Foreground tokens are checked against their own
+ * fill; muted text is checked against every surface it sits on.
+ */
+function contrastFailures(tokens, mode) {
+  const hex = Object.fromEntries(tokens.filter(isColor).map((t) => [cssName(t), t.$value]));
+  const pairs = [];
+  for (const name of ['primary', 'secondary', 'destructive', 'success', 'warning', 'info', 'accent', 'card', 'popover', 'muted']) {
+    if (hex[name] && hex[`${name}-foreground`]) pairs.push([`${name}-foreground on ${name}`, hex[`${name}-foreground`], hex[name]]);
+  }
+  for (const surface of ['background', 'card', 'muted']) {
+    if (hex['muted-foreground'] && hex[surface]) pairs.push([`muted-foreground on ${surface}`, hex['muted-foreground'], hex[surface]]);
+    if (hex.foreground && hex[surface]) pairs.push([`foreground on ${surface}`, hex.foreground, hex[surface]]);
+  }
+  return pairs
+    .map(([label, fg, bg]) => ({ label, fg, bg, ratio: contrast(fg, bg) }))
+    .filter((r) => r.ratio < AA)
+    .map((r) => `  ${mode.padEnd(5)} ${r.label.padEnd(36)} ${r.ratio.toFixed(2)}  (${r.fg} on ${r.bg})`);
+}
+
+const failures = [...contrastFailures(semLight, 'light'), ...contrastFailures(semDark, 'dark')];
+if (failures.length) {
+  console.error(
+    `\ntokens:build FAILED — ${failures.length} colour pairing(s) below WCAG AA (${AA}:1):\n\n${failures.join('\n')}\n\n` +
+      'Darken the fill, or flip its -foreground between neutral.0 and neutral.950.\n' +
+      'A brightened accent (usually the dark theme) needs dark text, not white.\n'
+  );
+  process.exit(1);
+}
+
 // 4. tokens/generated/figma-theme.mjs — what push-figma.mjs mirrors into Figma Variables
 const figmaColors = Object.fromEntries(
   semLight.filter(isColor).map((t, i) => [cssName(t), { light: t.$value.toLowerCase(), dark: semDark.filter(isColor)[i].$value.toLowerCase() }])
@@ -241,5 +294,5 @@ writeFileSync(
 );
 
 console.log(
-  `tokens:build → global.css (${semLight.length} vars × 2 modes), lib/theme.ts, tokens/generated/tailwind.theme.js`
+  `tokens:build → global.css (${semLight.length} vars × 2 modes), lib/theme.ts, tokens/generated/tailwind.theme.js · contrast AA ✓`
 );

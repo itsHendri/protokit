@@ -39,7 +39,7 @@ npm run dev:client     # expo start -c (development build)
 npm run ios            # expo start --ios --go (simulator)
 npm run web            # expo start --web
 npm run typecheck && npm run lint -- --max-warnings 0
-npm run tokens:build   # after editing tokens/tokens.json
+npm run tokens:build   # after editing tokens/tokens.json (fails if any pairing drops below WCAG AA)
 npm run share -- "msg" # EAS Update to the main channel, prints the links
 npm run export:web && eas deploy   # hosted web preview URL
 npx expo run:ios       # build + install the dev client on the simulator (needs LANG=en_US.UTF-8, see gotchas)
@@ -70,7 +70,8 @@ npx expo run:ios       # build + install the dev client on the simulator (needs 
   installed, or Expo Go signed into the `h3nners-prototypes` org (Expo Go on iOS requires login since SDK 57).
 - **Web link for clients:** `npm run export:web && eas deploy` → immutable preview URL. `web.output` is `single`
   so deep links resolve.
-- **Re-brand:** edit `tokens/tokens.json` (colours, radius), rebuild; set `name`/`slug`/`scheme`/bundle ids in
+- **Re-brand:** edit `tokens/tokens.json` (colours, radius), rebuild — `tokens:build` refuses to emit a
+  palette where any `X`/`X-foreground` pairing or muted text falls below 4.5:1, and prints the ratio; set `name`/`slug`/`scheme`/bundle ids in
   `app.json`; add a brand font with the `expo-font` config plugin; replace `assets/images/*`.
 
 ## Agent tooling
