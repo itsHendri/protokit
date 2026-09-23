@@ -19,7 +19,7 @@ export function Footnote({ children, action, className }: Props) {
           onPress={action.onPress}
           hitSlop={8}
           accessibilityRole="link"
-          className="min-h-6 justify-center">
+          className="min-h-11 justify-center">
           <Text className="text-xs font-semibold underline">{action.label}</Text>
         </Pressable>
       ) : null}

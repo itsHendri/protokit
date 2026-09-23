@@ -25,7 +25,7 @@ export function EmptyState({ icon, title, subtitle, action, variant = 'default',
         <Text className="text-muted-foreground text-center text-sm font-medium">{title}</Text>
         {subtitle ? <Text className="text-muted-foreground mt-1 text-center text-sm">{subtitle}</Text> : null}
         {action ? (
-          <Pressable onPress={action.onPress} accessibilityRole="button" className="mt-3 min-h-8 justify-center">
+          <Pressable onPress={action.onPress} accessibilityRole="button" className="mt-3 min-h-11 justify-center">
             <Text className="text-primary text-sm font-semibold">{action.label}</Text>
           </Pressable>
         ) : null}

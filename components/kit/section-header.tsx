@@ -14,9 +14,9 @@ type Props = {
 export function SectionHeader({ title, action, onAction, className }: Props) {
   return (
     <View className={cn('flex-row items-end justify-between', className)}>
-      <Text className="text-lg font-semibold">{title}</Text>
+      <Text variant="large">{title}</Text>
       {action ? (
-        <Pressable onPress={onAction} hitSlop={8} accessibilityRole="button" className="min-h-6 justify-center">
+        <Pressable onPress={onAction} hitSlop={8} accessibilityRole="button" className="min-h-11 justify-center">
           <Text className="text-primary text-sm font-medium">{action}</Text>
         </Pressable>
       ) : null}
