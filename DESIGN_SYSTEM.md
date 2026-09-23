@@ -133,18 +133,18 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | PagerDots | `components/kit/pager-dots.tsx` | |
 | HorizontalPager | `components/kit/horizontal-pager.tsx` | snap pager + dots |
 | TabBar / TabBarItem / tabIcon | `components/kit/tab-bar.tsx` | custom bottom tab bar: opaque tints, label, active dot under the label |
-| KitChip | `components/kit/kit-chip.tsx` | floating pill over a hosted prototype that returns to the kit |
+| KitChip | `components/kit/kit-chip.tsx` | scaffolding, not a product component — the way back to the kit from a sample. Not in the Kitchen Sink; delete it with the kit shell |
 | App tabs / stack | Expo Router | `app/(kit)/_layout.tsx` shows the pattern; prototypes own their `app/` routes |
 
 ### Data display
 | Component | Path | Notes |
 |---|---|---|
-| Text | `components/ui/text.tsx` | the only Text |
+| Text | `components/ui/text.tsx` | the only Text · the scale is previewed in **Foundations › Typography**, not Components |
 | Avatar | `components/ui/avatar.tsx` | image + fallback initials |
 | Badge | `components/ui/badge.tsx` | tag/pill/count · tint with semantic classes |
 | Separator | `components/ui/separator.tsx` | |
-| ListRow | `components/kit/list-row.tsx` | canonical row · `last` on the final row · `select={{mode,selected}}` makes it a radio/checkbox row |
-| ListGroup | `components/kit/list-group.tsx` | wraps ListRows and sets `last` for you · `variant` card/plain (plain = settings look) |
+| ListRow | `components/kit/list-row.tsx` | ONE row. | canonical row · `last` on the final row · `select={{mode,selected}}` makes it a radio/checkbox row |
+| ListGroup | `components/kit/list-group.tsx` | the CONTAINER around rows — owns the title, dividers, footnote and card/plain surface. | wraps ListRows and sets `last` for you · `variant` card/plain (plain = settings look) |
 | ValueHeader | `components/kit/value-header.tsx` | hero figure + caption · `maskable` adds the eye toggle |
 | IconCircle | `components/kit/icon-circle.tsx` | leading icon well, row scale (≤44px) · `shape` circle/square · `tone` |
 | KeyValueList / SummaryCard | `components/kit/key-value-list.tsx` | label/value rows, optionally in a Card |
@@ -172,7 +172,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 ### Containers & layout
 | Component | Path | Notes |
 |---|---|---|
-| Card | `components/ui/card.tsx` | never nest cards; titles sit outside |
+| Card | `components/ui/card.tsx` | never nest cards; titles sit outside · **flat — a shadow means it is pressable** |
 | Accordion | `components/ui/accordion.tsx` | |
 | Collapsible | `components/ui/collapsible.tsx` | |
 | StickyBottomBar | `components/kit/sticky-bottom-bar.tsx` | safe-area action bar under a ScrollView (`pb-32`) |
@@ -234,6 +234,7 @@ Remote push is gone from Expo Go since SDK 53.
   from `lib/reduced-motion.ts` and collapses to 0ms when the OS asks. `components/ui` gets this
   from reanimated's `ReduceMotion.System`; the kit's `Animated` code has no equivalent, so it is
   not optional — a new animated component without it is a bug.
+- **Shadow:** only on something you can press. A flat card is content; a shadowed card is a control.
 - **Permission:** `PermissionPrimer` before the OS dialog, always with a skip that runs the simulated
   path. Never show a raw denied state. Keep its copy in step with the strings in `app.json`.
 - **Imagery:** the kit ships no raster art. `Placeholder` (seeded, themed) fills image slots;
