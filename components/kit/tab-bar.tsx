@@ -44,10 +44,8 @@ export function TabBar({ state, descriptors, navigation }: TabBarProps) {
         const color = focused ? colors.primary : colors.mutedForeground;
         const onPress = () => {
           const e = navigation.emit({ type: 'tabPress', target: route.key, canPreventDefault: true }) as { defaultPrevented?: boolean };
-          if (!focused && !e.defaultPrevented) {
-            haptic('selection');
-            navigation.navigate(route.name, route.params);
-          }
+          // The haptic lives in TabBarItem so custom bars get it too.
+          if (!focused && !e.defaultPrevented) navigation.navigate(route.name, route.params);
         };
         return (
           <TabBarItem
@@ -83,9 +81,16 @@ export function TabBarItem({ label, focused, color, icon, accessibilityLabel, on
       accessibilityRole="tab"
       accessibilityState={{ selected: focused }}
       accessibilityLabel={accessibilityLabel ?? label}
-      onPress={onPress}
+      onPress={
+        onPress
+          ? () => {
+              haptic('selection');
+              onPress();
+            }
+          : undefined
+      }
       onLongPress={onLongPress}
-      className="min-h-14 flex-1 items-center justify-center gap-1 pt-2 active:opacity-70">
+      className="min-h-14 flex-1 items-center justify-center gap-1 pb-2 pt-2 active:opacity-70">
       {icon}
       <Text className="text-[11px] font-medium" style={{ color }} numberOfLines={1}>
         {label}

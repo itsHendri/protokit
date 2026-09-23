@@ -25,7 +25,7 @@ function Switch({
             web: 'pointer-events-none block ring-0',
           }),
           props.checked
-            ? 'dark:bg-primary-foreground translate-x-5'
+            ? 'dark:bg-primary-foreground translate-x-[22px]'
             : 'dark:bg-foreground translate-x-0'
         )}
       />

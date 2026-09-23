@@ -74,7 +74,10 @@ export function ValueHeader({
           </Pressable>
         ) : null}
       </View>
-      {caption && !isMasked ? <Text className={cn('text-sm font-medium', CAPTION[captionTone])}>{caption}</Text> : null}
+      {/* Kept mounted while masked so the block does not change height. */}
+      {caption ? (
+        <Text className={cn('text-sm font-medium', CAPTION[captionTone], isMasked && 'opacity-0')}>{caption}</Text>
+      ) : null}
     </View>
   );
 }

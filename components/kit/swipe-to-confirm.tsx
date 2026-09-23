@@ -84,18 +84,24 @@ export function SwipeToConfirm({ label, onConfirm, confirmLabel = 'Confirmed', t
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityHint="Swipe right to confirm">
-      <Animated.View pointerEvents="none" className={cn('absolute bottom-0 left-0 top-0 rounded-full', tone === 'destructive' ? 'bg-destructive/15' : 'bg-primary/15')} style={{ width: fillWidth }} />
-      <Animated.View pointerEvents="none" className="absolute left-0 right-0 items-center" style={{ opacity: completed ? 0 : promptOpacity }}>
-        <Text className="text-muted-foreground pl-10 font-semibold">{label}</Text>
+      <Animated.View pointerEvents="none" style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: fillWidth }}>
+        <View className={cn('h-full w-full rounded-full', tone === 'destructive' ? 'bg-destructive/15' : 'bg-primary/15')} />
+      </Animated.View>
+      <Animated.View
+        pointerEvents="none"
+        style={{ position: 'absolute', left: 0, right: 0, alignItems: 'center', opacity: completed ? 0 : promptOpacity }}>
+        <Text className="text-muted-foreground font-semibold">{label}</Text>
       </Animated.View>
       {completed ? (
         <View pointerEvents="none" className="absolute left-0 right-0 items-center">
-          <Text className={cn('pl-10 font-semibold', tone === 'destructive' ? 'text-destructive' : 'text-primary')}>{confirmLabel}</Text>
+          <Text className={cn('font-semibold', tone === 'destructive' ? 'text-destructive' : 'text-primary')}>{confirmLabel}</Text>
         </View>
       ) : null}
       <GestureDetector gesture={pan}>
-        <Animated.View className={cn('items-center justify-center rounded-full', bg)} style={{ width: THUMB, height: THUMB, marginLeft: INSET, transform: [{ translateX }] }}>
-          <Icon as={completed ? CheckIcon : ArrowRightIcon} size={24} className={fg} />
+        <Animated.View style={{ width: THUMB, height: THUMB, marginLeft: INSET, transform: [{ translateX }] }}>
+          <View className={cn('h-full w-full items-center justify-center rounded-full', bg)}>
+            <Icon as={completed ? CheckIcon : ArrowRightIcon} size={24} className={fg} />
+          </View>
         </Animated.View>
       </GestureDetector>
     </View>

@@ -40,15 +40,18 @@ export function SegmentedControl<T extends string>({ segments, value, onChange, 
       {segW > 0 ? (
         <Animated.View
           pointerEvents="none"
-          className="bg-background absolute rounded-md shadow-sm shadow-black/10"
           style={{
+            position: 'absolute',
             top: INSET,
             bottom: INSET,
             left: INSET,
             width: segW,
             transform: [{ translateX: anim.interpolate({ inputRange: [0, 1], outputRange: [0, segW] }) }],
-          }}
-        />
+          }}>
+          {/* The surface lives on a plain View: NativeWind drops classNames on
+              Animated.View on web, which left the thumb invisible in the preview. */}
+          <View className="bg-background h-full w-full rounded-md shadow-sm shadow-black/10" />
+        </Animated.View>
       ) : null}
       {segments.map((seg) => {
         const active = seg.value === value;

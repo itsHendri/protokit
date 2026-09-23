@@ -22,6 +22,10 @@ export function Calendar({ value, onChange, className }: Props) {
   const firstWeekday = new Date(view.year, view.month, 1).getDay();
   const daysInMonth = new Date(view.year, view.month + 1, 0).getDate();
   const cells: (number | null)[] = [...Array.from({ length: firstWeekday }, () => null), ...Array.from({ length: daysInMonth }, (_, i) => i + 1)];
+  while (cells.length % 7 !== 0) cells.push(null);
+  // Explicit rows of 7 with flex-1 cells: percentage widths round past 100% and wrap early,
+  // which left the Saturday column empty.
+  const weeks = Array.from({ length: cells.length / 7 }, (_, w) => cells.slice(w * 7, w * 7 + 7));
   const shift = (delta: number) =>
     setView((v) => {
       const m = v.month + delta;
@@ -48,29 +52,31 @@ export function Calendar({ value, onChange, className }: Props) {
           </Text>
         ))}
       </View>
-      <View className="flex-row flex-wrap">
-        {cells.map((day, i) => {
-          if (day === null) return <View key={`b${i}`} style={{ width: `${100 / 7}%` }} className="aspect-square" />;
-          const date = new Date(view.year, view.month, day);
-          const selected = value ? sameDay(date, value) : false;
-          const isToday = sameDay(date, today);
-          return (
-            <View key={day} style={{ width: `${100 / 7}%` }} className="aspect-square p-0.5">
-              <Pressable
-                accessibilityRole="button"
-                accessibilityState={{ selected }}
-                accessibilityLabel={date.toDateString()}
-                onPress={() => {
-                  haptic('selection');
-                  onChange(date);
-                }}
-                className={cn('flex-1 items-center justify-center rounded-full', selected ? 'bg-primary' : isToday ? 'border-primary border' : 'active:bg-accent')}>
-                <Text className={cn(selected && 'text-primary-foreground font-semibold')}>{day}</Text>
-              </Pressable>
-            </View>
-          );
-        })}
-      </View>
+      {weeks.map((week, w) => (
+        <View key={w} className="flex-row">
+          {week.map((day, i) => {
+            if (day === null) return <View key={`b${w}-${i}`} className="aspect-square flex-1" />;
+            const date = new Date(view.year, view.month, day);
+            const selected = value ? sameDay(date, value) : false;
+            const isToday = sameDay(date, today);
+            return (
+              <View key={day} className="aspect-square flex-1 p-0.5">
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityState={{ selected }}
+                  accessibilityLabel={date.toDateString()}
+                  onPress={() => {
+                    haptic('selection');
+                    onChange(date);
+                  }}
+                  className={cn('flex-1 items-center justify-center rounded-full', selected ? 'bg-primary' : isToday ? 'border-primary border' : 'active:bg-accent')}>
+                  <Text className={cn(selected && 'text-primary-foreground font-semibold')}>{day}</Text>
+                </Pressable>
+              </View>
+            );
+          })}
+        </View>
+      ))}
     </View>
   );
 }

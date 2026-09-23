@@ -29,16 +29,8 @@ export function DevKitHub<Id extends string>({ categories, sections, searchPlace
   const [open, setOpen] = React.useState<Id | null>(focus ?? null);
   const scrollRef = React.useRef<ScrollView>(null);
   const offsets = React.useRef<Record<string, number>>({});
+  const [pending, setPending] = React.useState<Id | null>(focus ?? null);
   const trimmed = query.trim();
-
-  React.useEffect(() => {
-    if (!focus) return;
-    const t = setTimeout(() => {
-      const y = offsets.current[focus];
-      if (y != null) scrollRef.current?.scrollTo({ y: Math.max(0, y - 8), animated: true });
-    }, 250);
-    return () => clearTimeout(t);
-  }, [focus]);
 
   const results = React.useMemo(() => (trimmed ? sections.filter((s) => matchesQuery(s, trimmed)) : []), [sections, trimmed]);
   const byCategory = React.useMemo(() => {
@@ -50,8 +42,9 @@ export function DevKitHub<Id extends string>({ categories, sections, searchPlace
   const toggle = (id: Id) => {
     haptic('selection');
     setOpen((cur) => (cur === id ? null : id));
-    const y = offsets.current[id];
-    if (open !== id && y != null) setTimeout(() => scrollRef.current?.scrollTo({ y: Math.max(0, y - 8), animated: true }), 50);
+    // Scroll once the new layout is in, not on a timer: closing the previously open
+    // category moves everything below it, so any offset read now is already stale.
+    if (open !== id) setPending(id);
   };
 
   return (
@@ -77,7 +70,17 @@ export function DevKitHub<Id extends string>({ categories, sections, searchPlace
           const items = byCategory.get(cat.id) ?? [];
           const isOpen = open === cat.id;
           return (
-            <View key={cat.id} onLayout={(e: LayoutChangeEvent) => (offsets.current[cat.id] = e.nativeEvent.layout.y)} className="border-border border-b">
+            <View
+              key={cat.id}
+              onLayout={(e: LayoutChangeEvent) => {
+                const y = e.nativeEvent.layout.y;
+                offsets.current[cat.id] = y;
+                if (pending === cat.id) {
+                  scrollRef.current?.scrollTo({ y: Math.max(0, y - 8), animated: true });
+                  setPending(null);
+                }
+              }}
+              className="border-border border-b">
               <Pressable
                 accessibilityRole="button"
                 accessibilityState={{ expanded: isOpen }}
