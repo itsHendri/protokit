@@ -56,6 +56,10 @@ Use `gap-*` for siblings, not margins. Vary spacing to create hierarchy.
 
 ### Radius
 
+Buttons are pills (`rounded-full`); everything else uses the scale below. Raised elements that
+sit on a track — the SegmentedControl thumb, the Switch thumb, the Slider handle — use `bg-card`,
+not `bg-background`, so they stay white if the page surface is ever tinted.
+
 `rounded-sm` 6 · `rounded-md` 8 (inputs, buttons) · `rounded-lg` 10 (cards, sheets base) · `rounded-xl` 14 ·
 `rounded-2xl` 20 (sheet tops, hero surfaces) · `rounded-full` (chips, avatars, dots).
 
