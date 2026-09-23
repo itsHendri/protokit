@@ -30,7 +30,7 @@ export const COLORS = {
   },
   "primary-foreground": {
     "light": "#ffffff",
-    "dark": "#ffffff"
+    "dark": "#09090b"
   },
   "secondary": {
     "light": "#f4f4f5",
@@ -45,7 +45,7 @@ export const COLORS = {
     "dark": "#27272a"
   },
   "muted-foreground": {
-    "light": "#71717a",
+    "light": "#52525b",
     "dark": "#a1a1aa"
   },
   "accent": {
@@ -62,15 +62,15 @@ export const COLORS = {
   },
   "destructive-foreground": {
     "light": "#ffffff",
-    "dark": "#ffffff"
+    "dark": "#09090b"
   },
   "success": {
-    "light": "#16a34a",
+    "light": "#15803d",
     "dark": "#22c55e"
   },
   "success-foreground": {
     "light": "#ffffff",
-    "dark": "#ffffff"
+    "dark": "#09090b"
   },
   "warning": {
     "light": "#f59e0b",
@@ -81,12 +81,12 @@ export const COLORS = {
     "dark": "#09090b"
   },
   "info": {
-    "light": "#0284c7",
+    "light": "#0369a1",
     "dark": "#0ea5e9"
   },
   "info-foreground": {
     "light": "#ffffff",
-    "dark": "#ffffff"
+    "dark": "#09090b"
   },
   "border": {
     "light": "#e4e4e7",
