@@ -6,15 +6,21 @@ import { Pressable } from 'react-native';
 
 type Props = React.ComponentProps<typeof Pressable> & {
   icon: LucideIcon;
-  /** Adds a label → extended pill FAB. */
+  /** Adds a label → an extended pill instead of a circle. */
   label?: string;
   variant?: 'primary' | 'secondary';
   /** `inline` renders in flow; the others pin to the screen corner/centre (parent must be relative/full-screen). */
   position?: 'inline' | 'bottom-right' | 'bottom-center';
 };
 
-/** Floating action button — the single most important action on a screen. One per screen. */
-export function FAB({ icon, label, variant = 'primary', position = 'inline', className, ...props }: Props) {
+/**
+ * A button that floats OVER the scroll rather than sitting in it, so a screen's one
+ * most important action stays reachable however far down you are — add, compose, new.
+ *
+ * Material calls this a FAB. Use an ordinary `Button` for anything that belongs in the
+ * content flow. One per screen.
+ */
+export function FloatingButton({ icon, label, variant = 'primary', position = 'inline', className, ...props }: Props) {
   const primary = variant === 'primary';
   const fg = primary ? 'text-primary-foreground' : 'text-secondary-foreground';
   return (

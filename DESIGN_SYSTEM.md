@@ -84,7 +84,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | Button | `components/ui/button.tsx` | `variant` default/secondary/outline/ghost/link/destructive · `size` sm/default/lg/icon · children are `<Text>`/`<Icon>` |
 | Toggle | `components/ui/toggle.tsx` | pressed two-state button |
 | ToggleGroup | `components/ui/toggle-group.tsx` | `type` single/multiple |
-| FAB | `components/kit/fab.tsx` | floats OVER the scroll (a Button flows with it) · `icon label? variant position` · one per screen |
+| FloatingButton | `components/kit/floating-button.tsx` | floats OVER the scroll (a Button flows with it) · Material calls it a FAB · `icon label? variant position` · one per screen |
 | IconBadge | `components/kit/icon-badge.tsx` | icon button with unread count/dot · always labelled |
 | ActionGrid | `components/kit/action-grid.tsx` | the row of shortcuts under a screen hero · 3–4 `items`, one row only, last tile is "More" |
 | SwipeToConfirm | `components/kit/swipe-to-confirm.tsx` | drag past 85% commits · `tone` primary/destructive · reset via `key` |

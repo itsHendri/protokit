@@ -1,5 +1,5 @@
 import { ActionGrid } from '@/components/kit/action-grid';
-import { FAB } from '@/components/kit/fab';
+import { FloatingButton } from '@/components/kit/floating-button';
 import { IconBadge } from '@/components/kit/icon-badge';
 import { SwipeToConfirm } from '@/components/kit/swipe-to-confirm';
 import { Button } from '@/components/ui/button';
@@ -9,12 +9,12 @@ import type { ComponentSection } from '../types';
 import * as React from 'react';
 import { View } from 'react-native';
 
-function FABDemo() {
+function FloatingButtonDemo() {
   return (
     <View className="flex-row flex-wrap items-center gap-4">
-      <FAB icon={PlusIcon} accessibilityLabel="Add" />
-      <FAB icon={PlusIcon} label="New item" />
-      <FAB icon={PlusIcon} label="Secondary" variant="secondary" />
+      <FloatingButton icon={PlusIcon} accessibilityLabel="Add" />
+      <FloatingButton icon={PlusIcon} label="New item" />
+      <FloatingButton icon={PlusIcon} label="Secondary" variant="secondary" />
     </View>
   );
 }
@@ -63,13 +63,13 @@ function ActionGridDemo() {
 
 export const KIT_ACTIONS_SECTIONS: ComponentSection[] = [
   {
-    id: 'fab',
-    title: 'FAB',
+    id: 'floating-button',
+    title: 'Floating button',
     category: 'actions',
-    aliases: ['floating action button', 'plus', 'extended', 'fab'],
-    api: '<FAB icon label? variant="primary|secondary" position="inline|bottom-right|bottom-center" />',
-    caption: 'Floating action button — it floats over the scroll instead of sitting in it, so the screen\u2019s one creative action stays reachable however far you scroll. A Button flows with content; a FAB does not. One per screen.',
-    Demo: FABDemo,
+    aliases: ['fab', 'floating action button', 'plus', 'extended', 'add button'],
+    api: '<FloatingButton icon label? variant="primary|secondary" position="inline|bottom-right|bottom-center" />',
+    caption: 'Floats over the scroll instead of sitting in it, so the screen\u2019s one most important action stays reachable however far down you are. A Button flows with the content; this does not. Material calls it a FAB. One per screen.',
+    Demo: FloatingButtonDemo,
   },
   {
     id: 'icon-badge',

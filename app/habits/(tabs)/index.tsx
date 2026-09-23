@@ -1,4 +1,4 @@
-import { FAB } from '@/components/kit/fab';
+import { FloatingButton } from '@/components/kit/floating-button';
 import { ListRow } from '@/components/kit/list-row';
 import { ProgressRing } from '@/components/kit/progress-ring';
 import { SectionHeader } from '@/components/kit/section-header';
@@ -57,7 +57,7 @@ export default function Today() {
           </Card>
         </View>
       </ScrollView>
-      <FAB icon={PlusIcon} accessibilityLabel="Add habit" position="bottom-right" onPress={() => router.push('/habits/new')} />
+      <FloatingButton icon={PlusIcon} accessibilityLabel="Add habit" position="bottom-right" onPress={() => router.push('/habits/new')} />
     </View>
   );
 }
