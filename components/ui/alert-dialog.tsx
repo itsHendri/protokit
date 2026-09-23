@@ -4,7 +4,7 @@ import { TextClassContext } from '@/components/ui/text';
 import { cn } from '@/lib/utils';
 import * as AlertDialogPrimitive from '@rn-primitives/alert-dialog';
 import * as React from 'react';
-import { Dimensions, Platform, View, type ViewProps } from 'react-native';
+import { Dimensions, Platform, StyleSheet, View, type ViewProps } from 'react-native';
 import { FadeIn, FadeOut, ReduceMotion } from 'react-native-reanimated';
 import { FullWindowOverlay as RNFullWindowOverlay } from 'react-native-screens';
 
@@ -64,8 +64,12 @@ function AlertDialogContent({
             }),
             className
           )}
-          style={[{ width: Math.min(Dimensions.get('window').width - 32, 448) }, props.style]}
           {...props}
+          // Flattened, and after the spread. On web this lands in a Radix `asChild` slot,
+          // which merges style by object spread — an array becomes {0: …, 1: …} and the DOM
+          // throws "Failed to set an indexed property [0] on CSSStyleDeclaration".
+          // The old order also let `props.style` (usually undefined) wipe the width.
+          style={StyleSheet.flatten([{ width: Math.min(Dimensions.get('window').width - 32, 448) }, props.style])}
         />
       </AlertDialogOverlay>
     </AlertDialogPortal>

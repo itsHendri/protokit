@@ -48,6 +48,8 @@ export function NotifyProvider({ children }: { children: React.ReactNode }) {
   const { cap, request } = useCapability('notify');
   const toast = useToast();
 
+  const dismiss = React.useCallback(() => setBanner(null), []);
+
   const showBanner = React.useCallback((options: NotifyOptions) => {
     haptic('light');
     setBanner({
@@ -126,7 +128,7 @@ export function NotifyProvider({ children }: { children: React.ReactNode }) {
   return (
     <NotifyContext.Provider value={api}>
       {children}
-      <NotificationBanner banner={banner} onDismiss={() => setBanner(null)} />
+      <NotificationBanner banner={banner} onDismiss={dismiss} />
     </NotifyContext.Provider>
   );
 }
