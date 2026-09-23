@@ -38,7 +38,7 @@ npm run dev            # expo start -c --go (Expo Go: scan the QR with the phone
 npm run dev:client     # expo start -c (development build)
 npm run ios            # expo start --ios --go (simulator)
 npm run web            # expo start --web
-npm run typecheck && npm run lint -- --max-warnings 0
+npm run typecheck && npm run lint -- --max-warnings 0   # CI runs these plus tokens:build and export:web
 npm run tokens:build   # after editing tokens/tokens.json (fails if any pairing drops below WCAG AA)
 npm run eject-samples  # delete the shop + habits samples, their stores and every reference
 npm run share -- "msg" # EAS Update to the main channel, prints the links

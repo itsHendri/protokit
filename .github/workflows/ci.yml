@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint -- --max-warnings 0
+
+      # Re-runs the token build and fails if any colour pairing drops below WCAG AA,
+      # then checks the generated files were committed — a palette change that was not
+      # rebuilt would otherwise ship a theme that does not match tokens.json.
+      - name: Tokens build and contrast gate
+        run: npm run tokens:build
+
+      - name: Generated token files are up to date
+        run: |
+          if ! git diff --quiet -- global.css lib/theme.ts tokens/generated; then
+            echo "::error::tokens.json changed without committing the generated files."
+            echo "Run 'npm run tokens:build' and commit global.css, lib/theme.ts and tokens/generated."
+            git --no-pager diff --stat -- global.css lib/theme.ts tokens/generated
+            exit 1
+          fi
+
+      - name: Web bundle builds
+        run: npm run export:web
