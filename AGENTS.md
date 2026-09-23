@@ -20,11 +20,11 @@ and the hallucination guard. This file covers engineering, workflows and gotchas
 ```
 app/_layout.tsx         providers (theme, toast, portal, nav theme) + root Stack
 app/(kit)/              the kit shell: Home · Components (kitchen sink) · Foundations · Settings
-app/shop/, app/habits/    two sample apps (named segments, not groups). DELETE on a real project.
+app/shop/, app/habits/    two sample apps (named segments, not groups). `npm run eject-samples` removes them.
 components/ui/          reusables — install more with the add-component skill
 components/kit/         ported/custom components
 components/devkit/      registry + previews (sections/<category>.tsx, sections/kit-<category>.tsx)
-components/shop/, components/habits/  sample data + stores. DELETE with the samples.
+components/shop/, components/habits/  sample data + stores. Go with `npm run eject-samples`.
 lib/                    theme.ts (generated), theme-context, haptics, utils(cn)
 tokens/                 tokens.json (edit), build.mjs, generated/
 .claude/skills/         add-component, qc-pass, transcript-to-prototype
@@ -40,6 +40,7 @@ npm run ios            # expo start --ios --go (simulator)
 npm run web            # expo start --web
 npm run typecheck && npm run lint -- --max-warnings 0
 npm run tokens:build   # after editing tokens/tokens.json (fails if any pairing drops below WCAG AA)
+npm run eject-samples  # delete the shop + habits samples, their stores and every reference
 npm run share -- "msg" # EAS Update to the main channel, prints the links
 npm run export:web && eas deploy   # hosted web preview URL
 npx expo run:ios       # build + install the dev client on the simulator (needs LANG=en_US.UTF-8, see gotchas)

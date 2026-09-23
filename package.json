@@ -12,6 +12,7 @@
     "lint": "expo lint",
     "clean": "rm -rf .expo node_modules",
     "tokens:build": "node tokens/build.mjs",
+    "eject-samples": "node scripts/eject-samples.mjs",
     "share": "bash scripts/share.sh",
     "export:web": "expo export --platform web",
     "tokens:figma": "node tokens/push-figma.mjs",
