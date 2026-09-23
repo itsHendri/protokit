@@ -69,11 +69,16 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * One shape for every tone: a dark surface with light text, tinted by the tone's icon.
+ * A toast is transient and overlays content — inverting it is what separates it from the
+ * page, and it keeps all four reading as the same object.
+ */
 const TONE = {
   success: { bg: 'bg-success', fg: 'text-success-foreground', icon: CircleCheckIcon },
   error: { bg: 'bg-destructive', fg: 'text-destructive-foreground', icon: CircleAlertIcon },
   warning: { bg: 'bg-warning', fg: 'text-warning-foreground', icon: TriangleAlertIcon },
-  info: { bg: 'bg-card border-border border', fg: 'text-foreground', icon: InfoIcon },
+  info: { bg: 'bg-foreground', fg: 'text-background', icon: InfoIcon },
 } as const;
 
 function ToastViewport({ toasts, onDismiss }: { toasts: ToastState[]; onDismiss: (id: number) => void }) {

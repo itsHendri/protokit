@@ -24,11 +24,11 @@ export function SuccessScreen({ title, body, amount, amountSubtitle, loading, ch
   return (
     <View className={cn('flex-1 items-center justify-center px-6', className)}>
       {loading ? (
-        <View className="bg-primary/15 mb-7 size-24 items-center justify-center rounded-full">
+        <View className="bg-muted mb-7 size-24 items-center justify-center rounded-full">
           <Spinner size="large" />
         </View>
       ) : (
-        <Spot icon={CheckIcon} size="md" tone="primary" ring className="mb-7" />
+        <Spot icon={CheckIcon} size="xl" tone="success" className="mb-7" />
       )}
       {!loading ? (
         <View className="w-full max-w-xs items-center gap-2">

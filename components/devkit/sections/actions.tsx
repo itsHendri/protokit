@@ -1,3 +1,4 @@
+import { Spinner } from '@/components/kit/spinner';
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
@@ -5,7 +6,7 @@ import { Toggle, ToggleIcon } from '@/components/ui/toggle';
 import { ToggleGroup, ToggleGroupIcon, ToggleGroupItem } from '@/components/ui/toggle-group';
 import type { ComponentSection } from '../types';
 import * as Haptics from 'expo-haptics';
-import { BoldIcon, ChevronRightIcon, ItalicIcon, Loader2Icon, MailIcon, UnderlineIcon } from 'lucide-react-native';
+import { BoldIcon, ChevronRightIcon, ItalicIcon, MailIcon, UnderlineIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
 
@@ -31,10 +32,9 @@ function ButtonDemo() {
         <Icon as={MailIcon} className="text-primary-foreground" />
         <Text>With icon</Text>
       </Button>
-      <Button disabled>
-        <View className="pointer-events-none animate-spin">
-          <Icon as={Loader2Icon} className="text-primary-foreground" />
-        </View>
+      {/* Busy, not disabled: full colour, and the Spinner matches the label. */}
+      <Button>
+        <Spinner tone="primary-foreground" />
         <Text>Loading</Text>
       </Button>
       <View className="flex-row items-center gap-2">
@@ -58,17 +58,16 @@ function ButtonDemo() {
 function ToggleDemo() {
   const [pressed, setPressed] = React.useState(false);
   return (
-    <View className="bg-muted flex-row items-center gap-1 self-start rounded-lg p-1">
-      <Toggle
-        aria-label="Toggle bold"
-        pressed={pressed}
-        onPressedChange={(next) => {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          setPressed(next);
-        }}>
-        <ToggleIcon as={BoldIcon} />
-      </Toggle>
-    </View>
+    <Toggle
+      variant="outline"
+      aria-label="Toggle bold"
+      pressed={pressed}
+      onPressedChange={(next) => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        setPressed(next);
+      }}>
+      <ToggleIcon as={BoldIcon} />
+    </Toggle>
   );
 }
 
