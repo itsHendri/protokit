@@ -31,7 +31,7 @@ export function ListGroup({ title, footnote, variant = 'card', children, classNa
 
   return (
     <View className={cn('gap-3', className)}>
-      {title ? <Text className="text-lg font-semibold">{title}</Text> : null}
+      {title ? <Text variant="large">{title}</Text> : null}
       {variant === 'card' ? (
         <Card className="w-full gap-0 px-4 py-0">{rows}</Card>
       ) : (

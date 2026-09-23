@@ -52,7 +52,7 @@ export function Sheet({ open, onClose, title, description, children, className }
             </View>
             {title || description ? (
               <View className="gap-0.5 px-5 pb-3">
-                {title ? <Text className="text-lg font-semibold">{title}</Text> : null}
+                {title ? <Text variant="large">{title}</Text> : null}
                 {description ? <Text className="text-muted-foreground text-sm">{description}</Text> : null}
               </View>
             ) : null}

@@ -4,6 +4,7 @@ import { Footnote } from '@/components/kit/footnote';
 import { ListGroup } from '@/components/kit/list-group';
 import { ListRow } from '@/components/kit/list-row';
 import { ScreenHeader } from '@/components/kit/screen-header';
+import { StatTile } from '@/components/kit/stat-tile';
 import { SectionHeader } from '@/components/kit/section-header';
 import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
@@ -22,9 +23,9 @@ export default function KitHome() {
       />
 
       <View className="flex-row gap-3">
-        <Stat label="Components" value={SECTIONS.length} />
-        <Stat label="Categories" value={CATEGORIES.length} />
-        <Stat label="Token groups" value={FOUNDATION_SECTIONS.length} />
+        <StatTile label="Components" value={String(SECTIONS.length)} />
+        <StatTile label="Categories" value={String(CATEGORIES.length)} />
+        <StatTile label="Tokens" value={String(FOUNDATION_SECTIONS.length)} />
       </View>
 
       <ListGroup title="Browse">
@@ -59,14 +60,6 @@ export default function KitHome() {
   );
 }
 
-function Stat({ label, value }: { label: string; value: number }) {
-  return (
-    <View className="bg-card border-border flex-1 gap-0.5 rounded-lg border p-3">
-      <Text className="text-2xl font-semibold">{value}</Text>
-      <Text className="text-muted-foreground text-xs">{label}</Text>
-    </View>
-  );
-}
 
 function Step({ n, title, body }: { n: number; title: string; body: string }) {
   return (
