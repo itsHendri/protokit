@@ -39,7 +39,7 @@ export default function Checkout() {
           <Button
             onPress={() => {
               router.back();
-              router.push({ pathname: '/(shop)/order/[id]', params: { id: orderId } });
+              router.push({ pathname: '/shop/order/[id]', params: { id: orderId } });
             }}>
             <Text>Track order</Text>
           </Button>

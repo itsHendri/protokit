@@ -29,7 +29,7 @@ export default function ShopHome() {
       {items.length ? (
         <View className="flex-row flex-wrap gap-3 px-5">
           {items.map((p) => (
-            <Pressable key={p.id} accessibilityRole="button" onPress={() => router.push({ pathname: '/(shop)/product/[id]', params: { id: p.id } })} className="w-[47.5%] gap-1 active:opacity-80">
+            <Pressable key={p.id} accessibilityRole="button" onPress={() => router.push({ pathname: '/shop/product/[id]', params: { id: p.id } })} className="w-[47.5%] gap-1 active:opacity-80">
               <ImageTile fallbackIcon={iconFor(p)} ratio={1} />
               <Text className="font-medium" numberOfLines={1}>
                 {p.name}

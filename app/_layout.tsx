@@ -16,6 +16,12 @@ export {
   ErrorBoundary,
 } from 'expo-router';
 
+/**
+ * The kit shell is home. Without this the sample groups also match "/" and one of
+ * them wins, so scanning the QR drops you into a sample instead of the kit.
+ */
+export const unstable_settings = { initialRouteName: '(kit)' };
+
 export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -38,8 +44,8 @@ function AppShell() {
         <NotifyProvider>
           <Stack screenOptions={{ headerShown: false }}>
             <Stack.Screen name="(kit)" />
-            <Stack.Screen name="(shop)" />
-            <Stack.Screen name="(habits)" />
+            <Stack.Screen name="shop" />
+            <Stack.Screen name="habits" />
           </Stack>
           <PortalHost />
         </NotifyProvider>

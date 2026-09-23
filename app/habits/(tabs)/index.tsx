@@ -47,7 +47,7 @@ export default function Today() {
                 title={h.name}
                 subtitle={h.goal > 1 ? `${h.today} / ${h.goal} ${h.unit}` : h.streak ? `${h.streak}-day streak` : 'Start your streak'}
                 trailing={
-                  <Pressable accessibilityRole="button" accessibilityLabel={`Open ${h.name}`} onPress={() => router.push({ pathname: '/(habits)/habit/[id]', params: { id: h.id } })} className="size-11 items-center justify-center rounded-full active:bg-accent">
+                  <Pressable accessibilityRole="button" accessibilityLabel={`Open ${h.name}`} onPress={() => router.push({ pathname: '/habits/habit/[id]', params: { id: h.id } })} className="size-11 items-center justify-center rounded-full active:bg-accent">
                     <Icon as={ChevronRightIcon} size={18} className="text-muted-foreground" />
                   </Pressable>
                 }
@@ -57,7 +57,7 @@ export default function Today() {
           </Card>
         </View>
       </ScrollView>
-      <FAB icon={PlusIcon} accessibilityLabel="Add habit" position="bottom-right" onPress={() => router.push('/(habits)/new')} />
+      <FAB icon={PlusIcon} accessibilityLabel="Add habit" position="bottom-right" onPress={() => router.push('/habits/new')} />
     </View>
   );
 }

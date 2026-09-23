@@ -1,7 +1,7 @@
 import { KitChip } from '@/components/kit/kit-chip';
 import { Stack } from 'expo-router';
 
-/** Shop and orders sample. Delete app/(shop) and components/shop when starting a real project. */
+/** Shop and orders sample. Delete app/shop and components/shop when starting a real project. */
 export default function ShopLayout() {
   return (
     <>

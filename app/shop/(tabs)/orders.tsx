@@ -37,7 +37,7 @@ export default function Orders() {
               </Badge>
             }
             chevron
-            onPress={() => router.push({ pathname: '/(shop)/order/[id]', params: { id: o.id } })}
+            onPress={() => router.push({ pathname: '/shop/order/[id]', params: { id: o.id } })}
             last={i === orders.length - 1}
           />
         ))}

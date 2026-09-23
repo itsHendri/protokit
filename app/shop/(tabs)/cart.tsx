@@ -19,7 +19,7 @@ export default function Cart() {
   if (cart.length === 0) {
     return (
       <View className="bg-background flex-1 justify-center">
-        <EmptyState icon={ShoppingCartIcon} title="Your cart is empty" subtitle="Anything you add from the shop shows up here." action={{ label: 'Browse the shop', onPress: () => router.navigate('/(shop)/(tabs)') }} />
+        <EmptyState icon={ShoppingCartIcon} title="Your cart is empty" subtitle="Anything you add from the shop shows up here." action={{ label: 'Browse the shop', onPress: () => router.navigate('/shop/(tabs)') }} />
       </View>
     );
   }
@@ -56,7 +56,7 @@ export default function Cart() {
         </Card>
       </ScrollView>
       <StickyBottomBar>
-        <Button onPress={() => router.push('/(shop)/checkout')}>
+        <Button onPress={() => router.push('/shop/checkout')}>
           <Text>Checkout</Text>
         </Button>
       </StickyBottomBar>

@@ -37,10 +37,10 @@ export default function KitHome() {
       </ListGroup>
 
       <ListGroup title="Sample apps" footnote="Both are built only from the kit. Use the floating Kit chip to come back.">
-        <Link href="/(shop)/(tabs)" asChild>
+        <Link href="/shop/(tabs)" asChild>
           <ListRow leading={<Icon as={ShoppingBagIcon} size={22} className="text-primary" />} title="Shop and orders" subtitle="Browse, cart, checkout, track an order" chevron onPress={() => {}} />
         </Link>
-        <Link href="/(habits)/(tabs)" asChild>
+        <Link href="/habits/(tabs)" asChild>
           <ListRow leading={<Icon as={TargetIcon} size={22} className="text-primary" />} title="Habit tracker" subtitle="Daily goals, streaks and insights" chevron onPress={() => {}} />
         </Link>
       </ListGroup>

@@ -1,7 +1,7 @@
 import { KitChip } from '@/components/kit/kit-chip';
 import { Stack } from 'expo-router';
 
-/** Habit tracker sample. Delete app/(habits) and components/habits when starting a real project. */
+/** Habit tracker sample. Delete app/habits and components/habits when starting a real project. */
 export default function HabitsLayout() {
   return (
     <>
