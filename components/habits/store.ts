@@ -1,5 +1,5 @@
 /**
- * Mock habits + a tiny store for the habit-tracker sample. Delete with app/(habits).
+ * Mock habits + a tiny store for the habit-tracker sample. Delete with app/habits.
  */
 import * as React from 'react';
 

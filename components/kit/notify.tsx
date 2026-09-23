@@ -1,9 +1,9 @@
+import { useToast } from '@/components/kit/toast';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { haptic } from '@/lib/haptics';
 import { useCapability } from '@/lib/native-context';
 import { cn } from '@/lib/utils';
-import Constants from 'expo-constants';
 import { BellIcon, type LucideIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { Animated, Easing, Pressable, View } from 'react-native';
@@ -15,11 +15,9 @@ export type NotifyOptions = {
   /** Seconds from now. 0 (default) shows the in-app banner immediately. */
   delay?: number;
   icon?: LucideIcon;
-  /** App name in the banner chrome. Defaults to the Expo config name. */
-  appName?: string;
 };
 
-type BannerState = { id: number; title: string; body?: string; icon: LucideIcon; appName: string };
+type BannerState = { id: number; title: string; body?: string; icon: LucideIcon };
 
 type NotifyApi = {
   notify: (options: NotifyOptions) => Promise<void>;
@@ -46,13 +44,25 @@ export function useNotify(): NotifyApi {
 export function NotifyProvider({ children }: { children: React.ReactNode }) {
   const [banner, setBanner] = React.useState<BannerState | null>(null);
   const idRef = React.useRef(0);
+  const timers = React.useRef<ReturnType<typeof setTimeout>[]>([]);
   const { cap, request } = useCapability('notify');
-  const defaultAppName = Constants.expoConfig?.name ?? 'Prototype';
+  const toast = useToast();
 
+  const showBanner = React.useCallback((options: NotifyOptions) => {
+    haptic('light');
+    setBanner({
+      id: ++idRef.current,
+      title: options.title,
+      body: options.body,
+      icon: options.icon ?? BellIcon,
+    });
+  }, []);
+
+  /** true when the OS accepted it. false means the caller must fall back. */
   const schedule = React.useCallback(
-    async (options: NotifyOptions) => {
+    async (options: NotifyOptions): Promise<boolean> => {
       const settled = cap.state === 'ready' ? cap : await request();
-      if (settled.simulated || settled.state !== 'ready') return;
+      if (settled.simulated || settled.state !== 'ready') return false;
       try {
         // Lazily required: importing expo-notifications warns and registers a push-token
         // side effect under Expo Go, which would fire in every prototype session.
@@ -70,8 +80,9 @@ export function NotifyProvider({ children }: { children: React.ReactNode }) {
           content: { title: options.title, body: options.body },
           trigger: { type: 'timeInterval', seconds: Math.max(1, options.delay ?? 1), repeats: false } as never,
         });
+        return true;
       } catch {
-        /* scheduling is best-effort — the banner already told the story */
+        return false;
       }
     },
     [cap, request]
@@ -80,24 +91,23 @@ export function NotifyProvider({ children }: { children: React.ReactNode }) {
   const notify = React.useCallback(
     async (options: NotifyOptions) => {
       const delay = options.delay ?? 0;
-      if (delay > 0) {
-        await schedule(options);
+      if (delay === 0) {
+        showBanner(options);
         return;
       }
-      haptic('light');
-      setBanner({
-        id: ++idRef.current,
-        title: options.title,
-        body: options.body,
-        icon: options.icon ?? BellIcon,
-        appName: options.appName ?? defaultAppName,
-      });
+      if (await schedule(options)) return;
+      // The OS will not deliver it — alerts are off, or this runtime cannot schedule.
+      // Fall back to the in-app banner after the same delay so the flow still lands.
+      toast.info(`Alerts are off — showing it in the app in ${delay}s`);
+      timers.current.push(setTimeout(() => showBanner(options), delay * 1000));
     },
-    [schedule, defaultAppName]
+    [schedule, showBanner, toast]
   );
 
   const cancelAll = React.useCallback(async () => {
     setBanner(null);
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
     if (cap.simulated) return;
     try {
       // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -158,15 +168,12 @@ function NotificationBanner({ banner, onDismiss }: { banner: BannerState | null;
             <Icon as={banner.icon} size={18} className="text-foreground" />
           </View>
           <View className="flex-1 gap-0.5">
-            <View className="flex-row items-center justify-between">
-              <Text className="text-muted-foreground text-xs font-semibold uppercase tracking-wide" numberOfLines={1}>
-                {banner.appName}
+            <View className="flex-row items-start justify-between gap-2">
+              <Text className="flex-1 text-sm font-semibold" numberOfLines={1}>
+                {banner.title}
               </Text>
               <Text className="text-muted-foreground text-xs">now</Text>
             </View>
-            <Text className="text-sm font-semibold" numberOfLines={1}>
-              {banner.title}
-            </Text>
             {banner.body ? (
               <Text className="text-muted-foreground text-sm leading-5" numberOfLines={2}>
                 {banner.body}

@@ -8,7 +8,9 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Text } from '@/components/ui/text';
 import { useNativeMode } from '@/lib/native-context';
-import { CheckIcon } from 'lucide-react-native';
+import { Spot } from '@/components/kit/spot';
+import { BellOffIcon, CheckIcon } from 'lucide-react-native';
+import * as Linking from 'expo-linking';
 import * as React from 'react';
 import { View } from 'react-native';
 import type { ComponentSection } from '../types';
@@ -32,7 +34,7 @@ function PhotoCaptureDemo() {
           <PhotoCapture value={uri} onChange={setUri} label="Add a photo" seed="demo-photo" />
         </View>
         <View className="w-28">
-          <PhotoCapture shape="avatar" sources={['library']} label="Avatar" seed="demo-avatar" />
+          <PhotoCapture shape="avatar" label="Avatar" seed="demo-avatar" />
         </View>
       </View>
       <ModeNote />
@@ -41,10 +43,24 @@ function PhotoCaptureDemo() {
 }
 
 function CodeScannerDemo() {
+  const [open, setOpen] = React.useState(false);
   const [last, setLast] = React.useState<string | null>(null);
   return (
     <View className="w-full gap-3">
-      <CodeScanner ratio={4 / 3} onScan={(value) => setLast(value)} />
+      {open ? (
+        <CodeScanner
+          ratio={4 / 3}
+          onScan={(value) => {
+            setLast(value);
+            setOpen(false);
+          }}
+          onClose={() => setOpen(false)}
+        />
+      ) : (
+        <Button variant="secondary" onPress={() => setOpen(true)}>
+          <Text>Open the scanner</Text>
+        </Button>
+      )}
       <Text className="text-muted-foreground text-sm">
         {last ? `Scanned: ${last}` : 'Nothing scanned yet.'}
       </Text>
@@ -76,44 +92,56 @@ function BiometricGateDemo() {
 }
 
 function PermissionPrimerDemo() {
-  const [done, setDone] = React.useState<string | null>(null);
-  if (done) {
-    return (
-      <View className="w-full gap-3">
-        <Text className="text-muted-foreground text-sm">You chose: {done}</Text>
-        <Button size="sm" variant="outline" onPress={() => setDone(null)}>
+  const [done, setDone] = React.useState<'allowed' | 'skipped' | null>(null);
+  return (
+    <View className="w-full gap-3">
+      <Card className="w-full px-2 py-2">
+        {done ? (
+          <View className="items-center gap-2 px-6 py-8">
+            <Spot
+              icon={done === 'allowed' ? CheckIcon : BellOffIcon}
+              size="lg"
+              tone={done === 'allowed' ? 'success' : 'muted'}
+              className="mb-4"
+            />
+            <Text variant="h4" className="text-center">
+              {done === 'allowed' ? 'Alerts are on' : 'No alerts, then'}
+            </Text>
+            <Text className="text-muted-foreground max-w-xs text-center">
+              {done === 'allowed'
+                ? 'This prototype can tell you when something changes.'
+                : 'Everything still works — updates appear inside the app instead.'}
+            </Text>
+          </View>
+        ) : (
+          <PermissionPrimer
+            capability="notify"
+            onAllow={() => setDone('allowed')}
+            onSkip={() => setDone('skipped')}
+          />
+        )}
+      </Card>
+      {done ? (
+        <Button variant="outline" onPress={() => setDone(null)}>
           <Text>Show the primer again</Text>
         </Button>
-      </View>
-    );
-  }
-  return (
-    <Card className="w-full px-2 py-2">
-      <PermissionPrimer
-        capability="notify"
-        onAllow={() => setDone('Allow alerts')}
-        onSkip={() => setDone('Show them in the app instead')}
-      />
-    </Card>
+      ) : null}
+    </View>
   );
 }
 
 function ShareDemo() {
   const { share } = useShare();
+  // The link that actually opens this prototype, wherever it is running.
+  const url = Linking.createURL('/');
   return (
     <View className="w-full gap-3">
       <Button
-        onPress={() =>
-          void share({
-            title: 'Prototype Kit',
-            message: 'Take a look at this prototype',
-            url: 'https://expo.dev',
-          })
-        }>
+        onPress={() => void share({ title: 'Prototype Kit', message: 'Take a look at this prototype', url })}>
         <Text>Share this prototype</Text>
       </Button>
-      <Text className="text-muted-foreground text-sm">
-        Opens the OS share sheet. On the web preview it copies to the clipboard instead.
+      <Text className="text-muted-foreground text-sm" numberOfLines={2}>
+        {url}
       </Text>
     </View>
   );
@@ -125,23 +153,21 @@ function NotifyDemo() {
     <View className="w-full gap-3">
       <Button
         onPress={() =>
-          void notify({
-            title: 'Payment received',
-            body: 'R240.00 from Sam Patel is now in your account.',
-            icon: CheckIcon,
-          })
+          void notify({ title: 'Title', body: 'Description goes here, over two lines when it needs them.' })
         }>
         <Text>Show a banner now</Text>
       </Button>
       <Button
         variant="outline"
-        onPress={() => void notify({ title: 'Reminder', body: 'This one arrives in 5 seconds.', delay: 5 })}>
+        onPress={() =>
+          void notify({ title: 'Title', body: 'Description goes here, over two lines when it needs them.', delay: 5 })
+        }>
         <Text>Schedule one in 5s</Text>
       </Button>
       <Text className="text-muted-foreground text-sm">
         {simulated
-          ? 'Scheduled alerts need a device — the banner works everywhere.'
-          : 'Background the app to see the scheduled one arrive.'}
+          ? 'Scheduled alerts need a device — it falls back to the banner after the same delay.'
+          : 'Background the app to see the scheduled one arrive. If alerts are off it falls back to the banner.'}
       </Text>
     </View>
   );

@@ -1,13 +1,15 @@
 import { Placeholder } from '@/components/kit/placeholder';
 import { PermissionPrimer } from '@/components/kit/permission-primer';
 import { Button } from '@/components/ui/button';
+import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { haptic } from '@/lib/haptics';
 import { useCapability } from '@/lib/native-context';
 import { cn } from '@/lib/utils';
 import { CameraView, type BarcodeType } from 'expo-camera';
+import { XIcon } from 'lucide-react-native';
 import * as React from 'react';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 export type CodeType = 'qr' | 'ean13' | 'code128' | 'pdf417' | 'upc_a';
 
@@ -23,6 +25,8 @@ type Props = {
   continuous?: boolean;
   /** What the simulated scanner emits, in order. */
   simulatedValues?: string[];
+  /** Adds a close button over the viewfinder. Without it there is no way to stop the camera. */
+  onClose?: () => void;
   simulate?: boolean;
   className?: string;
 };
@@ -55,6 +59,7 @@ export function CodeScanner({
   ratio = 1,
   continuous = false,
   simulatedValues = ['https://example.com/kit-demo'],
+  onClose,
   simulate,
   className,
 }: Props) {
@@ -74,6 +79,15 @@ export function CodeScanner({
       <View className="bg-muted w-full overflow-hidden rounded-2xl" style={{ aspectRatio: ratio }}>
         {children}
         <Reticle />
+        {onClose ? (
+          <Pressable
+            onPress={onClose}
+            accessibilityRole="button"
+            accessibilityLabel="Close the scanner"
+            className="bg-foreground/60 absolute right-3 top-3 size-11 items-center justify-center rounded-full active:opacity-80">
+            <Icon as={XIcon} size={20} className="text-background" />
+          </Pressable>
+        ) : null}
       </View>
       <Text className="text-muted-foreground text-center text-sm">{hint}</Text>
     </View>

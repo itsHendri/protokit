@@ -1,5 +1,5 @@
 /**
- * Mock catalogue + a tiny cart/orders store for the shop sample. Delete with app/(shop).
+ * Mock catalogue + a tiny cart/orders store for the shop sample. Delete with app/shop.
  */
 import { BackpackIcon, CoffeeIcon, HeadphonesIcon, LampIcon, type LucideIcon, NotebookIcon, ShoppingBagIcon, SpeakerIcon, SproutIcon } from 'lucide-react-native';
 import * as React from 'react';
