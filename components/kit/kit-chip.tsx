@@ -20,7 +20,7 @@ export function KitChip({ label = 'Back to kit', className }: Props) {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   return (
-    <View pointerEvents="box-none" className="absolute left-0 right-0 items-center" style={{ bottom: Math.max(insets.bottom, 8) + TAB_BAR_HEIGHT + 12 }}>
+    <View pointerEvents="box-none" className="absolute left-0 right-0 items-center" style={{ bottom: Math.max(insets.bottom, 8) + TAB_BAR_HEIGHT + 24 }}>
       <Pressable
         accessibilityRole="button"
         accessibilityLabel="Back to the kit"

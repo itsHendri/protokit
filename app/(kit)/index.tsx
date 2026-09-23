@@ -1,10 +1,9 @@
 import { CATEGORIES } from '@/components/devkit/categories';
-import { FOUNDATION_SECTIONS, SECTIONS } from '@/components/devkit/registry';
+import { SECTIONS } from '@/components/devkit/registry';
 import { Footnote } from '@/components/kit/footnote';
 import { ListGroup } from '@/components/kit/list-group';
 import { ListRow } from '@/components/kit/list-row';
 import { ScreenHeader } from '@/components/kit/screen-header';
-import { StatTile } from '@/components/kit/stat-tile';
 import { SectionHeader } from '@/components/kit/section-header';
 import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
@@ -22,11 +21,6 @@ export default function KitHome() {
         subtitle="A themeable Expo starter for mobile prototypes. Everything a screen needs is already here and previewed live."
       />
 
-      <View className="flex-row gap-3">
-        <StatTile label="Components" value={String(SECTIONS.length)} />
-        <StatTile label="Categories" value={String(CATEGORIES.length)} />
-        <StatTile label="Tokens" value={String(FOUNDATION_SECTIONS.length)} />
-      </View>
 
       <ListGroup title="Browse">
         <Link href="/(kit)/foundations" asChild>

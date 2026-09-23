@@ -2,7 +2,6 @@ import { EmptyState } from '@/components/kit/empty-state';
 import { ImageTile } from '@/components/kit/image-tile';
 import { KeyValueList } from '@/components/kit/key-value-list';
 import { QuantityStepper } from '@/components/kit/quantity-stepper';
-import { StickyBottomBar } from '@/components/kit/sticky-bottom-bar';
 import { cartTotal, iconFor, money, productById, shop, useShop } from '@/components/shop/store';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -54,12 +53,10 @@ export default function Cart() {
             ]}
           />
         </Card>
-      </ScrollView>
-      <StickyBottomBar>
         <Button onPress={() => router.push('/shop/checkout')}>
           <Text>Checkout</Text>
         </Button>
-      </StickyBottomBar>
+      </ScrollView>
     </View>
   );
 }

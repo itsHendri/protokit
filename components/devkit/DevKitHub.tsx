@@ -30,6 +30,7 @@ export function DevKitHub<Id extends string>({ categories, sections, searchPlace
   const scrollRef = React.useRef<ScrollView>(null);
   const offsets = React.useRef<Record<string, number>>({});
   const [pending, setPending] = React.useState<Id | null>(focus ?? null);
+  const scrollY = React.useRef(0);
   const trimmed = query.trim();
 
   const results = React.useMemo(() => (trimmed ? sections.filter((s) => matchesQuery(s, trimmed)) : []), [sections, trimmed]);
@@ -50,6 +51,8 @@ export function DevKitHub<Id extends string>({ categories, sections, searchPlace
   return (
     <ScrollView
       ref={scrollRef}
+      scrollEventThrottle={16}
+      onScroll={(e) => (scrollY.current = e.nativeEvent.contentOffset.y)}
       className="bg-background flex-1"
       contentContainerClassName="pb-16"
       keyboardShouldPersistTaps="handled"
@@ -76,7 +79,11 @@ export function DevKitHub<Id extends string>({ categories, sections, searchPlace
                 const y = e.nativeEvent.layout.y;
                 offsets.current[cat.id] = y;
                 if (pending === cat.id) {
-                  scrollRef.current?.scrollTo({ y: Math.max(0, y - 8), animated: true });
+                  const target = Math.max(0, y - 8);
+                  // Already there (within a row's height)? Leave the scroll alone.
+                  if (Math.abs(scrollY.current - target) > 24) {
+                    scrollRef.current?.scrollTo({ y: target, animated: true });
+                  }
                   setPending(null);
                 }
               }}
