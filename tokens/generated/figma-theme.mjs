@@ -73,11 +73,11 @@ export const COLORS = {
     "dark": "#09090b"
   },
   "warning": {
-    "light": "#f59e0b",
+    "light": "#b45309",
     "dark": "#fbbf24"
   },
   "warning-foreground": {
-    "light": "#09090b",
+    "light": "#ffffff",
     "dark": "#09090b"
   },
   "info": {
