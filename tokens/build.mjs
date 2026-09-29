@@ -223,6 +223,23 @@ writeFileSync(join(root, 'lib/theme.ts'), ts);
 // actually renders is checked here, and a failure stops the build.
 
 const AA = 4.5; // WCAG 2.1 AA, normal text. Kit labels are 16px — not "large text".
+const AA_NON_TEXT = 3; // WCAG 1.4.11, icons and other meaningful non-text.
+
+/** The alpha values the kit actually tints with (bg-<tone>/10 etc). */
+const TINTS = [0.1, 0.15, 0.2];
+/** Tones that get used as ink — text-<tone> and coloured icons — not just as fills. */
+const TONES = ['primary', 'success', 'warning', 'info', 'destructive'];
+
+/** Composite `hex` at `alpha` over `base`, the way a /NN tint renders. */
+function blend(hex, base, alpha) {
+  const rgb = (h) => {
+    const n = parseInt(h.replace('#', ''), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  };
+  const [f, b] = [rgb(hex), rgb(base)];
+  const mix = f.map((c, i) => Math.round(alpha * c + (1 - alpha) * b[i]));
+  return '#' + mix.map((c) => c.toString(16).padStart(2, '0')).join('');
+}
 
 function relativeLuminance(hex) {
   const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
@@ -241,8 +258,14 @@ function contrast(a, b) {
 }
 
 /**
- * Pairings the kit renders as text. Foreground tokens are checked against their own
- * fill; muted text is checked against every surface it sits on.
+ * Every way the kit puts one token against another:
+ *   1. a fill and its own -foreground label
+ *   2. body and muted text on each surface
+ *   3. a tone used as INK — text-<tone> and coloured icons — on the page and on a card
+ *   4. a tone's icon sitting on that same tone's tint, as Alert and IconCircle do
+ *
+ * 3 and 4 are the ones that matter most for a re-brand: a colour can be a perfectly good
+ * fill and still be unreadable as text, which is exactly how an amber warning gets in.
  */
 function contrastFailures(tokens, mode) {
   const hex = Object.fromEntries(tokens.filter(isColor).map((t) => [cssName(t), t.$value]));
@@ -254,10 +277,33 @@ function contrastFailures(tokens, mode) {
     if (hex['muted-foreground'] && hex[surface]) pairs.push([`muted-foreground on ${surface}`, hex['muted-foreground'], hex[surface]]);
     if (hex.foreground && hex[surface]) pairs.push([`foreground on ${surface}`, hex.foreground, hex[surface]]);
   }
-  return pairs
-    .map(([label, fg, bg]) => ({ label, fg, bg, ratio: contrast(fg, bg) }))
-    .filter((r) => r.ratio < AA)
-    .map((r) => `  ${mode.padEnd(5)} ${r.label.padEnd(36)} ${r.ratio.toFixed(2)}  (${r.fg} on ${r.bg})`);
+
+  // A tone used as ink rather than as a fill.
+  const inkPairs = [];
+  for (const tone of TONES) {
+    if (!hex[tone]) continue;
+    for (const surface of ['background', 'card']) {
+      if (hex[surface]) inkPairs.push([`text-${tone} on ${surface}`, hex[tone], hex[surface]]);
+    }
+  }
+
+  // A tone's icon on that tone's own tint — Alert, IconCircle, SwipeToConfirm.
+  const tintPairs = [];
+  for (const tone of TONES) {
+    if (!hex[tone] || !hex.background) continue;
+    for (const alpha of TINTS) {
+      tintPairs.push([`${tone} icon on ${tone}/${alpha * 100}`, hex[tone], blend(hex[tone], hex.background, alpha)]);
+    }
+  }
+
+  const check = (list, threshold) =>
+    list
+      .map(([label, fg, bg]) => ({ label, fg, bg, ratio: contrast(fg, bg), threshold }))
+      .filter((r) => r.ratio < threshold);
+
+  return [...check(pairs, AA), ...check(inkPairs, AA), ...check(tintPairs, AA_NON_TEXT)].map(
+    (r) => `  ${mode.padEnd(5)} ${r.label.padEnd(36)} ${r.ratio.toFixed(2)} / ${r.threshold}  (${r.fg} on ${r.bg})`
+  );
 }
 
 const failures = [...contrastFailures(semLight, 'light'), ...contrastFailures(semDark, 'dark')];
