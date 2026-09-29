@@ -65,7 +65,7 @@ export function Placeholder({ seed, ratio = 1, palette = 'chart', icon, classNam
     const out: Shape[] = [];
     for (let i = 0; i < count; i++) {
       const fill = Math.floor(rand() * 5);
-      const opacity = 0.25 + rand() * 0.45;
+      const opacity = 0.12 + rand() * 0.22;
       const pick = rand();
       if (pick < 0.45) {
         out.push({ kind: 'circle', cx: rand() * 100, cy: rand() * 100, r: 14 + rand() * 30, fill, opacity });
@@ -108,7 +108,7 @@ export function Placeholder({ seed, ratio = 1, palette = 'chart', icon, classNam
       </Svg>
       {icon ? (
         <View className="absolute">
-          <Icon as={icon} size={28} className="text-background" />
+          <Icon as={icon} size={28} className="text-muted-foreground" />
         </View>
       ) : null}
     </View>
