@@ -59,7 +59,7 @@ const HALO: Record<SpotTone, string> = {
  */
 export function Spot({ icon, size = 'lg', tone = 'muted', shape = 'circle', ring, className }: Props) {
   const s = SIZES[size];
-  const radius = shape === 'circle' ? 'rounded-full' : 'rounded-3xl';
+  const radius = shape === 'circle' ? 'rounded-full' : 'rounded-2xl';
   const well = (
     <View className={cn(WELL[tone], radius, 'items-center justify-center')} style={{ width: s.well, height: s.well }}>
       <Icon as={icon} size={s.icon} className={GLYPH[tone]} />

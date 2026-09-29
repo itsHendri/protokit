@@ -172,7 +172,7 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 ### Containers & layout
 | Component | Path | Notes |
 |---|---|---|
-| Card | `components/ui/card.tsx` | never nest cards; titles sit outside · **flat — a shadow means it is pressable** |
+| Card | `components/ui/card.tsx` | never nest cards; titles sit outside · **flat — a shadow means pressable or floating** |
 | Accordion | `components/ui/accordion.tsx` | |
 | Collapsible | `components/ui/collapsible.tsx` | |
 | StickyBottomBar | `components/kit/sticky-bottom-bar.tsx` | safe-area action bar under a ScrollView (`pb-32`) |
@@ -234,7 +234,9 @@ Remote push is gone from Expo Go since SDK 53.
   from `lib/reduced-motion.ts` and collapses to 0ms when the OS asks. `components/ui` gets this
   from reanimated's `ReduceMotion.System`; the kit's `Animated` code has no equivalent, so it is
   not optional — a new animated component without it is a bug.
-- **Shadow:** only on something you can press. A flat card is content; a shadowed card is a control.
+- **Shadow:** only on something you can **press**, or something **floating above the page**
+  (dialogs, sheets, menus, toasts, the FloatingButton). Content is flat — that includes inputs,
+  which are neither.
 - **Permission:** `PermissionPrimer` before the OS dialog, always with a skip that runs the simulated
   path. Never show a raw denied state. Keep its copy in step with the strings in `app.json`.
 - **Imagery:** the kit ships no raster art. `Placeholder` (seeded, themed) fills image slots;
