@@ -156,7 +156,11 @@ function NotificationBanner({ banner, onDismiss }: { banner: BannerState | null;
   if (!banner) return null;
 
   return (
-    <View pointerEvents="box-none" className="absolute left-0 right-0" style={{ top: Math.max(insets.top, 12) }}>
+    <View
+      pointerEvents="box-none"
+      accessibilityLiveRegion="polite"
+      className="absolute left-0 right-0"
+      style={{ top: Math.max(insets.top, 12) }}>
       <Animated.View
         style={{
           opacity: slide,

@@ -50,7 +50,11 @@ function Alert({
   const tone = variant ?? 'default';
   return (
     <TextClassContext.Provider value="text-foreground">
-      <View role="alert" className={cn(alertVariants({ variant: tone }), onDismiss && 'pr-12', className)} {...props}>
+      <View
+        role="alert"
+        accessibilityLiveRegion="polite"
+        className={cn(alertVariants({ variant: tone }), onDismiss && 'pr-12', className)}
+        {...props}>
         <View className="absolute left-4 top-4">
           <Icon as={icon} className={cn('size-5', ICON_TONE[tone], iconClassName)} size={20} />
         </View>
