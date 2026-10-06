@@ -1,0 +1,7 @@
+{
+  "$description": "The docs site dogfoods the mobile kit's brand: one tokens.json, emitted as the Tailwind 4 / shadcn theme. Run `kit-tokens build` (part of `npm run dev` and `npm run build`).",
+  "source": "../mobile/tokens/tokens.json",
+  "targets": {
+    "shadcn-web": { "out": "app/tokens.css" }
+  }
+}

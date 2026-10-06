@@ -1,0 +1,25 @@
+---
+title: Web kit
+description: "Coming next: Next.js and shadcn/ui on the same tokens."
+---
+
+<Callout title="Not in the repo yet">
+The web kit is the next phase. This page describes what it will be, so you can plan around it.
+</Callout>
+
+The web kit will be a Next.js app with [shadcn/ui](https://ui.shadcn.com), built to the same rules as the
+mobile kit: a registry, the same `tokens.json`, the same skills.
+
+## What it is for
+
+- **Web apps and dashboards**: tables, forms, settings, sidebars.
+- **Marketing pages**: heroes, pricing, feature grids.
+- **AI product interfaces**: chat, streaming, tool calls, approvals.
+- **The web version of a mobile prototype**, on the same brand from the same token file.
+
+## What already works
+
+The token build already writes the web theme. Every kit has
+`tokens/generated/web.css`: Tailwind 4 and shadcn variables in oklch, generated from the same `tokens.json` as
+the mobile app and checked so the colours are identical on both platforms. This site uses it: everything
+here is styled with the kit's own tokens.

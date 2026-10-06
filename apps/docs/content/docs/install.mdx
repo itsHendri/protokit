@@ -1,0 +1,76 @@
+---
+title: Install
+description: Three ways in, and the one prompt that sets an agent up.
+---
+
+## Let your agent do it
+
+Paste this into Claude Code, Cursor or any coding agent, in an empty folder or an existing Expo project:
+
+<CopyPrompt />
+
+The agent reads [`/install.md`](/install.md), picks the right path below, and then reads the kit's
+`AGENTS.md` and `DESIGN_SYSTEM.md` before writing UI.
+
+## Or do it yourself
+
+<Tabs items={['New prototype', 'Existing Expo app', 'Mobile + web']}>
+<Tab value="New prototype">
+
+Copy just the mobile kit into a new folder and run it:
+
+```bash
+npx giget@latest gh:itsHendri/protokit/apps/mobile my-prototype
+cd my-prototype && npm install
+npm run ios    # or: npm run web, npm run dev (Expo Go on a phone)
+```
+
+Then rename it, re-brand it and remove the samples: see [Mobile setup](/docs/mobile).
+
+</Tab>
+<Tab value="Existing Expo app">
+
+For an Expo app that already uses [react-native-reusables](https://reactnativereusables.com), add kit
+components one at a time through the shadcn registry. In `components.json`:
+
+```json
+{
+  "registries": {
+    "@kit-native": "https://<this site>/r/native/{name}.json"
+  }
+}
+```
+
+```bash
+npx shadcn@latest add @kit-native/theme @kit-native/lib-theme-context
+npx shadcn@latest add @kit-native/list-row @kit-native/sheet
+npx expo install --fix
+```
+
+Wrap the root layout in `<KitThemeProvider>`. Each component page shows its exact command and what it
+installs with it.
+
+</Tab>
+<Tab value="Mobile + web">
+
+Clone the whole monorepo for a client project that needs mobile and web on one brand:
+
+```bash
+git clone https://github.com/itsHendri/protokit.git
+cd protokit && npm install
+npm run ios
+```
+
+The web kit is not in the repo yet; see [Web kit](/docs/web).
+
+</Tab>
+</Tabs>
+
+## For agents
+
+| File | What it is |
+|---|---|
+| [`/install.md`](/install.md) | The install guide an agent follows: pick a path, read the rules |
+| [`/llms.txt`](/llms.txt) | Every component with its API and notes, the tokens, and these docs |
+| [`/llms-full.txt`](/llms-full.txt) | The same, with every docs page in full |
+| [`/r/native/registry.json`](/r/native/registry.json) | The shadcn registry index for Expo apps |

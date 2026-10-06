@@ -1,0 +1,80 @@
+---
+title: Mobile setup
+description: Run the mobile kit, make it yours, and share it.
+---
+
+The mobile kit is an Expo app: Expo Router, React Native, NativeWind (Tailwind classes) and
+react-native-reusables (shadcn/ui for React Native), with the kit's own components on top.
+
+## Run it
+
+```bash
+npm install
+npm run ios      # iOS Simulator, in Expo Go
+npm run web      # the browser
+npm run dev      # scan the QR code with a phone
+```
+
+Open **Components** in the app to see every component live, or **Foundations** for the tokens. On a
+physical iPhone, Expo Go only opens projects for members of your Expo account or organisation; a
+development build (`eas build --profile development`) works for anyone you send it to.
+
+## Make it yours
+
+<Steps>
+<Step>
+
+### Name it
+
+Set `name`, `slug` and `scheme` in `app.json`, and the bundle identifier as `APP_ID` in `.env.local` (copy
+`.env.example`). Account values never go into the repo.
+
+</Step>
+<Step>
+
+### Re-brand it
+
+Edit `tokens/tokens.json`: the brand ramp, the semantic colours and the base radius. Then:
+
+```bash
+npm run tokens:build
+```
+
+The build refuses any palette that falls below WCAG AA and names the pairing that failed. Add a brand font
+with the `expo-font` config plugin and set `primitive.font.family.sans`.
+
+</Step>
+<Step>
+
+### Remove the samples
+
+```bash
+npm run eject-samples
+```
+
+Deletes the Shop and Habits apps, their data and every reference to them.
+
+</Step>
+<Step>
+
+### Build your prototype
+
+A prototype lives in its own folder under `app/`, for example `app/acme/`, with its own tabs or stack. Or
+hand the agent a brief and let the `transcript-to-prototype` skill set it up.
+
+</Step>
+</Steps>
+
+## Share it
+
+| To | Run |
+|---|---|
+| A phone with your development build | `npm run share -- "what changed"` (EAS Update) |
+| Anyone with a browser | `npm run export:web && eas deploy` |
+| A teammate's agent | Send them the repo; `AGENTS.md` and the skills travel with it |
+
+## Device features
+
+Camera, photo library, QR scanning, Face ID, sharing and notifications are all in the kit. Each one falls
+back to a simulated version where the real thing cannot run (the browser, the simulator, Expo Go, a denied
+permission), so a prototype never dead-ends in an error. Face ID needs a development build.

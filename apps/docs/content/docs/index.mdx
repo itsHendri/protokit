@@ -1,0 +1,65 @@
+---
+title: How it works
+description: A prototype kit an agent can build from without making things up.
+---
+
+Protokit is a set of prototype kits for designers who work with coding agents. Each kit is a working app
+with three things an agent needs and usually lacks: a **registry** of the components that exist, **design
+tokens** that define the brand, and **rules** that keep the prototype inside both.
+
+## The loop
+
+<Steps>
+<Step>
+
+### A brief goes in
+
+Paste a meeting transcript, notes or a feature list. The `transcript-to-prototype` skill writes a short
+`BRIEF.md` (who it is for, the screens, the flows, the open questions) before any code is written.
+
+</Step>
+<Step>
+
+### The agent builds from the registry
+
+`DESIGN_SYSTEM.md` lists every component with its path and one-line rules, and `llms.txt` adds each API.
+The **hallucination guard** is a rule in that file: list the components you intend to use, and if one is
+not in the registry, stop and say so. The `add-component` skill adds it properly, with a Kitchen Sink demo
+and a registry entry, in the same change.
+
+</Step>
+<Step>
+
+### A quality gate checks it
+
+The `qc-pass` skill runs typecheck and lint, the token and registry checks, guards against hard-coded
+colours and stray icon libraries, then looks at the affected screens on the iOS simulator and the web in
+light and dark.
+
+</Step>
+</Steps>
+
+## What is in a kit
+
+<Cards>
+  <Card title="Components" href="/components">
+    87 components in 9 categories, each previewed live in the kit's Kitchen Sink.
+  </Card>
+  <Card title="Foundations" href="/docs/foundations">
+    One `tokens.json` for colour, spacing, radius, type and motion, light and dark.
+  </Card>
+  <Card title="Patterns" href="/docs/patterns">
+    Screen skeleton, multi-step flows, confirmations, success, loading, permissions.
+  </Card>
+  <Card title="Screens" href="/screens">
+    Two sample apps built only from the kit: the worked examples.
+  </Card>
+</Cards>
+
+## One source for everything
+
+The list of components lives in one file, `registry/components.ts`. From it the build generates the
+registry tables in `DESIGN_SYSTEM.md`, the component list in `llms.txt`, this site's component pages and a
+[shadcn registry](https://ui.shadcn.com/docs/registry). Tokens work the same way: `tokens/tokens.json` builds
+the CSS variables, the TypeScript theme, Figma variables and `DESIGN.md`. Nothing that describes the kit is
+written twice, so the docs, the agent and the code cannot drift apart.

@@ -108,3 +108,30 @@ jobs:
           npm run typecheck
           npm run lint -- --max-warnings 0
           npm run export:web
+
+  # The docs site: tokens, generated content, the kit's web export under /m, the registry under /r,
+  # the static Next export, then every internal link and the TypeScript.
+  docs:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/docs
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+        working-directory: .
+
+      - name: Build the site
+        run: npm run build
+
+      - name: Internal links resolve
+        run: npm run check:links
+
+      - name: Typecheck
+        run: npm run typecheck
