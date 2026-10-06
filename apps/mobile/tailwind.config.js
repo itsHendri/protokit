@@ -5,7 +5,11 @@ const tokenTheme = require('./tokens/generated/tailwind.theme.js');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
-  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './prototype/**/*.{ts,tsx}'],
+  // Relative to this file, not the working directory, so the build is the same from the monorepo root.
+  content: {
+    relative: true,
+    files: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './prototype/**/*.{ts,tsx}'],
+  },
   presets: [require('nativewind/preset')],
   theme: {
     extend: {

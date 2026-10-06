@@ -35,6 +35,10 @@ DESIGN.md, llms.txt     GENERATED agent-facing summaries (tokens:build, registry
 
 ## Commands
 
+Inside the Protokit monorepo, install once at the repo root (`npm install`; the lockfile lives there) and
+run these from `apps/mobile`, or from the root with `-w apps/mobile`. Copied out on its own, this app is a
+normal npm project.
+
 ```bash
 npm run dev            # expo start -c --go (Expo Go: scan the QR with the phone camera)
 npm run dev:client     # expo start -c (development build)
@@ -105,7 +109,7 @@ npx expo run:ios       # build + install the dev client on the simulator (needs 
   (use `useState(() => new Animated.Value())`), no setState synchronously in effects.
 - Expo Go on the simulator does not run the native modules a dev build adds; treat it as the fast path,
   the dev client as the truth.
-- When upgrading the SDK: delete `package-lock.json`, `npm install expo@latest`, `npx expo install --fix`,
+- When upgrading the SDK: delete the lockfile (the root one in the monorepo), `npm install expo@latest`, `npx expo install --fix`,
   then `npx expo-doctor`.
 - Device capabilities degrade rather than fail — see `lib/native.ts`. Reality: the iOS Simulator has no
   camera; **Face ID does not work in Expo Go** (its Info.plist has no `NSFaceIDUsageDescription`), so use
