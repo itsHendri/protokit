@@ -42,5 +42,3 @@ Present: 69 previews across 8 categories. Still missing, roughly in order of how
 - One iOS session (2026-10-06) had the top two-thirds of the Kitchen Sink search field ignore taps until a Fast
   Refresh cleared it. Not reproduced after cold launch, simulator reboot or `expo start -c`. If it comes back, log
   `onTouchStart` on the root view to see whether the tap reaches React Native at all.
-- The `qc-pass` skill calls `tokens:check`, `test:tokens` and `registry:build -- --check`, which are not in
-  `package.json`. Add the scripts or point the skill at `tokens:build`.
