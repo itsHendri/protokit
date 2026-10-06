@@ -32,6 +32,14 @@ required; every fill/foreground pairing clears WCAG AA (4.5:1), enforced by `npm
 | `border` | #e4e4e7 | #27272a |
 | `input` | #e4e4e7 | #27272a |
 | `ring` | #2563eb | #3b82f6 |
+| `sidebar` | #fafafa | #18181b |
+| `sidebar-foreground` | #09090b | #fafafa |
+| `sidebar-primary` | #2563eb | #3b82f6 |
+| `sidebar-primary-foreground` | #ffffff | #09090b |
+| `sidebar-accent` | #f4f4f5 | #27272a |
+| `sidebar-accent-foreground` | #18181b | #fafafa |
+| `sidebar-border` | #e4e4e7 | #27272a |
+| `sidebar-ring` | #2563eb | #3b82f6 |
 | `chart-1` | #3b82f6 | #60a5fa |
 | `chart-2` | #22c55e | #4ade80 |
 | `chart-3` | #f59e0b | #fbbf24 |

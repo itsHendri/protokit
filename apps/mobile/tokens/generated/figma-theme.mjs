@@ -100,6 +100,38 @@ export const COLORS = {
     "light": "#2563eb",
     "dark": "#3b82f6"
   },
+  "sidebar": {
+    "light": "#fafafa",
+    "dark": "#18181b"
+  },
+  "sidebar-foreground": {
+    "light": "#09090b",
+    "dark": "#fafafa"
+  },
+  "sidebar-primary": {
+    "light": "#2563eb",
+    "dark": "#3b82f6"
+  },
+  "sidebar-primary-foreground": {
+    "light": "#ffffff",
+    "dark": "#09090b"
+  },
+  "sidebar-accent": {
+    "light": "#f4f4f5",
+    "dark": "#27272a"
+  },
+  "sidebar-accent-foreground": {
+    "light": "#18181b",
+    "dark": "#fafafa"
+  },
+  "sidebar-border": {
+    "light": "#e4e4e7",
+    "dark": "#27272a"
+  },
+  "sidebar-ring": {
+    "light": "#2563eb",
+    "dark": "#3b82f6"
+  },
   "chart-1": {
     "light": "#3b82f6",
     "dark": "#60a5fa"

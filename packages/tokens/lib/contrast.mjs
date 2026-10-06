@@ -27,7 +27,7 @@ const TONES = ['primary', 'success', 'warning', 'info', 'destructive'];
  */
 export function contrastFailures(hex, mode) {
   const pairs = [];
-  for (const name of ['primary', 'secondary', 'destructive', 'success', 'warning', 'info', 'accent', 'card', 'popover', 'muted']) {
+  for (const name of ['primary', 'secondary', 'destructive', 'success', 'warning', 'info', 'accent', 'card', 'popover', 'muted', 'sidebar', 'sidebar-primary', 'sidebar-accent']) {
     if (hex[name] && hex[`${name}-foreground`]) pairs.push([`${name}-foreground on ${name}`, hex[`${name}-foreground`], hex[name]]);
   }
   for (const surface of ['background', 'card', 'muted']) {
