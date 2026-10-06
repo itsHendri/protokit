@@ -1,0 +1,17 @@
+# Next
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Generated at build time (scripts/prepare-content.mjs, scripts/build-docs.mjs)
+public/m/
+public/r/
+public/_redirects
+public/_headers
+content/docs/patterns.mdx
+lib/generated/
+
+# Cloudflare
+.wrangler/
+app/tokens.css

@@ -8,7 +8,7 @@ components, no stray colours, light and dark from day one.
 |---|---|
 | [`apps/mobile`](./apps/mobile) | **Mobile kit**: Expo + React Native, NativeWind, react-native-reusables. 87 components, two sample apps, a live Kitchen Sink. |
 | `apps/web` | **Web kit** (coming): Next.js + shadcn/ui on the same tokens. |
-| `apps/docs` | **Docs site** (coming): how it works, setup, live component previews. |
+| [`apps/docs`](./apps/docs) | **Docs site**: how it works, setup, every component live in a phone frame. Static, on Cloudflare. |
 
 One token file drives every kit. `tokens.json` (W3C design-token format) builds the CSS variables and
 TypeScript theme each app reads, and the build refuses any palette that falls below WCAG AA.
@@ -22,7 +22,7 @@ TypeScript theme each app reads, and the build refuses any palette that falls be
    ```
    Or clone this whole repo for a client project that needs mobile and web on one brand.
 2. **Add kit components to an existing Expo app** that uses react-native-reusables, through the shadcn
-   registry: `npx shadcn add @kit-native/<component>` (registry URL coming with the docs site).
+   registry: `npx shadcn add @kit-native/<component>` (see the docs site's install guide).
 3. **Let your agent do it.** Point Claude Code or Cursor at the kit; it reads `AGENTS.md`,
    `DESIGN_SYSTEM.md` and `llms.txt` and builds only from what is registered.
 
@@ -31,7 +31,8 @@ TypeScript theme each app reads, and the build refuses any palette that falls be
 ```bash
 npm install            # once, at the root (npm workspaces)
 npm run ios            # mobile kit on the iOS Simulator; also: npm run web, npm run dev
-npm run check          # typecheck, lint, token and registry checks for the mobile kit
+npm run check          # typecheck, lint, token and registry checks
+npm run docs:dev       # the docs site at http://localhost:3000 (docs:build, docs:preview)
 ```
 
 Each app is self-contained and documented in its own README and `AGENTS.md`. Start with

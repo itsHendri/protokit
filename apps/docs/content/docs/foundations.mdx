@@ -1,0 +1,43 @@
+---
+title: Foundations
+description: Colour, spacing, radius, type and motion, from one token file.
+---
+
+Every kit reads its look from `tokens/tokens.json`, in the [W3C design-token
+format](https://www.designtokens.org/tr/2025.10/format/). `npm run tokens:build` (the
+[`@itshendri/kit-tokens`](https://www.npmjs.com/package/@itshendri/kit-tokens) package) turns it into the
+CSS variables, the TypeScript theme, Figma variables and `DESIGN.md`.
+
+## Colour
+
+Semantic names only, the shadcn vocabulary, each usable as `bg-`, `text-` and `border-`. Screens never
+use hex or Tailwind's palette colours. These swatches use this site's variables, generated from the same
+file, so they follow the theme toggle.
+
+<TokenSwatches />
+
+The build checks every pairing the kit renders, in both themes: each fill and its `-foreground`, body and
+muted text on every surface, each status colour used as text, and each status icon on its own tint.
+Anything below WCAG AA fails the build.
+
+## Spacing
+
+A 4-point grid, using Tailwind's numeric scale and only these steps:
+`0 1 2 3 4 5 6 8 10 12 16` (0 to 64 px). Screen edges `px-5`, between sections `gap-5`, inside cards `p-4`,
+list rows `py-3`.
+
+## Radius
+
+`rounded-sm` 6 · `rounded-md` 8 · `rounded-lg` 10 · `rounded-xl` 16 · `rounded-2xl` 20 · `rounded-full`.
+Buttons are pills. Each class is an offset from one base radius, so changing `semantic.radius.base` reshapes
+the whole kit.
+
+## Type
+
+The system font unless a brand font is set. Screens use the `Text` variants (`h1`–`h4`, `lead`, `large`,
+`p`, `small`, `muted`, `code`) rather than raw sizes.
+
+## Motion
+
+150 ms for small feedback, 200 ms for most transitions, 300 ms for sheets and large surfaces. Anything that
+moves stops when the operating system asks for reduced motion.

@@ -4,7 +4,7 @@ A monorepo of prototype kits. Each app is self-contained; this file only covers 
 
 ```
 apps/mobile/    Expo mobile kit. Its AGENTS.md, DESIGN_SYSTEM.md and .claude/skills are the rules for any mobile work.
-apps/docs/      Docs site (coming in Phase B).
+apps/docs/      Docs site (Next + Fumadocs, static export for Cloudflare). Reads apps/mobile; the one app allowed to.
 apps/web/       Web kit (coming).
 packages/tokens/ @itshendri/kit-tokens: the token build (DTCG → NativeWind, Tailwind 4, TS, DESIGN.md, Figma) every app uses.
 kit.json        The kit's name and addresses, read by the generators.
@@ -14,7 +14,8 @@ kit.json        The kit's name and addresses, read by the generators.
 
 - **Work inside one app.** Read that app's `AGENTS.md` first. For the mobile kit: `apps/mobile/AGENTS.md`
   and `apps/mobile/DESIGN_SYSTEM.md`.
-- **Apps never import from each other or reach outside their folder.** An app must keep working when it
+- **Apps never import from each other or reach outside their folder** (except apps/docs, which documents them
+  and is never extracted). An app must keep working when it
   is copied out on its own (`npx giget gh:itsHendri/protokit/apps/mobile`). Shared code goes through a
   published package in `packages/`, depended on by version range.
 - **One install, at the root.** `npm install` at the repo root (npm workspaces). Run an app's scripts
