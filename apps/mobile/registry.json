@@ -124,6 +124,20 @@
       }
     },
     {
+      "name": "lib-embed",
+      "type": "registry:lib",
+      "title": "lib/embed.ts",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "lib/embed.ts",
+          "type": "registry:lib",
+          "target": "lib/embed.ts"
+        }
+      ]
+    },
+    {
       "name": "lib-haptics",
       "type": "registry:lib",
       "title": "lib/haptics.ts",
@@ -198,7 +212,9 @@
         "@react-native-async-storage/async-storage@2.2.0",
         "nativewind@^4.2.6"
       ],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-embed"
+      ],
       "files": [
         {
           "path": "lib/theme-context.tsx",

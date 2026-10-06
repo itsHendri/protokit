@@ -17,19 +17,29 @@ type Props<Id extends string> = {
   searchPlaceholder: string;
   /** Category to open and scroll to on mount (deep links). Everything else starts collapsed. */
   focus?: Id;
+  /** Section to scroll to and tint on mount (?section=<id>); opens its category. */
+  focusSection?: string;
 };
+
+/** How long a deep-linked section stays tinted. */
+const HIGHLIGHT_MS = 2000;
 
 /**
  * One scrollable page: search on top, one disclosure per category, only one open at a time.
  * Typing collapses everything into a flat result list. No nested screens, no layout animations
  * (long previews inside animated accordions made scrolling unreliable on device).
  */
-export function DevKitHub<Id extends string>({ categories, sections, searchPlaceholder, focus }: Props<Id>) {
+export function DevKitHub<Id extends string>({ categories, sections, searchPlaceholder, focus, focusSection }: Props<Id>) {
+  const target = focusSection ? sections.find((s) => s.id === focusSection) : undefined;
+  const initial = target?.category ?? focus ?? null;
   const [query, setQuery] = React.useState('');
-  const [open, setOpen] = React.useState<Id | null>(focus ?? null);
+  const [open, setOpen] = React.useState<Id | null>(initial);
   const scrollRef = React.useRef<ScrollView>(null);
   const offsets = React.useRef<Record<string, number>>({});
-  const [pending, setPending] = React.useState<Id | null>(focus ?? null);
+  const [pending, setPending] = React.useState<Id | null>(target ? null : initial);
+  const [pendingSection, setPendingSection] = React.useState<string | null>(target?.id ?? null);
+  const sectionOffsets = React.useRef<Record<string, number>>({});
+  const [highlight, setHighlight] = React.useState<string | null>(target?.id ?? null);
   const scrollY = React.useRef(0);
   const trimmed = query.trim();
 
@@ -39,6 +49,22 @@ export function DevKitHub<Id extends string>({ categories, sections, searchPlace
     for (const s of sections) map.set(s.category, [...(map.get(s.category) ?? []), s]);
     return map;
   }, [sections]);
+
+  React.useEffect(() => {
+    if (!highlight) return;
+    const timer = setTimeout(() => setHighlight(null), HIGHLIGHT_MS);
+    return () => clearTimeout(timer);
+  }, [highlight]);
+
+  /** A section's y inside the page = its category's y + its own y inside the category. */
+  const scrollToPendingSection = (category: Id) => {
+    if (!pendingSection || target?.category !== category) return;
+    const catY = offsets.current[category];
+    const secY = sectionOffsets.current[pendingSection];
+    if (catY === undefined || secY === undefined) return;
+    scrollRef.current?.scrollTo({ y: Math.max(0, catY + secY - 8), animated: false });
+    setPendingSection(null);
+  };
 
   const toggle = (id: Id) => {
     haptic('selection');
@@ -86,6 +112,7 @@ export function DevKitHub<Id extends string>({ categories, sections, searchPlace
                   }
                   setPending(null);
                 }
+                scrollToPendingSection(cat.id);
               }}
               className="border-border border-b">
               <Pressable
@@ -107,7 +134,19 @@ export function DevKitHub<Id extends string>({ categories, sections, searchPlace
                   <Icon as={ChevronDownIcon} size={18} className="text-muted-foreground" />
                 </View>
               </Pressable>
-              {isOpen ? items.map((s) => <DevKitSection key={s.id} section={s} />) : null}
+              {isOpen
+                ? items.map((s) => (
+                    <DevKitSection
+                      key={s.id}
+                      section={s}
+                      highlighted={highlight === s.id}
+                      onLayout={(e) => {
+                        sectionOffsets.current[s.id] = e.nativeEvent.layout.y;
+                        scrollToPendingSection(cat.id);
+                      }}
+                    />
+                  ))
+                : null}
             </View>
           );
         })

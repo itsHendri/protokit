@@ -1,0 +1,58 @@
+import * as React from 'react';
+import { Platform } from 'react-native';
+
+/**
+ * Embed mode: the docs site shows the kit's web export inside a phone frame (an iframe). The page that
+ * loads first decides it for the whole session, because navigating inside the iframe drops the query.
+ *
+ *   ?embed=1             hide the kit chrome: tab bar, header, KitChip
+ *   ?theme=light|dark    start in that theme and never persist it (also works without embed)
+ *   ?section=<id>        on /kitchen-sink: with embed, render just that component's demo
+ *
+ * The host page keeps the theme in step with postMessage (web only):
+ *   host → kit   { type: 'kit:theme', value: 'light' | 'dark' }
+ *   kit → host   { type: 'kit:ready' }   once mounted
+ * Messages are accepted from this page's own origin (the docs site serves the export under /m) and from
+ * the origins in EXPO_PUBLIC_EMBED_ORIGINS (comma-separated, for a docs dev server on another port).
+ */
+export type EmbedScheme = 'light' | 'dark';
+export type EmbedState = { embedded: boolean; theme?: EmbedScheme };
+
+const isScheme = (value: unknown): value is EmbedScheme => value === 'light' || value === 'dark';
+
+function readInitial(): EmbedState {
+  if (Platform.OS !== 'web' || typeof window === 'undefined') return { embedded: false };
+  const params = new URLSearchParams(window.location.search);
+  const theme = params.get('theme');
+  return { embedded: params.get('embed') === '1', theme: isScheme(theme) ? theme : undefined };
+}
+
+/** Latched once, at startup. */
+export const EMBED: EmbedState = readInitial();
+
+function allowedOrigins(): string[] {
+  const extra = (process.env.EXPO_PUBLIC_EMBED_ORIGINS ?? '')
+    .split(',')
+    .map((o) => o.trim())
+    .filter(Boolean);
+  return typeof window === 'undefined' ? extra : [window.location.origin, ...extra];
+}
+
+/**
+ * Listens for `kit:theme` from the host page and tells it `kit:ready`. No-op unless embedded on web.
+ * `onTheme` must be stable (wrap it in useCallback).
+ */
+export function useEmbedBridge(onTheme: (scheme: EmbedScheme) => void) {
+  React.useEffect(() => {
+    if (!EMBED.embedded || Platform.OS !== 'web' || typeof window === 'undefined' || window.parent === window) return;
+    const origins = allowedOrigins();
+    const onMessage = (event: MessageEvent) => {
+      if (!origins.includes(event.origin)) return;
+      const data = event.data as { type?: unknown; value?: unknown } | null;
+      if (data?.type === 'kit:theme' && isScheme(data.value)) onTheme(data.value);
+    };
+    window.addEventListener('message', onMessage);
+    for (const origin of origins) window.parent.postMessage({ type: 'kit:ready' }, origin);
+    return () => window.removeEventListener('message', onMessage);
+  }, [onTheme]);
+}
