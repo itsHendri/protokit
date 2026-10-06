@@ -5,6 +5,7 @@
  *   kit-tokens build    resolve, run the contrast gate, write every target in tokens.config.json
  *   kit-tokens check    same, but write nothing; exit 1 if any generated file is stale (CI)
  *   kit-tokens figma    mirror the tokens into Figma Variables (see push-figma.mjs)
+ *   kit-tokens --version
  *
  *   --root <dir>        app root (default: cwd); every path in the config is relative to it
  *   --config <file>     default: tokens/tokens.config.json
@@ -13,7 +14,7 @@
  * Targets live in ./targets/<name>.mjs and return [{ path, contents }]. All outputs are GENERATED —
  * never hand-edit them.
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -33,6 +34,10 @@ function parseArgs(argv) {
 
 export async function run(argv = process.argv.slice(2)) {
   const { command, flags } = parseArgs(argv);
+  if (command === '--version' || command === '-v') {
+    console.log(JSON.parse(readFileSync(join(here, 'package.json'), 'utf8')).version);
+    return;
+  }
   const root = resolve(flags.root ?? process.cwd());
 
   if (command === 'figma') {
@@ -93,4 +98,12 @@ export async function run(argv = process.argv.slice(2)) {
   console.log(`tokens:build → ${files.map((f) => f.path).join(', ')} · contrast AA ✓`);
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await run();
+// npm runs bins through a symlink in node_modules/.bin, so compare real paths.
+const isMain = () => {
+  try {
+    return realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));
+  } catch {
+    return false;
+  }
+};
+if (process.argv[1] && isMain()) await run();

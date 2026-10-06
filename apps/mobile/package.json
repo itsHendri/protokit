@@ -19,14 +19,13 @@
     "typecheck": "tsc --noEmit",
     "lint": "expo lint",
     "clean": "rm -rf .expo node_modules",
-    "tokens:build": "node tokens/build.mjs",
+    "tokens:build": "kit-tokens build",
     "eject-samples": "node scripts/eject-samples.mjs",
     "share": "bash scripts/share.sh",
     "export:web": "expo export --platform web",
-    "tokens:figma": "node tokens/push-figma.mjs",
+    "tokens:figma": "kit-tokens figma",
     "dev:client": "expo start -c",
-    "tokens:check": "node tokens/cli.mjs check",
-    "test:tokens": "node --test tokens/*.test.mjs",
+    "tokens:check": "kit-tokens check",
     "registry:build": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/registry-build.mjs",
     "registry:drift": "node scripts/rnr-drift.mjs",
     "registry:dist": "npx -y shadcn@4.21.3 build registry.json --output dist/r/native",
@@ -96,6 +95,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
+    "@itshendri/kit-tokens": "^1.0.0",
     "@types/node": "^26.6.4",
     "@types/react": "~19.2.10",
     "eslint": "^9.39.5",
@@ -103,7 +103,6 @@
     "expo-mcp": "~0.2.1",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
-    "style-dictionary": "^5.5.5",
     "typescript": "~6.0.3"
   },
   "private": true

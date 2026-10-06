@@ -6,7 +6,7 @@ A monorepo of prototype kits. Each app is self-contained; this file only covers 
 apps/mobile/    Expo mobile kit. Its AGENTS.md, DESIGN_SYSTEM.md and .claude/skills are the rules for any mobile work.
 apps/docs/      Docs site (coming in Phase B).
 apps/web/       Web kit (coming).
-packages/       Shared tooling published to npm (coming: @itshendri/kit-tokens).
+packages/tokens/ @itshendri/kit-tokens: the token build (DTCG → NativeWind, Tailwind 4, TS, DESIGN.md, Figma) every app uses.
 kit.json        The kit's name and addresses, read by the generators.
 ```
 
@@ -23,6 +23,17 @@ kit.json        The kit's name and addresses, read by the generators.
   An SDK upgrade moves every app.
 - Tailwind 3 (mobile, NativeWind) and Tailwind 4 (docs, web) coexist: the root pins `tailwindcss@^3`
   so v3 hoists and v4 nests under the Next apps. `npm ls tailwindcss` should show that.
+
+## Packages and releases
+
+- `packages/tokens` is `@itshendri/kit-tokens`. Apps depend on it by range (`^1.0.0`); inside the repo npm
+  links the workspace copy, outside it installs from npm. Change the build there, run
+  `npm test -w packages/tokens`, then rebuild an app's tokens (`npm run tokens:build -w apps/mobile`).
+- Anything in a package that should ship needs a changeset: `npx changeset` at the root. Merging to main
+  opens a "Version Packages" PR; merging that publishes to npm (`.github/workflows/release.yml`, trusted
+  publishing). Never bump package versions by hand, and keep app ranges on the same major.
+- CI's `extract` job copies apps/mobile out of the repo and runs its checks standalone. If it fails, an app
+  has started depending on something outside its folder.
 
 ## Skills
 
