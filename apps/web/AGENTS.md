@@ -22,12 +22,15 @@ hallucination guard. This file covers engineering, workflows and gotchas.
 app/layout.tsx          providers (theme, tooltips, toasts) + the embed boot script
 app/(kit)/              the kit shell: Home (/) · Components (/components, the Kitchen Sink) · Foundations
 app/<slug>/             a prototype: its own folder with its own layout.tsx (AppShell, a marketing layout…)
+app/dashboard/, app/landing/, app/assistant/   the three samples (worked examples). `npm run eject-samples`
+                        removes them, their data in components/<sample>/ and the kit home's links.
 components/ui/          shadcn/ui — add more with the add-component skill (`npx shadcn@latest add <name>`)
 components/kit/         ours: AppShell, PageHeader, StatTile, DataTable, EmptyState, Hero, FeatureGrid,
                         PricingCard, ChatMessage, ChatComposer, StreamingText, ThinkingIndicator,
                         ToolCallCard, ApprovalCard
 components/devkit/      the Kitchen Sink: demos.tsx keyed by registry id
-components/site/        the kit shell's own chrome (header, theme toggle, providers)
+components/site/        the kit shell's own chrome (header, theme toggle, providers) and KitChip, a
+                        prototype's way back to the kit
 registry/               components.ts: what the kit ships → DESIGN_SYSTEM.md tables, llms.txt, registry.json
 hooks/, lib/            use-reduced-motion · embed (docs iframe mode) · theme.ts (generated)
 DESIGN.md, llms.txt     GENERATED agent-facing summaries
@@ -48,6 +51,7 @@ npm run registry:build    # after editing registry/components.ts
 npm run tokens:check && npm run registry:build -- --check   # what CI checks
 npm run registry:drift    # after `shadcn add`: which components/ui files differ from shadcn (network)
 npm run registry:dist && npm run registry:roundtrip         # build the shadcn registry and prove it reinstalls
+npm run eject-samples     # delete the dashboard, landing and assistant samples and every reference
 ```
 
 ## Building a prototype (the rules)
@@ -55,7 +59,11 @@ npm run registry:dist && npm run registry:roundtrip         # build the shadcn r
 1. A prototype lives in its own folder under `app/`, e.g. `app/acme/`, with its own `layout.tsx`. An app
    prototype puts `AppShell` in that layout; a marketing page uses a plain layout. When the prototype IS the
    product, move it to `/` and delete `app/(kit)`.
-2. Pages compose ONLY registry components. Patterns are in `DESIGN_SYSTEM.md › Patterns`.
+2. Pages compose ONLY registry components. Patterns are in `DESIGN_SYSTEM.md › Patterns`; the samples
+   (`app/dashboard`, `app/landing`, `app/assistant`) are the worked examples. `KitChip` in their top bars is
+   the way back to the kit (and the theme toggle); it hides itself in embed mode.
+   Interactive pages that pass functions to kit components (DataTable cells, nav icons) are client
+   components; keep `metadata` in a server `page.tsx` or `layout.tsx` that renders them.
 3. Mock data lives beside the prototype (`app/<slug>/data.ts` or `components/<slug>/data.ts`). Never call
    real APIs; a route handler returning fixtures is fine when a flow needs one.
 4. New component needed? Use the `add-component` skill: it lands in the registry and the docs.

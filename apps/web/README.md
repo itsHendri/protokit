@@ -10,6 +10,8 @@ transcript and get a first prototype that already looks and feels coherent.
   chat with streaming, tool calls and approvals
 - **Design tokens** in one JSON file → CSS variables + TypeScript, light and dark, WCAG AA enforced
 - **Kitchen Sink** and **Foundations** pages, searchable
+- **Three sample apps** for one made-up product: a SaaS dashboard (`/dashboard`), a landing page
+  (`/landing`) and an AI assistant (`/assistant`), each built only from the registry
 
 ## Quick start
 
@@ -20,7 +22,7 @@ npm run dev        # http://localhost:3100
 
 ## Start a real project
 
-1. Rename `name` in `package.json`.
+1. Rename `name` in `package.json`, and remove the samples: `npm run eject-samples`.
 2. Brand: edit `tokens/tokens.json` (brand ramp, semantic colours, radius), run `npm run tokens:build`.
 3. Build your prototype in its own folder, `app/<slug>/` (see `AGENTS.md › Building a prototype`), or hand
    a brief to the `transcript-to-prototype` skill.
