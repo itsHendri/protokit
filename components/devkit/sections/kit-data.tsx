@@ -14,7 +14,7 @@ import { StatusDot } from '@/components/kit/status-dot';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Text } from '@/components/ui/text';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 import { BellIcon, CreditCardIcon, FolderIcon, LockIcon, ScanFaceIcon, ShoppingCartIcon, UsersIcon, WalletIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -228,18 +228,19 @@ function ValueHeaderDemo() {
   );
 }
 
-export const KIT_DATA_SECTIONS: ComponentSection[] = [
-  { id: 'list-row', title: 'List row', category: 'data', aliases: ['row', 'cell', 'setting', 'menu item', 'list item'], api: '<ListRow leading title subtitle? value? sublabel? trailing? chevron? onPress? last? />', caption: 'The canonical row. Put rows inside a Card with px-4 py-0; mark the last one `last`.', Demo: ListRowDemo },
-  { id: 'icon-circle', title: 'Icon circle', category: 'data', aliases: ['icon well', 'avatar icon', 'leading icon'], api: '<IconCircle as size? shape="circle|square" tone? />', caption: 'Row scale only — 32–64px. `square` is the rounded-square well. At illustration scale (64px and up) use Spot instead.', Demo: IconCircleDemo },
-  { id: 'summary-card', title: 'Summary card', category: 'data', aliases: ['key value', 'receipt', 'details', 'summary', 'confirmation'], api: '<SummaryCard title? rows={[{label,value}]} /> · <KeyValueList rows />', Demo: SummaryDemo },
-  { id: 'stat-tile', title: 'Stat tile', category: 'data', aliases: ['kpi', 'metric', 'dashboard'], api: '<StatTile label value delta? icon? />', Demo: StatTileDemo },
-  { id: 'percent-change', title: 'Percent change', category: 'data', aliases: ['delta', 'trend', 'up down'], api: '<PercentChange value decimals? showIcon? />', Demo: PercentChangeDemo },
-  { id: 'avatar-group', after: 'avatar', title: 'Avatar group', category: 'data', aliases: ['members', 'participants', 'stack', '+n'], api: '<AvatarGroup items={[{id,initials,uri?}]} max? size? />', Demo: AvatarGroupDemo },
-  { id: 'progress-ring', title: 'Progress ring', category: 'data', aliases: ['circular progress', 'goal', 'percent', 'donut'], api: '<ProgressRing value size? tone?>{centre}</ProgressRing>', Demo: ProgressRingDemo },
-  { id: 'status-dot', title: 'Status dot', category: 'data', aliases: ['indicator', 'online', 'presence'], api: '<StatusDot tone size />', Demo: StatusDotDemo },
-  { id: 'line-chart', title: 'Line chart', category: 'data', aliases: ['sparkline', 'trend', 'time series', 'graph'], api: '<LineChart data variant="interactive|sparkline" height tone area? onPointerChange? />', caption: 'Interactive variant reports the scrubbed point; render your own header from it.', Demo: LineChartDemo },
-  { id: 'bar-chart', title: 'Bar chart', category: 'data', aliases: ['bars', 'histogram', 'weekly'], api: '<BarChart data={[{label,value,className?}]} height showValues? />', Demo: BarChartDemo },
-  { id: 'donut-chart', title: 'Donut chart', category: 'data', aliases: ['pie', 'ring', 'allocation', 'breakdown'], api: '<DonutChart data size>{centre}</DonutChart> + <ChartLegend data />', Demo: DonutChartDemo },
-  { id: 'list-group', title: 'List group', category: 'data', after: 'list-row', aliases: ['rows', 'settings list', 'grouped list', 'plain list', 'choice rows'], api: '<ListGroup title? footnote? variant="card|plain">{rows}</ListGroup>', caption: 'Wraps ListRows and sets `last` on the final one for you. `plain` drops the card for the settings look; pair with ListRow `select` for radio or checkbox rows.', Demo: ListGroupDemo },
-  { id: 'value-header', title: 'Value header', category: 'data', aliases: ['balance', 'hero number', 'total', 'amount', 'mask', 'hide balance'], api: '<ValueHeader value label? caption? captionTone? maskable? align? />', caption: 'The hero figure at the top of a screen. `maskable` adds the eye toggle for anything someone might not want visible over their shoulder.', Demo: ValueHeaderDemo },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const KIT_DATA_DEMOS: Record<string, ComponentType> = {
+  'list-row': ListRowDemo,
+  'icon-circle': IconCircleDemo,
+  'summary-card': SummaryDemo,
+  'stat-tile': StatTileDemo,
+  'percent-change': PercentChangeDemo,
+  'avatar-group': AvatarGroupDemo,
+  'progress-ring': ProgressRingDemo,
+  'status-dot': StatusDotDemo,
+  'line-chart': LineChartDemo,
+  'bar-chart': BarChartDemo,
+  'donut-chart': DonutChartDemo,
+  'list-group': ListGroupDemo,
+  'value-header': ValueHeaderDemo,
+};

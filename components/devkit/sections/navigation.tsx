@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/menubar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Text } from '@/components/ui/text';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 import * as React from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -105,23 +105,8 @@ function MenubarDemo() {
   );
 }
 
-export const NAVIGATION_SECTIONS: ComponentSection[] = [
-  {
-    id: 'tabs',
-    title: 'Tabs',
-    category: 'navigation',
-    aliases: ['segmented', 'tab bar', 'content switch'],
-    api: '<Tabs value onValueChange><TabsList><TabsTrigger value /></TabsList><TabsContent value /></Tabs>',
-    caption: 'In-page content switching. App-level tabs are the Expo Router tab bar.',
-    Demo: TabsDemo,
-  },
-  {
-    id: 'menubar',
-    title: 'Menubar',
-    category: 'navigation',
-    aliases: ['menu', 'toolbar', 'desktop'],
-    api: '<Menubar value onValueChange><MenubarMenu value><MenubarTrigger /><MenubarContent /></MenubarMenu></Menubar>',
-    caption: 'Mostly a web/desktop pattern; prefer a DropdownMenu on phones.',
-    Demo: MenubarDemo,
-  },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const NAVIGATION_DEMOS: Record<string, ComponentType> = {
+  'tabs': TabsDemo,
+  'menubar': MenubarDemo,
+};

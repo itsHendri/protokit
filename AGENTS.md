@@ -23,10 +23,12 @@ app/(kit)/              the kit shell: Home · Components (kitchen sink) · Foun
 app/shop/, app/habits/    two sample apps (named segments, not groups). `npm run eject-samples` removes them.
 components/ui/          reusables — install more with the add-component skill
 components/kit/         ported/custom components
-components/devkit/      registry + previews (sections/<category>.tsx, sections/kit-<category>.tsx)
+registry/               components.ts: what the kit ships (metadata) → DESIGN_SYSTEM.md tables, llms.txt, registry
+components/devkit/      Kitchen Sink: demos keyed by registry id (sections/<category>.tsx, sections/kit-<category>.tsx)
 components/shop/, components/habits/  sample data + stores. Go with `npm run eject-samples`.
 lib/                    theme.ts (generated), theme-context, haptics, utils(cn)
 tokens/                 tokens.json (edit), tokens.config.json (outputs), cli.mjs + lib/ + targets/, generated/
+DESIGN.md, llms.txt     GENERATED agent-facing summaries (tokens:build, registry:build)
 .claude/skills/         add-component, qc-pass, transcript-to-prototype
 .claude/launch.json     preview configs: kit-web (port 8090) and kit-ios (port 8091)
 ```
@@ -40,6 +42,8 @@ npm run ios            # expo start --ios --go (simulator)
 npm run web            # expo start --web
 npm run typecheck && npm run lint -- --max-warnings 0   # CI runs these plus tokens:build and export:web
 npm run tokens:build   # after editing tokens/tokens.json (fails if any pairing drops below WCAG AA)
+npm run registry:build # after editing registry/components.ts: DESIGN_SYSTEM.md tables, llms.txt, index
+npm run tokens:check && npm run test:tokens && npm run registry:build -- --check   # what CI checks
 npm run eject-samples  # delete the shop + habits samples, their stores and every reference
 npm run share -- "msg" # EAS Update to the main channel, prints the links
 npm run export:web && eas deploy   # hosted web preview URL

@@ -4,7 +4,7 @@ import { Icon } from '@/components/ui/icon';
 import { Separator } from '@/components/ui/separator';
 import { Text } from '@/components/ui/text';
 import { cn } from '@/lib/utils';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 import { BadgeCheckIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -115,31 +115,9 @@ function SeparatorDemo() {
   );
 }
 
-export const DATA_SECTIONS: ComponentSection[] = [
-  {
-    id: 'avatar',
-    title: 'Avatar',
-    category: 'data',
-    aliases: ['profile', 'user', 'initials'],
-    api: '<Avatar alt><AvatarImage source /><AvatarFallback><Text /></AvatarFallback></Avatar>',
-    caption: 'Default 48px. Image with initials fallback; size with size-8 / size-16; rounded-lg for a square.',
-    Demo: AvatarDemo,
-  },
-  {
-    id: 'badge',
-    title: 'Badge',
-    category: 'data',
-    aliases: ['tag', 'chip', 'pill', 'count', 'status'],
-    api: '<Badge variant="default|secondary|destructive|outline"><Text /></Badge>',
-    caption: 'Tint with a semantic class (bg-success + text-success-foreground), never a raw colour.',
-    Demo: BadgeDemo,
-  },
-  {
-    id: 'separator',
-    title: 'Separator',
-    category: 'data',
-    aliases: ['divider', 'rule', 'hairline'],
-    api: '<Separator orientation="horizontal|vertical" />',
-    Demo: SeparatorDemo,
-  },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const DATA_DEMOS: Record<string, ComponentType> = {
+  'avatar': AvatarDemo,
+  'badge': BadgeDemo,
+  'separator': SeparatorDemo,
+};

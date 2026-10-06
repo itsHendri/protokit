@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/itsHendri/mobile-app-prototype-kit.git"
   },
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "start": "expo start --go",
     "dev": "expo start -c --go",
@@ -23,7 +26,8 @@
     "tokens:figma": "node tokens/push-figma.mjs",
     "dev:client": "expo start -c",
     "tokens:check": "node tokens/cli.mjs check",
-    "test:tokens": "node --test tokens/*.test.mjs"
+    "test:tokens": "node --test tokens/*.test.mjs",
+    "registry:build": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/registry-build.mjs"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",

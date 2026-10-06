@@ -1,7 +1,7 @@
 import { ActionSheet, OptionSheet, Sheet } from '@/components/kit/sheet';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 import { PencilIcon, ShareIcon, Trash2Icon } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -67,8 +67,9 @@ function ActionSheetDemo() {
   );
 }
 
-export const KIT_OVERLAYS_SECTIONS: ComponentSection[] = [
-  { id: 'sheet', title: 'Sheet', category: 'overlays', aliases: ['bottom sheet', 'drawer', 'modal sheet'], api: '<Sheet open onClose title? description?>{children}</Sheet>', caption: 'The base for OptionSheet and ActionSheet. Native mobile pattern; prefer over Dialog for pickers.', Demo: SheetDemo },
-  { id: 'option-sheet', title: 'Option sheet', category: 'overlays', aliases: ['picker', 'select sheet', 'choose one'], api: '<OptionSheet open onClose title options={[{value,label,description?,icon?}]} value onChange />', Demo: OptionSheetDemo },
-  { id: 'action-sheet', title: 'Action sheet', category: 'overlays', aliases: ['actions', 'more menu', 'share delete'], api: '<ActionSheet open onClose title? items={[{label,icon?,destructive?,onPress}]} />', Demo: ActionSheetDemo },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const KIT_OVERLAYS_DEMOS: Record<string, ComponentType> = {
+  'sheet': SheetDemo,
+  'option-sheet': OptionSheetDemo,
+  'action-sheet': ActionSheetDemo,
+};

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 import * as React from 'react';
 import { StickyBottomBar } from '@/components/kit/sticky-bottom-bar';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 import { View } from 'react-native';
 
 function StickyBottomBarDemo() {
@@ -56,8 +56,9 @@ function FootnoteDemo() {
   );
 }
 
-export const KIT_LAYOUT_SECTIONS: ComponentSection[] = [
-  { id: 'sticky-bottom-bar', title: 'Sticky bottom bar', category: 'layout', aliases: ['cta bar', 'footer actions', 'safe area'], api: '<StickyBottomBar transparent?>{buttons}</StickyBottomBar>', caption: 'Render after the ScrollView; give the scroll content pb-32. Children share the width equally.', Demo: StickyBottomBarDemo },
-  { id: 'promo-card', title: 'Promo card', category: 'layout', aliases: ['banner', 'upsell', 'announcement', 'offer', 'nudge'], api: '<PromoCard title body? action? onDismiss? tone? seed? icon? />', caption: 'At most one per screen, and dismissible whenever it is promotional rather than required. The art is generated from the seed, so it needs no asset.', Demo: PromoCardDemo },
-  { id: 'footnote', title: 'Footnote', category: 'layout', aliases: ['small print', 'legal', 'disclosure', 'terms', 'learn more'], api: '<Footnote action?>{copy}</Footnote>', caption: 'Disclosures at the foot of a screen. Keep it last in the scroll, after the final section.', Demo: FootnoteDemo },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const KIT_LAYOUT_DEMOS: Record<string, ComponentType> = {
+  'sticky-bottom-bar': StickyBottomBarDemo,
+  'promo-card': PromoCardDemo,
+  'footnote': FootnoteDemo,
+};

@@ -2,7 +2,7 @@ import { ImageTile } from '@/components/kit/image-tile';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 import {
   BellIcon,
   CalendarIcon,
@@ -64,23 +64,9 @@ function AspectRatioDemo() {
   );
 }
 
-export const MEDIA_SECTIONS: ComponentSection[] = [
-  {
-    id: 'icon',
-    title: 'Icon',
-    category: 'media',
-    aliases: ['lucide', 'glyph', 'symbol'],
-    api: '<Icon as={LucideIcon} size? className="text-…" />',
-    caption: 'Lucide has 1,500+ icons. Colour with a text-* class; never import lucide outside this atom.',
-    Demo: IconDemo,
-  },
-  { id: 'image-tile', title: 'Image tile', category: 'media', aliases: ['image', 'photo', 'thumbnail', 'placeholder', 'cover'], api: '<ImageTile source? ratio? caption? fallbackIcon? />', caption: 'Rounded image with a muted placeholder while loading or when there is nothing to show.', Demo: ImageTileDemo },
-  {
-    id: 'aspect-ratio',
-    title: 'Aspect ratio',
-    category: 'media',
-    aliases: ['image', 'thumbnail', '16:9'],
-    api: '<AspectRatio ratio={16 / 9}>…</AspectRatio>',
-    Demo: AspectRatioDemo,
-  },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const MEDIA_DEMOS: Record<string, ComponentType> = {
+  'icon': IconDemo,
+  'image-tile': ImageTileDemo,
+  'aspect-ratio': AspectRatioDemo,
+};

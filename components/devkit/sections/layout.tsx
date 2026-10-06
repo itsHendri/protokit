@@ -6,7 +6,7 @@ import { Icon } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Text } from '@/components/ui/text';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 import { ChevronsUpDownIcon } from 'lucide-react-native';
 import { View } from 'react-native';
 
@@ -92,30 +92,9 @@ function CollapsibleDemo() {
   );
 }
 
-export const LAYOUT_SECTIONS: ComponentSection[] = [
-  {
-    id: 'card',
-    title: 'Card',
-    category: 'layout',
-    aliases: ['surface', 'container', 'panel'],
-    api: '<Card><CardHeader><CardTitle /><CardDescription /></CardHeader><CardContent /><CardFooter /></Card>',
-    caption: 'Never nest cards. Section titles sit outside the card.',
-    Demo: CardDemo,
-  },
-  {
-    id: 'accordion',
-    title: 'Accordion',
-    category: 'layout',
-    aliases: ['disclosure', 'expand', 'faq'],
-    api: '<Accordion type="single|multiple" collapsible><AccordionItem value><AccordionTrigger /><AccordionContent /></AccordionItem></Accordion>',
-    Demo: AccordionDemo,
-  },
-  {
-    id: 'collapsible',
-    title: 'Collapsible',
-    category: 'layout',
-    aliases: ['show more', 'expand'],
-    api: '<Collapsible><CollapsibleTrigger asChild /><CollapsibleContent /></Collapsible>',
-    Demo: CollapsibleDemo,
-  },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const LAYOUT_DEMOS: Record<string, ComponentType> = {
+  'card': CardDemo,
+  'accordion': AccordionDemo,
+  'collapsible': CollapsibleDemo,
+};

@@ -4,7 +4,7 @@ import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Text } from '@/components/ui/text';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 import { CircleAlertIcon, CircleCheckIcon, InfoIcon, TriangleAlertIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { Platform, View } from 'react-native';
@@ -97,39 +97,10 @@ function TooltipDemo() {
   );
 }
 
-export const FEEDBACK_SECTIONS: ComponentSection[] = [
-  {
-    id: 'alert',
-    title: 'Alert',
-    category: 'feedback',
-    aliases: ['inline message', 'banner', 'callout', 'error', 'success'],
-    api: '<Alert icon variant="default|info|success|warning|destructive" onDismiss? action?><AlertTitle /><AlertDescription /></Alert>',
-    caption: 'Inline and persistent, tinted by tone. For transient messages use Toast. `onDismiss` and `action` turn it into a nudge — never dismissible for an error the user must act on.',
-    Demo: AlertDemo,
-  },
-  {
-    id: 'progress',
-    title: 'Progress',
-    category: 'feedback',
-    aliases: ['bar', 'loading', 'percent', 'determinate'],
-    api: '<Progress value={0–100} />',
-    Demo: ProgressDemo,
-  },
-  {
-    id: 'skeleton',
-    title: 'Skeleton',
-    category: 'feedback',
-    aliases: ['placeholder', 'shimmer', 'loading'],
-    api: '<Skeleton className="h-4 w-40" />',
-    caption: 'Match the shape of the content it stands in for.',
-    Demo: SkeletonDemo,
-  },
-  {
-    id: 'tooltip',
-    title: 'Tooltip',
-    category: 'feedback',
-    aliases: ['hint', 'hover'],
-    api: '<Tooltip><TooltipTrigger asChild /><TooltipContent><Text /></TooltipContent></Tooltip>',
-    Demo: TooltipDemo,
-  },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const FEEDBACK_DEMOS: Record<string, ComponentType> = {
+  'alert': AlertDemo,
+  'progress': ProgressDemo,
+  'skeleton': SkeletonDemo,
+  'tooltip': TooltipDemo,
+};

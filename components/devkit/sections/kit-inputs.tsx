@@ -13,7 +13,7 @@ import { SelectableCard } from '@/components/kit/selectable-card';
 import { Slider } from '@/components/kit/slider';
 import { Label } from '@/components/ui/label';
 import { Text } from '@/components/ui/text';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 import { StarIcon, TruckIcon, ZapIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -163,18 +163,19 @@ function RangeSelectorDemo() {
   );
 }
 
-export const KIT_INPUTS_SECTIONS: ComponentSection[] = [
-  { id: 'filter-chip', title: 'Filter chip', category: 'inputs', aliases: ['chip', 'tag filter', 'pill'], api: '<FilterChipRow><FilterChip label selected onPress icon? /></FilterChipRow>', caption: 'Selected state is inverted neutral, never the brand colour.', Demo: FilterChipDemo },
-  { id: 'segmented-control', title: 'Segmented control', category: 'inputs', aliases: ['segment', 'ios', 'switcher'], api: '<SegmentedControl segments={[{value,label}]} value onChange />', caption: '2–4 mutually exclusive options. For content panes use Tabs.', Demo: SegmentedControlDemo },
-  { id: 'search-field', title: 'Search field', category: 'inputs', aliases: ['search bar', 'find'], api: '<SearchField value onChangeText placeholder />', Demo: SearchFieldDemo },
-  { id: 'quantity-stepper', title: 'Quantity stepper', category: 'inputs', aliases: ['plus minus', 'counter', 'increment'], api: '<QuantityStepper value onChange min max step />', Demo: QuantityStepperDemo },
-  { id: 'amount-input', title: 'Amount input', category: 'inputs', aliases: ['money', 'currency', 'quantity', 'hero field', 'large number'], api: '<AmountInput value onChangeText symbol helper? onMax? onToggleCurrency? error? editable? />', caption: 'Hero numeric entry. Set editable={false} when a NumericKeypad drives it.', Demo: AmountInputDemo },
-  { id: 'numeric-keypad', title: 'Numeric keypad', category: 'inputs', aliases: ['keypad', 'pin pad', 'digits'], api: '<NumericKeypad value onChange maxLength? allowDecimal? />', caption: 'Replaces the system keyboard on full-screen amount entry. Long-press ⌫ clears.', Demo: NumericKeypadDemo },
-  { id: 'otp-input', title: 'OTP input', category: 'inputs', aliases: ['code', 'verification', 'pin', '2fa', 'passcode'], api: '<OtpInput length value onChange onComplete error? />', caption: 'Try 123456. Handles paste and backspace across cells.', Demo: OtpInputDemo },
-  { id: 'password-input', title: 'Password input', category: 'inputs', aliases: ['secure', 'show hide', 'login'], api: '<PasswordInput value onChangeText />', Demo: PasswordInputDemo },
-  { id: 'selectable-card', title: 'Selectable card', category: 'inputs', aliases: ['radio card', 'option card', 'plan', 'choice'], api: '<SelectableCard title description? icon? detail? selected onPress mode="radio|checkbox" />', caption: 'A whole card as a choice. Selection shows as a ring/check plus a tinted border, not colour alone.', Demo: SelectableCardDemo },
-  { id: 'slider', title: 'Slider', category: 'inputs', aliases: ['range', 'drag', 'percentage'], api: '<Slider value onChange min max step? tone? onChangeComplete? />', Demo: SliderDemo },
-  { id: 'date-picker', title: 'Date picker', category: 'inputs', aliases: ['date', 'calendar field'], api: '<DatePicker value onChange placeholder? />', caption: 'Input-shaped trigger that opens a Calendar in a Sheet.', Demo: DatePickerDemo },
-  { id: 'calendar', title: 'Calendar', category: 'inputs', aliases: ['month', 'day grid'], api: '<Calendar value onChange />', Demo: CalendarDemo },
-  { id: 'range-selector', title: 'Range selector', category: 'inputs', aliases: ['time range', 'chart range', '1D 1W 1M', 'period'], api: '<RangeSelector options value onChange />', caption: 'For the time window over a chart. Use SegmentedControl instead when the options switch content rather than a period.', Demo: RangeSelectorDemo },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const KIT_INPUTS_DEMOS: Record<string, ComponentType> = {
+  'filter-chip': FilterChipDemo,
+  'segmented-control': SegmentedControlDemo,
+  'search-field': SearchFieldDemo,
+  'quantity-stepper': QuantityStepperDemo,
+  'amount-input': AmountInputDemo,
+  'numeric-keypad': NumericKeypadDemo,
+  'otp-input': OtpInputDemo,
+  'password-input': PasswordInputDemo,
+  'selectable-card': SelectableCardDemo,
+  'slider': SliderDemo,
+  'date-picker': DatePickerDemo,
+  'calendar': CalendarDemo,
+  'range-selector': RangeSelectorDemo,
+};

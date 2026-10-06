@@ -5,7 +5,7 @@ import { SwipeToConfirm } from '@/components/kit/swipe-to-confirm';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 import { ArrowUpRightIcon, BellIcon, EllipsisIcon, FileTextIcon, MailIcon, PlusIcon, ShoppingCartIcon } from 'lucide-react-native';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 import * as React from 'react';
 import { View } from 'react-native';
 
@@ -61,33 +61,10 @@ function ActionGridDemo() {
   );
 }
 
-export const KIT_ACTIONS_SECTIONS: ComponentSection[] = [
-  {
-    id: 'floating-button',
-    title: 'Floating button',
-    category: 'actions',
-    aliases: ['fab', 'floating action button', 'plus', 'extended', 'add button'],
-    api: '<FloatingButton icon label? variant="primary|secondary" position="inline|bottom-right|bottom-center" />',
-    caption: 'Floats over the scroll instead of sitting in it, so the screen\u2019s one most important action stays reachable however far down you are. A Button flows with the content; this does not. Material calls it a FAB. One per screen.',
-    Demo: FloatingButtonDemo,
-  },
-  {
-    id: 'icon-badge',
-    title: 'Icon badge',
-    category: 'actions',
-    aliases: ['notification', 'bell', 'cart', 'unread count', 'icon button'],
-    api: '<IconBadge icon count? dot? accessibilityLabel />',
-    caption: 'Header icon button with an unread count. The label announces the count for screen readers.',
-    Demo: IconBadgeDemo,
-  },
-  {
-    id: 'swipe-to-confirm',
-    title: 'Swipe to confirm',
-    category: 'actions',
-    aliases: ['slide', 'drag', 'commit', 'high stakes'],
-    api: '<SwipeToConfirm label onConfirm confirmLabel? tone="primary|destructive" />',
-    caption: 'For irreversible actions (submit, delete, pay). Reset by changing its key.',
-    Demo: SwipeToConfirmDemo,
-  },
-  { id: 'action-grid', title: 'Action grid', category: 'actions', aliases: ['quick actions', 'shortcuts', 'tiles', 'icon buttons'], api: '<ActionGrid items={[{icon,label,onPress,badge?}]} />', caption: 'The row of shortcuts under a screen hero. Keep it to one row — the last tile should be "More", not a second row.', Demo: ActionGridDemo },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const KIT_ACTIONS_DEMOS: Record<string, ComponentType> = {
+  'floating-button': FloatingButtonDemo,
+  'icon-badge': IconBadgeDemo,
+  'swipe-to-confirm': SwipeToConfirmDemo,
+  'action-grid': ActionGridDemo,
+};

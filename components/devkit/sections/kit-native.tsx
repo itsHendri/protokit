@@ -13,7 +13,7 @@ import { BellOffIcon, CheckIcon } from 'lucide-react-native';
 import * as Linking from 'expo-linking';
 import * as React from 'react';
 import { View } from 'react-native';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 
 function ModeNote() {
   const { mode } = useNativeMode();
@@ -173,59 +173,12 @@ function NotifyDemo() {
   );
 }
 
-export const KIT_NATIVE_SECTIONS: ComponentSection[] = [
-  {
-    id: 'photo-capture',
-    title: 'PhotoCapture',
-    category: 'native',
-    aliases: ['camera', 'photo', 'image picker', 'upload', 'avatar photo', 'attachment'],
-    api: '<PhotoCapture value? onChange? sources? shape="tile|avatar|wide" label? seed? simulate? />',
-    caption: 'Tap to take or choose a photo. Falls back to generated art wherever there is no camera — the web preview, the simulator, a declined permission — so the screen still reads as filled.',
-    Demo: PhotoCaptureDemo,
-  },
-  {
-    id: 'code-scanner',
-    title: 'CodeScanner',
-    category: 'native',
-    aliases: ['qr', 'barcode', 'scan', 'camera viewfinder'],
-    api: '<CodeScanner onScan types? hint? ratio? continuous? simulatedValues? simulate? />',
-    caption: 'QR and barcode viewfinder. Without a camera it shows the same framing overlay plus a button that emits a sample payload, so the flow behind it stays demonstrable.',
-    Demo: CodeScannerDemo,
-  },
-  {
-    id: 'biometric-gate',
-    title: 'BiometricGate',
-    category: 'native',
-    aliases: ['face id', 'touch id', 'fingerprint', 'lock', 'unlock', 'biometrics'],
-    api: '<BiometricGate title? subtitle? prompt? locked? onUnlock? simulate?>…</BiometricGate> · useBiometricAuth()',
-    caption: 'Hides its children until Face ID succeeds. Use the hook instead when you are confirming a single action. Real only in a dev build — Expo Go and the web simulate it.',
-    Demo: BiometricGateDemo,
-  },
-  {
-    id: 'permission-primer',
-    title: 'PermissionPrimer',
-    category: 'native',
-    aliases: ['permission', 'allow', 'prompt', 'ask', 'privacy'],
-    api: '<PermissionPrimer capability variant="inline|sheet" onAllow onSkip skipLabel? />',
-    caption: 'Show this before the OS dialog, never instead of it. The skip is not optional: a prototype must never dead-end on a permission the viewer declined.',
-    Demo: PermissionPrimerDemo,
-  },
-  {
-    id: 'share',
-    title: 'useShare',
-    category: 'native',
-    aliases: ['share sheet', 'send', 'export', 'copy link'],
-    api: 'const { share } = useShare(); share({ message?, url?, title? })',
-    caption: 'A hook, not a component — the trigger is an ordinary Button. Copies to the clipboard when the OS sheet is unavailable.',
-    Demo: ShareDemo,
-  },
-  {
-    id: 'notify',
-    title: 'useNotify',
-    category: 'native',
-    aliases: ['notification', 'alert', 'push', 'banner', 'reminder'],
-    api: 'const { notify } = useNotify(); notify({ title, body?, delay?, icon? })',
-    caption: 'No delay draws the in-app banner, which looks the same everywhere and is what a demo needs. A delay also schedules the real OS notification when it can.',
-    Demo: NotifyDemo,
-  },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const KIT_NATIVE_DEMOS: Record<string, ComponentType> = {
+  'photo-capture': PhotoCaptureDemo,
+  'code-scanner': CodeScannerDemo,
+  'biometric-gate': BiometricGateDemo,
+  'permission-primer': PermissionPrimerDemo,
+  'share': ShareDemo,
+  'notify': NotifyDemo,
+};

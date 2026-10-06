@@ -5,7 +5,7 @@ import { Text } from '@/components/ui/text';
 import { BellIcon, LockIcon, ShieldCheckIcon, UserIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 
 function PlaceholderDemo() {
   const [round, setRound] = React.useState(0);
@@ -54,23 +54,8 @@ function SpotDemo() {
   );
 }
 
-export const KIT_MEDIA_SECTIONS: ComponentSection[] = [
-  {
-    id: 'placeholder',
-    title: 'Placeholder',
-    category: 'media',
-    aliases: ['generated art', 'stand-in image', 'seeded', 'mock image', 'abstract'],
-    api: '<Placeholder seed ratio? palette="chart|mono|primary" icon? />',
-    caption: 'Stand-in imagery that never 404s. Drawn from theme colours, so it follows light/dark and re-brands with the tokens — use it instead of shipping placeholder files.',
-    Demo: PlaceholderDemo,
-  },
-  {
-    id: 'spot',
-    title: 'Spot',
-    category: 'media',
-    aliases: ['illustration', 'icon well', 'hero icon', 'empty state art'],
-    api: '<Spot icon size="md|lg|xl" tone? shape="circle|square" ring? />',
-    caption: 'The whole illustration vocabulary: an icon at display scale. EmptyState, SuccessScreen and PermissionPrimer all render one. For a row’s leading slot use IconCircle — the boundary is 44px.',
-    Demo: SpotDemo,
-  },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const KIT_MEDIA_DEMOS: Record<string, ComponentType> = {
+  'placeholder': PlaceholderDemo,
+  'spot': SpotDemo,
+};

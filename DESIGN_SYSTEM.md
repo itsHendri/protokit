@@ -61,8 +61,9 @@ Buttons are pills (`rounded-full`); everything else uses the scale below. Raised
 sit on a track — the SegmentedControl thumb, the Switch thumb, the Slider handle — use `bg-card`,
 not `bg-background`, so they stay white if the page surface is ever tinted.
 
-`rounded-sm` 6 · `rounded-md` 8 (inputs, buttons) · `rounded-lg` 10 (cards, sheets base) · `rounded-xl` 16 ·
-`rounded-2xl` 20 (sheet tops, hero surfaces) · `rounded-full` (chips, avatars, dots).
+<!-- GENERATED:tokens:radius -->
+`rounded-sm` 6 · `rounded-md` 8 (inputs, buttons) · `rounded-lg` 10 (cards, sheets base) · `rounded-xl` 16 · `rounded-2xl` 20 (sheet tops, hero surfaces) · `rounded-full` (chips, avatars, dots).
+<!-- /GENERATED:tokens:radius -->
 
 ### Typography
 
@@ -88,7 +89,11 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 - `components/ui/*` — react-native-reusables (shadcn for RN). Owned source; edit if needed.
 - `components/kit/*` — ours. Composed from `ui` primitives, className-only styling.
 
+The tables are generated from `registry/components.ts` by `npm run registry:build`: edit that file, not the
+tables. Text between `GENERATED` markers is overwritten.
+
 ### Actions
+<!-- GENERATED:registry:actions -->
 | Component | Path | Notes |
 |---|---|---|
 | Button | `components/ui/button.tsx` | `variant` default/secondary/outline/ghost/link/destructive · `size` sm/default/lg/icon · children are `<Text>`/`<Icon>` |
@@ -96,22 +101,23 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | ToggleGroup | `components/ui/toggle-group.tsx` | `type` single/multiple |
 | FloatingButton | `components/kit/floating-button.tsx` | floats OVER the scroll (a Button flows with it) · Material calls it a FAB · `icon label? variant position` · one per screen |
 | IconBadge | `components/kit/icon-badge.tsx` | icon button with unread count/dot · always labelled |
-| ActionGrid | `components/kit/action-grid.tsx` | the row of shortcuts under a screen hero · 3–4 `items`, one row only, last tile is "More" |
 | SwipeToConfirm | `components/kit/swipe-to-confirm.tsx` | drag past 85% commits · `tone` primary/destructive · reset via `key` |
+| ActionGrid | `components/kit/action-grid.tsx` | the row of shortcuts under a screen hero · 3–4 `items`, one row only, last tile is "More" |
+<!-- /GENERATED:registry:actions -->
 
 ### Inputs & selection
+<!-- GENERATED:registry:inputs -->
 | Component | Path | Notes |
 |---|---|---|
 | Input | `components/ui/input.tsx` | always with `Label` |
-| Textarea | `components/ui/textarea.tsx` | |
 | Label | `components/ui/label.tsx` | `htmlFor` · own `onPress` on native |
+| Textarea | `components/ui/textarea.tsx` | |
 | Checkbox | `components/ui/checkbox.tsx` | `checked onCheckedChange` |
 | RadioGroup | `components/ui/radio-group.tsx` | `RadioGroupItem value id` |
 | Switch | `components/ui/switch.tsx` | settings on/off |
 | Select | `components/ui/select.tsx` | pass safe-area `insets` to `SelectContent` |
 | FilterChip / FilterChipRow | `components/kit/filter-chip.tsx` | neutral-active chips |
 | SegmentedControl | `components/kit/segmented-control.tsx` | 2–4 options, animated thumb |
-| RangeSelector | `components/kit/range-selector.tsx` | trackless chart range (1D·1W·1M·1Y·ALL), active is a filled disc |
 | SearchField | `components/kit/search-field.tsx` | Input + search icon + clear |
 | QuantityStepper | `components/kit/quantity-stepper.tsx` | `min max step` |
 | AmountInput | `components/kit/amount-input.tsx` | hero money field · `editable={false}` with keypad |
@@ -122,55 +128,65 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | Slider | `components/kit/slider.tsx` | continuous/stepped · `tone` |
 | DatePicker | `components/kit/date-picker.tsx` | field trigger → Calendar in a Sheet |
 | Calendar | `components/kit/calendar.tsx` | month grid |
+| RangeSelector | `components/kit/range-selector.tsx` | trackless chart range (1D·1W·1M·1Y·ALL), active is a filled disc |
+<!-- /GENERATED:registry:inputs -->
 
 ### Navigation
+<!-- GENERATED:registry:navigation -->
 | Component | Path | Notes |
 |---|---|---|
 | Tabs | `components/ui/tabs.tsx` | in-page content switching |
 | Menubar | `components/ui/menubar.tsx` | web/desktop pattern |
+| TabBar / TabBarItem / `tabIcon` | `components/kit/tab-bar.tsx` | custom bottom tab bar: opaque tints, label, active dot under the label |
+| KitChip | `components/kit/kit-chip.tsx` | scaffolding, not a product component: the way back to the kit from a sample. Not in the Kitchen Sink; delete it with the kit shell |
 | Stepper | `components/kit/stepper.tsx` | `numbered` / `compact` flow progress |
-| ScreenHeader | `components/kit/screen-header.tsx` | the in-body page title + intro · one per screen, first child of the ScrollView |
 | SectionHeader | `components/kit/section-header.tsx` | title + action, outside the card |
+| ScreenHeader | `components/kit/screen-header.tsx` | the in-body page title + intro · one per screen, first child of the ScrollView |
 | PagerDots | `components/kit/pager-dots.tsx` | |
 | HorizontalPager | `components/kit/horizontal-pager.tsx` | snap pager + dots |
-| TabBar / TabBarItem / tabIcon | `components/kit/tab-bar.tsx` | custom bottom tab bar: opaque tints, label, active dot under the label |
-| KitChip | `components/kit/kit-chip.tsx` | scaffolding, not a product component — the way back to the kit from a sample. Not in the Kitchen Sink; delete it with the kit shell |
-| App tabs / stack | Expo Router | `app/(kit)/_layout.tsx` shows the pattern; prototypes own their `app/` routes |
+<!-- /GENERATED:registry:navigation -->
+
+App tabs and stacks are Expo Router: `app/(kit)/_layout.tsx` shows the pattern; prototypes own their `app/` routes.
 
 ### Data display
+<!-- GENERATED:registry:data -->
 | Component | Path | Notes |
 |---|---|---|
 | Text | `components/ui/text.tsx` | the only Text · the scale is previewed in **Foundations › Typography**, not Components |
 | Avatar | `components/ui/avatar.tsx` | image + fallback initials |
+| AvatarGroup | `components/kit/avatar-group.tsx` | overlapping avatars + "+N" |
 | Badge | `components/ui/badge.tsx` | tag/pill/count · tint with semantic classes |
 | Separator | `components/ui/separator.tsx` | |
-| ListRow | `components/kit/list-row.tsx` | ONE row. | canonical row · `last` on the final row · `select={{mode,selected}}` makes it a radio/checkbox row |
-| ListGroup | `components/kit/list-group.tsx` | the CONTAINER around rows — owns the title, dividers, footnote and card/plain surface. | wraps ListRows and sets `last` for you · `variant` card/plain (plain = settings look) |
-| ValueHeader | `components/kit/value-header.tsx` | hero figure + caption · `maskable` adds the eye toggle |
+| ListRow | `components/kit/list-row.tsx` | ONE row · the canonical row · `last` on the final row · `select={{mode,selected}}` makes it a radio/checkbox row |
+| ListGroup | `components/kit/list-group.tsx` | the CONTAINER around rows: owns the title, dividers, footnote and card/plain surface · wraps ListRows and sets `last` for you · `variant` card/plain (plain = settings look) |
 | IconCircle | `components/kit/icon-circle.tsx` | leading icon well, row scale (≤44px) · `shape` circle/square · `tone` |
 | KeyValueList / SummaryCard | `components/kit/key-value-list.tsx` | label/value rows, optionally in a Card |
 | StatTile | `components/kit/stat-tile.tsx` | KPI tile with delta |
 | PercentChange | `components/kit/percent-change.tsx` | signed % with trend icon |
-| StatusDot | `components/kit/status-dot.tsx` | |
-| AvatarGroup | `components/kit/avatar-group.tsx` | overlapping avatars + "+N" |
 | ProgressRing | `components/kit/progress-ring.tsx` | circular determinate progress |
+| StatusDot | `components/kit/status-dot.tsx` | |
 | LineChart | `components/kit/line-chart.tsx` | interactive/sparkline · `area` · `onPointerChange` |
 | BarChart | `components/kit/bar-chart.tsx` | plain Views |
 | DonutChart / ChartLegend | `components/kit/donut-chart.tsx` | ring + legend |
+| ValueHeader | `components/kit/value-header.tsx` | hero figure + caption · `maskable` adds the eye toggle |
+<!-- /GENERATED:registry:data -->
 
 ### Feedback & status
+<!-- GENERATED:registry:feedback -->
 | Component | Path | Notes |
 |---|---|---|
 | Alert | `components/ui/alert.tsx` | inline, persistent · `variant` default/info/success/warning/destructive · `icon` · `onDismiss`/`action` make it a nudge |
 | Progress | `components/ui/progress.tsx` | 0–100 |
 | Skeleton | `components/ui/skeleton.tsx` | |
 | Tooltip | `components/ui/tooltip.tsx` | |
-| Toast (`useToast`) | `components/kit/toast.tsx` | transient · `ToastProvider` is in the root layout |
+| `useToast` / ToastProvider | `components/kit/toast.tsx` | transient · `ToastProvider` is in the root layout |
 | Spinner | `components/kit/spinner.tsx` | themed ActivityIndicator |
 | EmptyState | `components/kit/empty-state.tsx` | `default` / `compact` |
 | SuccessScreen | `components/kit/success-screen.tsx` | the one success template |
+<!-- /GENERATED:registry:feedback -->
 
 ### Containers & layout
+<!-- GENERATED:registry:layout -->
 | Component | Path | Notes |
 |---|---|---|
 | Card | `components/ui/card.tsx` | never nest cards; titles sit outside · **flat — a shadow means pressable or floating** |
@@ -179,8 +195,10 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | StickyBottomBar | `components/kit/sticky-bottom-bar.tsx` | safe-area action bar under a ScrollView (`pb-32`) |
 | PromoCard | `components/kit/promo-card.tsx` | tinted offer/nudge card · circular arrow CTA, dismiss X, generated art · one per screen |
 | Footnote | `components/kit/footnote.tsx` | small print / disclosure, last in the scroll |
+<!-- /GENERATED:registry:layout -->
 
 ### Overlays
+<!-- GENERATED:registry:overlays -->
 | Component | Path | Notes |
 |---|---|---|
 | Dialog | `components/ui/dialog.tsx` | edits with a form |
@@ -192,15 +210,18 @@ Two folders, one rule: **use what's here, extend before duplicating, register an
 | Sheet | `components/kit/sheet.tsx` | bottom sheet shell |
 | OptionSheet | `components/kit/sheet.tsx` | pick one of N |
 | ActionSheet | `components/kit/sheet.tsx` | list of actions + Cancel |
+<!-- /GENERATED:registry:overlays -->
 
 ### Media & icons
+<!-- GENERATED:registry:media -->
 | Component | Path | Notes |
 |---|---|---|
 | Icon | `components/ui/icon.tsx` | lucide wrapper |
-| AspectRatio | `components/ui/aspect-ratio.tsx` | |
 | ImageTile | `components/kit/image-tile.tsx` | rounded image · `seed` draws generated art when there is no `source` |
+| AspectRatio | `components/ui/aspect-ratio.tsx` | |
 | Placeholder | `components/kit/placeholder.tsx` | deterministic abstract SVG art from a `seed` · the kit ships no raster imagery |
 | Spot | `components/kit/spot.tsx` | an icon at illustration scale (≥64px) · EmptyState, SuccessScreen and PermissionPrimer all use it |
+<!-- /GENERATED:registry:media -->
 
 ### Device capabilities
 
@@ -208,6 +229,7 @@ Everything here resolves through `lib/native.ts` + `useCapability()`: when the r
 run — the web preview, a simulator, Expo Go, a denied permission — the component draws a simulated
 version instead of an error. `simulate` forces the fallback; the kit-wide switch is in Settings.
 
+<!-- GENERATED:registry:native -->
 | Component | Path | Notes |
 |---|---|---|
 | PhotoCapture | `components/kit/photo-capture.tsx` | camera + library · falls back to a seeded `Placeholder` |
@@ -216,6 +238,7 @@ version instead of an error. `simulate` forces the fallback; the kit-wide switch
 | PermissionPrimer | `components/kit/permission-primer.tsx` | shown BEFORE the OS dialog · the skip is not optional |
 | `useShare` | `components/kit/share.ts` | OS share sheet · copies to the clipboard on web |
 | `useNotify` / NotifyProvider | `components/kit/notify.tsx` | in-app banner now (`delay: 0`), real OS notification when scheduled |
+<!-- /GENERATED:registry:native -->
 
 Reality check: photos, camera, scanning and local notifications work in Expo Go on a phone.
 The iOS Simulator has no camera. Face ID does **not** work in Expo Go — use the dev client.
