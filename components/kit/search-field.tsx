@@ -14,7 +14,8 @@ type Props = React.ComponentProps<typeof Input> & {
 export function SearchField({ value, onChangeText, className, containerClassName, ...props }: Props) {
   return (
     <View className={cn('relative justify-center', containerClassName)}>
-      <View className="absolute left-3 z-10">
+      {/* Drawn over the input, so it must let taps through or the icon is a dead spot. */}
+      <View className="pointer-events-none absolute left-3 z-10">
         <Icon as={SearchIcon} className="text-muted-foreground" size={16} />
       </View>
       <Input
