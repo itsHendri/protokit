@@ -2,7 +2,7 @@
 
 Durable, human- and agent-readable list of deferred work. Update when you defer or finish something.
 
-_Last updated: 2026-09-22_
+_Last updated: 2026-10-06_
 
 ## Deferred by decision
 - **Scenario system** (several prototypes in one install with a picker and web `/scenarios` index). One prototype per
@@ -36,3 +36,9 @@ Present: 69 previews across 8 categories. Still missing, roughly in order of how
 - `Sheet` exit is a plain fade (RN Modal); a slide-out needs a mounted-state dance the React Compiler rules dislike.
 - Haptics/blur only verified on the simulator; feel on a physical device still to confirm.
 - Web `Select`/`DropdownMenu` positioning relies on rn-primitives portals; check on narrow viewports.
+- Dev builds and Expo Go draw a draggable "Tools" gear at the top right whose touch area (gear + 10pt) covers the
+  `SearchField` clear button and part of the header theme toggle on the Kitchen Sink. Dev tooling only, not in
+  production; drag the gear away when testing those controls.
+- One iOS session (2026-10-06) had the top two-thirds of the Kitchen Sink search field ignore taps until a Fast
+  Refresh cleared it. Not reproduced after cold launch, simulator reboot or `expo start -c`. If it comes back, log
+  `onTouchStart` on the root view to see whether the tap reaches React Native at all.
