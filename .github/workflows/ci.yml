@@ -10,8 +10,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check:
+  mobile:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/mobile
     steps:
       - uses: actions/checkout@v4
 
@@ -20,7 +23,14 @@ jobs:
           node-version: 24
           cache: npm
 
+      # One install for the whole monorepo (npm workspaces, root lockfile).
       - run: npm ci
+        working-directory: .
+
+      # NativeWind 4 needs Tailwind 3; apps/docs and apps/web bring Tailwind 4. The root pins v3 so it
+      # hoists. If an install ever flips that, fail here rather than at bundle time.
+      - name: NativeWind resolves Tailwind 3
+        run: node -e "const v=require(require.resolve('tailwindcss/package.json',{paths:[require.resolve('nativewind')]})).version; if(!v.startsWith('3.')){console.error('nativewind resolves tailwindcss '+v);process.exit(1)}; console.log('tailwindcss', v)"
 
       - name: Typecheck
         run: npm run typecheck
