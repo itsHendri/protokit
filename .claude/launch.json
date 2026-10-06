@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "kit-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["exec", "-w", "apps/mobile", "--", "expo", "start", "--web", "--port", "8090"],
+      "port": 8090
+    },
+    {
+      "name": "kit-ios",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["exec", "-w", "apps/mobile", "--", "expo", "start", "--ios", "--port", "8091"],
+      "port": 8091
+    }
+  ]
+}

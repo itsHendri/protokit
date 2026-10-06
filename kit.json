@@ -1,0 +1,9 @@
+{
+  "$description": "The kit's name and addresses, in one place. Generators (docs site, llms.txt, registry) read it; rename the kit here.",
+  "name": "Protokit",
+  "tagline": "Prototype kits for mobile and web that coding agents build from.",
+  "repo": "https://github.com/itsHendri/protokit",
+  "siteUrl": null,
+  "npmScope": "@itshendri",
+  "registry": { "native": "@kit-native", "web": "@kit" }
+}
