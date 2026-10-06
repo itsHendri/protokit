@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "kit-native",
-  "homepage": "https://github.com/itsHendri/mobile-app-prototype-kit",
+  "homepage": "https://github.com/itsHendri/protokit",
   "items": [
     {
       "name": "theme",

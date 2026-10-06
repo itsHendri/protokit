@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/itsHendri/mobile-app-prototype-kit.git"
+    "url": "git+https://github.com/itsHendri/protokit.git"
   },
   "engines": {
     "node": ">=22.18"
