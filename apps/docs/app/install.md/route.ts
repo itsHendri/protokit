@@ -10,12 +10,16 @@ export function GET() {
   const md = `# Install ${kit.name}
 
 ${kit.name} is a prototype kit for coding agents: a themed component registry, design tokens with a WCAG AA
-gate, and rules that keep a prototype inside what the kit ships. Today it has a mobile kit (Expo, React
-Native, NativeWind, react-native-reusables). A web kit (Next.js, shadcn/ui) is coming.
+gate, and rules that keep a prototype inside what the kit ships. There are two kits on one set of tokens:
+
+- **Mobile** (\`apps/mobile\`): Expo, React Native, NativeWind, react-native-reusables. Phone prototypes.
+- **Web** (\`apps/web\`): Next.js, Tailwind 4, shadcn/ui. Dashboards, marketing pages, AI product interfaces.
+
+If the person did not say which, ask: "a phone app, a web app, or both?"
 
 ## 1. Pick the path
 
-**A. New mobile prototype** (most common)
+**A. New mobile prototype**
 
 \`\`\`bash
 npx giget@latest gh:${repoPath}/apps/mobile <project-name>
@@ -23,7 +27,15 @@ cd <project-name> && npm install
 npm run ios        # or: npm run web
 \`\`\`
 
-**B. Add kit components to an existing Expo app** that already uses react-native-reusables:
+**B. New web prototype**
+
+\`\`\`bash
+npx giget@latest gh:${repoPath}/apps/web <project-name>
+cd <project-name> && npm install
+npm run dev        # http://localhost:3100
+\`\`\`
+
+**C. Add kit components to an existing Expo app** that already uses react-native-reusables:
 
 1. Add the registry to \`components.json\`:
    \`"registries": { "${kit.registry.native}": "${site('/r/native/{name}.json')}" }\`
@@ -33,26 +45,47 @@ npm run ios        # or: npm run web
    pass \`--overwrite\`: kit components expect the kit's refined versions.
 4. \`npx expo install --fix\` so Expo packages match the project's SDK.
 
-**C. Mobile and web on one brand**: \`git clone ${kit.repo}.git\`, \`npm install\` at the root, and work in
-\`apps/mobile\`.
+**D. Add kit components to an existing Next.js app** that already uses shadcn/ui (Tailwind 4):
+
+1. Add the registry to \`components.json\`:
+   \`"registries": { "${kit.registry.web}": "${site('/r/web/{name}.json')}" }\`
+2. \`npx shadcn@latest add ${kit.registry.web}/theme\` for the kit's colours and radius, then components:
+   \`npx shadcn@latest add ${kit.registry.web}/data-table\`. Components the kit did not change are plain shadcn
+   items (\`npx shadcn@latest add dialog\`).
+3. When shadcn asks to overwrite \`button.tsx\`, \`badge.tsx\` or \`slider.tsx\`, answer yes: the kit's versions
+   fix colour contrast that kit components rely on.
+
+**E. Mobile and web on one brand**: \`git clone ${kit.repo}.git\`, \`npm install\` at the root, and work in
+\`apps/mobile\` and \`apps/web\`. \`apps/mobile/tokens/tokens.json\` is the one brand file; \`npm run tokens:sync\`
+copies it to the web kit.
 
 ## 2. Read before writing UI
 
-- \`AGENTS.md\`: stack, commands, how a prototype is laid out (its own named segment under \`app/\`), gotchas.
+In the kit you are working in:
+
+- \`AGENTS.md\`: stack, commands, how a prototype is laid out (its own folder under \`app/\`), gotchas.
 - \`DESIGN_SYSTEM.md\`: tokens, the component registry, patterns, anti-patterns, the hallucination guard.
 - \`llms.txt\` in the project, or ${site('/llms.txt')}: every component with its API.
+- The sample apps are the worked examples. Mobile: \`app/shop\`, \`app/habits\`. Web: \`app/dashboard\`,
+  \`app/landing\`, \`app/assistant\`. Remove them with \`npm run eject-samples\` once you have copied their shape.
 
-## 3. Rules
+## 3. Rules (both kits)
 
 - Build screens only from registry components, by their exact names. If something is missing, stop, say
   so in one line, and add it with the \`add-component\` skill. Never invent a component.
 - Style with semantic classes only (\`bg-card\`, \`text-muted-foreground\`, \`bg-primary/15\`). No hex, no
   Tailwind palette colours, no inline colour styles.
-- Text through \`<Text variant>\`, icons through \`<Icon as={…} />\` (lucide). Buttons hold \`<Text>\`/\`<Icon>\`.
-- Prefer a kit pattern over a new flow: screen skeleton, multi-step flow as one route, \`SuccessScreen\`,
-  \`StickyBottomBar\`. Content is flat; shadows only on what you can press or what floats.
+- One primary action per screen. Content is flat; shadows only on what you can press or what floats.
 - Mock data lives beside the prototype (\`components/<slug>/data.ts\`). Never call real APIs.
 - Check every screen in light and dark. Run the \`qc-pass\` skill before saying "done".
+
+**Mobile only:** text through \`<Text variant>\`, icons through \`<Icon as={…} />\` (lucide). Buttons hold
+\`<Text>\`/\`<Icon>\`. Prefer a kit pattern over a new flow: screen skeleton, multi-step flow as one route,
+\`SuccessScreen\`, \`StickyBottomBar\`.
+
+**Web only:** a prototype's \`layout.tsx\` holds its frame (\`AppShell\` for an app, a plain header and footer
+for a marketing page). Lucide icons from \`lucide-react\`, links as \`<Button asChild><Link/></Button>\`. Design
+at 375px and 1280px. In an AI interface, ask with an \`ApprovalCard\` before anything irreversible.
 
 ## 4. Re-brand
 

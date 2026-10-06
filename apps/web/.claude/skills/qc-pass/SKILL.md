@@ -30,7 +30,7 @@ grep -rn "from '\./" components/kit || true
 
 ## 3. In the browser
 
-Start the dev server (`npm run dev`, or the `web-kit` launch config). For each affected page or component
+Start the dev server (`npm run dev`, or the `web-dev` launch config). For each affected page or component
 (`/components?section=<id>` for a component):
 
 1. Look at 1280px and at 375px. Nothing overflows horizontally; sidebars become sheets; tables scroll in

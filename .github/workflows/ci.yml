@@ -121,6 +121,7 @@ jobs:
   # lockfile, no root overrides, no workspace links. The tokens package comes from a packed tarball,
   # standing in for the published version.
   extract:
+    name: extract (${{ matrix.app }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -160,8 +161,8 @@ jobs:
         working-directory: ${{ runner.temp }}/app
         run: npm run eject-samples && ${{ matrix['after-eject'] }}
 
-  # The docs site: tokens, generated content, the kit's web export under /m, the registry under /r,
-  # the static Next export, then every internal link and the TypeScript.
+  # The docs site: tokens, generated content, both kits' exports (mobile under /m, web under /w), both
+  # registries under /r, the static Next export, then every internal link and the TypeScript.
   docs:
     runs-on: ubuntu-latest
     defaults:

@@ -72,7 +72,7 @@ npm run eject-samples     # delete the dashboard, landing and assistant samples 
 
 ## Workflows
 
-- **Preview:** `npm run dev`, or the `web-kit` launch config. Deep link a component:
+- **Preview:** `npm run dev`, or the `web-dev` launch config. Deep link a component:
   `/components?section=<id>`.
 - **Embedding (the docs site's browser frames):** `?embed=1` hides everything with the `kit-chrome` class
   for the session (inside a frame); `?theme=light|dark` pins the theme without saving it. The host syncs the

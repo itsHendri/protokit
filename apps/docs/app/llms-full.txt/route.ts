@@ -1,10 +1,9 @@
-import { mobileLlms } from '@/lib/llms';
+import { kitLlmsSection, siteLlmsHeader } from '@/lib/llms';
 import { docsLlms } from '@/lib/source';
 
 export const revalidate = false;
 
 export async function GET() {
-  return new Response(`${mobileLlms()}\n\n${await docsLlms.full()}`, {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-  });
+  const body = [siteLlmsHeader(), kitLlmsSection('mobile', 'Mobile kit'), kitLlmsSection('web', 'Web kit'), await docsLlms.full()].join('\n\n');
+  return new Response(body, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 }

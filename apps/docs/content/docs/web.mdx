@@ -1,25 +1,90 @@
 ---
-title: Web kit
-description: "Coming next: Next.js and shadcn/ui on the same tokens."
+title: Web setup
+description: Run the web kit, make it yours, and share it.
 ---
 
-<Callout title="Not in the repo yet">
-The web kit is the next phase. This page describes what it will be, so you can plan around it.
-</Callout>
+The web kit is a Next.js app: the App Router, Tailwind 4 and [shadcn/ui](https://ui.shadcn.com), with the
+kit's own components on top for app shells, tables, marketing pages and AI product interfaces. It is built
+to the same rules as the mobile kit: a registry, the same `tokens.json`, the same skills.
 
-The web kit will be a Next.js app with [shadcn/ui](https://ui.shadcn.com), built to the same rules as the
-mobile kit: a registry, the same `tokens.json`, the same skills.
+## Run it
+
+```bash
+npx giget@latest gh:itsHendri/protokit/apps/web my-prototype
+cd my-prototype && npm install
+npm run dev      # http://localhost:3100
+```
+
+Open **Components** for every component live, **Foundations** for the tokens, and the three sample apps
+from the home page. They are the [worked examples](/screens): one made-up invoicing product, Northwind, as
+a dashboard, a landing page and an AI assistant.
+
+## Make it yours
+
+<Steps>
+<Step>
+
+### Name it
+
+Set `name` in `package.json`, and the title and description in `app/layout.tsx`.
+
+</Step>
+<Step>
+
+### Re-brand it
+
+Edit `tokens/tokens.json`: the brand ramp, the semantic colours and the base radius. Then:
+
+```bash
+npm run tokens:build
+```
+
+The build writes `app/tokens.css` (Tailwind 4 and shadcn variables, in oklch), refuses any palette that
+falls below WCAG AA and names the pairing that failed. In the monorepo, edit
+`apps/mobile/tokens/tokens.json` instead and run `npm run tokens:sync`: one brand file drives both kits.
+
+</Step>
+<Step>
+
+### Remove the samples
+
+```bash
+npm run eject-samples
+```
+
+Deletes the dashboard, landing page and assistant, their data and the kit home's links to them.
+
+</Step>
+<Step>
+
+### Build your prototype
+
+A prototype lives in its own folder under `app/`, for example `app/acme/`, with its own `layout.tsx`:
+`AppShell` for an app, a plain header and footer for a marketing page. Or hand the agent a brief and let
+the `transcript-to-prototype` skill set it up.
+
+</Step>
+</Steps>
 
 ## What it is for
 
-- **Web apps and dashboards**: tables, forms, settings, sidebars.
-- **Marketing pages**: heroes, pricing, feature grids.
-- **AI product interfaces**: chat, streaming, tool calls, approvals.
+- **Web apps and dashboards**: `AppShell`, `PageHeader`, `StatTile`, `DataTable`, charts, forms, settings.
+- **Marketing pages**: `Hero`, `FeatureGrid`, `PricingCard`, FAQ accordions.
+- **AI product interfaces**: `ChatMessage`, `ChatComposer`, `StreamingText`, `ThinkingIndicator`,
+  `ToolCallCard`, and `ApprovalCard` so the assistant asks before anything irreversible.
 - **The web version of a mobile prototype**, on the same brand from the same token file.
 
-## What already works
+See every one live under [Components › Web kit](/components/web).
 
-The token build already writes the web theme. Every kit has
-`tokens/generated/web.css`: Tailwind 4 and shadcn variables in oklch, generated from the same `tokens.json` as
-the mobile app and checked so the colours are identical on both platforms. This site uses it: everything
-here is styled with the kit's own tokens.
+## Share it
+
+| To | Run |
+|---|---|
+| Anyone with a browser | Deploy to Vercel or any Next.js host, or `KIT_WEB_EXPORT=1 npm run build` for a static `out/` folder |
+| A teammate's agent | Send them the repo; `AGENTS.md` and the skills travel with it |
+
+## Checks
+
+`npm run typecheck`, `npm run lint`, `npm run tokens:check` and `npm run registry:build -- --check` are what
+CI runs. The `qc-pass` skill adds guards against hard-coded colours and stray UI libraries, then looks at the
+changed pages in a browser at 375px and 1280px, in light and dark.

@@ -1,13 +1,11 @@
 'use client';
-import { useTheme } from 'next-themes';
-import * as React from 'react';
-import { kitWebUrl } from '@/lib/kit';
+import { frameBase, useKitFrame } from '@/lib/frames';
 
 /** The phone's logical viewport (iPhone 16/17), rendered at this size and scaled down to fit. */
 const VIEWPORT = { width: 390, height: 844 };
 
 type Props = {
-  /** A kit route with its query, e.g. `/kitchen-sink?section=list-row` or `/shop`. */
+  /** A mobile kit route with its query, e.g. `/kitchen-sink?section=list-row` or `/shop`. */
   path: string;
   /** Accessible name for the iframe ("List row preview"). */
   title: string;
@@ -19,38 +17,11 @@ type Props = {
 };
 
 /**
- * The real kit, live: an iframe of the kit's web export in embed mode (no tab bar, header or KitChip),
- * scaled into a phone outline. The theme follows the site: the first load passes `theme=`, later changes
- * go over postMessage (`kit:theme`) once the kit has said `kit:ready`, so toggling never reloads it.
+ * The real mobile kit, live: an iframe of its web export in embed mode (no tab bar, header or KitChip),
+ * scaled into a phone outline. The theme follows the site (see useKitFrame).
  */
 export function PhoneFrame({ path, title, width = 300, viewportHeight = VIEWPORT.height, className }: Props) {
-  const { resolvedTheme } = useTheme();
-  const theme = resolvedTheme === 'dark' ? 'dark' : 'light';
-  const frame = React.useRef<HTMLIFrameElement>(null);
-  const [src, setSrc] = React.useState<string | null>(null);
-  const [ready, setReady] = React.useState(false);
-
-  // Build the URL once, on the client, with whatever theme the site has by then.
-  React.useEffect(() => {
-    if (src || !resolvedTheme) return;
-    const sep = path.includes('?') ? '&' : '?';
-    setSrc(`${kitWebUrl}${path}${sep}embed=1&theme=${theme}`);
-  }, [path, resolvedTheme, src, theme]);
-
-  React.useEffect(() => {
-    const onMessage = (event: MessageEvent) => {
-      if (event.source === frame.current?.contentWindow && event.data?.type === 'kit:ready') setReady(true);
-    };
-    window.addEventListener('message', onMessage);
-    return () => window.removeEventListener('message', onMessage);
-  }, []);
-
-  React.useEffect(() => {
-    const target = frame.current?.contentWindow;
-    if (!ready || !target) return;
-    target.postMessage({ type: 'kit:theme', value: theme }, new URL(kitWebUrl, window.location.href).origin);
-  }, [ready, theme]);
-
+  const { ref, src } = useKitFrame(frameBase.mobile, path);
   const scale = width / VIEWPORT.width;
   const bezel = 10;
 
@@ -58,12 +29,10 @@ export function PhoneFrame({ path, title, width = 300, viewportHeight = VIEWPORT
     <div
       className={`border-border bg-foreground/90 inline-block shrink-0 rounded-[2.75rem] border shadow-xl ${className ?? ''}`}
       style={{ padding: bezel, width: width + bezel * 2 }}>
-      <div
-        className="bg-background relative overflow-hidden rounded-[2.1rem]"
-        style={{ width, height: viewportHeight * scale }}>
+      <div className="bg-background relative overflow-hidden rounded-[2.1rem]" style={{ width, height: viewportHeight * scale }}>
         {src ? (
           <iframe
-            ref={frame}
+            ref={ref}
             src={src}
             title={title}
             loading="lazy"

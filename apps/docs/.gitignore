@@ -6,6 +6,7 @@ next-env.d.ts
 
 # Generated at build time (scripts/prepare-content.mjs, scripts/build-docs.mjs)
 public/m/
+public/w/
 public/r/
 public/_redirects
 public/_headers

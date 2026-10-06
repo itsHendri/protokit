@@ -4,9 +4,10 @@
  *
  *   1. tokens.css from the kit's tokens.json (kit-tokens) and the generated MDX pages
  *   2. the mobile kit's web export, under the sub-path /m (embed mode for the phone frames)
- *   3. the shadcn registry for Expo apps, at /r/native/*.json
- *   4. _redirects (SPA fallback for the kit's routes only) and _headers (content types, CORS)
- *   5. next build (static export) and a check that everything above landed in out/
+ *   3. the web kit's static export, under /w (the browser frames)
+ *   4. the shadcn registries: Expo apps at /r/native/*.json, Next.js apps at /r/web/*.json
+ *   5. _redirects (SPA fallback for the mobile kit's routes only) and _headers (content types, CORS)
+ *   6. next build (static export) and a check that everything above landed in out/
  */
 import { execFileSync } from 'node:child_process';
 import { cpSync, existsSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
@@ -15,8 +16,10 @@ import { fileURLToPath } from 'node:url';
 
 const docs = join(dirname(fileURLToPath(import.meta.url)), '..');
 const mobile = join(docs, '../mobile');
+const web = join(docs, '../web');
 const pub = join(docs, 'public');
 const KIT_PATH = '/m';
+const WEB_PATH = '/w';
 
 const run = (cmd, args, cwd, env = {}) =>
   execFileSync(cmd, args, { cwd, stdio: 'inherit', env: { ...process.env, ...env } });
@@ -36,6 +39,17 @@ step('shadcn registry → public/r/native');
 run('npm', ['run', 'registry:dist'], mobile);
 rmSync(join(pub, 'r'), { recursive: true, force: true });
 cpSync(join(mobile, 'dist/r/native'), join(pub, 'r/native'), { recursive: true });
+
+// The web kit prerenders every route, so unlike /m it needs no SPA fallback: each page is its own HTML file.
+step(`web kit static export → public${WEB_PATH}`);
+rmSync(join(web, 'out'), { recursive: true, force: true });
+run('npx', ['next', 'build'], web, { KIT_WEB_EXPORT: '1', KIT_WEB_BASE_PATH: WEB_PATH });
+rmSync(join(pub, WEB_PATH.slice(1)), { recursive: true, force: true });
+cpSync(join(web, 'out'), join(pub, WEB_PATH.slice(1)), { recursive: true });
+
+step('shadcn registry → public/r/web');
+run('npm', ['run', 'registry:dist'], web);
+cpSync(join(web, 'dist/r/web'), join(pub, 'r/web'), { recursive: true });
 
 step('_redirects and _headers');
 /**
@@ -94,7 +108,9 @@ run('npx', ['next', 'build'], docs);
 step('check out/');
 const expected = [
   'index.html',
-  'components/list-row/index.html',
+  'components/mobile/index.html',
+  'components/mobile/list-row/index.html',
+  'components/web/data-table/index.html',
   'docs/install/index.html',
   'screens/index.html',
   'install.md',
@@ -104,6 +120,12 @@ const expected = [
   'm/index.html',
   'r/native/registry.json',
   'r/native/list-row.json',
+  'w/index.html',
+  'w/components/index.html',
+  'w/dashboard/index.html',
+  'w/assistant/index.html',
+  'r/web/registry.json',
+  'r/web/data-table.json',
   '_redirects',
   '_headers',
 ];
