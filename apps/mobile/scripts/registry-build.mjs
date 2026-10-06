@@ -152,6 +152,8 @@ const versions = { ...pkg.dependencies, ...pkg.devDependencies };
 const PLATFORM = new Set(['react', 'react-native', 'react-dom', 'expo']);
 
 const isUpstream = (name) => forks[name]?.upstream && !forks[name].forked;
+/** components/ui/button.tsx → button: upstream items are named after the file, not the registry id. */
+const uiName = (file) => file.replace(/^components\/ui\//, '').replace(/\.tsx?$/, '');
 /** The registry item that ships a file: the first entry listing it (sheet.tsx → sheet). */
 const owner = new Map();
 for (const c of COMPONENTS) for (const f of c.files) if (!owner.has(f)) owner.set(f, c.id);
@@ -236,7 +238,7 @@ for (const c of COMPONENTS) {
   const file = c.files[0];
   if (c.publish === false || owner.get(file) !== c.id || published.has(file)) continue;
   const isUi = file.startsWith('components/ui/');
-  if (isUi && isUpstream(c.id)) continue; // consumers depend on the rnr URL directly
+  if (isUi && isUpstream(uiName(file))) continue; // consumers depend on the rnr URL directly
   published.add(file);
   const type = isUi ? 'registry:ui' : 'registry:component';
   items.push({
@@ -256,7 +258,7 @@ for (const c of COMPONENTS) {
 function installOf(c) {
   const file = c.files[0];
   if (c.publish === false) return null;
-  if (file.startsWith('components/ui/') && isUpstream(c.id)) return `${RNR}/${c.id}.json`;
+  if (file.startsWith('components/ui/') && isUpstream(uiName(file))) return `${RNR}/${uiName(file)}.json`;
   return `${NS}/${owner.get(file)}`;
 }
 

@@ -68,10 +68,17 @@ try {
   }
   for (const file of overwrites) {
     const diff = await run(['--diff', file]);
+    // shadcn strips a file's leading comment block on install; any other difference is a real change.
+    const local = readFileSync(join(copy, file), 'utf8').split('\n');
+    const firstCode = local.findIndex((l) => l.trim() && !/^\s*(\/\/|\/\*|\*)/.test(l));
+    // Compared as collapsed text: shadcn's diff output can join two source lines into one.
+    const squash = (t) => t.replace(/\s+/g, ' ').trim();
+    const leading = squash(local.slice(0, firstCode === -1 ? 0 : firstCode).join(' '));
     const changed = diff
       .split('\n')
       .map((l) => l.replace(/^[│\s]*/, ''))
-      .filter((l) => /^[-+](?![-+])/.test(l) && !/^[-+]\s*(\/\/|\/\*).*GENERATED/.test(l));
+      .filter((l) => /^[-+](?![-+])/.test(l))
+      .filter((l) => !(l.startsWith('-') && leading.includes(squash(l.slice(1)))));
     if (changed.length) {
       failed = true;
       console.error(`registry:roundtrip: ${file} differs after install:\n${changed.map((l) => `  ${l}`).join('\n')}`);
@@ -79,7 +86,7 @@ try {
   }
   if (!failed) {
     const files = summary.match(/Files \((\d+)\)/)?.[1] ?? '?';
-    console.log(`registry:roundtrip: ${names.length} items, ${files} files reinstall identically (${overwrites.length} differ only by the GENERATED header)`);
+    console.log(`registry:roundtrip: ${names.length} items, ${files} files reinstall identically (${overwrites.length} differ only by their leading comment, which shadcn strips)`);
   }
 } finally {
   server.close();
