@@ -58,6 +58,47 @@ jobs:
       - name: Web bundle builds
         run: npm run export:web
 
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+        working-directory: .
+
+      # One brand: apps/web/tokens/tokens.json must be a copy of apps/mobile's.
+      - name: Tokens in step with the mobile kit
+        run: npm run tokens:sync -- --check
+        working-directory: .
+
+      - name: Tokens are built and pass the contrast gate
+        run: npm run tokens:check
+
+      - name: Registry is consistent and generated docs are current
+        run: npm run registry:build -- --check
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      # The published shadcn registry reinstalls every kit file identically (unchanged shadcn items come
+      # from ui.shadcn.com).
+      - name: Registry builds and round-trips
+        run: npm run registry:dist && npm run registry:roundtrip
+
   tokens:
     runs-on: ubuntu-latest
     steps:
@@ -76,11 +117,19 @@ jobs:
       - name: Package contents
         run: npm pack -w packages/tokens --dry-run
 
-  # apps/mobile must work when copied out on its own (npx giget gh:itsHendri/protokit/apps/mobile):
-  # no root lockfile, no root overrides, no workspace links. The tokens package comes from a packed
-  # tarball, standing in for the published version.
+  # Each app must work when copied out on its own (npx giget gh:itsHendri/protokit/apps/<app>): no root
+  # lockfile, no root overrides, no workspace links. The tokens package comes from a packed tarball,
+  # standing in for the published version.
   extract:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - app: mobile
+            checks: npm run tokens:check && npm run registry:build -- --check && npm run typecheck && npm run lint -- --max-warnings 0 && npm run export:web
+          - app: web
+            checks: npm run tokens:check && npm run registry:build -- --check && npm run typecheck && npm run lint && npm run build
     steps:
       - uses: actions/checkout@v7
 
@@ -88,10 +137,10 @@ jobs:
         with:
           node-version: 24
 
-      - name: Copy apps/mobile out of the monorepo
+      - name: Copy apps/${{ matrix.app }} out of the monorepo
         run: |
           mkdir -p "$RUNNER_TEMP/app"
-          git archive HEAD:apps/mobile | tar -x -C "$RUNNER_TEMP/app"
+          git archive HEAD:apps/${{ matrix.app }} | tar -x -C "$RUNNER_TEMP/app"
           npm pack -w packages/tokens --pack-destination "$RUNNER_TEMP"
           cd "$RUNNER_TEMP/app"
           npm pkg set "devDependencies.@itshendri/kit-tokens=file:$(ls "$RUNNER_TEMP"/itshendri-kit-tokens-*.tgz)"
@@ -102,12 +151,7 @@ jobs:
 
       - name: Checks pass standalone
         working-directory: ${{ runner.temp }}/app
-        run: |
-          npm run tokens:check
-          npm run registry:build -- --check
-          npm run typecheck
-          npm run lint -- --max-warnings 0
-          npm run export:web
+        run: ${{ matrix.checks }}
 
   # The docs site: tokens, generated content, the kit's web export under /m, the registry under /r,
   # the static Next export, then every internal link and the TypeScript.

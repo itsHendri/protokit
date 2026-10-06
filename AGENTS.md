@@ -5,7 +5,7 @@ A monorepo of prototype kits. Each app is self-contained; this file only covers 
 ```
 apps/mobile/    Expo mobile kit. Its AGENTS.md, DESIGN_SYSTEM.md and .claude/skills are the rules for any mobile work.
 apps/docs/      Docs site (Next + Fumadocs, static export for Cloudflare). Reads apps/mobile; the one app allowed to.
-apps/web/       Web kit (coming).
+apps/web/       Web kit: Next.js + shadcn/ui. Its AGENTS.md, DESIGN_SYSTEM.md and .claude/skills are the rules for web work.
 packages/tokens/ @itshendri/kit-tokens: the token build (DTCG → NativeWind, Tailwind 4, TS, DESIGN.md, Figma) every app uses.
 kit.json        The kit's name and addresses, read by the generators.
 ```
@@ -20,6 +20,8 @@ kit.json        The kit's name and addresses, read by the generators.
   published package in `packages/`, depended on by version range.
 - **One install, at the root.** `npm install` at the repo root (npm workspaces). Run an app's scripts
   from its folder or with `-w apps/<name>`. Never add a lockfile inside an app.
+- **One brand.** `apps/mobile/tokens/tokens.json` is the source; `npm run tokens:sync` copies it to `apps/web` and
+  rebuilds. CI fails when the copies differ.
 - React and react-dom are pinned once, in the root `overrides`, to the version the Expo SDK requires.
   An SDK upgrade moves every app.
 - Tailwind 3 (mobile, NativeWind) and Tailwind 4 (docs, web) coexist: the root pins `tailwindcss@^3`

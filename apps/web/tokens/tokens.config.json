@@ -1,0 +1,12 @@
+{
+  "$description": "What `npm run tokens:build` writes, and where. tokens.json is a copy of apps/mobile's (one brand): in the monorepo, edit the mobile one and run `npm run tokens:sync` at the root.",
+  "source": "tokens/tokens.json",
+  "targets": {
+    "shadcn-web": { "out": "app/tokens.css" },
+    "ts-theme": { "out": "lib/theme.ts", "navTheme": false },
+    "figma": { "out": "tokens/generated/figma-theme.mjs" },
+    "registry-theme": { "out": "tokens/generated/theme.registry.json" },
+    "design-md": { "out": "DESIGN.md", "name": "Prototype Kit (web)" },
+    "llms": { "out": "tokens/generated/llms-tokens.md" }
+  }
+}
