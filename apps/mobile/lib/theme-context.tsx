@@ -1,10 +1,12 @@
+import { EMBED, useEmbedBridge } from '@/lib/embed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
 
 /**
  * Kit theme mode. `system` follows the OS appearance; `light`/`dark` pin it.
- * The choice is persisted so it survives reloads and app restarts.
+ * The choice is persisted so it survives reloads and app restarts, except in an embedded or `?theme=`
+ * session (see lib/embed.ts), which starts from the URL and leaves the saved choice alone.
  *
  * Colours themselves live in tokens/tokens.json → global.css (CSS variables) and are
  * switched by NativeWind's colour scheme, so `bg-primary`, `text-muted-foreground`, etc.
@@ -14,6 +16,8 @@ export type ThemeMode = 'system' | 'light' | 'dark';
 export type ColorScheme = 'light' | 'dark';
 
 const STORAGE_KEY = 'kit.theme-mode';
+/** Embedded in the docs, or opened with ?theme=: the theme comes from the host, not from storage. */
+const EPHEMERAL = EMBED.embedded || EMBED.theme !== undefined;
 
 type ThemeContextValue = {
   /** What the user chose. */
@@ -33,32 +37,40 @@ function isThemeMode(value: unknown): value is ThemeMode {
 
 export function KitThemeProvider({ children }: { children: React.ReactNode }) {
   const { colorScheme, setColorScheme } = useColorScheme();
-  const [mode, setModeState] = React.useState<ThemeMode>('system');
+  const [mode, setModeState] = React.useState<ThemeMode>(EMBED.theme ?? 'system');
+  // NativeWind hands out a new setColorScheme on every render, so this effect re-runs; the start-up
+  // theme must be applied once, or it would undo every later change (the embed bridge's included).
+  const started = React.useRef(false);
 
   React.useEffect(() => {
-    let cancelled = false;
+    if (started.current) return;
+    started.current = true;
+    if (EPHEMERAL) {
+      if (EMBED.theme) setColorScheme(EMBED.theme);
+      return;
+    }
+    // No cancel-on-cleanup: with the once-guard, a cancelled load would never be retried.
     AsyncStorage.getItem(STORAGE_KEY)
       .then((stored) => {
-        if (cancelled || !isThemeMode(stored)) return;
+        if (!isThemeMode(stored)) return;
         setModeState(stored);
         setColorScheme(stored);
       })
       .catch(() => {
         /* storage unavailable (e.g. private web session) — stay on system */
       });
-    return () => {
-      cancelled = true;
-    };
   }, [setColorScheme]);
 
   const setMode = React.useCallback(
     (next: ThemeMode) => {
       setModeState(next);
       setColorScheme(next);
-      AsyncStorage.setItem(STORAGE_KEY, next).catch(() => {});
+      if (!EPHEMERAL) AsyncStorage.setItem(STORAGE_KEY, next).catch(() => {});
     },
     [setColorScheme]
   );
+
+  useEmbedBridge(setMode);
 
   const scheme: ColorScheme = colorScheme === 'dark' ? 'dark' : 'light';
 

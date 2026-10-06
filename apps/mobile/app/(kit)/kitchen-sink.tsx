@@ -1,21 +1,43 @@
 import { CATEGORIES, isCategoryId } from '@/components/devkit/categories';
 import { DevKitHub } from '@/components/devkit/DevKitHub';
+import { DevKitSection } from '@/components/devkit/DevKitSection';
 import { SECTIONS } from '@/components/devkit/registry';
+import { Text } from '@/components/ui/text';
+import { EMBED } from '@/lib/embed';
 import { useLocalSearchParams } from 'expo-router';
+import { ScrollView } from 'react-native';
 
 /**
  * The Kitchen Sink: every component the kit ships, grouped by function, searchable.
- * Deep link: /kitchen-sink?open=inputs (or protokit://kitchen-sink?open=inputs) expands a category.
+ * Deep links (or protokit://kitchen-sink?…):
+ *   /kitchen-sink?open=inputs          expand a category
+ *   /kitchen-sink?section=list-row     expand its category, scroll to it, tint it briefly
+ *   /kitchen-sink?section=list-row&embed=1   just that demo, no chrome (the docs' phone frame)
  */
 export default function KitchenSink() {
-  const { open } = useLocalSearchParams<{ open?: string }>();
+  const { open, section } = useLocalSearchParams<{ open?: string; section?: string }>();
+
+  if (EMBED.embedded && section) {
+    const match = SECTIONS.find((s) => s.id === section);
+    return (
+      <ScrollView className="bg-background flex-1" contentContainerClassName="py-3">
+        {match ? (
+          <DevKitSection section={match} bare />
+        ) : (
+          <Text className="text-muted-foreground p-5">No component called “{section}” in this kit.</Text>
+        )}
+      </ScrollView>
+    );
+  }
+
   return (
     <DevKitHub
-      key={open ?? 'default'}
+      key={`${open ?? ''}:${section ?? ''}`}
       categories={CATEGORIES}
       sections={SECTIONS}
       searchPlaceholder="Search components"
       focus={isCategoryId(open) ? open : undefined}
+      focusSection={section}
     />
   );
 }
