@@ -31,9 +31,10 @@ function readInitial(): EmbedState {
 export const EMBED: EmbedState = readInitial();
 
 function allowedOrigins(): string[] {
-  const extra = (process.env.EXPO_PUBLIC_EMBED_ORIGINS ?? '')
+  // String(): apps without Node's types see `process.env` as untyped.
+  const extra = String(process.env.EXPO_PUBLIC_EMBED_ORIGINS ?? '')
     .split(',')
-    .map((o) => o.trim())
+    .map((o: string) => o.trim())
     .filter(Boolean);
   return typeof window === 'undefined' ? extra : [window.location.origin, ...extra];
 }

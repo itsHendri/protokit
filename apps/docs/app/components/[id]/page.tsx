@@ -1,6 +1,6 @@
 import { Callout } from 'fumadocs-ui/components/callout';
 import { DynamicCodeBlock } from 'fumadocs-ui/components/dynamic-codeblock';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from 'fumadocs-ui/components/tabs';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import { InlineMd } from '@/components/inline-md';
 import { PhoneFrame } from '@/components/phone-frame';
 import { components, getComponent, kit, registryItemFor, sourceUrl } from '@/lib/kit';
 import { site } from '@/lib/llms';
+import { codeThemes } from '@/lib/shared';
 
 export const dynamicParams = false;
 
@@ -66,7 +67,7 @@ export default async function ComponentPage(props: PageProps<'/components/[id]'>
                 <h2 id="api" className="mb-2 text-lg font-semibold">
                   API
                 </h2>
-                <DynamicCodeBlock lang="tsx" code={c.api} />
+                <DynamicCodeBlock options={{ themes: codeThemes }} lang="tsx" code={c.api} />
               </section>
             ) : null}
 
@@ -74,16 +75,21 @@ export default async function ComponentPage(props: PageProps<'/components/[id]'>
               <h2 id="get-it" className="mb-2 text-lg font-semibold">
                 Get it
               </h2>
-              <Tabs items={['In the kit', ...(installCommand ? ['Existing Expo app'] : [])]}>
-                <Tab value="In the kit">
+              {/* Explicit values: Fumadocs builds tab ids from the label and only replaces its first space. */}
+              <Tabs defaultValue="kit">
+                <TabsList>
+                  <TabsTrigger value="kit">In the kit</TabsTrigger>
+                  {installCommand ? <TabsTrigger value="expo">Existing Expo app</TabsTrigger> : null}
+                </TabsList>
+                <TabsContent value="kit">
                   <p className="text-muted-foreground mb-3 text-sm">Already in every copy of the mobile kit:</p>
                   <DynamicCodeBlock
                     lang="tsx"
                     code={`import { ${c.exports.join(', ')} } from '@/${c.files[0].replace(/\.tsx?$/, '')}';`}
                   />
-                </Tab>
+                </TabsContent>
                 {installCommand ? (
-                  <Tab value="Existing Expo app">
+                  <TabsContent value="expo">
                     <p className="text-muted-foreground mb-3 text-sm">
                       With react-native-reusables set up and the registry in <code>components.json</code> (
                       <Link href="/docs/install" className="underline underline-offset-4">
@@ -91,8 +97,14 @@ export default async function ComponentPage(props: PageProps<'/components/[id]'>
                       </Link>
                       ):
                     </p>
-                    <DynamicCodeBlock lang="bash" code={`${installCommand}\nnpx expo install --fix`} />
-                  </Tab>
+                    <DynamicCodeBlock options={{ themes: codeThemes }} lang="bash" code={`${installCommand}\nnpx expo install --fix`} />
+                    {item?.registryDependencies?.some((d) => d.startsWith(`${kit.registry.native}/`) && !d.includes('/lib-') && !d.endsWith('/theme')) ? (
+                      <p className="text-muted-foreground mt-3 text-sm">
+                        Replaces some react-native-reusables files with the kit&apos;s refined versions; answer yes when
+                        asked to overwrite (or add <code>--overwrite</code>).
+                      </p>
+                    ) : null}
+                  </TabsContent>
                 ) : null}
               </Tabs>
             </section>

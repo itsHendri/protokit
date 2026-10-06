@@ -33,6 +33,10 @@ Present: 69 previews across 8 categories. Still missing, roughly in order of how
 - `@expo/ui` (SwiftUI/Compose controls) and `expo-glass-effect` — evaluate for native-feel controls after SDK 58.
 
 ## Known rough edges
+- **Contrast gate gap:** it checks each tone as text on `background` and `card`, not on `muted`/`accent`. In dark
+  mode `primary` (brand.500) on `muted` (neutral.800) is 4.04:1. Found by Lighthouse on the docs site's tabs (fixed
+  there with neutral selected tabs, the kit's own rule). Adding the pairing would need a lighter dark primary — a
+  brand decision.
 - `Sheet` exit is a plain fade (RN Modal); a slide-out needs a mounted-state dance the React Compiler rules dislike.
 - Haptics/blur only verified on the simulator; feel on a physical device still to confirm.
 - Web `Select`/`DropdownMenu` positioning relies on rn-primitives portals; check on narrow viewports.
