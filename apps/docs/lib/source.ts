@@ -1,12 +1,14 @@
 import { llms, loader } from 'fumadocs-core/source';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
+import { applyMdxPreset } from 'fumadocs-mdx/config';
 import { defineDocs } from 'fumadocs-mdx/macro';
-import { docsRoute } from './shared';
+import { codeThemes, docsRoute } from './shared';
 
 const docs = defineDocs({
   dir: 'content/docs',
   docs: {
     schema: pageSchema,
+    mdxOptions: applyMdxPreset({ rehypeCodeOptions: { themes: codeThemes } }),
     postprocess: { includeProcessedMarkdown: true },
   },
   meta: { schema: metaSchema },

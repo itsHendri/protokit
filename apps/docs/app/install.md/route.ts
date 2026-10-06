@@ -29,7 +29,9 @@ npm run ios        # or: npm run web
    \`"registries": { "${kit.registry.native}": "${site('/r/native/{name}.json')}" }\`
 2. \`npx shadcn@latest add ${kit.registry.native}/theme ${kit.registry.native}/lib-theme-context\`, wrap the root
    layout in \`<KitThemeProvider>\`, then add components: \`npx shadcn@latest add ${kit.registry.native}/list-row\`.
-3. \`npx expo install --fix\` so Expo packages match the project's SDK.
+3. When shadcn asks to overwrite a react-native-reusables file (\`text.tsx\`, \`button.tsx\`, …), answer yes or
+   pass \`--overwrite\`: kit components expect the kit's refined versions.
+4. \`npx expo install --fix\` so Expo packages match the project's SDK.
 
 **C. Mobile and web on one brand**: \`git clone ${kit.repo}.git\`, \`npm install\` at the root, and work in
 \`apps/mobile\`.
