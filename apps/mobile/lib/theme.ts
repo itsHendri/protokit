@@ -3,7 +3,7 @@ import { DarkTheme, DefaultTheme, type Theme } from 'expo-router/react-navigatio
 
 /**
  * Semantic colours as hex, per scheme. Use ONLY where a className cannot reach:
- * SVG fills, chart strokes, native props (StatusBar, gradient stops). Everything
+ * SVG fills, chart strokes, canvas, platform props (a StatusBar, gradient stops). Everything
  * else styles with Tailwind classes (bg-primary, text-muted-foreground, …).
  */
 export const THEME = {
