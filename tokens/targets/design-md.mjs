@@ -1,0 +1,162 @@
+/**
+ * DESIGN.md (google-labs-code/design.md, spec version "alpha"): the tokens as YAML front matter plus
+ * short, platform-neutral prose an agent can load on its own. The spec has no light/dark modes, so
+ * `colors` carries the light value under each name and the dark one under `<name>-dark`.
+ * The detailed rules stay in DESIGN_SYSTEM.md; this file points there instead of repeating them.
+ *   options: { out: 'DESIGN.md', name?: string, description?: string }
+ */
+import { group } from '../lib/resolve.mjs';
+
+const q = (s) => JSON.stringify(String(s));
+const px = (n) => `${n}px`;
+
+/** The Text variants of components/ui/text.tsx, as typography tokens. */
+function typography(prim) {
+  const size = Object.fromEntries(group(prim, ['font', 'size']).map((t) => [t.key, t.value]));
+  const families = Object.fromEntries(group(prim, ['font', 'family']).map((t) => [t.key, t.value]));
+  const sans = families.sans || 'system-ui';
+  const mono = families.mono || 'monospace';
+  const levels = [
+    ['h1', sans, size['4xl'], 800, 1.1, '-0.025em'],
+    ['h2', sans, size['3xl'], 600, 1.2, '-0.025em'],
+    ['h3', sans, size['2xl'], 600, 1.25, '-0.025em'],
+    ['h4', sans, size.xl, 600, 1.3, '-0.025em'],
+    ['lead', sans, size.xl, 400, 1.4],
+    ['large', sans, size.lg, 600, 1.4],
+    ['body', sans, size.base, 400, 1.75],
+    ['small', sans, size.sm, 500, 1],
+    ['muted', sans, size.sm, 400, 1.4],
+    ['code', mono, size.sm, 600, 1.4],
+  ];
+  return levels
+    .map(([name, family, fontSize, weight, lineHeight, tracking]) =>
+      [
+        `  ${name}:`,
+        `    fontFamily: ${q(family)}`,
+        `    fontSize: ${px(fontSize)}`,
+        `    fontWeight: ${weight}`,
+        `    lineHeight: ${lineHeight}`,
+        ...(tracking ? [`    letterSpacing: ${tracking}`] : []),
+      ].join('\n')
+    )
+    .join('\n');
+}
+
+export default function designMd(ctx, options) {
+  const name = options.name ?? 'Prototype Kit';
+  const description =
+    options.description ?? 'Brand-agnostic prototype kit: shadcn semantics, light and dark, WCAG AA enforced at build time.';
+  const colors = ctx.colors
+    .flatMap((c) => [`  ${c.name}: ${q(c.light)}`, `  ${c.name}-dark: ${q(c.dark)}`])
+    .join('\n');
+  const rounded = group(ctx.prim, ['radius'])
+    .map((t) => `  ${t.key}: ${px(t.value)}`)
+    .join('\n');
+  const spacing = group(ctx.prim, ['space'])
+    .map((t) => `  ${q(t.key)}: ${px(t.value)}`)
+    .join('\n');
+  const hex = Object.fromEntries(ctx.colors.map((c) => [c.name, c.light]));
+  const darkHex = Object.fromEntries(ctx.colors.map((c) => [c.name, c.dark]));
+  const radius = Object.fromEntries(group(ctx.prim, ['radius']).map((t) => [t.key, t.value]));
+  const duration = Object.fromEntries(group(ctx.prim, ['duration']).map((t) => [t.key, t.value]));
+
+  const contents = `---
+version: alpha
+name: ${q(name)}
+description: ${q(description)}
+colors:
+${colors}
+typography:
+${typography(ctx.prim)}
+rounded:
+${rounded}
+spacing:
+${spacing}
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.primary-foreground}"
+    rounded: "{rounded.full}"
+    height: 48px
+  button-secondary:
+    backgroundColor: "{colors.secondary}"
+    textColor: "{colors.secondary-foreground}"
+    rounded: "{rounded.full}"
+    height: 48px
+  card:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.card-foreground}"
+    rounded: "{rounded.lg}"
+    padding: 16px
+  input:
+    backgroundColor: "{colors.background}"
+    textColor: "{colors.foreground}"
+    rounded: "{rounded.md}"
+    height: 48px
+---
+
+<!-- ${ctx.header} -->
+
+# ${name}
+
+## Overview
+
+A neutral, brand-agnostic base for clickable prototypes on phone and web. Calm surfaces, one brand
+colour reserved for the primary action and focus, generous spacing, and both light and dark themes
+from day one. Re-branding means editing \`tokens/tokens.json\`; everything else follows. The full
+rules and the component registry are in \`DESIGN_SYSTEM.md\` — read it before building UI.
+
+## Colors
+
+Semantic names only (the shadcn vocabulary), each usable as \`bg-\`, \`text-\` and \`border-\`. Never a
+hex literal or a Tailwind palette colour in UI code. Keys ending in \`-dark\` are the dark theme.
+
+- **Primary (${hex.primary} / dark ${darkHex.primary}):** the single most important action, links and focus.
+- **Background (${hex.background}) and Card (${hex.card}):** the page canvas and raised surfaces.
+- **Muted foreground (${hex['muted-foreground']}):** helper text, captions, placeholders.
+- **Destructive, Success, Warning, Info:** status only, each with its own \`-foreground\`.
+- **Chart 1–5:** data series.
+
+Every \`X\` / \`X-foreground\` pairing, muted text on every surface, and every status tone used as text
+clears WCAG AA (4.5:1) in both themes; the build refuses a palette that does not.
+
+## Typography
+
+System font unless a brand font is configured. Use the Text variants (h1–h4, lead, large, body,
+small, muted, code) rather than raw sizes. Medium weight for row titles, semibold for headings and
+values, bold only for hero amounts.
+
+## Layout
+
+A 4-pt grid, restricted to the steps in \`spacing\` (0–64px). Screen edge padding 20px, 20px between
+sections, 16px inside cards, 12px vertical in list rows. Siblings are spaced with gaps, not margins,
+and spacing varies to create hierarchy. Interactive targets are at least 44×44.
+
+## Elevation & Depth
+
+Mostly flat: hierarchy comes from surface colour (background → card) and borders. A shadow is only
+for something you can press or something floating above the page (dialogs, sheets, menus, toasts,
+a floating button). Content — inputs included — stays flat.
+
+## Shapes
+
+Buttons are pills. Inputs ${radius.md}px, cards ${radius.lg}px, larger surfaces ${radius.xl}px, sheet tops
+${radius['2xl']}px; chips, avatars and dots are fully round.
+
+## Components
+
+Only components listed in the registry in \`DESIGN_SYSTEM.md\` exist. Controls are 48px tall (small
+40, large 56). Selected chips and segments are neutral (inverted foreground), never the brand colour.
+Motion: ${duration.fast}ms for micro-feedback, ${duration.base}ms for most transitions, ${duration.slow}ms for sheets, and
+nothing moves when the OS asks for reduced motion.
+
+## Do's and Don'ts
+
+- Do keep the brand colour for the primary action and focus; one primary action per screen.
+- Do check every screen in light and dark.
+- Don't nest cards inside cards or put a section title inside its card.
+- Don't use grey-on-grey text below 4.5:1, tap targets under 44×44, or icon-only buttons without a label.
+- Don't invent a component: if it is not in the registry, stop and add it properly.
+`;
+  return [{ path: options.out, contents }];
+}

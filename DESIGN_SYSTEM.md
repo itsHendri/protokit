@@ -11,7 +11,8 @@ Engineering conventions (routing, state, workflows) live in `AGENTS.md`.
 ## Tokens
 
 Single source of truth: `tokens/tokens.json` (DTCG). `npm run tokens:build` regenerates
-`global.css` (CSS variables), `lib/theme.ts` (TS mirror) and `tokens/generated/tailwind.theme.js`.
+`global.css` (CSS variables), `lib/theme.ts` (TS mirror), `tokens/generated/tailwind.theme.js`, the
+web theme `tokens/generated/web.css` (Tailwind 4 / shadcn, oklch) and `DESIGN.md`.
 Never edit the generated files. To re-brand a project, change `tokens.json` and rebuild.
 
 **The build enforces contrast.** Every `X` / `X-foreground` pairing, and muted text on every
@@ -60,7 +61,7 @@ Buttons are pills (`rounded-full`); everything else uses the scale below. Raised
 sit on a track — the SegmentedControl thumb, the Switch thumb, the Slider handle — use `bg-card`,
 not `bg-background`, so they stay white if the page surface is ever tinted.
 
-`rounded-sm` 6 · `rounded-md` 8 (inputs, buttons) · `rounded-lg` 10 (cards, sheets base) · `rounded-xl` 14 ·
+`rounded-sm` 6 · `rounded-md` 8 (inputs, buttons) · `rounded-lg` 10 (cards, sheets base) · `rounded-xl` 16 ·
 `rounded-2xl` 20 (sheet tops, hero surfaces) · `rounded-full` (chips, avatars, dots).
 
 ### Typography

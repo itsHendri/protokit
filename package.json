@@ -21,7 +21,9 @@
     "share": "bash scripts/share.sh",
     "export:web": "expo export --platform web",
     "tokens:figma": "node tokens/push-figma.mjs",
-    "dev:client": "expo start -c"
+    "dev:client": "expo start -c",
+    "tokens:check": "node tokens/cli.mjs check",
+    "test:tokens": "node --test tokens/*.test.mjs"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",

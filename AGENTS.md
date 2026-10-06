@@ -26,7 +26,7 @@ components/kit/         ported/custom components
 components/devkit/      registry + previews (sections/<category>.tsx, sections/kit-<category>.tsx)
 components/shop/, components/habits/  sample data + stores. Go with `npm run eject-samples`.
 lib/                    theme.ts (generated), theme-context, haptics, utils(cn)
-tokens/                 tokens.json (edit), build.mjs, generated/
+tokens/                 tokens.json (edit), tokens.config.json (outputs), cli.mjs + lib/ + targets/, generated/
 .claude/skills/         add-component, qc-pass, transcript-to-prototype
 .claude/launch.json     preview configs: kit-web (port 8090) and kit-ios (port 8091)
 ```
