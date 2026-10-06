@@ -28,7 +28,7 @@ components/shop/, components/habits/  sample data + stores. Go with `npm run eje
 lib/                    theme.ts (generated), theme-context, haptics, utils(cn)
 tokens/                 tokens.json (edit), build.mjs, generated/
 .claude/skills/         add-component, qc-pass, transcript-to-prototype
-.claude/launch.json     preview configs (also mirrored in the parent Development/.claude/launch.json as kit-web / kit-ios)
+.claude/launch.json     preview configs: kit-web (port 8090) and kit-ios (port 8091)
 ```
 
 ## Commands
@@ -67,13 +67,17 @@ npx expo run:ios       # build + install the dev client on the simulator (needs 
 - **Dev client:** `LANG=en_US.UTF-8 npx expo run:ios --no-bundler` builds `Prototype Kit` for the simulator; then
   `xcrun simctl openurl booted "exp+mobile-app-prototype-kit://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8091"`.
   For phones: `eas build --profile development` (needs Apple credentials, interactive).
+- **Account config:** `app.config.ts` reads `APP_ID`, `EAS_OWNER`, `EAS_PROJECT_ID` and `KIT_WEB_BASE_URL` from
+  `.env.local` (gitignored, see `.env.example`) or the environment, so the repo carries no account. EAS cloud
+  builds and workflows need the same names as EAS environment variables. `eas init` cannot write to a dynamic
+  config: copy the id it prints into `.env.local`.
 - **Share:** `npm run share -- "what changed"` publishes to the `main` channel. Recipients need the dev build
-  installed, or Expo Go signed into the `h3nners-prototypes` org (Expo Go on iOS requires login since SDK 57).
+  installed, or Expo Go signed into the owning account/org (Expo Go on iOS requires login since SDK 57).
 - **Web link for clients:** `npm run export:web && eas deploy` → immutable preview URL. `web.output` is `single`
   so deep links resolve.
 - **Re-brand:** edit `tokens/tokens.json` (colours, radius), rebuild — `tokens:build` refuses to emit a
-  palette where any `X`/`X-foreground` pairing or muted text falls below 4.5:1, and prints the ratio; set `name`/`slug`/`scheme`/bundle ids in
-  `app.json`; add a brand font with the `expo-font` config plugin; replace `assets/images/*`.
+  palette where any `X`/`X-foreground` pairing or muted text falls below 4.5:1, and prints the ratio; set `name`/`slug`/`scheme` in
+  `app.json` and `APP_ID` in `.env.local`; add a brand font with the `expo-font` config plugin; replace `assets/images/*`.
 
 ## Agent tooling
 

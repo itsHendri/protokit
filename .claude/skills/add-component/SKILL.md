@@ -1,6 +1,6 @@
 ---
 name: add-component
-description: Add a component to the prototype kit the right way — either install a react-native-reusables component or build/port one into components/kit — and register it in the Kitchen Sink and DESIGN_SYSTEM.md in the same change. Use when asked to "add a component", "we need a <thing>", "port <Component> from the old kit", or when a screen needs something the registry lacks.
+description: Add a component to the prototype kit the right way — either install a react-native-reusables component or build/port one into components/kit — and register it in the Kitchen Sink and DESIGN_SYSTEM.md in the same change. Use when asked to "add a component", "we need a <thing>", "port <Component> from another kit", or when a screen needs something the registry lacks.
 ---
 
 # Add a component
@@ -22,8 +22,8 @@ Pick one:
 - **react-native-reusables has it** (check https://reactnativereusables.com/docs/components):
   `npx @react-native-reusables/cli@latest add <name> -y` → lands in `components/ui/<name>.tsx`.
   If it adds packages, run `npx expo install --fix` afterwards.
-- **Port from the old kit** (read-only reference: https://github.com/itsHendri/swissborg-prototype-kit,
-  `src/components/shared/{atoms,molecules,organisms}`): create `components/kit/<name>.tsx`.
+- **Port from a reference** (another kit, a client's codebase, a screenshot): create
+  `components/kit/<name>.tsx`.
   Rewrite, don't copy: className-only styling with semantic classes, `cva` for variants,
   compose from `components/ui` primitives where possible, forward `className`, use the kit
   `Text`/`Icon`. No `useThemeColors`, no inline colour objects, no `@expo/vector-icons`.

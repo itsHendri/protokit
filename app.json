@@ -11,15 +11,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.h3nners.prototypekit"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.h3nners.prototypekit"
+      }
     },
     "web": {
       "bundler": "metro",
@@ -65,18 +63,11 @@
     "experiments": {
       "typedRoutes": true
     },
-    "owner": "h3nners-prototypes",
     "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "98e93a09-7ebc-46f1-a440-3ff7e0ceb7cb"
-      }
+      "router": {}
     },
     "runtimeVersion": {
       "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/98e93a09-7ebc-46f1-a440-3ff7e0ceb7cb"
     }
   }
 }

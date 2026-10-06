@@ -2,6 +2,11 @@
   "name": "mobile-app-prototype-kit",
   "main": "expo-router/entry",
   "version": "0.1.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsHendri/mobile-app-prototype-kit.git"
+  },
   "scripts": {
     "start": "expo start --go",
     "dev": "expo start -c --go",
@@ -82,6 +87,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
+    "@types/node": "^26.6.4",
     "@types/react": "~19.2.10",
     "eslint": "^9.39.5",
     "eslint-config-expo": "^57.0.2",
