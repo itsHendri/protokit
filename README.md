@@ -49,4 +49,8 @@ API (Enterprise seat); otherwise import the JSON through the Figma MCP (`use_fig
 - [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md) — tokens, registry, patterns, anti-patterns. Read before writing UI.
 - [`AGENTS.md`](./AGENTS.md) — engineering conventions, workflows, gotchas (also what Claude Code reads).
 - [`BACKLOG.md`](./BACKLOG.md) — deferred work.
+- [`DESIGN.md`](./DESIGN.md) and [`llms.txt`](./llms.txt) — generated summaries for agents (tokens and the component list).
+- [`registry/components.ts`](./registry/components.ts) — what the kit ships. Feeds the Kitchen Sink, the registry
+  tables in `DESIGN_SYSTEM.md`, `llms.txt`, and `registry.json`, the shadcn registry that lets another Expo +
+  react-native-reusables app install kit components (`npm run registry:dist` builds it into `dist/r/native`).
 - `.claude/skills/` — `add-component`, `qc-pass`, `transcript-to-prototype`.

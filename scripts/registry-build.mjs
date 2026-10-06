@@ -10,11 +10,16 @@
  * 2. DESIGN_SYSTEM.md: rewrites the blocks between <!-- GENERATED:<name> --> markers (one table per
  *    category, and the radius scale). Everything outside the markers stays hand-written.
  * 3. llms.txt: the agent-facing index (rules pointer, components, tokens).
- * 4. registry/generated/index.json: the same data for the docs site.
+ * 4. registry.json: the shadcn registry source (`npm run registry:dist` builds dist/r/native from it).
+ *    Dependencies are read from each file's imports: unchanged components/ui files point at
+ *    react-native-reusables, forked ones and components/kit are our own `@kit-native/*` items.
+ * 5. registry/generated/index.json: the same data for the docs site.
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import ts from 'typescript';
 
 import { CATEGORY_META } from '../registry/categories.ts';
 import { COMPONENTS } from '../registry/components.ts';
@@ -136,13 +141,140 @@ ${CATEGORY_META.map(
 
 ${llmsTokens}`;
 
-// ---------- 4. registry/generated/index.json -----------------------------------------------------
+// ---------- 4. registry.json (shadcn) --------------------------------------------------------------
+
+const NS = '@kit-native';
+const RNR = 'https://reactnativereusables.com/r/nativewind';
+const forks = JSON.parse(read('registry/rnr-forks.json')).components;
+const pkg = JSON.parse(read('package.json'));
+const versions = { ...pkg.dependencies, ...pkg.devDependencies };
+/** Provided by every Expo app; never listed as an item dependency. */
+const PLATFORM = new Set(['react', 'react-native', 'react-dom', 'expo']);
+
+const isUpstream = (name) => forks[name]?.upstream && !forks[name].forked;
+/** The registry item that ships a file: the first entry listing it (sheet.tsx → sheet). */
+const owner = new Map();
+for (const c of COMPONENTS) for (const f of c.files) if (!owner.has(f)) owner.set(f, c.id);
+
+/** Every module a file imports, requires or references in a type position, comments ignored. */
+function importsOf(file) {
+  const src = ts.createSourceFile(file, read(file), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const specs = new Set();
+  const visit = (node) => {
+    if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier) specs.add(node.moduleSpecifier.text);
+    if (ts.isCallExpression(node) && node.expression.getText(src) === 'require' && ts.isStringLiteral(node.arguments[0] ?? {})) specs.add(node.arguments[0].text);
+    if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument)) specs.add(node.argument.literal.text);
+    ts.forEachChild(node, visit);
+  };
+  visit(src);
+  return [...specs];
+}
+
+function existing(base) {
+  return ['.tsx', '.ts'].map((ext) => base + ext).find((f) => existsSync(join(root, f)));
+}
+
+/** Map one import to an npm dependency or a registry dependency. */
+function resolveImport(spec, from) {
+  if (spec.startsWith('@/components/ui/')) {
+    const name = spec.slice('@/components/ui/'.length);
+    return { registry: isUpstream(name) ? `${RNR}/${name}.json` : `${NS}/${name}` };
+  }
+  if (spec.startsWith('@/components/kit/')) {
+    const file = existing(spec.slice(2));
+    if (!file || !owner.has(file)) throw new Error(`${from}: ${spec} is not a registered kit file`);
+    return { registry: `${NS}/${owner.get(file)}` };
+  }
+  if (spec.startsWith('@/lib/')) return { registry: `${NS}/lib-${spec.slice('@/lib/'.length)}` };
+  if (spec.startsWith('@/') || spec.startsWith('.')) throw new Error(`${from}: cannot publish an import of ${spec}`);
+  const name = spec.startsWith('@') ? spec.split('/').slice(0, 2).join('/') : spec.split('/')[0];
+  if (PLATFORM.has(name)) return {};
+  return { dependency: versions[name] ? `${name}@${versions[name]}` : name };
+}
+
+function depsOf(files, self) {
+  const dependencies = new Set();
+  const registryDependencies = new Set();
+  for (const file of files) {
+    for (const spec of importsOf(file)) {
+      const r = resolveImport(spec, file);
+      if (r.dependency) dependencies.add(r.dependency);
+      if (r.registry && r.registry !== `${NS}/${self}`) registryDependencies.add(r.registry);
+    }
+  }
+  return { dependencies: [...dependencies].sort(), registryDependencies: [...registryDependencies].sort() };
+}
+
+const INSTALL_NOTE =
+  'Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.';
+
+const items = [];
+const theme = JSON.parse(read('tokens/generated/theme.registry.json')).native;
+items.push({
+  name: 'theme',
+  type: 'registry:theme',
+  title: 'Kit theme',
+  description: 'The kit tokens as CSS variables (light + dark) and the Tailwind colour + radius extension. Generated from tokens/tokens.json.',
+  cssVars: theme.cssVars,
+  tailwind: theme.tailwind,
+});
+
+const libFiles = readdirSync(join(root, 'lib')).filter((f) => /\.tsx?$/.test(f)).sort();
+for (const f of libFiles) {
+  const name = `lib-${f.replace(/\.tsx?$/, '')}`;
+  items.push({
+    name,
+    type: 'registry:lib',
+    title: `lib/${f}`,
+    ...depsOf([`lib/${f}`], name),
+    files: [{ path: `lib/${f}`, type: 'registry:lib', target: `lib/${f}` }],
+  });
+}
+
+const published = new Set();
+for (const c of COMPONENTS) {
+  const file = c.files[0];
+  if (c.publish === false || owner.get(file) !== c.id || published.has(file)) continue;
+  const isUi = file.startsWith('components/ui/');
+  if (isUi && isUpstream(c.id)) continue; // consumers depend on the rnr URL directly
+  published.add(file);
+  const type = isUi ? 'registry:ui' : 'registry:component';
+  items.push({
+    name: c.id,
+    type,
+    title: c.title,
+    description: c.notes || firstSentence(c.caption),
+    ...depsOf(c.files, c.id),
+    files: c.files.map((path) => ({ path, type, target: path })),
+    categories: [c.category],
+    docs: INSTALL_NOTE,
+    meta: { exports: c.exports, api: c.api },
+  });
+}
+
+/** How a consumer gets each component: one of our items, an rnr URL, or not at all. */
+function installOf(c) {
+  const file = c.files[0];
+  if (c.publish === false) return null;
+  if (file.startsWith('components/ui/') && isUpstream(c.id)) return `${RNR}/${c.id}.json`;
+  return `${NS}/${owner.get(file)}`;
+}
+
+const homepage = (pkg.repository?.url ?? '').replace(/^git\+/, '').replace(/\.git$/, '');
+const registry = {
+  $schema: 'https://ui.shadcn.com/schema/registry.json',
+  name: 'kit-native',
+  homepage,
+  items,
+};
+
+// ---------- 5. registry/generated/index.json -----------------------------------------------------
 
 const index = {
   $comment: 'GENERATED by `npm run registry:build` from registry/components.ts — do not edit by hand.',
   name: app.name,
   categories: CATEGORY_META,
-  components: COMPONENTS,
+  components: COMPONENTS.map((c) => ({ ...c, install: installOf(c) })),
 };
 
 // ---------- write / check ------------------------------------------------------------------------
@@ -150,6 +282,7 @@ const index = {
 const outputs = [
   ['DESIGN_SYSTEM.md', designSystem],
   ['llms.txt', llms],
+  ['registry.json', JSON.stringify(registry, null, 2) + '\n'],
   ['registry/generated/index.json', JSON.stringify(index, null, 2) + '\n'],
 ];
 const stale = outputs.filter(([p, contents]) => !existsSync(join(root, p)) || read(p) !== contents);

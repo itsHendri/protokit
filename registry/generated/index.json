@@ -71,7 +71,8 @@
         "link",
         "destructive",
         "loading"
-      ]
+      ],
+      "install": "@kit-native/button"
     },
     {
       "id": "toggle",
@@ -88,7 +89,8 @@
       "aliases": [
         "pressed",
         "two-state button"
-      ]
+      ],
+      "install": "https://reactnativereusables.com/r/nativewind/toggle.json"
     },
     {
       "id": "toggle-group",
@@ -106,7 +108,8 @@
       "aliases": [
         "segmented",
         "multi select buttons"
-      ]
+      ],
+      "install": "https://reactnativereusables.com/r/nativewind/toggle-group.json"
     },
     {
       "id": "floating-button",
@@ -127,7 +130,8 @@
         "plus",
         "extended",
         "add button"
-      ]
+      ],
+      "install": "@kit-native/floating-button"
     },
     {
       "id": "icon-badge",
@@ -148,7 +152,8 @@
         "cart",
         "unread count",
         "icon button"
-      ]
+      ],
+      "install": "@kit-native/icon-badge"
     },
     {
       "id": "swipe-to-confirm",
@@ -168,7 +173,8 @@
         "drag",
         "commit",
         "high stakes"
-      ]
+      ],
+      "install": "@kit-native/swipe-to-confirm"
     },
     {
       "id": "action-grid",
@@ -188,7 +194,8 @@
         "shortcuts",
         "tiles",
         "icon buttons"
-      ]
+      ],
+      "install": "@kit-native/action-grid"
     },
     {
       "id": "input",
@@ -207,7 +214,8 @@
         "text field",
         "textfield",
         "form"
-      ]
+      ],
+      "install": "@kit-native/input"
     },
     {
       "id": "label",
@@ -220,7 +228,8 @@
         "components/ui/label.tsx"
       ],
       "notes": "`htmlFor` · own `onPress` on native",
-      "preview": false
+      "preview": false,
+      "install": "https://reactnativereusables.com/r/nativewind/label.json"
     },
     {
       "id": "textarea",
@@ -237,7 +246,8 @@
       "aliases": [
         "multiline",
         "message"
-      ]
+      ],
+      "install": "@kit-native/textarea"
     },
     {
       "id": "checkbox",
@@ -255,7 +265,8 @@
       "aliases": [
         "tick",
         "check"
-      ]
+      ],
+      "install": "@kit-native/checkbox"
     },
     {
       "id": "radio-group",
@@ -272,7 +283,8 @@
       "aliases": [
         "single choice",
         "option"
-      ]
+      ],
+      "install": "@kit-native/radio-group"
     },
     {
       "id": "switch",
@@ -290,7 +302,8 @@
       "aliases": [
         "toggle",
         "on off"
-      ]
+      ],
+      "install": "@kit-native/switch"
     },
     {
       "id": "select",
@@ -309,7 +322,8 @@
         "dropdown",
         "picker",
         "menu"
-      ]
+      ],
+      "install": "@kit-native/select"
     },
     {
       "id": "filter-chip",
@@ -329,7 +343,8 @@
         "chip",
         "tag filter",
         "pill"
-      ]
+      ],
+      "install": "@kit-native/filter-chip"
     },
     {
       "id": "segmented-control",
@@ -348,7 +363,8 @@
         "segment",
         "ios",
         "switcher"
-      ]
+      ],
+      "install": "@kit-native/segmented-control"
     },
     {
       "id": "search-field",
@@ -365,7 +381,8 @@
       "aliases": [
         "search bar",
         "find"
-      ]
+      ],
+      "install": "@kit-native/search-field"
     },
     {
       "id": "quantity-stepper",
@@ -383,7 +400,8 @@
         "plus minus",
         "counter",
         "increment"
-      ]
+      ],
+      "install": "@kit-native/quantity-stepper"
     },
     {
       "id": "amount-input",
@@ -404,7 +422,8 @@
         "quantity",
         "hero field",
         "large number"
-      ]
+      ],
+      "install": "@kit-native/amount-input"
     },
     {
       "id": "numeric-keypad",
@@ -423,7 +442,8 @@
         "keypad",
         "pin pad",
         "digits"
-      ]
+      ],
+      "install": "@kit-native/numeric-keypad"
     },
     {
       "id": "otp-input",
@@ -444,7 +464,8 @@
         "pin",
         "2fa",
         "passcode"
-      ]
+      ],
+      "install": "@kit-native/otp-input"
     },
     {
       "id": "password-input",
@@ -462,7 +483,8 @@
         "secure",
         "show hide",
         "login"
-      ]
+      ],
+      "install": "@kit-native/password-input"
     },
     {
       "id": "selectable-card",
@@ -482,7 +504,8 @@
         "option card",
         "plan",
         "choice"
-      ]
+      ],
+      "install": "@kit-native/selectable-card"
     },
     {
       "id": "slider",
@@ -500,7 +523,8 @@
         "range",
         "drag",
         "percentage"
-      ]
+      ],
+      "install": "@kit-native/slider"
     },
     {
       "id": "date-picker",
@@ -518,7 +542,8 @@
       "aliases": [
         "date",
         "calendar field"
-      ]
+      ],
+      "install": "@kit-native/date-picker"
     },
     {
       "id": "calendar",
@@ -535,7 +560,8 @@
       "aliases": [
         "month",
         "day grid"
-      ]
+      ],
+      "install": "@kit-native/calendar"
     },
     {
       "id": "range-selector",
@@ -555,7 +581,8 @@
         "chart range",
         "1D 1W 1M",
         "period"
-      ]
+      ],
+      "install": "@kit-native/range-selector"
     },
     {
       "id": "tabs",
@@ -574,7 +601,8 @@
         "segmented",
         "tab bar",
         "content switch"
-      ]
+      ],
+      "install": "@kit-native/tabs"
     },
     {
       "id": "menubar",
@@ -593,7 +621,8 @@
         "menu",
         "toolbar",
         "desktop"
-      ]
+      ],
+      "install": "@kit-native/menubar"
     },
     {
       "id": "tab-bar",
@@ -616,7 +645,8 @@
         "active dot",
         "navigation bar",
         "tab icon"
-      ]
+      ],
+      "install": "@kit-native/tab-bar"
     },
     {
       "id": "kit-chip",
@@ -630,7 +660,8 @@
       ],
       "notes": "scaffolding, not a product component: the way back to the kit from a sample. Not in the Kitchen Sink; delete it with the kit shell",
       "preview": false,
-      "publish": false
+      "publish": false,
+      "install": null
     },
     {
       "id": "stepper",
@@ -648,7 +679,8 @@
         "progress steps",
         "wizard",
         "onboarding progress"
-      ]
+      ],
+      "install": "@kit-native/stepper"
     },
     {
       "id": "section-header",
@@ -667,7 +699,8 @@
         "title",
         "see all",
         "heading row"
-      ]
+      ],
+      "install": "@kit-native/section-header"
     },
     {
       "id": "screen-header",
@@ -687,7 +720,8 @@
         "heading",
         "hero title",
         "intro"
-      ]
+      ],
+      "install": "@kit-native/screen-header"
     },
     {
       "id": "pager-dots",
@@ -707,7 +741,8 @@
         "carousel dots",
         "onboarding slides",
         "full-width pager"
-      ]
+      ],
+      "install": "@kit-native/pager-dots"
     },
     {
       "id": "horizontal-pager",
@@ -727,7 +762,8 @@
         "swipe",
         "slides",
         "banner"
-      ]
+      ],
+      "install": "@kit-native/horizontal-pager"
     },
     {
       "id": "text",
@@ -740,7 +776,8 @@
         "components/ui/text.tsx"
       ],
       "notes": "the only Text · the scale is previewed in **Foundations › Typography**, not Components",
-      "preview": false
+      "preview": false,
+      "install": "@kit-native/text"
     },
     {
       "id": "avatar",
@@ -759,7 +796,8 @@
         "profile",
         "user",
         "initials"
-      ]
+      ],
+      "install": "@kit-native/avatar"
     },
     {
       "id": "avatar-group",
@@ -778,7 +816,8 @@
         "participants",
         "stack",
         "+n"
-      ]
+      ],
+      "install": "@kit-native/avatar-group"
     },
     {
       "id": "badge",
@@ -799,7 +838,8 @@
         "pill",
         "count",
         "status"
-      ]
+      ],
+      "install": "@kit-native/badge"
     },
     {
       "id": "separator",
@@ -817,7 +857,8 @@
         "divider",
         "rule",
         "hairline"
-      ]
+      ],
+      "install": "https://reactnativereusables.com/r/nativewind/separator.json"
     },
     {
       "id": "list-row",
@@ -838,7 +879,8 @@
         "setting",
         "menu item",
         "list item"
-      ]
+      ],
+      "install": "@kit-native/list-row"
     },
     {
       "id": "list-group",
@@ -859,7 +901,8 @@
         "grouped list",
         "plain list",
         "choice rows"
-      ]
+      ],
+      "install": "@kit-native/list-group"
     },
     {
       "id": "icon-circle",
@@ -878,7 +921,8 @@
         "icon well",
         "avatar icon",
         "leading icon"
-      ]
+      ],
+      "install": "@kit-native/icon-circle"
     },
     {
       "id": "summary-card",
@@ -899,7 +943,8 @@
         "details",
         "summary",
         "confirmation"
-      ]
+      ],
+      "install": "@kit-native/summary-card"
     },
     {
       "id": "stat-tile",
@@ -917,7 +962,8 @@
         "kpi",
         "metric",
         "dashboard"
-      ]
+      ],
+      "install": "@kit-native/stat-tile"
     },
     {
       "id": "percent-change",
@@ -935,7 +981,8 @@
         "delta",
         "trend",
         "up down"
-      ]
+      ],
+      "install": "@kit-native/percent-change"
     },
     {
       "id": "progress-ring",
@@ -954,7 +1001,8 @@
         "goal",
         "percent",
         "donut"
-      ]
+      ],
+      "install": "@kit-native/progress-ring"
     },
     {
       "id": "status-dot",
@@ -972,7 +1020,8 @@
         "indicator",
         "online",
         "presence"
-      ]
+      ],
+      "install": "@kit-native/status-dot"
     },
     {
       "id": "line-chart",
@@ -992,7 +1041,8 @@
         "trend",
         "time series",
         "graph"
-      ]
+      ],
+      "install": "@kit-native/line-chart"
     },
     {
       "id": "bar-chart",
@@ -1010,7 +1060,8 @@
         "bars",
         "histogram",
         "weekly"
-      ]
+      ],
+      "install": "@kit-native/bar-chart"
     },
     {
       "id": "donut-chart",
@@ -1030,7 +1081,8 @@
         "ring",
         "allocation",
         "breakdown"
-      ]
+      ],
+      "install": "@kit-native/donut-chart"
     },
     {
       "id": "value-header",
@@ -1052,7 +1104,8 @@
         "amount",
         "mask",
         "hide balance"
-      ]
+      ],
+      "install": "@kit-native/value-header"
     },
     {
       "id": "alert",
@@ -1073,7 +1126,8 @@
         "callout",
         "error",
         "success"
-      ]
+      ],
+      "install": "@kit-native/alert"
     },
     {
       "id": "progress",
@@ -1092,7 +1146,8 @@
         "loading",
         "percent",
         "determinate"
-      ]
+      ],
+      "install": "@kit-native/progress"
     },
     {
       "id": "skeleton",
@@ -1111,7 +1166,8 @@
         "placeholder",
         "shimmer",
         "loading"
-      ]
+      ],
+      "install": "https://reactnativereusables.com/r/nativewind/skeleton.json"
     },
     {
       "id": "tooltip",
@@ -1128,7 +1184,8 @@
       "aliases": [
         "hint",
         "hover"
-      ]
+      ],
+      "install": "@kit-native/tooltip"
     },
     {
       "id": "toast",
@@ -1149,7 +1206,8 @@
         "notification",
         "message",
         "copied"
-      ]
+      ],
+      "install": "@kit-native/toast"
     },
     {
       "id": "spinner",
@@ -1166,7 +1224,8 @@
       "aliases": [
         "loading",
         "activity indicator"
-      ]
+      ],
+      "install": "@kit-native/spinner"
     },
     {
       "id": "empty-state",
@@ -1184,7 +1243,8 @@
         "no results",
         "nothing here",
         "zero state"
-      ]
+      ],
+      "install": "@kit-native/empty-state"
     },
     {
       "id": "success-screen",
@@ -1204,7 +1264,8 @@
         "confirmation",
         "checkmark",
         "complete"
-      ]
+      ],
+      "install": "@kit-native/success-screen"
     },
     {
       "id": "card",
@@ -1223,7 +1284,8 @@
         "surface",
         "container",
         "panel"
-      ]
+      ],
+      "install": "@kit-native/card"
     },
     {
       "id": "accordion",
@@ -1241,7 +1303,8 @@
         "disclosure",
         "expand",
         "faq"
-      ]
+      ],
+      "install": "@kit-native/accordion"
     },
     {
       "id": "collapsible",
@@ -1258,7 +1321,8 @@
       "aliases": [
         "show more",
         "expand"
-      ]
+      ],
+      "install": "https://reactnativereusables.com/r/nativewind/collapsible.json"
     },
     {
       "id": "sticky-bottom-bar",
@@ -1277,7 +1341,8 @@
         "cta bar",
         "footer actions",
         "safe area"
-      ]
+      ],
+      "install": "@kit-native/sticky-bottom-bar"
     },
     {
       "id": "promo-card",
@@ -1298,7 +1363,8 @@
         "announcement",
         "offer",
         "nudge"
-      ]
+      ],
+      "install": "@kit-native/promo-card"
     },
     {
       "id": "footnote",
@@ -1319,7 +1385,8 @@
         "disclosure",
         "terms",
         "learn more"
-      ]
+      ],
+      "install": "@kit-native/footnote"
     },
     {
       "id": "dialog",
@@ -1337,7 +1404,8 @@
       "aliases": [
         "modal",
         "form modal"
-      ]
+      ],
+      "install": "@kit-native/dialog"
     },
     {
       "id": "alert-dialog",
@@ -1355,7 +1423,8 @@
         "confirm",
         "destructive confirmation",
         "are you sure"
-      ]
+      ],
+      "install": "@kit-native/alert-dialog"
     },
     {
       "id": "popover",
@@ -1373,7 +1442,8 @@
       "aliases": [
         "bubble",
         "anchored"
-      ]
+      ],
+      "install": "https://reactnativereusables.com/r/nativewind/popover.json"
     },
     {
       "id": "dropdown-menu",
@@ -1391,7 +1461,8 @@
         "menu",
         "actions",
         "more"
-      ]
+      ],
+      "install": "@kit-native/dropdown-menu"
     },
     {
       "id": "context-menu",
@@ -1408,7 +1479,8 @@
       "aliases": [
         "long press",
         "right click"
-      ]
+      ],
+      "install": "@kit-native/context-menu"
     },
     {
       "id": "hover-card",
@@ -1426,7 +1498,8 @@
       "aliases": [
         "preview",
         "profile card"
-      ]
+      ],
+      "install": "https://reactnativereusables.com/r/nativewind/hover-card.json"
     },
     {
       "id": "sheet",
@@ -1445,7 +1518,8 @@
         "bottom sheet",
         "drawer",
         "modal sheet"
-      ]
+      ],
+      "install": "@kit-native/sheet"
     },
     {
       "id": "option-sheet",
@@ -1463,7 +1537,8 @@
         "picker",
         "select sheet",
         "choose one"
-      ]
+      ],
+      "install": "@kit-native/sheet"
     },
     {
       "id": "action-sheet",
@@ -1481,7 +1556,8 @@
         "actions",
         "more menu",
         "share delete"
-      ]
+      ],
+      "install": "@kit-native/sheet"
     },
     {
       "id": "icon",
@@ -1500,7 +1576,8 @@
         "lucide",
         "glyph",
         "symbol"
-      ]
+      ],
+      "install": "https://reactnativereusables.com/r/nativewind/icon.json"
     },
     {
       "id": "image-tile",
@@ -1521,7 +1598,8 @@
         "thumbnail",
         "placeholder",
         "cover"
-      ]
+      ],
+      "install": "@kit-native/image-tile"
     },
     {
       "id": "aspect-ratio",
@@ -1539,7 +1617,8 @@
         "image",
         "thumbnail",
         "16:9"
-      ]
+      ],
+      "install": "https://reactnativereusables.com/r/nativewind/aspect-ratio.json"
     },
     {
       "id": "placeholder",
@@ -1560,7 +1639,8 @@
         "seeded",
         "mock image",
         "abstract"
-      ]
+      ],
+      "install": "@kit-native/placeholder"
     },
     {
       "id": "spot",
@@ -1580,7 +1660,8 @@
         "icon well",
         "hero icon",
         "empty state art"
-      ]
+      ],
+      "install": "@kit-native/spot"
     },
     {
       "id": "photo-capture",
@@ -1602,7 +1683,8 @@
         "upload",
         "avatar photo",
         "attachment"
-      ]
+      ],
+      "install": "@kit-native/photo-capture"
     },
     {
       "id": "code-scanner",
@@ -1622,7 +1704,8 @@
         "barcode",
         "scan",
         "camera viewfinder"
-      ]
+      ],
+      "install": "@kit-native/code-scanner"
     },
     {
       "id": "biometric-gate",
@@ -1645,7 +1728,8 @@
         "lock",
         "unlock",
         "biometrics"
-      ]
+      ],
+      "install": "@kit-native/biometric-gate"
     },
     {
       "id": "permission-primer",
@@ -1666,7 +1750,8 @@
         "prompt",
         "ask",
         "privacy"
-      ]
+      ],
+      "install": "@kit-native/permission-primer"
     },
     {
       "id": "share",
@@ -1686,7 +1771,8 @@
         "send",
         "export",
         "copy link"
-      ]
+      ],
+      "install": "@kit-native/share"
     },
     {
       "id": "notify",
@@ -1708,7 +1794,8 @@
         "push",
         "banner",
         "reminder"
-      ]
+      ],
+      "install": "@kit-native/notify"
     }
   ]
 }

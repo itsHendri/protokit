@@ -27,7 +27,10 @@
     "dev:client": "expo start -c",
     "tokens:check": "node tokens/cli.mjs check",
     "test:tokens": "node --test tokens/*.test.mjs",
-    "registry:build": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/registry-build.mjs"
+    "registry:build": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/registry-build.mjs",
+    "registry:drift": "node scripts/rnr-drift.mjs",
+    "registry:dist": "npx -y shadcn@4.21.3 build registry.json --output dist/r/native",
+    "registry:roundtrip": "node scripts/registry-roundtrip.mjs"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",
