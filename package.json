@@ -19,9 +19,11 @@
     "web": "npm run web -w apps/mobile --",
     "typecheck": "npm run typecheck -w apps/mobile --",
     "lint": "npm run lint -w apps/mobile --",
-    "check": "npm run typecheck -w apps/mobile && npm run lint -w apps/mobile -- --max-warnings 0 && npm run tokens:check -w apps/mobile && npm run test:tokens -w apps/mobile && npm run registry:build -w apps/mobile -- --check"
+    "check": "npm run typecheck -w apps/mobile && npm run lint -w apps/mobile -- --max-warnings 0 && npm run tokens:check -w apps/mobile && npm test -w packages/tokens && npm run registry:build -w apps/mobile -- --check",
+    "test": "npm test -w packages/tokens"
   },
   "devDependencies": {
+    "@changesets/cli": "^3.0.3",
     "tailwindcss": "^3.4.14"
   },
   "overrides": {

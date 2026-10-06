@@ -9,6 +9,9 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   mobile:
     runs-on: ubuntu-latest
@@ -16,9 +19,9 @@ jobs:
       run:
         working-directory: apps/mobile
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
@@ -43,9 +46,6 @@ jobs:
       - name: Tokens are built and pass the contrast gate
         run: npm run tokens:check
 
-      - name: Token build tests
-        run: npm run test:tokens
-
       # Every ui/kit file is registered and exports what registry/components.ts says, and the
       # generated DESIGN_SYSTEM.md tables, llms.txt and registry.json are committed.
       - name: Registry is consistent and generated docs are current
@@ -57,3 +57,54 @@ jobs:
 
       - name: Web bundle builds
         run: npm run export:web
+
+  tokens:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: kit-tokens tests
+        run: npm test -w packages/tokens
+
+      - name: Package contents
+        run: npm pack -w packages/tokens --dry-run
+
+  # apps/mobile must work when copied out on its own (npx giget gh:itsHendri/protokit/apps/mobile):
+  # no root lockfile, no root overrides, no workspace links. The tokens package comes from a packed
+  # tarball, standing in for the published version.
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Copy apps/mobile out of the monorepo
+        run: |
+          mkdir -p "$RUNNER_TEMP/app"
+          git archive HEAD:apps/mobile | tar -x -C "$RUNNER_TEMP/app"
+          npm pack -w packages/tokens --pack-destination "$RUNNER_TEMP"
+          cd "$RUNNER_TEMP/app"
+          npm pkg set "devDependencies.@itshendri/kit-tokens=file:$(ls "$RUNNER_TEMP"/itshendri-kit-tokens-*.tgz)"
+
+      - name: Install the standalone app
+        working-directory: ${{ runner.temp }}/app
+        run: npm install --no-audit --no-fund
+
+      - name: Checks pass standalone
+        working-directory: ${{ runner.temp }}/app
+        run: |
+          npm run tokens:check
+          npm run registry:build -- --check
+          npm run typecheck
+          npm run lint -- --max-warnings 0
+          npm run export:web

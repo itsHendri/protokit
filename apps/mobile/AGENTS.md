@@ -27,7 +27,7 @@ registry/               components.ts: what the kit ships (metadata) → DESIGN_
 components/devkit/      Kitchen Sink: demos keyed by registry id (sections/<category>.tsx, sections/kit-<category>.tsx)
 components/shop/, components/habits/  sample data + stores. Go with `npm run eject-samples`.
 lib/                    theme.ts (generated), theme-context, haptics, utils(cn)
-tokens/                 tokens.json (edit), tokens.config.json (outputs), cli.mjs + lib/ + targets/, generated/
+tokens/                 tokens.json (edit), tokens.config.json (outputs), generated/ — built by `kit-tokens` (@itshendri/kit-tokens)
 DESIGN.md, llms.txt     GENERATED agent-facing summaries (tokens:build, registry:build)
 .claude/skills/         add-component, qc-pass, transcript-to-prototype
 .claude/launch.json     preview configs: kit-web (port 8090) and kit-ios (port 8091)
@@ -47,7 +47,7 @@ npm run web            # expo start --web
 npm run typecheck && npm run lint -- --max-warnings 0   # CI runs these plus tokens:build and export:web
 npm run tokens:build   # after editing tokens/tokens.json (fails if any pairing drops below WCAG AA)
 npm run registry:build # after editing registry/components.ts: DESIGN_SYSTEM.md tables, llms.txt, index
-npm run tokens:check && npm run test:tokens && npm run registry:build -- --check   # what CI checks
+npm run tokens:check && npm run registry:build -- --check   # what CI checks (plus the kit-tokens tests in the monorepo)
 npm run eject-samples  # delete the shop + habits samples, their stores and every reference
 npm run share -- "msg" # EAS Update to the main channel, prints the links
 npm run export:web && eas deploy   # hosted web preview URL

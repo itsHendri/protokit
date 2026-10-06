@@ -12,7 +12,7 @@ _Last updated: 2026-10-06_
 - **Tier 2 ports** from the old kit: Carousel, Lightbox, DataTable, StatusTimeline, ProfileHeader, OnboardingSlide,
   PermissionPrompt, SettingsGroup, Breadcrumb, Pagination, ChipInput, AvatarStack, StarRating, TimeRangePicker,
   CountrySelect (needs country data), Drawer, Coachmark.
-- **Figma:** `tokens/push-figma.mjs` (one-way Variables push with code syntax) and Code Connect once the component
+- **Figma:** `kit-tokens figma` (`npm run tokens:figma`) (one-way Variables push with code syntax) and Code Connect once the component
   set is stable.
 
 ## Component gap analysis (vs. Material 3, HIG, gluestack, HeroUI — 2026-09-22)

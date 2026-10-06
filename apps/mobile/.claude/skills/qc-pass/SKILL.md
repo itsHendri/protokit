@@ -14,7 +14,6 @@ exact output for failures.
 npm run typecheck
 npm run lint -- --max-warnings 0
 npm run tokens:check        # generated token files match tokens/tokens.json, contrast gate passes
-npm run test:tokens
 npm run registry:build -- --check   # every ui/kit file registered, exports real, generated docs current
 ```
 

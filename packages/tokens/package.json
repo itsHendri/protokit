@@ -1,0 +1,51 @@
+{
+  "name": "@itshendri/kit-tokens",
+  "version": "1.0.0",
+  "description": "Design tokens (W3C DTCG) to NativeWind, Tailwind 4 / shadcn, TypeScript, DESIGN.md and Figma, with a WCAG AA contrast gate. The token build behind Protokit.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsHendri/protokit.git",
+    "directory": "packages/tokens"
+  },
+  "homepage": "https://github.com/itsHendri/protokit/tree/main/packages/tokens#readme",
+  "keywords": [
+    "design-tokens",
+    "dtcg",
+    "nativewind",
+    "tailwindcss",
+    "shadcn",
+    "expo",
+    "wcag"
+  ],
+  "bin": {
+    "kit-tokens": "cli.mjs"
+  },
+  "exports": {
+    ".": "./cli.mjs",
+    "./lib/*": "./lib/*.mjs",
+    "./targets/*": "./targets/*.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "cli.mjs",
+    "push-figma.mjs",
+    "lib/",
+    "targets/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "style-dictionary": "^5.5.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
