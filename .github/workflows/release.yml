@@ -2,6 +2,9 @@
 # On main: changesets present → open/update a "Version Packages" PR; that PR merged → publish to npm
 # through trusted publishing (OIDC, no npm token). The npm trusted-publisher entry must name this
 # repository and this file, `release.yml`. Apps are private and never published.
+#
+# Off until the first manual publish is done (.changeset/README.md): set the repository variable
+# RELEASES_ENABLED=true (Settings → Secrets and variables → Actions → Variables) to turn it on.
 name: Release
 
 on:
@@ -15,6 +18,7 @@ concurrency:
 
 jobs:
   select-mode:
+    if: vars.RELEASES_ENABLED == 'true'
     runs-on: ubuntu-latest
     outputs:
       mode: ${{ steps.select-mode.outputs.mode }}
