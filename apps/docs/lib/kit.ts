@@ -1,12 +1,15 @@
 /**
- * Everything the site knows about the kit, read from the monorepo at build time. The docs app is the
+ * Everything the site knows about the kits, read from the monorepo at build time. The docs app is the
  * one app that may reach outside its folder: it documents the others.
  */
 import kitJson from '../../../kit.json';
-import registryIndex from '../../mobile/registry/generated/index.json';
-import registryJson from '../../mobile/registry.json';
+import mobileIndex from '../../mobile/registry/generated/index.json';
+import mobileRegistry from '../../mobile/registry.json';
+import type * as Mobile from '../../mobile/registry/types';
 import themeJson from '../../mobile/tokens/generated/theme.registry.json';
-import type { CategoryId, CategoryMeta, ComponentMeta } from '../../mobile/registry/types';
+import webIndex from '../../web/registry/generated/index.json';
+import webRegistry from '../../web/registry.json';
+import type * as Web from '../../web/registry/types';
 
 export const kit = kitJson as {
   name: string;
@@ -17,39 +20,81 @@ export const kit = kitJson as {
   registry: { native: string; web: string };
 };
 
-export type KitComponent = ComponentMeta & { install: string | null };
+export type Platform = 'mobile' | 'web';
+export const PLATFORMS: Platform[] = ['mobile', 'web'];
 
-export const categories = registryIndex.categories as CategoryMeta[];
-export const components = registryIndex.components as KitComponent[];
-/** What the Kitchen Sink shows (KitChip, Text and Label have no demo of their own). */
-export const previewed = components.filter((c) => c.preview !== false);
+type CategoryMeta = Mobile.CategoryMeta | Web.CategoryMeta;
+export type KitComponent = (Mobile.ComponentMeta | Web.ComponentMeta) & { install: string | null };
+type RegistryItem = { name: string; dependencies?: string[]; registryDependencies?: string[] };
 
-export const componentsIn = (category: CategoryId) => components.filter((c) => c.category === category);
-export const getComponent = (id: string) => components.find((c) => c.id === id);
-export const categoryLabel = (id: CategoryId) => categories.find((c) => c.id === id)?.label ?? id;
+export type KitInfo = {
+  platform: Platform;
+  /** "Mobile kit" */
+  label: string;
+  /** What it is built on, one line. */
+  stack: string;
+  categories: CategoryMeta[];
+  components: KitComponent[];
+  /** What the Kitchen Sink previews (some components have no demo of their own). */
+  previewed: KitComponent[];
+  /** The shadcn registry namespace (`@kit-native`) and where this site serves it (`/r/native`). */
+  namespace: string;
+  registryPath: string;
+  registryItems: RegistryItem[];
+  /** The Kitchen Sink route inside the kit, for live previews. */
+  kitchenSink: string;
+};
 
-/** Semantic colour names, in tokens.json order (radius excluded). */
+const build = (
+  platform: Platform,
+  label: string,
+  stack: string,
+  index: { categories: unknown; components: unknown },
+  registry: { items: RegistryItem[] },
+  namespace: string,
+  registryPath: string,
+  kitchenSink: string
+): KitInfo => {
+  const components = index.components as KitComponent[];
+  return {
+    platform,
+    label,
+    stack,
+    categories: index.categories as CategoryMeta[],
+    components,
+    previewed: components.filter((c) => c.preview !== false),
+    namespace,
+    registryPath,
+    registryItems: registry.items,
+    kitchenSink,
+  };
+};
+
+export const kits: Record<Platform, KitInfo> = {
+  mobile: build('mobile', 'Mobile kit', 'Expo, React Native, NativeWind, react-native-reusables', mobileIndex, mobileRegistry, kit.registry.native, '/r/native', '/kitchen-sink'),
+  web: build('web', 'Web kit', 'Next.js, Tailwind 4, shadcn/ui', webIndex, webRegistry, kit.registry.web, '/r/web', '/components'),
+};
+
+export const isPlatform = (p: string): p is Platform => p === 'mobile' || p === 'web';
+
+export const componentsIn = (platform: Platform, category: string) => kits[platform].components.filter((c) => c.category === category);
+export const getComponent = (platform: Platform, id: string) => kits[platform].components.find((c) => c.id === id);
+export const categoryLabel = (platform: Platform, id: string) => kits[platform].categories.find((c) => c.id === id)?.label ?? id;
+export const componentUrl = (platform: Platform, id: string) => `/components/${platform}/${id}`;
+
+/** Every component across both kits. */
+export const totalComponents = kits.mobile.components.length + kits.web.components.length;
+
+/** Semantic colour names, in tokens.json order (radius excluded). Both kits share one tokens.json. */
 export const colorNames = Object.keys(themeJson.web.cssVars.light).filter((k) => k !== 'radius');
 
-/** Source link for a file in the mobile kit. */
-export const sourceUrl = (file: string) => `${kit.repo}/blob/main/apps/mobile/${file}`;
+/** Source link for a file in a kit. */
+export const sourceUrl = (platform: Platform, file: string) => `${kit.repo}/blob/main/apps/${platform}/${file}`;
 
-/**
- * Where the kit's web export lives. Production: /m on this site (same origin). Dev: point
- * NEXT_PUBLIC_KIT_WEB_URL at a running `npm run web` (e.g. http://localhost:8090) and start the kit with
- * EXPO_PUBLIC_EMBED_ORIGINS=http://localhost:3000 so it accepts the theme messages.
- */
-export const kitWebUrl = (process.env.NEXT_PUBLIC_KIT_WEB_URL ?? '/m').replace(/\/$/, '');
-
-/** The registry URL template for a shadcn components.json. */
-export const registryUrl = (origin: string) => `${origin}/r/native/{name}.json`;
-
-type RegistryItem = { name: string; dependencies?: string[]; registryDependencies?: string[] };
-const registryItems = (registryJson as { items: RegistryItem[] }).items;
-
-/** The published shadcn item behind a component (`@kit-native/list-row` → its deps), if it has one. */
-export function registryItemFor(c: KitComponent): RegistryItem | undefined {
-  if (!c.install?.startsWith(`${kit.registry.native}/`)) return undefined;
-  const name = c.install.slice(kit.registry.native.length + 1);
+/** The published shadcn item behind a component (`@kit-native/list-row` → its deps), if the kit publishes it. */
+export function registryItemFor(platform: Platform, c: KitComponent): RegistryItem | undefined {
+  const { namespace, registryItems } = kits[platform];
+  if (!c.install?.startsWith(`${namespace}/`)) return undefined;
+  const name = c.install.slice(namespace.length + 1);
   return registryItems.find((i) => i.name === name);
 }

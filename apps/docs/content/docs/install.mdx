@@ -1,11 +1,11 @@
 ---
 title: Install
-description: Three ways in, and the one prompt that sets an agent up.
+description: Two kits, three ways in, and the one prompt that sets an agent up.
 ---
 
 ## Let your agent do it
 
-Paste this into Claude Code, Cursor or any coding agent, in an empty folder or an existing Expo project:
+Paste this into Claude Code, Cursor or any coding agent, in an empty folder or an existing Expo or Next.js project:
 
 <CopyPrompt />
 
@@ -17,7 +17,7 @@ The agent reads [`/install.md`](/install.md), picks the right path below, and th
 <Tabs items={['New prototype', 'Existing app', 'Monorepo']}>
 <Tab value="New prototype">
 
-Copy just the mobile kit into a new folder and run it:
+Copy just the kit you need into a new folder and run it. A phone app:
 
 ```bash
 npx giget@latest gh:itsHendri/protokit/apps/mobile my-prototype
@@ -25,13 +25,23 @@ cd my-prototype && npm install
 npm run ios    # or: npm run web, npm run dev (Expo Go on a phone)
 ```
 
-Then rename it, re-brand it and remove the samples: see [Mobile setup](/docs/mobile).
+A web app:
+
+```bash
+npx giget@latest gh:itsHendri/protokit/apps/web my-prototype
+cd my-prototype && npm install
+npm run dev    # http://localhost:3100
+```
+
+Then rename it, re-brand it and remove the samples: see [Mobile setup](/docs/mobile) or
+[Web setup](/docs/web).
 
 </Tab>
 <Tab value="Existing app">
 
-For an Expo app that already uses [react-native-reusables](https://reactnativereusables.com), add kit
-components one at a time through the shadcn registry. In `components.json`:
+Add kit components one at a time through a [shadcn registry](https://ui.shadcn.com/docs/registry).
+
+**Expo** with [react-native-reusables](https://reactnativereusables.com). In `components.json`:
 
 ```json
 {
@@ -55,6 +65,25 @@ expect those versions. When `shadcn add` asks to overwrite one of them, say yes,
 Then run `npx expo install --fix`: the registry pins the kit's Expo SDK versions, and this moves them to
 yours.
 
+**Next.js** with [shadcn/ui](https://ui.shadcn.com) on Tailwind 4. In `components.json`:
+
+```json
+{
+  "registries": {
+    "@kit": "https://<this site>/r/web/{name}.json"
+  }
+}
+```
+
+```bash
+npx shadcn@latest add @kit/theme
+npx shadcn@latest add @kit/data-table @kit/approval-card
+```
+
+Components the kit did not change install from shadcn itself (`npx shadcn@latest add dialog`). The kit's
+Button, Badge and Slider fix colour contrast that its components rely on: say yes when asked to overwrite
+them.
+
 </Tab>
 <Tab value="Monorepo">
 
@@ -63,10 +92,12 @@ Clone the whole monorepo for a client project that needs mobile and web on one b
 ```bash
 git clone https://github.com/itsHendri/protokit.git
 cd protokit && npm install
-npm run ios
+npm run ios          # the mobile kit
+npm run web:dev      # the web kit, http://localhost:3100
 ```
 
-The web kit is not in the repo yet; see [Web kit](/docs/web).
+`apps/mobile/tokens/tokens.json` is the one brand file. After editing it, `npm run tokens:sync` copies it to
+the web kit and rebuilds both themes; CI fails if they differ.
 
 </Tab>
 </Tabs>

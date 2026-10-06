@@ -1,11 +1,13 @@
 # Protokit docs site
 
-How the kits work, setup, and every component live in a phone frame. Next.js 16 + Fumadocs 16, styled with
+How the kits work, setup, and every component live in a phone or browser frame. Next.js 16 + Fumadocs 16, styled with
 the kit's own tokens, built as a fully static site and served by Cloudflare as static assets (no Worker
 script, so no request or CPU limits apply on the free plan).
 
-This app is monorepo-only by design: it reads `apps/mobile` (tokens, registry, `DESIGN_SYSTEM.md`,
-`llms.txt`) and embeds the mobile kit's web export.
+This app is monorepo-only by design: it reads `apps/mobile` and `apps/web` (tokens, registries,
+`DESIGN_SYSTEM.md`, `llms.txt`) and embeds both kits: the mobile kit's web export under `/m` (phone frames)
+and the web kit's static export under `/w` (browser frames). Component pages live at
+`/components/mobile/<id>` and `/components/web/<id>`.
 
 ## Develop
 
@@ -14,26 +16,29 @@ npm install                 # at the repo root
 npm run docs:dev            # http://localhost:3000
 ```
 
-The phone frames load the kit from `/m`, which only exists after a build. To see them live while
-developing, run the kit's web server alongside and point the site at it:
+The frames load the kits from `/m` and `/w`, which only exist after a build. To see them live while
+developing, run the kits alongside and point the site at them (each kit must accept the site's origin):
 
 ```bash
-EXPO_PUBLIC_EMBED_ORIGINS=http://localhost:3000 npm run web -- --port 8090          # terminal 1, repo root
-NEXT_PUBLIC_KIT_WEB_URL=http://localhost:8090 npm run docs:dev                      # terminal 2
+EXPO_PUBLIC_EMBED_ORIGINS=http://localhost:3000 npm run web -- --port 8090          # terminal 1: mobile kit
+NEXT_PUBLIC_EMBED_ORIGINS=http://localhost:3000 npm run web:dev                     # terminal 2: web kit, :3100
+NEXT_PUBLIC_KIT_WEB_URL=http://localhost:8090 NEXT_PUBLIC_WEB_KIT_URL=http://localhost:3100 npm run docs:dev
 ```
 
 ## Build and preview
 
 ```bash
-npm run docs:build          # → apps/docs/out (about 3 minutes: includes the kit's web export)
+npm run docs:build          # → apps/docs/out (a few minutes: includes both kits' exports)
 npm run docs:preview        # serves out/ with Cloudflare's own rules, http://localhost:8788
 npm run check:links -w apps/docs
 ```
 
 `scripts/build-docs.mjs` does, in order: `kit-tokens build` (→ `app/tokens.css`), the generated pages
-(`scripts/prepare-content.mjs`), the kit's web export with `KIT_WEB_BASE_URL=/m` into `public/m`, the
-shadcn registry into `public/r/native`, `_redirects` (one rule per kit route; a blanket `/m/*` rule would
-swallow the kit's JavaScript) and `_headers`, then `next build`, then a check that it all landed in `out/`.
+(`scripts/prepare-content.mjs`), the mobile kit's web export with `KIT_WEB_BASE_URL=/m` into `public/m`,
+its shadcn registry into `public/r/native`, the web kit's static export with `KIT_WEB_BASE_PATH=/w` into
+`public/w`, its registry into `public/r/web`, `_redirects` (one rule per mobile kit route; a blanket `/m/*`
+rule would swallow the kit's JavaScript; the web kit prerenders every route and needs none) and `_headers`,
+then `next build`, then a check that it all landed in `out/`.
 
 ## Deploy (Cloudflare Workers, static assets)
 
