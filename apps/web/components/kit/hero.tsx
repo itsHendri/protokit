@@ -8,7 +8,7 @@ type Props = {
   description?: string;
   /** One primary Button and at most one secondary. */
   actions?: React.ReactNode;
-  /** A product shot, illustration or Placeholder. Omit for a centred text hero. */
+  /** A product shot or illustration (compose real components rather than an image). Omit for a centred text hero. */
   media?: React.ReactNode;
   className?: string;
 };

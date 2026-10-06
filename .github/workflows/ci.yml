@@ -128,8 +128,10 @@ jobs:
         include:
           - app: mobile
             checks: npm run tokens:check && npm run registry:build -- --check && npm run typecheck && npm run lint -- --max-warnings 0 && npm run export:web
+            after-eject: npm run typecheck && npm run lint -- --max-warnings 0
           - app: web
             checks: npm run tokens:check && npm run registry:build -- --check && npm run typecheck && npm run lint && npm run build
+            after-eject: npm run typecheck && npm run lint
     steps:
       - uses: actions/checkout@v7
 
@@ -152,6 +154,11 @@ jobs:
       - name: Checks pass standalone
         working-directory: ${{ runner.temp }}/app
         run: ${{ matrix.checks }}
+
+      # The first thing a real project does. Runs on the throwaway copy, so it can be destructive.
+      - name: Samples eject cleanly
+        working-directory: ${{ runner.temp }}/app
+        run: npm run eject-samples && ${{ matrix['after-eject'] }}
 
   # The docs site: tokens, generated content, the kit's web export under /m, the registry under /r,
   # the static Next export, then every internal link and the TypeScript.

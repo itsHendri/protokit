@@ -38,6 +38,8 @@ compose it from existing parts or run the `add-component` skill first.
 
 - Folder `app/<slug>/` with its own `layout.tsx`: `AppShell` for an app, a plain header/footer for a
   marketing page. Pages as `app/<slug>/<page>/page.tsx`. Link it from the kit home (`app/(kit)/page.tsx`).
+  Start from the closest sample (`app/dashboard`, `app/landing`, `app/assistant`): copy its shape, not its
+  copy. Put `KitChip` in the top bar.
 - Data in `app/<slug>/data.ts` (typed, exported constants). No network calls; a route handler returning
   fixtures is fine if a flow needs one. AI answers are scripted: canned text through `StreamingText`,
   `ToolCallCard`s with plausible inputs and outputs, an `ApprovalCard` before anything consequential.

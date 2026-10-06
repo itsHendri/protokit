@@ -1,4 +1,4 @@
-import { ArrowRightIcon, BlocksIcon, PaletteIcon } from 'lucide-react';
+import { ArrowRightIcon, BlocksIcon, BotIcon, LayoutDashboardIcon, MegaphoneIcon, PaletteIcon, type LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
 import { CATEGORY_META } from '@/registry/categories';
@@ -8,6 +8,14 @@ const BROWSE = [
   { href: '/components', icon: BlocksIcon, title: 'Components', body: `${COMPONENTS.length} components in ${CATEGORY_META.length} categories, each with a live demo.` },
   { href: '/foundations', icon: PaletteIcon, title: 'Foundations', body: 'Colour, radius, spacing and type, from tokens/tokens.json.' },
 ];
+
+// samples:start (npm run eject-samples removes everything up to samples:end)
+const SAMPLES = [
+  { href: '/dashboard', icon: LayoutDashboardIcon, title: 'Dashboard', body: 'A SaaS app: overview with a chart, an invoices table with filters and a dialog, settings forms.' },
+  { href: '/landing', icon: MegaphoneIcon, title: 'Landing page', body: 'Marketing: hero, proof, features, pricing, FAQ and a closing call to action.' },
+  { href: '/assistant', icon: BotIcon, title: 'Assistant', body: 'An AI conversation: thinking, a tool call, a streamed answer and an approval before it acts.' },
+];
+// samples:end
 
 const STEPS = [
   ['Pick from what exists', 'Pages are composed only from registry components. Search Components; DESIGN_SYSTEM.md has the rules for each.'],
@@ -31,21 +39,27 @@ export default function KitHome() {
           Browse
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
-          {BROWSE.map(({ href, icon: Icon, title, body }) => (
-            <Link key={href} href={href} className="group focus-visible:ring-ring rounded-xl focus-visible:outline-none focus-visible:ring-2">
-              <Card className="group-hover:bg-accent h-full flex-row items-start gap-4 p-5 transition-colors">
-                <Icon className="text-primary mt-0.5 size-5 shrink-0" aria-hidden />
-                <div className="flex flex-1 flex-col gap-1">
-                  <span className="flex items-center gap-1 font-semibold">
-                    {title} <ArrowRightIcon className="size-4" aria-hidden />
-                  </span>
-                  <span className="text-muted-foreground text-sm">{body}</span>
-                </div>
-              </Card>
-            </Link>
+          {BROWSE.map((l) => (
+            <LinkCard key={l.href} {...l} />
           ))}
         </div>
       </section>
+
+      {/* samples:start */}
+      <section aria-labelledby="samples" className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
+          <h2 id="samples" className="text-lg font-semibold">
+            Sample apps
+          </h2>
+          <p className="text-muted-foreground text-sm">One made-up product, Northwind, built three ways from the registry. Delete them with npm run eject-samples.</p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {SAMPLES.map((l) => (
+            <LinkCard key={l.href} {...l} />
+          ))}
+        </div>
+      </section>
+      {/* samples:end */}
 
       <section aria-labelledby="how" className="flex flex-col gap-4">
         <h2 id="how" className="text-lg font-semibold">
@@ -63,5 +77,21 @@ export default function KitHome() {
         <p className="text-muted-foreground text-sm">DESIGN_SYSTEM.md and AGENTS.md hold the full rules.</p>
       </section>
     </div>
+  );
+}
+
+function LinkCard({ href, icon: Icon, title, body }: { href: string; icon: LucideIcon; title: string; body: string }) {
+  return (
+    <Link href={href} className="group focus-visible:ring-ring rounded-xl focus-visible:outline-none focus-visible:ring-2">
+      <Card className="group-hover:bg-accent h-full flex-row items-start gap-4 p-5 transition-colors">
+        <Icon className="text-primary mt-0.5 size-5 shrink-0" aria-hidden />
+        <div className="flex flex-1 flex-col gap-1">
+          <span className="flex items-center gap-1 font-semibold">
+            {title} <ArrowRightIcon className="size-4" aria-hidden />
+          </span>
+          <span className="text-muted-foreground text-sm">{body}</span>
+        </div>
+      </Card>
+    </Link>
   );
 }

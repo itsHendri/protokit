@@ -196,6 +196,9 @@ the tables. Text between `GENERATED` markers is overwritten.
 - **Responsive:** design at 375px and 1280px. Sidebars collapse into a sheet (`AppShell` does), tables
   scroll inside their card, grids drop columns.
 
+Worked examples of the first three: `/dashboard` (an AppShell app with a chart, a filtered table, a dialog
+form, settings and a guarded delete), `/landing` and `/assistant`.
+
 ## Anti-patterns
 
 - ✗ Cards inside cards. ✗ Identical icon + heading + body cards repeated as filler.

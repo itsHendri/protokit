@@ -51,7 +51,7 @@ export function AppShell({ brand, nav, footer, topbar, children }: Props) {
 
   return (
     <div className="flex min-h-screen">
-      <aside className="bg-sidebar text-sidebar-foreground border-sidebar-border hidden w-60 shrink-0 flex-col gap-6 border-r p-4 md:flex">
+      <aside className="bg-sidebar text-sidebar-foreground border-sidebar-border sticky top-0 hidden h-screen w-60 shrink-0 flex-col gap-6 overflow-y-auto border-r p-4 md:flex">
         <div className="px-2 font-semibold">{brand}</div>
         {links}
         {footer ? <div className="mt-auto">{footer}</div> : null}
