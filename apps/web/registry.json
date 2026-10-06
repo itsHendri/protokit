@@ -1,0 +1,658 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "kit-web",
+  "homepage": "https://github.com/itsHendri/protokit",
+  "items": [
+    {
+      "name": "theme",
+      "type": "registry:theme",
+      "title": "Kit theme",
+      "description": "The kit tokens as Tailwind 4 CSS variables (oklch, light + dark) and the radius scale. Generated from tokens/tokens.json.",
+      "cssVars": {
+        "theme": {
+          "radius-sm": "calc(var(--radius) - 4px)",
+          "radius-md": "calc(var(--radius) - 2px)",
+          "radius-lg": "var(--radius)",
+          "radius-xl": "calc(var(--radius) + 6px)",
+          "radius-2xl": "calc(var(--radius) + 10px)"
+        },
+        "light": {
+          "radius": "0.625rem",
+          "background": "oklch(1 0 0)",
+          "foreground": "oklch(0.1408 0.0044 285.82)",
+          "card": "oklch(1 0 0)",
+          "card-foreground": "oklch(0.1408 0.0044 285.82)",
+          "popover": "oklch(1 0 0)",
+          "popover-foreground": "oklch(0.1408 0.0044 285.82)",
+          "primary": "oklch(0.5461 0.2152 262.88)",
+          "primary-foreground": "oklch(1 0 0)",
+          "secondary": "oklch(0.9674 0.0013 286.38)",
+          "secondary-foreground": "oklch(0.2103 0.0059 285.89)",
+          "muted": "oklch(0.9674 0.0013 286.38)",
+          "muted-foreground": "oklch(0.4419 0.0146 285.79)",
+          "accent": "oklch(0.9674 0.0013 286.38)",
+          "accent-foreground": "oklch(0.2103 0.0059 285.89)",
+          "destructive": "oklch(0.5771 0.2152 27.33)",
+          "destructive-foreground": "oklch(1 0 0)",
+          "success": "oklch(0.5273 0.1371 150.07)",
+          "success-foreground": "oklch(1 0 0)",
+          "warning": "oklch(0.5553 0.1455 49)",
+          "warning-foreground": "oklch(1 0 0)",
+          "info": "oklch(0.5 0.1193 242.75)",
+          "info-foreground": "oklch(1 0 0)",
+          "border": "oklch(0.9197 0.004 286.32)",
+          "input": "oklch(0.9197 0.004 286.32)",
+          "ring": "oklch(0.5461 0.2152 262.88)",
+          "sidebar": "oklch(0.9851 0 0)",
+          "sidebar-foreground": "oklch(0.1408 0.0044 285.82)",
+          "sidebar-primary": "oklch(0.5461 0.2152 262.88)",
+          "sidebar-primary-foreground": "oklch(1 0 0)",
+          "sidebar-accent": "oklch(0.9674 0.0013 286.38)",
+          "sidebar-accent-foreground": "oklch(0.2103 0.0059 285.89)",
+          "sidebar-border": "oklch(0.9197 0.004 286.32)",
+          "sidebar-ring": "oklch(0.5461 0.2152 262.88)",
+          "chart-1": "oklch(0.6231 0.188 259.81)",
+          "chart-2": "oklch(0.7227 0.192 149.58)",
+          "chart-3": "oklch(0.7686 0.1647 70.08)",
+          "chart-4": "oklch(0.6368 0.2078 25.33)",
+          "chart-5": "oklch(0.6847 0.1479 237.32)"
+        },
+        "dark": {
+          "background": "oklch(0.1408 0.0044 285.82)",
+          "foreground": "oklch(0.9851 0 0)",
+          "card": "oklch(0.2103 0.0059 285.89)",
+          "card-foreground": "oklch(0.9851 0 0)",
+          "popover": "oklch(0.2103 0.0059 285.89)",
+          "popover-foreground": "oklch(0.9851 0 0)",
+          "primary": "oklch(0.6231 0.188 259.81)",
+          "primary-foreground": "oklch(0.1408 0.0044 285.82)",
+          "secondary": "oklch(0.2739 0.0055 286.03)",
+          "secondary-foreground": "oklch(0.9851 0 0)",
+          "muted": "oklch(0.2739 0.0055 286.03)",
+          "muted-foreground": "oklch(0.7118 0.0129 286.07)",
+          "accent": "oklch(0.2739 0.0055 286.03)",
+          "accent-foreground": "oklch(0.9851 0 0)",
+          "destructive": "oklch(0.6368 0.2078 25.33)",
+          "destructive-foreground": "oklch(0.1408 0.0044 285.82)",
+          "success": "oklch(0.7227 0.192 149.58)",
+          "success-foreground": "oklch(0.1408 0.0044 285.82)",
+          "warning": "oklch(0.8369 0.1644 84.43)",
+          "warning-foreground": "oklch(0.1408 0.0044 285.82)",
+          "info": "oklch(0.6847 0.1479 237.32)",
+          "info-foreground": "oklch(0.1408 0.0044 285.82)",
+          "border": "oklch(0.2739 0.0055 286.03)",
+          "input": "oklch(0.2739 0.0055 286.03)",
+          "ring": "oklch(0.6231 0.188 259.81)",
+          "sidebar": "oklch(0.2103 0.0059 285.89)",
+          "sidebar-foreground": "oklch(0.9851 0 0)",
+          "sidebar-primary": "oklch(0.6231 0.188 259.81)",
+          "sidebar-primary-foreground": "oklch(0.1408 0.0044 285.82)",
+          "sidebar-accent": "oklch(0.2739 0.0055 286.03)",
+          "sidebar-accent-foreground": "oklch(0.9851 0 0)",
+          "sidebar-border": "oklch(0.2739 0.0055 286.03)",
+          "sidebar-ring": "oklch(0.6231 0.188 259.81)",
+          "chart-1": "oklch(0.7137 0.1434 254.62)",
+          "chart-2": "oklch(0.8003 0.1821 151.71)",
+          "chart-3": "oklch(0.8369 0.1644 84.43)",
+          "chart-4": "oklch(0.7106 0.1661 22.22)",
+          "chart-5": "oklch(0.7535 0.139 232.66)"
+        }
+      }
+    },
+    {
+      "name": "lib-embed-boot",
+      "type": "registry:lib",
+      "title": "lib/embed-boot.ts",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "lib/embed-boot.ts",
+          "type": "registry:lib",
+          "target": "lib/embed-boot.ts"
+        }
+      ]
+    },
+    {
+      "name": "lib-embed",
+      "type": "registry:lib",
+      "title": "lib/embed.ts",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit/lib-embed-boot"
+      ],
+      "files": [
+        {
+          "path": "lib/embed.ts",
+          "type": "registry:lib",
+          "target": "lib/embed.ts"
+        }
+      ]
+    },
+    {
+      "name": "lib-theme",
+      "type": "registry:lib",
+      "title": "lib/theme.ts",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "lib/theme.ts",
+          "type": "registry:lib",
+          "target": "lib/theme.ts"
+        }
+      ]
+    },
+    {
+      "name": "hook-use-reduced-motion",
+      "type": "registry:hook",
+      "title": "hooks/use-reduced-motion.ts",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hooks/use-reduced-motion.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-reduced-motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "`variant` default/secondary/outline/ghost/link/destructive · `size` default/sm/lg/icon · `asChild` for links",
+      "dependencies": [
+        "class-variance-authority@^0.7.1",
+        "cn@^0.4.0",
+        "radix-ui@^1.7.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/button.tsx"
+        }
+      ],
+      "categories": [
+        "actions"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "Button",
+          "buttonVariants"
+        ],
+        "api": "<Button variant? size? asChild?>Label</Button>"
+      }
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "a value on a range · two thumbs for a range",
+      "dependencies": [
+        "cn@^0.4.0",
+        "radix-ui@^1.7.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/slider.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/slider.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "Slider"
+        ],
+        "api": "<Slider value onValueChange min max step aria-label />"
+      }
+    },
+    {
+      "name": "app-shell",
+      "type": "registry:component",
+      "title": "App shell",
+      "description": "sidebar of 4–8 destinations on desktop, a sheet on mobile · active item follows the URL",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0"
+      ],
+      "registryDependencies": [
+        "@kit/button",
+        "sheet"
+      ],
+      "files": [
+        {
+          "path": "components/kit/app-shell.tsx",
+          "type": "registry:component",
+          "target": "components/kit/app-shell.tsx"
+        }
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "AppShell"
+        ],
+        "api": "<AppShell brand nav={[{href,label,icon}]} footer? topbar?>{page}</AppShell>"
+      }
+    },
+    {
+      "name": "data-table",
+      "type": "registry:component",
+      "title": "Data table",
+      "description": "sortable columns + built-in empty state · `columns rows rowKey caption?`",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0"
+      ],
+      "registryDependencies": [
+        "@kit/empty-state",
+        "table"
+      ],
+      "files": [
+        {
+          "path": "components/kit/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/kit/data-table.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "DataTable"
+        ],
+        "api": "<DataTable columns={[{key,header,cell?,sortValue?,align?}]} rows rowKey caption? />"
+      }
+    },
+    {
+      "name": "stat-tile",
+      "type": "registry:component",
+      "title": "Stat tile",
+      "description": "one KPI with a signed change · `invert` when down is good",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0"
+      ],
+      "registryDependencies": [
+        "card"
+      ],
+      "files": [
+        {
+          "path": "components/kit/stat-tile.tsx",
+          "type": "registry:component",
+          "target": "components/kit/stat-tile.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "StatTile"
+        ],
+        "api": "<StatTile label value delta? deltaLabel? invert? />"
+      }
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "a status or tag · tint with semantic classes (`bg-success/15 text-success`)",
+      "dependencies": [
+        "class-variance-authority@^0.7.1",
+        "cn@^0.4.0",
+        "radix-ui@^1.7.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/badge.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/badge.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "Badge",
+          "badgeVariants"
+        ],
+        "api": "<Badge variant?>Label</Badge>"
+      }
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:component",
+      "title": "Empty state",
+      "description": "nothing here yet, and the way out · `default` page / `compact` in a card",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/kit/empty-state.tsx",
+          "type": "registry:component",
+          "target": "components/kit/empty-state.tsx"
+        }
+      ],
+      "categories": [
+        "feedback"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "EmptyState"
+        ],
+        "api": "<EmptyState icon title description? action? variant? />"
+      }
+    },
+    {
+      "name": "page-header",
+      "type": "registry:component",
+      "title": "Page header",
+      "description": "title, description and actions · one per page, first in the content",
+      "dependencies": [
+        "cn@^0.4.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/kit/page-header.tsx",
+          "type": "registry:component",
+          "target": "components/kit/page-header.tsx"
+        }
+      ],
+      "categories": [
+        "layout"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "PageHeader"
+        ],
+        "api": "<PageHeader eyebrow? title description? actions? />"
+      }
+    },
+    {
+      "name": "hero",
+      "type": "registry:component",
+      "title": "Hero",
+      "description": "one promise, one primary action · `media` for a product shot, omit for centred",
+      "dependencies": [
+        "cn@^0.4.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/kit/hero.tsx",
+          "type": "registry:component",
+          "target": "components/kit/hero.tsx"
+        }
+      ],
+      "categories": [
+        "marketing"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "Hero"
+        ],
+        "api": "<Hero eyebrow? title description? actions? media? />"
+      }
+    },
+    {
+      "name": "feature-grid",
+      "type": "registry:component",
+      "title": "Feature grid",
+      "description": "3–6 short blocks · `columns` 2/3",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/kit/feature-grid.tsx",
+          "type": "registry:component",
+          "target": "components/kit/feature-grid.tsx"
+        }
+      ],
+      "categories": [
+        "marketing"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "FeatureGrid"
+        ],
+        "api": "<FeatureGrid features={[{icon,title,description}]} columns? />"
+      }
+    },
+    {
+      "name": "pricing-card",
+      "type": "registry:component",
+      "title": "Pricing card",
+      "description": "one plan · 2–4 side by side · `highlighted` on one",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0"
+      ],
+      "registryDependencies": [
+        "@kit/badge",
+        "card"
+      ],
+      "files": [
+        {
+          "path": "components/kit/pricing-card.tsx",
+          "type": "registry:component",
+          "target": "components/kit/pricing-card.tsx"
+        }
+      ],
+      "categories": [
+        "marketing"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "PricingCard"
+        ],
+        "api": "<PricingCard name price period? description? features action highlighted? />"
+      }
+    },
+    {
+      "name": "chat-message",
+      "type": "registry:component",
+      "title": "Chat message",
+      "description": "one turn · user = bubble on the right, assistant = plain text on the left",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0"
+      ],
+      "registryDependencies": [
+        "avatar"
+      ],
+      "files": [
+        {
+          "path": "components/kit/chat-message.tsx",
+          "type": "registry:component",
+          "target": "components/kit/chat-message.tsx"
+        }
+      ],
+      "categories": [
+        "ai"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "ChatMessage"
+        ],
+        "api": "<ChatMessage role=\"user|assistant\" initials?>{content}</ChatMessage>"
+      }
+    },
+    {
+      "name": "chat-composer",
+      "type": "registry:component",
+      "title": "Chat composer",
+      "description": "Enter sends, Shift+Enter breaks · `busy` turns Send into Stop",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0"
+      ],
+      "registryDependencies": [
+        "@kit/button",
+        "textarea"
+      ],
+      "files": [
+        {
+          "path": "components/kit/chat-composer.tsx",
+          "type": "registry:component",
+          "target": "components/kit/chat-composer.tsx"
+        }
+      ],
+      "categories": [
+        "ai"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "ChatComposer"
+        ],
+        "api": "<ChatComposer onSend busy? onStop? placeholder? />"
+      }
+    },
+    {
+      "name": "streaming-text",
+      "type": "registry:component",
+      "title": "Streaming text",
+      "description": "an answer arriving · all at once under reduced motion · screen readers get it once",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit/hook-use-reduced-motion"
+      ],
+      "files": [
+        {
+          "path": "components/kit/streaming-text.tsx",
+          "type": "registry:component",
+          "target": "components/kit/streaming-text.tsx"
+        }
+      ],
+      "categories": [
+        "ai"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "StreamingText",
+          "useStreamingText"
+        ],
+        "api": "<StreamingText text onDone? />"
+      }
+    },
+    {
+      "name": "thinking-indicator",
+      "type": "registry:component",
+      "title": "Thinking indicator",
+      "description": "the model is working · say what it is doing when you can",
+      "dependencies": [
+        "cn@^0.4.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/kit/thinking-indicator.tsx",
+          "type": "registry:component",
+          "target": "components/kit/thinking-indicator.tsx"
+        }
+      ],
+      "categories": [
+        "ai"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "ThinkingIndicator"
+        ],
+        "api": "<ThinkingIndicator label? />"
+      }
+    },
+    {
+      "name": "tool-call-card",
+      "type": "registry:component",
+      "title": "Tool call card",
+      "description": "an action the assistant took · `status` running/done/error · details collapsed",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0"
+      ],
+      "registryDependencies": [
+        "collapsible"
+      ],
+      "files": [
+        {
+          "path": "components/kit/tool-call-card.tsx",
+          "type": "registry:component",
+          "target": "components/kit/tool-call-card.tsx"
+        }
+      ],
+      "categories": [
+        "ai"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "ToolCallCard"
+        ],
+        "api": "<ToolCallCard title status input? output? />"
+      }
+    },
+    {
+      "name": "approval-card",
+      "type": "registry:component",
+      "title": "Approval card",
+      "description": "consent before consequence · says what changes and whether it can be undone",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0"
+      ],
+      "registryDependencies": [
+        "@kit/button"
+      ],
+      "files": [
+        {
+          "path": "components/kit/approval-card.tsx",
+          "type": "registry:component",
+          "target": "components/kit/approval-card.tsx"
+        }
+      ],
+      "categories": [
+        "ai"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "ApprovalCard"
+        ],
+        "api": "<ApprovalCard title description? details? onApprove onDeny />"
+      }
+    }
+  ]
+}

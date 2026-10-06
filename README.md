@@ -7,7 +7,7 @@ components, no stray colours, light and dark from day one.
 | | |
 |---|---|
 | [`apps/mobile`](./apps/mobile) | **Mobile kit**: Expo + React Native, NativeWind, react-native-reusables. 87 components, two sample apps, a live Kitchen Sink. |
-| `apps/web` | **Web kit** (coming): Next.js + shadcn/ui on the same tokens. |
+| [`apps/web`](./apps/web) | **Web kit**: Next.js + shadcn/ui on the same tokens. 47 components for dashboards, marketing pages and AI product UI. |
 | [`apps/docs`](./apps/docs) | **Docs site**: how it works, setup, every component live in a phone frame. Static, on Cloudflare. |
 
 One token file drives every kit. `tokens.json` (W3C design-token format) builds the CSS variables and
@@ -17,8 +17,8 @@ TypeScript theme each app reads, and the build refuses any palette that falls be
 
 1. **Start a prototype from a kit.** Copy just the app you need:
    ```bash
-   npx giget@latest gh:itsHendri/protokit/apps/mobile my-prototype
-   cd my-prototype && npm install && npm run ios
+   npx giget@latest gh:itsHendri/protokit/apps/mobile my-prototype   # or apps/web
+   cd my-prototype && npm install && npm run ios                       # web: npm run dev
    ```
    Or clone this whole repo for a client project that needs mobile and web on one brand.
 2. **Add kit components to an existing Expo app** that uses react-native-reusables, through the shadcn
@@ -32,7 +32,9 @@ TypeScript theme each app reads, and the build refuses any palette that falls be
 npm install            # once, at the root (npm workspaces)
 npm run ios            # mobile kit on the iOS Simulator; also: npm run web, npm run dev
 npm run check          # typecheck, lint, token and registry checks
+npm run web:dev        # the web kit at http://localhost:3100
 npm run docs:dev       # the docs site at http://localhost:3000 (docs:build, docs:preview)
+npm run tokens:sync    # after editing the brand in apps/mobile/tokens/tokens.json
 ```
 
 Each app is self-contained and documented in its own README and `AGENTS.md`. Start with

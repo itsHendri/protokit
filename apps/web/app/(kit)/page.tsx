@@ -1,0 +1,67 @@
+import { ArrowRightIcon, BlocksIcon, PaletteIcon } from 'lucide-react';
+import Link from 'next/link';
+import { Card } from '@/components/ui/card';
+import { CATEGORY_META } from '@/registry/categories';
+import { COMPONENTS } from '@/registry/components';
+
+const BROWSE = [
+  { href: '/components', icon: BlocksIcon, title: 'Components', body: `${COMPONENTS.length} components in ${CATEGORY_META.length} categories, each with a live demo.` },
+  { href: '/foundations', icon: PaletteIcon, title: 'Foundations', body: 'Colour, radius, spacing and type, from tokens/tokens.json.' },
+];
+
+const STEPS = [
+  ['Pick from what exists', 'Pages are composed only from registry components. Search Components; DESIGN_SYSTEM.md has the rules for each.'],
+  ['Use token names, not values', 'bg-primary, text-muted-foreground, p-4, rounded-lg. Colours follow light and dark automatically.'],
+  ['Hand it a brief', 'The transcript-to-prototype skill turns a conversation into pages, using the same rules.'],
+];
+
+export default function KitHome() {
+  return (
+    <div className="flex flex-col gap-12">
+      <header className="flex max-w-3xl flex-col gap-3">
+        <h1 className="text-4xl font-semibold tracking-tight">Prototype Kit · web</h1>
+        <p className="text-muted-foreground text-lg leading-8">
+          A themeable Next.js and shadcn/ui starter for web prototypes: dashboards, marketing pages and AI product
+          interfaces. Everything a page needs is already here and previewed live.
+        </p>
+      </header>
+
+      <section aria-labelledby="browse" className="flex flex-col gap-4">
+        <h2 id="browse" className="text-lg font-semibold">
+          Browse
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {BROWSE.map(({ href, icon: Icon, title, body }) => (
+            <Link key={href} href={href} className="group focus-visible:ring-ring rounded-xl focus-visible:outline-none focus-visible:ring-2">
+              <Card className="group-hover:bg-accent h-full flex-row items-start gap-4 p-5 transition-colors">
+                <Icon className="text-primary mt-0.5 size-5 shrink-0" aria-hidden />
+                <div className="flex flex-1 flex-col gap-1">
+                  <span className="flex items-center gap-1 font-semibold">
+                    {title} <ArrowRightIcon className="size-4" aria-hidden />
+                  </span>
+                  <span className="text-muted-foreground text-sm">{body}</span>
+                </div>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section aria-labelledby="how" className="flex flex-col gap-4">
+        <h2 id="how" className="text-lg font-semibold">
+          How it works
+        </h2>
+        <ol className="grid gap-6 md:grid-cols-3">
+          {STEPS.map(([title, body], i) => (
+            <li key={title} className="flex flex-col gap-2">
+              <span className="bg-primary/10 text-primary flex size-8 items-center justify-center rounded-full text-sm font-semibold">{i + 1}</span>
+              <p className="font-semibold">{title}</p>
+              <p className="text-muted-foreground text-sm leading-6">{body}</p>
+            </li>
+          ))}
+        </ol>
+        <p className="text-muted-foreground text-sm">DESIGN_SYSTEM.md and AGENTS.md hold the full rules.</p>
+      </section>
+    </div>
+  );
+}

@@ -34,6 +34,17 @@
       "port": 8091
     },
     {
+      "name": "web-kit",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "-w",
+        "apps/web"
+      ],
+      "port": 3100
+    },
+    {
       "name": "docs-dev",
       "runtimeExecutable": "npm",
       "runtimeArgs": [
