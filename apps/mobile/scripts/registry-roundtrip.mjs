@@ -12,6 +12,7 @@
 import { execFile } from 'node:child_process';
 import { cpSync, createReadStream, existsSync, mkdtempSync, readFileSync, rmSync, statSync, symlinkSync, writeFileSync } from 'node:fs';
 import { createServer } from 'node:http';
+import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -42,7 +43,9 @@ const copy = mkdtempSync(join(tmpdir(), 'kit-roundtrip-'));
 let failed = false;
 try {
   cpSync(root, copy, { recursive: true, filter: (src) => !SKIP.has(src.slice(root.length + 1).split('/')[0]) });
-  symlinkSync(join(root, 'node_modules'), join(copy, 'node_modules'));
+  // In the monorepo the packages are hoisted to the root; resolve wherever they actually live.
+  const modules = dirname(dirname(createRequire(join(root, 'package.json')).resolve('expo/package.json')));
+  symlinkSync(modules, join(copy, 'node_modules'));
   const config = JSON.parse(readFileSync(join(copy, 'components.json'), 'utf8'));
   config.registries = { '@kit-native': `http://127.0.0.1:${port}/{name}.json` };
   writeFileSync(join(copy, 'components.json'), JSON.stringify(config, null, 2));
