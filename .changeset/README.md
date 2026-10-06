@@ -19,5 +19,7 @@ npm cannot create a package through trusted publishing, so `1.0.0` goes up from 
 4. Package → Settings → Publishing access: "Require two-factor authentication and disallow tokens".
 5. GitHub repo → Settings → Actions → General: tick "Allow GitHub Actions to create and approve pull
    requests" (the Version Packages PR needs it).
+6. GitHub repo → Settings → Secrets and variables → Actions → Variables: add `RELEASES_ENABLED` = `true`.
+   Until then the release workflow skips, so main stays green.
 
 Provenance statements are added automatically once the repository is public.
