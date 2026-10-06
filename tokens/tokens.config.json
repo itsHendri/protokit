@@ -1,0 +1,30 @@
+{
+  "$description": "What `npm run tokens:build` writes, and where. Paths are relative to the app root. Targets: tokens/targets/<name>.mjs.",
+  "source": "tokens/tokens.json",
+  "targets": {
+    "nativewind3": {
+      "css": "global.css",
+      "tailwind": "tokens/generated/tailwind.theme.js"
+    },
+    "ts-theme": {
+      "out": "lib/theme.ts",
+      "navTheme": "expo-router/react-navigation"
+    },
+    "figma": {
+      "out": "tokens/generated/figma-theme.mjs"
+    },
+    "shadcn-web": {
+      "out": "tokens/generated/web.css"
+    },
+    "registry-theme": {
+      "out": "tokens/generated/theme.registry.json"
+    },
+    "design-md": {
+      "out": "DESIGN.md",
+      "name": "Prototype Kit"
+    },
+    "llms": {
+      "out": "tokens/generated/llms-tokens.md"
+    }
+  }
+}

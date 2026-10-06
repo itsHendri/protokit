@@ -17,7 +17,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       - run: npm ci
@@ -28,20 +28,22 @@ jobs:
       - name: Lint
         run: npm run lint -- --max-warnings 0
 
-      # Re-runs the token build and fails if any colour pairing drops below WCAG AA,
-      # then checks the generated files were committed — a palette change that was not
-      # rebuilt would otherwise ship a theme that does not match tokens.json.
-      - name: Tokens build and contrast gate
-        run: npm run tokens:build
+      # Fails if any colour pairing drops below WCAG AA, or if tokens.json changed without the
+      # generated files (global.css, lib/theme.ts, web.css, DESIGN.md, …) being rebuilt and committed.
+      - name: Tokens are built and pass the contrast gate
+        run: npm run tokens:check
 
-      - name: Generated token files are up to date
-        run: |
-          if ! git diff --quiet -- global.css lib/theme.ts tokens/generated; then
-            echo "::error::tokens.json changed without committing the generated files."
-            echo "Run 'npm run tokens:build' and commit global.css, lib/theme.ts and tokens/generated."
-            git --no-pager diff --stat -- global.css lib/theme.ts tokens/generated
-            exit 1
-          fi
+      - name: Token build tests
+        run: npm run test:tokens
+
+      # Every ui/kit file is registered and exports what registry/components.ts says, and the
+      # generated DESIGN_SYSTEM.md tables, llms.txt and registry.json are committed.
+      - name: Registry is consistent and generated docs are current
+        run: npm run registry:build -- --check
+
+      # The published shadcn registry reinstalls every component and lib file identically.
+      - name: Registry builds and round-trips
+        run: npm run registry:dist && npm run registry:roundtrip
 
       - name: Web bundle builds
         run: npm run export:web

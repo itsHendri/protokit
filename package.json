@@ -2,6 +2,14 @@
   "name": "mobile-app-prototype-kit",
   "main": "expo-router/entry",
   "version": "0.1.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsHendri/mobile-app-prototype-kit.git"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "start": "expo start --go",
     "dev": "expo start -c --go",
@@ -16,7 +24,13 @@
     "share": "bash scripts/share.sh",
     "export:web": "expo export --platform web",
     "tokens:figma": "node tokens/push-figma.mjs",
-    "dev:client": "expo start -c"
+    "dev:client": "expo start -c",
+    "tokens:check": "node tokens/cli.mjs check",
+    "test:tokens": "node --test tokens/*.test.mjs",
+    "registry:build": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/registry-build.mjs",
+    "registry:drift": "node scripts/rnr-drift.mjs",
+    "registry:dist": "npx -y shadcn@4.21.3 build registry.json --output dist/r/native",
+    "registry:roundtrip": "node scripts/registry-roundtrip.mjs"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",
@@ -82,6 +96,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
+    "@types/node": "^26.6.4",
     "@types/react": "~19.2.10",
     "eslint": "^9.39.5",
     "eslint-config-expo": "^57.0.2",

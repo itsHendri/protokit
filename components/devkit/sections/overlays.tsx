@@ -42,7 +42,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Text } from '@/components/ui/text';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 import * as Haptics from 'expo-haptics';
 import { Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -221,56 +221,12 @@ function HoverCardDemo() {
   );
 }
 
-export const OVERLAYS_SECTIONS: ComponentSection[] = [
-  {
-    id: 'dialog',
-    title: 'Dialog',
-    category: 'overlays',
-    aliases: ['modal', 'form modal'],
-    api: '<Dialog><DialogTrigger asChild /><DialogContent><DialogHeader /><DialogFooter /></DialogContent></Dialog>',
-    caption: 'For edits with a form. Confirmations use AlertDialog.',
-    Demo: DialogDemo,
-  },
-  {
-    id: 'alert-dialog',
-    title: 'Alert dialog',
-    category: 'overlays',
-    aliases: ['confirm', 'destructive confirmation', 'are you sure'],
-    api: '<AlertDialog>…<AlertDialogCancel /><AlertDialogAction /></AlertDialog>',
-    Demo: AlertDialogDemo,
-  },
-  {
-    id: 'popover',
-    title: 'Popover',
-    category: 'overlays',
-    aliases: ['bubble', 'anchored'],
-    api: '<Popover><PopoverTrigger asChild /><PopoverContent side /></Popover>',
-    caption: 'A small anchored panel for a quick edit or extra detail next to its trigger. For a full form use Dialog; for a list of actions use DropdownMenu.',
-    Demo: PopoverDemo,
-  },
-  {
-    id: 'dropdown-menu',
-    title: 'Dropdown menu',
-    category: 'overlays',
-    aliases: ['menu', 'actions', 'more'],
-    api: '<DropdownMenu><DropdownMenuTrigger asChild /><DropdownMenuContent insets><DropdownMenuItem /></DropdownMenuContent></DropdownMenu>',
-    Demo: DropdownMenuDemo,
-  },
-  {
-    id: 'context-menu',
-    title: 'Context menu',
-    category: 'overlays',
-    aliases: ['long press', 'right click'],
-    api: '<ContextMenu><ContextMenuTrigger /><ContextMenuContent insets><ContextMenuItem /></ContextMenuContent></ContextMenu>',
-    Demo: ContextMenuDemo,
-  },
-  {
-    id: 'hover-card',
-    title: 'Hover card',
-    category: 'overlays',
-    aliases: ['preview', 'profile card'],
-    api: '<HoverCard><HoverCardTrigger asChild /><HoverCardContent insets /></HoverCard>',
-    caption: 'Opens on press on native.',
-    Demo: HoverCardDemo,
-  },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const OVERLAYS_DEMOS: Record<string, ComponentType> = {
+  'dialog': DialogDemo,
+  'alert-dialog': AlertDialogDemo,
+  'popover': PopoverDemo,
+  'dropdown-menu': DropdownMenuDemo,
+  'context-menu': ContextMenuDemo,
+  'hover-card': HoverCardDemo,
+};

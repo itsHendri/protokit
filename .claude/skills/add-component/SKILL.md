@@ -1,6 +1,6 @@
 ---
 name: add-component
-description: Add a component to the prototype kit the right way — either install a react-native-reusables component or build/port one into components/kit — and register it in the Kitchen Sink and DESIGN_SYSTEM.md in the same change. Use when asked to "add a component", "we need a <thing>", "port <Component> from the old kit", or when a screen needs something the registry lacks.
+description: Add a component to the prototype kit the right way — either install a react-native-reusables component or build/port one into components/kit — and register it in the Kitchen Sink and DESIGN_SYSTEM.md in the same change. Use when asked to "add a component", "we need a <thing>", "port <Component> from another kit", or when a screen needs something the registry lacks.
 ---
 
 # Add a component
@@ -11,7 +11,7 @@ skill, which builds from the registry alone.
 
 ## 0. Check it does not already exist
 
-Search `components/devkit/sections/*.tsx` titles and aliases, and DESIGN_SYSTEM.md. Extend
+Search `registry/components.ts` (titles, exports, aliases) and DESIGN_SYSTEM.md. Extend
 an existing component (a new variant/prop) before creating a sibling. Only extract a new
 component when the pattern appears 3+ times with the same intent.
 
@@ -22,8 +22,8 @@ Pick one:
 - **react-native-reusables has it** (check https://reactnativereusables.com/docs/components):
   `npx @react-native-reusables/cli@latest add <name> -y` → lands in `components/ui/<name>.tsx`.
   If it adds packages, run `npx expo install --fix` afterwards.
-- **Port from the old kit** (read-only reference: https://github.com/itsHendri/swissborg-prototype-kit,
-  `src/components/shared/{atoms,molecules,organisms}`): create `components/kit/<name>.tsx`.
+- **Port from a reference** (another kit, a client's codebase, a screenshot): create
+  `components/kit/<name>.tsx`.
   Rewrite, don't copy: className-only styling with semantic classes, `cva` for variants,
   compose from `components/ui` primitives where possible, forward `className`, use the kit
   `Text`/`Icon`. No `useThemeColors`, no inline colour objects, no `@expo/vector-icons`.
@@ -38,13 +38,17 @@ Styling rules (enforced by `qc-pass`):
 
 ## 2. Register it
 
-1. Add a section to the matching file in `components/devkit/sections/`: `<category>.tsx` for
-   `components/ui` (reusables) components, `kit-<category>.tsx` for `components/kit` ones
-   (`actions`, `inputs`, `navigation`, `data`, `feedback`, `layout`, `overlays`, `media`) with `id`, `title`,
-   `category`, `aliases` (how a designer would search for it), a one-line `api`, a `caption`
-   (when to use it / the one rule people get wrong), and a self-contained `Demo` showing every
-   variant and state. Keep the demo's own state inside `Demo`.
-2. Add a row to the Component Registry table in `DESIGN_SYSTEM.md` (name, path, one-line notes).
+1. Add an entry to `registry/components.ts`, in display order within its category: `id` (the file
+   name), `title`, `exports` (the real exported names, component first), `category` (`actions`,
+   `inputs`, `navigation`, `data`, `feedback`, `layout`, `overlays`, `media`, `native`), `files`,
+   `notes` (the one-liner for the registry table), `aliases` (how a designer would search for it),
+   a one-line `api`, and a `caption` (when to use it / the one rule people get wrong).
+2. Add a self-contained demo showing every variant and state to the `DEMOS` record in the matching
+   `components/devkit/sections/` file, keyed by the same `id`: `<category>.tsx` for `components/ui`
+   (reusables), `kit-<category>.tsx` for `components/kit`. Keep the demo's own state inside it.
+3. `npm run registry:build`. It checks the file exists and exports what you listed, then regenerates
+   the registry tables in `DESIGN_SYSTEM.md`, `llms.txt` and `registry/generated/index.json`. Never
+   edit those tables by hand.
 
 ## 3. Verify
 
@@ -53,4 +57,4 @@ simulator in both themes). Fix anything it flags before calling the component do
 
 ## 4. Commit
 
-One commit per component: `feat(kit): add <Name>` with the demo, registry row and any deps.
+One commit per component: `feat(kit): add <Name>` with the entry, demo, regenerated files and any deps.

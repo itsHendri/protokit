@@ -1,3 +1,4 @@
+import { CATEGORY_META } from '@/registry/categories';
 import type { CategoryDef, CategoryId, FoundationId } from './types';
 import {
   ActivityIcon,
@@ -13,20 +14,23 @@ import {
   RulerIcon,
   SmartphoneIcon,
   TypeIcon,
+  type LucideIcon,
 } from 'lucide-react-native';
 
-/** Component categories, in display order. */
-export const CATEGORIES: CategoryDef<CategoryId>[] = [
-  { id: 'actions', label: 'Actions', blurb: 'Buttons & commit affordances', icon: MousePointerClickIcon },
-  { id: 'inputs', label: 'Inputs & selection', blurb: 'Fields, toggles, pickers', icon: PenLineIcon },
-  { id: 'navigation', label: 'Navigation', blurb: 'Tabs, menus, headers', icon: CompassIcon },
-  { id: 'data', label: 'Data display', blurb: 'Text, avatars, badges, cards', icon: ChartBarIcon },
-  { id: 'feedback', label: 'Feedback & status', blurb: 'Alerts, progress, skeletons', icon: BellIcon },
-  { id: 'layout', label: 'Containers & layout', blurb: 'Cards, accordions, collapsibles', icon: BlocksIcon },
-  { id: 'overlays', label: 'Overlays', blurb: 'Dialogs, popovers, menus', icon: LayersIcon },
-  { id: 'media', label: 'Media & icons', blurb: 'Icons, images, ratios', icon: ImageIcon },
-  { id: 'native', label: 'Device capabilities', blurb: 'Camera, photos, Face ID, alerts', icon: SmartphoneIcon },
-];
+const CATEGORY_ICON: Record<CategoryId, LucideIcon> = {
+  actions: MousePointerClickIcon,
+  inputs: PenLineIcon,
+  navigation: CompassIcon,
+  data: ChartBarIcon,
+  feedback: BellIcon,
+  layout: BlocksIcon,
+  overlays: LayersIcon,
+  media: ImageIcon,
+  native: SmartphoneIcon,
+};
+
+/** Component categories, in display order (labels and blurbs live in registry/categories.ts). */
+export const CATEGORIES: CategoryDef<CategoryId>[] = CATEGORY_META.map((c) => ({ ...c, icon: CATEGORY_ICON[c.id] }));
 
 /** Foundation categories, in display order. */
 export const FOUNDATIONS: CategoryDef<FoundationId>[] = [

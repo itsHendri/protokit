@@ -1,63 +1,76 @@
 /**
- * The Kitchen Sink registry — the single source of truth for what the kit ships.
- * Each entry is a self-contained preview tagged with one functional category.
+ * The Kitchen Sink registry: the metadata in registry/components.ts joined to the demos in
+ * ./sections/*.tsx. registry/components.ts is the single source of truth for what the kit ships.
  *
- * Adding a component: add it under components/ui (reusables) or components/kit (ours),
- * then add a section to the matching ./sections/*.tsx file AND a row to DESIGN_SYSTEM.md.
- * The `add-component` skill walks through this.
+ * Adding a component: add it under components/ui (reusables) or components/kit (ours), add an entry
+ * to registry/components.ts and a demo to the matching ./sections/*.tsx DEMOS record, then run
+ * `npm run registry:build`. The `add-component` skill walks through this.
  */
+import { COMPONENTS } from '@/registry/components';
+import type { ComponentType } from 'react';
 import type { CategoryId, ComponentSection, FoundationSection, Section } from './types';
-import { ACTIONS_SECTIONS } from './sections/actions';
-import { INPUTS_SECTIONS } from './sections/inputs';
-import { NAVIGATION_SECTIONS } from './sections/navigation';
-import { DATA_SECTIONS } from './sections/data';
-import { FEEDBACK_SECTIONS } from './sections/feedback';
-import { LAYOUT_SECTIONS } from './sections/layout';
-import { OVERLAYS_SECTIONS } from './sections/overlays';
-import { MEDIA_SECTIONS } from './sections/media';
+import { ACTIONS_DEMOS } from './sections/actions';
+import { INPUTS_DEMOS } from './sections/inputs';
+import { NAVIGATION_DEMOS } from './sections/navigation';
+import { DATA_DEMOS } from './sections/data';
+import { FEEDBACK_DEMOS } from './sections/feedback';
+import { LAYOUT_DEMOS } from './sections/layout';
+import { OVERLAYS_DEMOS } from './sections/overlays';
+import { MEDIA_DEMOS } from './sections/media';
 import { FOUNDATION_SECTIONS } from './foundations';
-import { KIT_ACTIONS_SECTIONS } from './sections/kit-actions';
-import { KIT_INPUTS_SECTIONS } from './sections/kit-inputs';
-import { KIT_NAVIGATION_SECTIONS } from './sections/kit-navigation';
-import { KIT_DATA_SECTIONS } from './sections/kit-data';
-import { KIT_FEEDBACK_SECTIONS } from './sections/kit-feedback';
-import { KIT_LAYOUT_SECTIONS } from './sections/kit-layout';
-import { KIT_OVERLAYS_SECTIONS } from './sections/kit-overlays';
-import { KIT_MEDIA_SECTIONS } from './sections/kit-media';
-import { KIT_NATIVE_SECTIONS } from './sections/kit-native';
+import { KIT_ACTIONS_DEMOS } from './sections/kit-actions';
+import { KIT_INPUTS_DEMOS } from './sections/kit-inputs';
+import { KIT_NAVIGATION_DEMOS } from './sections/kit-navigation';
+import { KIT_DATA_DEMOS } from './sections/kit-data';
+import { KIT_FEEDBACK_DEMOS } from './sections/kit-feedback';
+import { KIT_LAYOUT_DEMOS } from './sections/kit-layout';
+import { KIT_OVERLAYS_DEMOS } from './sections/kit-overlays';
+import { KIT_MEDIA_DEMOS } from './sections/kit-media';
+import { KIT_NATIVE_DEMOS } from './sections/kit-native';
 
-/** ui/ (reusables) previews live in <category>.tsx; kit/ previews in kit-<category>.tsx. */
-const RAW_SECTIONS: ComponentSection[] = [
-  ...ACTIONS_SECTIONS,
-  ...KIT_ACTIONS_SECTIONS,
-  ...INPUTS_SECTIONS,
-  ...KIT_INPUTS_SECTIONS,
-  ...NAVIGATION_SECTIONS,
-  ...KIT_NAVIGATION_SECTIONS,
-  ...DATA_SECTIONS,
-  ...KIT_DATA_SECTIONS,
-  ...FEEDBACK_SECTIONS,
-  ...KIT_FEEDBACK_SECTIONS,
-  ...LAYOUT_SECTIONS,
-  ...KIT_LAYOUT_SECTIONS,
-  ...OVERLAYS_SECTIONS,
-  ...KIT_OVERLAYS_SECTIONS,
-  ...MEDIA_SECTIONS,
-  ...KIT_MEDIA_SECTIONS,
-  ...KIT_NATIVE_SECTIONS,
-];
+/** ui/ (reusables) demos live in <category>.tsx; kit/ demos in kit-<category>.tsx. */
+const DEMOS: Record<string, ComponentType> = {
+  ...ACTIONS_DEMOS,
+  ...KIT_ACTIONS_DEMOS,
+  ...INPUTS_DEMOS,
+  ...KIT_INPUTS_DEMOS,
+  ...NAVIGATION_DEMOS,
+  ...KIT_NAVIGATION_DEMOS,
+  ...DATA_DEMOS,
+  ...KIT_DATA_DEMOS,
+  ...FEEDBACK_DEMOS,
+  ...KIT_FEEDBACK_DEMOS,
+  ...LAYOUT_DEMOS,
+  ...KIT_LAYOUT_DEMOS,
+  ...OVERLAYS_DEMOS,
+  ...KIT_OVERLAYS_DEMOS,
+  ...MEDIA_DEMOS,
+  ...KIT_MEDIA_DEMOS,
+  ...KIT_NATIVE_DEMOS,
+};
 
-/** Honour `after`: move a section directly behind the one it names. */
-function placeAfter(list: ComponentSection[]): ComponentSection[] {
-  const out = list.filter((s) => !s.after);
-  for (const s of list.filter((s) => s.after)) {
-    const i = out.findIndex((o) => o.id === s.after);
-    out.splice(i === -1 ? out.length : i + 1, 0, s);
+const PREVIEWED = COMPONENTS.filter((c) => c.preview !== false);
+
+if (__DEV__) {
+  const missing = PREVIEWED.filter((c) => !DEMOS[c.id]).map((c) => c.id);
+  const orphaned = Object.keys(DEMOS).filter((id) => !PREVIEWED.some((c) => c.id === id));
+  if (missing.length || orphaned.length) {
+    throw new Error(
+      `Kitchen Sink registry out of sync. No demo for: ${missing.join(', ') || '—'}. ` +
+        `Demo without a registry entry: ${orphaned.join(', ') || '—'}.`
+    );
   }
-  return out;
 }
 
-export const SECTIONS: ComponentSection[] = placeAfter(RAW_SECTIONS);
+export const SECTIONS: ComponentSection[] = PREVIEWED.map((c) => ({
+  id: c.id,
+  title: c.title,
+  category: c.category,
+  aliases: c.aliases,
+  api: c.api,
+  caption: c.caption,
+  Demo: DEMOS[c.id],
+}));
 
 export { FOUNDATION_SECTIONS };
 export type { ComponentSection, FoundationSection };

@@ -15,11 +15,12 @@
  * variables plugin.
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
-const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const theme = await import(join(root, 'tokens/generated/figma-theme.mjs')).catch(() => null);
+// The app root: `kit-tokens figma --root` sets KIT_TOKENS_ROOT; `npm run tokens:figma` runs from it.
+const root = process.env.KIT_TOKENS_ROOT ?? process.cwd();
+const theme = await import(pathToFileURL(join(root, 'tokens/generated/figma-theme.mjs')).href).catch(() => null);
 if (!theme) {
   console.error('Run `npm run tokens:build` first (it emits tokens/generated/figma-theme.mjs).');
   process.exit(1);

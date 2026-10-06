@@ -4,7 +4,7 @@ import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { Toggle, ToggleIcon } from '@/components/ui/toggle';
 import { ToggleGroup, ToggleGroupIcon, ToggleGroupItem } from '@/components/ui/toggle-group';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 import * as Haptics from 'expo-haptics';
 import { BoldIcon, ChevronRightIcon, ItalicIcon, MailIcon, UnderlineIcon } from 'lucide-react-native';
 import * as React from 'react';
@@ -96,31 +96,9 @@ function ToggleGroupDemo() {
   );
 }
 
-export const ACTIONS_SECTIONS: ComponentSection[] = [
-  {
-    id: 'button',
-    title: 'Button',
-    category: 'actions',
-    aliases: ['cta', 'primary', 'secondary', 'outline', 'ghost', 'link', 'destructive', 'loading'],
-    api: '<Button variant? size? disabled?><Text>…</Text></Button>',
-    caption: 'Children are Text and Icon, never a bare string. One primary button per screen.',
-    Demo: ButtonDemo,
-  },
-  {
-    id: 'toggle',
-    title: 'Toggle',
-    category: 'actions',
-    aliases: ['pressed', 'two-state button'],
-    api: '<Toggle pressed onPressedChange><ToggleIcon as={…} /></Toggle>',
-    Demo: ToggleDemo,
-  },
-  {
-    id: 'toggle-group',
-    title: 'Toggle group',
-    category: 'actions',
-    aliases: ['segmented', 'multi select buttons'],
-    api: '<ToggleGroup type="single|multiple" value onValueChange><ToggleGroupItem value … /></ToggleGroup>',
-    caption: 'Use type="single" for a segmented control.',
-    Demo: ToggleGroupDemo,
-  },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const ACTIONS_DEMOS: Record<string, ComponentType> = {
+  'button': ButtonDemo,
+  'toggle': ToggleDemo,
+  'toggle-group': ToggleGroupDemo,
+};

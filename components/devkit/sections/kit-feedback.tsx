@@ -5,7 +5,7 @@ import { useToast } from '@/components/kit/toast';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Text } from '@/components/ui/text';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 import { InboxIcon, SearchXIcon } from 'lucide-react-native';
 import { View } from 'react-native';
 
@@ -65,9 +65,10 @@ function SuccessScreenDemo() {
   );
 }
 
-export const KIT_FEEDBACK_SECTIONS: ComponentSection[] = [
-  { id: 'toast', title: 'Toast', category: 'feedback', aliases: ['snackbar', 'notification', 'message', 'copied'], api: 'const toast = useToast(); toast.success("Saved") · .error · .warning · .info', caption: 'Transient, bottom-anchored, tap to dismiss. Persistent messages use Alert.', Demo: ToastDemo },
-  { id: 'spinner', title: 'Spinner', category: 'feedback', aliases: ['loading', 'activity indicator'], api: '<Spinner size="small|large" tone="primary|foreground|muted" />', Demo: SpinnerDemo },
-  { id: 'empty-state', title: 'Empty state', category: 'feedback', aliases: ['no results', 'nothing here', 'zero state'], api: '<EmptyState icon title subtitle? action? variant="default|compact" />', Demo: EmptyStateDemo },
-  { id: 'success-screen', title: 'Success screen', category: 'feedback', aliases: ['done', 'confirmation', 'checkmark', 'complete'], api: '<SuccessScreen title body? amount? amountSubtitle? loading?>{extra}</SuccessScreen>', caption: 'Use for EVERY success state: signup done, booking confirmed, order placed. Optional amount/subtitle when a value matters. Actions go in a StickyBottomBar below it.', Demo: SuccessScreenDemo },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const KIT_FEEDBACK_DEMOS: Record<string, ComponentType> = {
+  'toast': ToastDemo,
+  'spinner': SpinnerDemo,
+  'empty-state': EmptyStateDemo,
+  'success-screen': SuccessScreenDemo,
+};

@@ -13,7 +13,9 @@ exact output for failures.
 ```bash
 npm run typecheck
 npm run lint -- --max-warnings 0
-npm run tokens:build && git diff --quiet -- global.css lib/theme.ts tokens/generated || echo "TOKENS OUT OF DATE: commit the regenerated files"
+npm run tokens:check        # generated token files match tokens/tokens.json, contrast gate passes
+npm run test:tokens
+npm run registry:build -- --check   # every ui/kit file registered, exports real, generated docs current
 ```
 
 ## 2. Guards (must print nothing)
@@ -25,12 +27,10 @@ grep -rnE "#[0-9a-fA-F]{3,8}\b|rgba?\(" app components --include="*.tsx" --inclu
 grep -rln "@expo/vector-icons\|react-native-vector-icons" app components || true
 # react-native Text must not be used directly (use components/ui/text)
 grep -rnE "import \{[^}]*\bText\b[^}]*\} from 'react-native'" app components/kit
-# every components/ui + components/kit file has a registry section
-for f in components/ui/*.tsx components/kit/*.tsx; do n=$(basename "$f" .tsx); grep -rqi "id: '$n'" components/devkit/sections || echo "UNREGISTERED: $f"; done 2>/dev/null
 ```
 
-Known exemptions: `native-only-animated-view`, `icon`, `text`, `label` are helpers and are
-registered indirectly. Everything else must appear.
+Registration is checked by `registry:build -- --check` in step 1 (helpers it skips are listed in
+`HELPERS` in `scripts/registry-build.mjs`).
 
 ## 3. On-device look
 

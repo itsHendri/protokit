@@ -14,7 +14,7 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { Text } from '@/components/ui/text';
 import { Textarea } from '@/components/ui/textarea';
-import type { ComponentSection } from '../types';
+import type { ComponentType } from 'react';
 import * as Haptics from 'expo-haptics';
 import * as React from 'react';
 import { Platform, View } from 'react-native';
@@ -147,57 +147,12 @@ function SelectDemo() {
   );
 }
 
-export const INPUTS_SECTIONS: ComponentSection[] = [
-  {
-    id: 'input',
-    title: 'Input',
-    category: 'inputs',
-    aliases: ['text field', 'textfield', 'form'],
-    api: '<Label htmlFor /> + <Input id placeholder keyboardType … />',
-    caption: 'Pair every Input with a Label. Inputs stretch to their container.',
-    Demo: InputDemo,
-  },
-  {
-    id: 'textarea',
-    title: 'Textarea',
-    category: 'inputs',
-    aliases: ['multiline', 'message'],
-    api: '<Textarea placeholder numberOfLines? />',
-    Demo: TextareaDemo,
-  },
-  {
-    id: 'checkbox',
-    title: 'Checkbox',
-    category: 'inputs',
-    aliases: ['tick', 'check'],
-    api: '<Checkbox checked onCheckedChange disabled? />',
-    caption: 'On native the Label needs its own onPress to toggle.',
-    Demo: CheckboxDemo,
-  },
-  {
-    id: 'radio-group',
-    title: 'Radio group',
-    category: 'inputs',
-    aliases: ['single choice', 'option'],
-    api: '<RadioGroup value onValueChange><RadioGroupItem value id /></RadioGroup>',
-    Demo: RadioGroupDemo,
-  },
-  {
-    id: 'switch',
-    title: 'Switch',
-    category: 'inputs',
-    aliases: ['toggle', 'on off'],
-    api: '<Switch checked onCheckedChange />',
-    caption: 'Settings-style on/off. For an action, use Toggle instead.',
-    Demo: SwitchDemo,
-  },
-  {
-    id: 'select',
-    title: 'Select',
-    category: 'inputs',
-    aliases: ['dropdown', 'picker', 'menu'],
-    api: '<Select><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem label value /></SelectContent></Select>',
-    caption: 'Pass safe-area insets to SelectContent so the sheet clears the home indicator.',
-    Demo: SelectDemo,
-  },
-];
+/** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+export const INPUTS_DEMOS: Record<string, ComponentType> = {
+  'input': InputDemo,
+  'textarea': TextareaDemo,
+  'checkbox': CheckboxDemo,
+  'radio-group': RadioGroupDemo,
+  'switch': SwitchDemo,
+  'select': SelectDemo,
+};

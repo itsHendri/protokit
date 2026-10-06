@@ -5,8 +5,8 @@ description: Turn a client conversation (meeting transcript, notes, or a brief) 
 
 # Transcript → prototype
 
-Input: a transcript or brief (pasted, or a file path). Output: a browsable prototype as its own route
-group in `app/`, mock data beside it, and a short brief that records the decisions.
+Input: a transcript or brief (pasted, or a file path). Output: a browsable prototype as its own named
+segment in `app/`, mock data beside it, and a short brief that records the decisions.
 
 Work in this order. Do not skip the brief — it is what the client sees first and what keeps the build honest.
 
@@ -35,8 +35,8 @@ and either compose it from existing parts or run the `add-component` skill first
 
 ## 3. Build
 
-- Route group `app/(<slug>)/` with its own `_layout.tsx` (Tabs or Stack). Register it in the root
-  `app/_layout.tsx` Stack. Add an "Open <name>" button on the kit home (or make it the initial route
+- Named segment `app/<slug>/` (not a route group, see `AGENTS.md` rule 1) with its own `_layout.tsx`
+  (Tabs or Stack). Register it in the root `app/_layout.tsx` Stack. Add an "Open <name>" button on the kit home (or make it the initial route
   if the kit shell should be hidden).
 - Data in `components/<slug>/data.ts` (typed, exported constants). No network calls.
 - Screens follow the patterns in `DESIGN_SYSTEM.md`: screen skeleton, `SectionHeader` + `Card` of
@@ -44,7 +44,7 @@ and either compose it from existing parts or run the `add-component` skill first
   multi-step flows as one route with a `Step` state machine and a `Stepper`.
 - Copy: real, specific, short. No lorem ipsum. Use the client's product vocabulary.
 - Every screen works in light and dark. No hex. Tap targets ≥ 44pt. Icons have labels.
-- Model the sample apps (`app/(shop)`, `app/(habits)`) for structure; do not copy their content. Add `<KitChip />` to the new root layout so the kit stays reachable.
+- Model the sample apps (`app/shop`, `app/habits`) for structure; do not copy their content. Add `<KitChip />` to the new root layout so the kit stays reachable.
 
 ## 4. Verify
 

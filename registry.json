@@ -1,0 +1,2566 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "kit-native",
+  "homepage": "https://github.com/itsHendri/mobile-app-prototype-kit",
+  "items": [
+    {
+      "name": "theme",
+      "type": "registry:theme",
+      "title": "Kit theme",
+      "description": "The kit tokens as CSS variables (light + dark) and the Tailwind colour + radius extension. Generated from tokens/tokens.json.",
+      "cssVars": {
+        "light": {
+          "radius": "0.625rem",
+          "background": "0 0% 100%",
+          "foreground": "240 10% 3.9%",
+          "card": "0 0% 100%",
+          "card-foreground": "240 10% 3.9%",
+          "popover": "0 0% 100%",
+          "popover-foreground": "240 10% 3.9%",
+          "primary": "221.2 83.2% 53.3%",
+          "primary-foreground": "0 0% 100%",
+          "secondary": "240 4.8% 95.9%",
+          "secondary-foreground": "240 5.9% 10%",
+          "muted": "240 4.8% 95.9%",
+          "muted-foreground": "240 5.2% 33.9%",
+          "accent": "240 4.8% 95.9%",
+          "accent-foreground": "240 5.9% 10%",
+          "destructive": "0 72.2% 50.6%",
+          "destructive-foreground": "0 0% 100%",
+          "success": "142.4 71.8% 29.2%",
+          "success-foreground": "0 0% 100%",
+          "warning": "26 90.5% 37.1%",
+          "warning-foreground": "0 0% 100%",
+          "info": "201.3 96.3% 32.2%",
+          "info-foreground": "0 0% 100%",
+          "border": "240 5.9% 90%",
+          "input": "240 5.9% 90%",
+          "ring": "221.2 83.2% 53.3%",
+          "chart-1": "217.2 91.2% 59.8%",
+          "chart-2": "142.1 70.6% 45.3%",
+          "chart-3": "37.7 92.1% 50.2%",
+          "chart-4": "0 84.2% 60.2%",
+          "chart-5": "198.6 88.7% 48.4%"
+        },
+        "dark": {
+          "background": "240 10% 3.9%",
+          "foreground": "0 0% 98%",
+          "card": "240 5.9% 10%",
+          "card-foreground": "0 0% 98%",
+          "popover": "240 5.9% 10%",
+          "popover-foreground": "0 0% 98%",
+          "primary": "217.2 91.2% 59.8%",
+          "primary-foreground": "240 10% 3.9%",
+          "secondary": "240 3.7% 15.9%",
+          "secondary-foreground": "0 0% 98%",
+          "muted": "240 3.7% 15.9%",
+          "muted-foreground": "240 5% 64.9%",
+          "accent": "240 3.7% 15.9%",
+          "accent-foreground": "0 0% 98%",
+          "destructive": "0 84.2% 60.2%",
+          "destructive-foreground": "240 10% 3.9%",
+          "success": "142.1 70.6% 45.3%",
+          "success-foreground": "240 10% 3.9%",
+          "warning": "43.3 96.4% 56.3%",
+          "warning-foreground": "240 10% 3.9%",
+          "info": "198.6 88.7% 48.4%",
+          "info-foreground": "240 10% 3.9%",
+          "border": "240 3.7% 15.9%",
+          "input": "240 3.7% 15.9%",
+          "ring": "217.2 91.2% 59.8%",
+          "chart-1": "213.1 93.9% 67.8%",
+          "chart-2": "141.9 69.2% 58%",
+          "chart-3": "43.3 96.4% 56.3%",
+          "chart-4": "0 90.6% 70.8%",
+          "chart-5": "198.4 93.2% 59.6%"
+        }
+      },
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "colors": {
+                "background": "hsl(var(--background))",
+                "foreground": "hsl(var(--foreground))",
+                "card": "hsl(var(--card))",
+                "card-foreground": "hsl(var(--card-foreground))",
+                "popover": "hsl(var(--popover))",
+                "popover-foreground": "hsl(var(--popover-foreground))",
+                "primary": "hsl(var(--primary))",
+                "primary-foreground": "hsl(var(--primary-foreground))",
+                "secondary": "hsl(var(--secondary))",
+                "secondary-foreground": "hsl(var(--secondary-foreground))",
+                "muted": "hsl(var(--muted))",
+                "muted-foreground": "hsl(var(--muted-foreground))",
+                "accent": "hsl(var(--accent))",
+                "accent-foreground": "hsl(var(--accent-foreground))",
+                "destructive": "hsl(var(--destructive))",
+                "destructive-foreground": "hsl(var(--destructive-foreground))",
+                "success": "hsl(var(--success))",
+                "success-foreground": "hsl(var(--success-foreground))",
+                "warning": "hsl(var(--warning))",
+                "warning-foreground": "hsl(var(--warning-foreground))",
+                "info": "hsl(var(--info))",
+                "info-foreground": "hsl(var(--info-foreground))",
+                "border": "hsl(var(--border))",
+                "input": "hsl(var(--input))",
+                "ring": "hsl(var(--ring))",
+                "chart-1": "hsl(var(--chart-1))",
+                "chart-2": "hsl(var(--chart-2))",
+                "chart-3": "hsl(var(--chart-3))",
+                "chart-4": "hsl(var(--chart-4))",
+                "chart-5": "hsl(var(--chart-5))"
+              },
+              "borderRadius": {
+                "sm": "calc(var(--radius) - 4px)",
+                "md": "calc(var(--radius) - 2px)",
+                "lg": "var(--radius)",
+                "xl": "calc(var(--radius) + 6px)",
+                "2xl": "calc(var(--radius) + 10px)"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "lib-haptics",
+      "type": "registry:lib",
+      "title": "lib/haptics.ts",
+      "dependencies": [
+        "expo-haptics@~57.0.3"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "lib/haptics.ts",
+          "type": "registry:lib",
+          "target": "lib/haptics.ts"
+        }
+      ]
+    },
+    {
+      "name": "lib-native-context",
+      "type": "registry:lib",
+      "title": "lib/native-context.tsx",
+      "dependencies": [
+        "@react-native-async-storage/async-storage@2.2.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-native"
+      ],
+      "files": [
+        {
+          "path": "lib/native-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/native-context.tsx"
+        }
+      ]
+    },
+    {
+      "name": "lib-native",
+      "type": "registry:lib",
+      "title": "lib/native.ts",
+      "dependencies": [
+        "expo-device@~57.0.2",
+        "expo-image-picker@~57.0.19",
+        "expo-local-authentication@~57.0.3",
+        "expo-notifications@~57.0.20"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "lib/native.ts",
+          "type": "registry:lib",
+          "target": "lib/native.ts"
+        }
+      ]
+    },
+    {
+      "name": "lib-reduced-motion",
+      "type": "registry:lib",
+      "title": "lib/reduced-motion.ts",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "lib/reduced-motion.ts",
+          "type": "registry:lib",
+          "target": "lib/reduced-motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "lib-theme-context",
+      "type": "registry:lib",
+      "title": "lib/theme-context.tsx",
+      "dependencies": [
+        "@react-native-async-storage/async-storage@2.2.0",
+        "nativewind@^4.2.6"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "lib/theme-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/theme-context.tsx"
+        }
+      ]
+    },
+    {
+      "name": "lib-theme",
+      "type": "registry:lib",
+      "title": "lib/theme.ts",
+      "dependencies": [
+        "expo-router@~57.0.22"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "lib/theme.ts",
+          "type": "registry:lib",
+          "target": "lib/theme.ts"
+        }
+      ]
+    },
+    {
+      "name": "lib-utils",
+      "type": "registry:lib",
+      "title": "lib/utils.ts",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.5.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "`variant` default/secondary/outline/ghost/link/destructive · `size` sm/default/lg/icon · children are `<Text>`/`<Icon>`",
+      "dependencies": [
+        "class-variance-authority@^0.7.1"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/button.tsx"
+        }
+      ],
+      "categories": [
+        "actions"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Button"
+        ],
+        "api": "<Button variant? size? disabled?><Text>…</Text></Button>"
+      }
+    },
+    {
+      "name": "floating-button",
+      "type": "registry:component",
+      "title": "Floating button",
+      "description": "floats OVER the scroll (a Button flows with it) · Material calls it a FAB · `icon label? variant position` · one per screen",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/floating-button.tsx",
+          "type": "registry:component",
+          "target": "components/kit/floating-button.tsx"
+        }
+      ],
+      "categories": [
+        "actions"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "FloatingButton"
+        ],
+        "api": "<FloatingButton icon label? variant=\"primary|secondary\" position=\"inline|bottom-right|bottom-center\" />"
+      }
+    },
+    {
+      "name": "icon-badge",
+      "type": "registry:component",
+      "title": "Icon badge",
+      "description": "icon button with unread count/dot · always labelled",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/icon-badge.tsx",
+          "type": "registry:component",
+          "target": "components/kit/icon-badge.tsx"
+        }
+      ],
+      "categories": [
+        "actions"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "IconBadge"
+        ],
+        "api": "<IconBadge icon count? dot? accessibilityLabel />"
+      }
+    },
+    {
+      "name": "swipe-to-confirm",
+      "type": "registry:component",
+      "title": "Swipe to confirm",
+      "description": "drag past 85% commits · `tone` primary/destructive · reset via `key`",
+      "dependencies": [
+        "lucide-react-native@^1.21.0",
+        "react-native-gesture-handler@~2.32.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-reduced-motion",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/swipe-to-confirm.tsx",
+          "type": "registry:component",
+          "target": "components/kit/swipe-to-confirm.tsx"
+        }
+      ],
+      "categories": [
+        "actions"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "SwipeToConfirm"
+        ],
+        "api": "<SwipeToConfirm label onConfirm confirmLabel? tone=\"primary|destructive\" />"
+      }
+    },
+    {
+      "name": "action-grid",
+      "type": "registry:component",
+      "title": "Action grid",
+      "description": "the row of shortcuts under a screen hero · 3–4 `items`, one row only, last tile is \"More\"",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/action-grid.tsx",
+          "type": "registry:component",
+          "target": "components/kit/action-grid.tsx"
+        }
+      ],
+      "categories": [
+        "actions"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "ActionGrid"
+        ],
+        "api": "<ActionGrid items={[{icon,label,onPress,badge?}]} />"
+      }
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "always with `Label`",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/input.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Input"
+        ],
+        "api": "<Label htmlFor /> + <Input id placeholder keyboardType … />"
+      }
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/textarea.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/textarea.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Textarea"
+        ],
+        "api": "<Textarea placeholder numberOfLines? />"
+      }
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "`checked onCheckedChange`",
+      "dependencies": [
+        "@rn-primitives/checkbox@^1.5.2",
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/checkbox.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/checkbox.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Checkbox"
+        ],
+        "api": "<Checkbox checked onCheckedChange disabled? />"
+      }
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio group",
+      "description": "`RadioGroupItem value id`",
+      "dependencies": [
+        "@rn-primitives/radio-group@^1.5.2"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/radio-group.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/radio-group.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "RadioGroup"
+        ],
+        "api": "<RadioGroup value onValueChange><RadioGroupItem value id /></RadioGroup>"
+      }
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "settings on/off",
+      "dependencies": [
+        "@rn-primitives/switch@^1.5.2"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/switch.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/switch.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Switch"
+        ],
+        "api": "<Switch checked onCheckedChange />"
+      }
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "pass safe-area `insets` to `SelectContent`",
+      "dependencies": [
+        "@rn-primitives/select@^1.5.2",
+        "lucide-react-native@^1.21.0",
+        "react-native-reanimated@4.5.1",
+        "react-native-screens@~4.26.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json",
+        "https://reactnativereusables.com/r/nativewind/native-only-animated-view.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/select.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/select.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Select"
+        ],
+        "api": "<Select><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem label value /></SelectContent></Select>"
+      }
+    },
+    {
+      "name": "filter-chip",
+      "type": "registry:component",
+      "title": "Filter chip",
+      "description": "neutral-active chips",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/filter-chip.tsx",
+          "type": "registry:component",
+          "target": "components/kit/filter-chip.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "FilterChip",
+          "FilterChipRow"
+        ],
+        "api": "<FilterChipRow><FilterChip label selected onPress icon? /></FilterChipRow>"
+      }
+    },
+    {
+      "name": "segmented-control",
+      "type": "registry:component",
+      "title": "Segmented control",
+      "description": "2–4 options, animated thumb",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-reduced-motion",
+        "@kit-native/lib-theme",
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/segmented-control.tsx",
+          "type": "registry:component",
+          "target": "components/kit/segmented-control.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "SegmentedControl"
+        ],
+        "api": "<SegmentedControl segments={[{value,label}]} value onChange />"
+      }
+    },
+    {
+      "name": "search-field",
+      "type": "registry:component",
+      "title": "Search field",
+      "description": "Input + search icon + clear",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/input",
+        "@kit-native/lib-utils",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/search-field.tsx",
+          "type": "registry:component",
+          "target": "components/kit/search-field.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "SearchField"
+        ],
+        "api": "<SearchField value onChangeText placeholder />"
+      }
+    },
+    {
+      "name": "quantity-stepper",
+      "type": "registry:component",
+      "title": "Quantity stepper",
+      "description": "`min max step`",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/quantity-stepper.tsx",
+          "type": "registry:component",
+          "target": "components/kit/quantity-stepper.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "QuantityStepper"
+        ],
+        "api": "<QuantityStepper value onChange min max step />"
+      }
+    },
+    {
+      "name": "amount-input",
+      "type": "registry:component",
+      "title": "Amount input",
+      "description": "hero money field · `editable={false}` with keypad",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/amount-input.tsx",
+          "type": "registry:component",
+          "target": "components/kit/amount-input.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "AmountInput"
+        ],
+        "api": "<AmountInput value onChangeText symbol helper? onMax? onToggleCurrency? error? editable? />"
+      }
+    },
+    {
+      "name": "numeric-keypad",
+      "type": "registry:component",
+      "title": "Numeric keypad",
+      "description": "3×4 in-app keypad, keys on `bg-muted`",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/numeric-keypad.tsx",
+          "type": "registry:component",
+          "target": "components/kit/numeric-keypad.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "NumericKeypad"
+        ],
+        "api": "<NumericKeypad value onChange maxLength? allowDecimal? />"
+      }
+    },
+    {
+      "name": "otp-input",
+      "type": "registry:component",
+      "title": "OTP input",
+      "description": "N-digit code, paste-aware",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/otp-input.tsx",
+          "type": "registry:component",
+          "target": "components/kit/otp-input.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "OtpInput"
+        ],
+        "api": "<OtpInput length value onChange onComplete error? />"
+      }
+    },
+    {
+      "name": "password-input",
+      "type": "registry:component",
+      "title": "Password input",
+      "description": "Input + show/hide",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/input",
+        "@kit-native/lib-utils",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/password-input.tsx",
+          "type": "registry:component",
+          "target": "components/kit/password-input.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "PasswordInput"
+        ],
+        "api": "<PasswordInput value onChangeText />"
+      }
+    },
+    {
+      "name": "selectable-card",
+      "type": "registry:component",
+      "title": "Selectable card",
+      "description": "card as a radio/checkbox choice",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/selectable-card.tsx",
+          "type": "registry:component",
+          "target": "components/kit/selectable-card.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "SelectableCard"
+        ],
+        "api": "<SelectableCard title description? icon? detail? selected onPress mode=\"radio|checkbox\" />"
+      }
+    },
+    {
+      "name": "slider",
+      "type": "registry:component",
+      "title": "Slider",
+      "description": "continuous/stepped · `tone`",
+      "dependencies": [
+        "react-native-gesture-handler@~2.32.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-utils"
+      ],
+      "files": [
+        {
+          "path": "components/kit/slider.tsx",
+          "type": "registry:component",
+          "target": "components/kit/slider.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Slider"
+        ],
+        "api": "<Slider value onChange min max step? tone? onChangeComplete? />"
+      }
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:component",
+      "title": "Date picker",
+      "description": "field trigger → Calendar in a Sheet",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/calendar",
+        "@kit-native/lib-utils",
+        "@kit-native/sheet",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/date-picker.tsx",
+          "type": "registry:component",
+          "target": "components/kit/date-picker.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "DatePicker"
+        ],
+        "api": "<DatePicker value onChange placeholder? />"
+      }
+    },
+    {
+      "name": "calendar",
+      "type": "registry:component",
+      "title": "Calendar",
+      "description": "month grid",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/calendar.tsx",
+          "type": "registry:component",
+          "target": "components/kit/calendar.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Calendar"
+        ],
+        "api": "<Calendar value onChange />"
+      }
+    },
+    {
+      "name": "range-selector",
+      "type": "registry:component",
+      "title": "Range selector",
+      "description": "trackless chart range (1D·1W·1M·1Y·ALL), active is a filled disc",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/range-selector.tsx",
+          "type": "registry:component",
+          "target": "components/kit/range-selector.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "RangeSelector"
+        ],
+        "api": "<RangeSelector options value onChange />"
+      }
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "in-page content switching",
+      "dependencies": [
+        "@rn-primitives/tabs@^1.5.2"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/ui/tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/tabs.tsx"
+        }
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Tabs"
+        ],
+        "api": "<Tabs value onValueChange><TabsList><TabsTrigger value /></TabsList><TabsContent value /></Tabs>"
+      }
+    },
+    {
+      "name": "menubar",
+      "type": "registry:ui",
+      "title": "Menubar",
+      "description": "web/desktop pattern",
+      "dependencies": [
+        "@rn-primitives/menubar@^1.5.2",
+        "@rn-primitives/portal@~1.4.0",
+        "lucide-react-native@^1.21.0",
+        "react-native-reanimated@4.5.1",
+        "react-native-screens@~4.26.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json",
+        "https://reactnativereusables.com/r/nativewind/native-only-animated-view.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/menubar.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/menubar.tsx"
+        }
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Menubar"
+        ],
+        "api": "<Menubar value onValueChange><MenubarMenu value><MenubarTrigger /><MenubarContent /></MenubarMenu></Menubar>"
+      }
+    },
+    {
+      "name": "tab-bar",
+      "type": "registry:component",
+      "title": "Tab bar",
+      "description": "custom bottom tab bar: opaque tints, label, active dot under the label",
+      "dependencies": [
+        "lucide-react-native@^1.21.0",
+        "react-native-safe-area-context@~5.7.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-theme",
+        "@kit-native/lib-theme-context",
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/tab-bar.tsx",
+          "type": "registry:component",
+          "target": "components/kit/tab-bar.tsx"
+        }
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "TabBar",
+          "TabBarItem",
+          "tabIcon"
+        ],
+        "api": "<Tabs tabBar={(p) => <TabBar {...p} />}><Tabs.Screen options={{ title, tabBarIcon: tabIcon(HouseIcon) }} /></Tabs>"
+      }
+    },
+    {
+      "name": "stepper",
+      "type": "registry:component",
+      "title": "Stepper",
+      "description": "`numbered` / `compact` flow progress",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/stepper.tsx",
+          "type": "registry:component",
+          "target": "components/kit/stepper.tsx"
+        }
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Stepper"
+        ],
+        "api": "<Stepper current total labels? variant=\"numbered|compact\" />"
+      }
+    },
+    {
+      "name": "section-header",
+      "type": "registry:component",
+      "title": "Section header",
+      "description": "title + action, outside the card",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/section-header.tsx",
+          "type": "registry:component",
+          "target": "components/kit/section-header.tsx"
+        }
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "SectionHeader"
+        ],
+        "api": "<SectionHeader title action? onAction? />"
+      }
+    },
+    {
+      "name": "screen-header",
+      "type": "registry:component",
+      "title": "Screen header",
+      "description": "the in-body page title + intro · one per screen, first child of the ScrollView",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/screen-header.tsx",
+          "type": "registry:component",
+          "target": "components/kit/screen-header.tsx"
+        }
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "ScreenHeader"
+        ],
+        "api": "<ScreenHeader title subtitle? action? size=\"default|large\" />"
+      }
+    },
+    {
+      "name": "pager-dots",
+      "type": "registry:component",
+      "title": "Pager dots",
+      "description": "Full-width slides: HorizontalPager with itemWidth = screen width.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-utils"
+      ],
+      "files": [
+        {
+          "path": "components/kit/pager-dots.tsx",
+          "type": "registry:component",
+          "target": "components/kit/pager-dots.tsx"
+        }
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "PagerDots"
+        ],
+        "api": "<PagerDots count activeIndex /> — HorizontalPager renders them for you"
+      }
+    },
+    {
+      "name": "horizontal-pager",
+      "type": "registry:component",
+      "title": "Horizontal pager",
+      "description": "snap pager + dots",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/pager-dots"
+      ],
+      "files": [
+        {
+          "path": "components/kit/horizontal-pager.tsx",
+          "type": "registry:component",
+          "target": "components/kit/horizontal-pager.tsx"
+        }
+      ],
+      "categories": [
+        "navigation"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "HorizontalPager"
+        ],
+        "api": "<HorizontalPager itemWidth gap? showDots? onIndexChange?>{cards}</HorizontalPager>"
+      }
+    },
+    {
+      "name": "text",
+      "type": "registry:ui",
+      "title": "Text",
+      "description": "the only Text · the scale is previewed in **Foundations › Typography**, not Components",
+      "dependencies": [
+        "@rn-primitives/slot@^1.5.2",
+        "class-variance-authority@^0.7.1"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/text.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/text.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Text"
+        ]
+      }
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "image + fallback initials",
+      "dependencies": [
+        "@rn-primitives/avatar@^1.5.2"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/avatar.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/avatar.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Avatar"
+        ],
+        "api": "<Avatar alt><AvatarImage source /><AvatarFallback><Text /></AvatarFallback></Avatar>"
+      }
+    },
+    {
+      "name": "avatar-group",
+      "type": "registry:component",
+      "title": "Avatar group",
+      "description": "overlapping avatars + \"+N\"",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/avatar",
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/avatar-group.tsx",
+          "type": "registry:component",
+          "target": "components/kit/avatar-group.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "AvatarGroup"
+        ],
+        "api": "<AvatarGroup items={[{id,initials,uri?}]} max? size? />"
+      }
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "tag/pill/count · tint with semantic classes",
+      "dependencies": [
+        "@rn-primitives/slot@^1.5.2",
+        "class-variance-authority@^0.7.1"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/ui/badge.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/badge.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Badge"
+        ],
+        "api": "<Badge variant=\"default|secondary|destructive|outline\"><Text /></Badge>"
+      }
+    },
+    {
+      "name": "list-row",
+      "type": "registry:component",
+      "title": "List row",
+      "description": "ONE row · the canonical row · `last` on the final row · `select={{mode,selected}}` makes it a radio/checkbox row",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/list-row.tsx",
+          "type": "registry:component",
+          "target": "components/kit/list-row.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "ListRow"
+        ],
+        "api": "<ListRow leading title subtitle? value? sublabel? trailing? chevron? onPress? last? />"
+      }
+    },
+    {
+      "name": "list-group",
+      "type": "registry:component",
+      "title": "List group",
+      "description": "the CONTAINER around rows: owns the title, dividers, footnote and card/plain surface · wraps ListRows and sets `last` for you · `variant` card/plain (plain = settings look)",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/card",
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/list-group.tsx",
+          "type": "registry:component",
+          "target": "components/kit/list-group.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "ListGroup"
+        ],
+        "api": "<ListGroup title? footnote? variant=\"card|plain\">{rows}</ListGroup>"
+      }
+    },
+    {
+      "name": "icon-circle",
+      "type": "registry:component",
+      "title": "Icon circle",
+      "description": "leading icon well, row scale (≤44px) · `shape` circle/square · `tone`",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/icon-circle.tsx",
+          "type": "registry:component",
+          "target": "components/kit/icon-circle.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "IconCircle"
+        ],
+        "api": "<IconCircle as size? shape=\"circle|square\" tone? />"
+      }
+    },
+    {
+      "name": "summary-card",
+      "type": "registry:component",
+      "title": "Summary card",
+      "description": "label/value rows, optionally in a Card",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/card",
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/key-value-list.tsx",
+          "type": "registry:component",
+          "target": "components/kit/key-value-list.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "KeyValueList",
+          "SummaryCard"
+        ],
+        "api": "<SummaryCard title? rows={[{label,value}]} /> · <KeyValueList rows />"
+      }
+    },
+    {
+      "name": "stat-tile",
+      "type": "registry:component",
+      "title": "Stat tile",
+      "description": "KPI tile with delta",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/percent-change",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/stat-tile.tsx",
+          "type": "registry:component",
+          "target": "components/kit/stat-tile.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "StatTile"
+        ],
+        "api": "<StatTile label value delta? icon? />"
+      }
+    },
+    {
+      "name": "percent-change",
+      "type": "registry:component",
+      "title": "Percent change",
+      "description": "signed % with trend icon",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/percent-change.tsx",
+          "type": "registry:component",
+          "target": "components/kit/percent-change.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "PercentChange"
+        ],
+        "api": "<PercentChange value decimals? showIcon? />"
+      }
+    },
+    {
+      "name": "progress-ring",
+      "type": "registry:component",
+      "title": "Progress ring",
+      "description": "circular determinate progress",
+      "dependencies": [
+        "react-native-svg@15.15.4"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-theme",
+        "@kit-native/lib-theme-context",
+        "@kit-native/lib-utils"
+      ],
+      "files": [
+        {
+          "path": "components/kit/progress-ring.tsx",
+          "type": "registry:component",
+          "target": "components/kit/progress-ring.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "ProgressRing"
+        ],
+        "api": "<ProgressRing value size? tone?>{centre}</ProgressRing>"
+      }
+    },
+    {
+      "name": "status-dot",
+      "type": "registry:component",
+      "title": "Status dot",
+      "description": "",
+      "dependencies": [
+        "class-variance-authority@^0.7.1"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils"
+      ],
+      "files": [
+        {
+          "path": "components/kit/status-dot.tsx",
+          "type": "registry:component",
+          "target": "components/kit/status-dot.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "StatusDot"
+        ],
+        "api": "<StatusDot tone size />"
+      }
+    },
+    {
+      "name": "line-chart",
+      "type": "registry:component",
+      "title": "Line chart",
+      "description": "interactive/sparkline · `area` · `onPointerChange`",
+      "dependencies": [
+        "react-native-svg@15.15.4"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-theme",
+        "@kit-native/lib-theme-context"
+      ],
+      "files": [
+        {
+          "path": "components/kit/line-chart.tsx",
+          "type": "registry:component",
+          "target": "components/kit/line-chart.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "LineChart"
+        ],
+        "api": "<LineChart data variant=\"interactive|sparkline\" height tone area? onPointerChange? />"
+      }
+    },
+    {
+      "name": "bar-chart",
+      "type": "registry:component",
+      "title": "Bar chart",
+      "description": "plain Views",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/bar-chart.tsx",
+          "type": "registry:component",
+          "target": "components/kit/bar-chart.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "BarChart"
+        ],
+        "api": "<BarChart data={[{label,value,className?}]} height showValues? />"
+      }
+    },
+    {
+      "name": "donut-chart",
+      "type": "registry:component",
+      "title": "Donut chart",
+      "description": "ring + legend",
+      "dependencies": [
+        "react-native-svg@15.15.4"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-theme",
+        "@kit-native/lib-theme-context",
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/donut-chart.tsx",
+          "type": "registry:component",
+          "target": "components/kit/donut-chart.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "DonutChart",
+          "ChartLegend"
+        ],
+        "api": "<DonutChart data size>{centre}</DonutChart> + <ChartLegend data />"
+      }
+    },
+    {
+      "name": "value-header",
+      "type": "registry:component",
+      "title": "Value header",
+      "description": "hero figure + caption · `maskable` adds the eye toggle",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/value-header.tsx",
+          "type": "registry:component",
+          "target": "components/kit/value-header.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "ValueHeader"
+        ],
+        "api": "<ValueHeader value label? caption? captionTone? maskable? align? />"
+      }
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "inline, persistent · `variant` default/info/success/warning/destructive · `icon` · `onDismiss`/`action` make it a nudge",
+      "dependencies": [
+        "class-variance-authority@^0.7.1",
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/alert.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/alert.tsx"
+        }
+      ],
+      "categories": [
+        "feedback"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Alert"
+        ],
+        "api": "<Alert icon variant=\"default|info|success|warning|destructive\" onDismiss? action?><AlertTitle /><AlertDescription /></Alert>"
+      }
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "0–100",
+      "dependencies": [
+        "@rn-primitives/progress@^1.5.2",
+        "react-native-reanimated@4.5.1"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/progress.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/progress.tsx"
+        }
+      ],
+      "categories": [
+        "feedback"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Progress"
+        ],
+        "api": "<Progress value={0–100} />"
+      }
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "",
+      "dependencies": [
+        "@rn-primitives/tooltip@^1.5.2",
+        "react-native-reanimated@4.5.1",
+        "react-native-screens@~4.26.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/native-only-animated-view.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/tooltip.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/tooltip.tsx"
+        }
+      ],
+      "categories": [
+        "feedback"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Tooltip"
+        ],
+        "api": "<Tooltip><TooltipTrigger asChild /><TooltipContent><Text /></TooltipContent></Tooltip>"
+      }
+    },
+    {
+      "name": "toast",
+      "type": "registry:component",
+      "title": "Toast",
+      "description": "transient · `ToastProvider` is in the root layout",
+      "dependencies": [
+        "lucide-react-native@^1.21.0",
+        "react-native-safe-area-context@~5.7.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-reduced-motion",
+        "@kit-native/lib-theme",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/toast.tsx",
+          "type": "registry:component",
+          "target": "components/kit/toast.tsx"
+        }
+      ],
+      "categories": [
+        "feedback"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "useToast",
+          "ToastProvider"
+        ],
+        "api": "const toast = useToast(); toast.success(\"Saved\") · .error · .warning · .info"
+      }
+    },
+    {
+      "name": "spinner",
+      "type": "registry:component",
+      "title": "Spinner",
+      "description": "themed ActivityIndicator",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-theme",
+        "@kit-native/lib-theme-context"
+      ],
+      "files": [
+        {
+          "path": "components/kit/spinner.tsx",
+          "type": "registry:component",
+          "target": "components/kit/spinner.tsx"
+        }
+      ],
+      "categories": [
+        "feedback"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Spinner"
+        ],
+        "api": "<Spinner size=\"small|large\" tone=\"primary|foreground|muted\" />"
+      }
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:component",
+      "title": "Empty state",
+      "description": "`default` / `compact`",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/button",
+        "@kit-native/lib-utils",
+        "@kit-native/spot",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/empty-state.tsx",
+          "type": "registry:component",
+          "target": "components/kit/empty-state.tsx"
+        }
+      ],
+      "categories": [
+        "feedback"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "EmptyState"
+        ],
+        "api": "<EmptyState icon title subtitle? action? variant=\"default|compact\" />"
+      }
+    },
+    {
+      "name": "success-screen",
+      "type": "registry:component",
+      "title": "Success screen",
+      "description": "the one success template",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/spinner",
+        "@kit-native/spot",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/success-screen.tsx",
+          "type": "registry:component",
+          "target": "components/kit/success-screen.tsx"
+        }
+      ],
+      "categories": [
+        "feedback"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "SuccessScreen"
+        ],
+        "api": "<SuccessScreen title body? amount? amountSubtitle? loading?>{extra}</SuccessScreen>"
+      }
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "never nest cards; titles sit outside · **flat — a shadow means pressable or floating**",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/ui/card.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/card.tsx"
+        }
+      ],
+      "categories": [
+        "layout"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Card"
+        ],
+        "api": "<Card><CardHeader><CardTitle /><CardDescription /></CardHeader><CardContent /><CardFooter /></Card>"
+      }
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "",
+      "dependencies": [
+        "@rn-primitives/accordion@^1.5.2",
+        "lucide-react-native@^1.21.0",
+        "react-native-reanimated@4.5.1"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/accordion.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/accordion.tsx"
+        }
+      ],
+      "categories": [
+        "layout"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Accordion"
+        ],
+        "api": "<Accordion type=\"single|multiple\" collapsible><AccordionItem value><AccordionTrigger /><AccordionContent /></AccordionItem></Accordion>"
+      }
+    },
+    {
+      "name": "sticky-bottom-bar",
+      "type": "registry:component",
+      "title": "Sticky bottom bar",
+      "description": "safe-area action bar under a ScrollView (`pb-32`)",
+      "dependencies": [
+        "react-native-safe-area-context@~5.7.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils"
+      ],
+      "files": [
+        {
+          "path": "components/kit/sticky-bottom-bar.tsx",
+          "type": "registry:component",
+          "target": "components/kit/sticky-bottom-bar.tsx"
+        }
+      ],
+      "categories": [
+        "layout"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "StickyBottomBar"
+        ],
+        "api": "<StickyBottomBar transparent?>{buttons}</StickyBottomBar>"
+      }
+    },
+    {
+      "name": "promo-card",
+      "type": "registry:component",
+      "title": "Promo card",
+      "description": "tinted offer/nudge card · circular arrow CTA, dismiss X, generated art · one per screen",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-utils",
+        "@kit-native/placeholder",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/promo-card.tsx",
+          "type": "registry:component",
+          "target": "components/kit/promo-card.tsx"
+        }
+      ],
+      "categories": [
+        "layout"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "PromoCard"
+        ],
+        "api": "<PromoCard title body? action? onDismiss? tone? seed? icon? />"
+      }
+    },
+    {
+      "name": "footnote",
+      "type": "registry:component",
+      "title": "Footnote",
+      "description": "small print / disclosure, last in the scroll",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/footnote.tsx",
+          "type": "registry:component",
+          "target": "components/kit/footnote.tsx"
+        }
+      ],
+      "categories": [
+        "layout"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Footnote"
+        ],
+        "api": "<Footnote action?>{copy}</Footnote>"
+      }
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "edits with a form",
+      "dependencies": [
+        "@rn-primitives/dialog@^1.5.2",
+        "lucide-react-native@^1.21.0",
+        "react-native-reanimated@4.5.1",
+        "react-native-screens@~4.26.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "https://reactnativereusables.com/r/nativewind/icon.json",
+        "https://reactnativereusables.com/r/nativewind/native-only-animated-view.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/dialog.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/dialog.tsx"
+        }
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Dialog"
+        ],
+        "api": "<Dialog><DialogTrigger asChild /><DialogContent><DialogHeader /><DialogFooter /></DialogContent></Dialog>"
+      }
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert dialog",
+      "description": "confirmations",
+      "dependencies": [
+        "@rn-primitives/alert-dialog@^1.5.2",
+        "react-native-reanimated@4.5.1",
+        "react-native-screens@~4.26.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/button",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/native-only-animated-view.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/alert-dialog.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/alert-dialog.tsx"
+        }
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "AlertDialog"
+        ],
+        "api": "<AlertDialog>…<AlertDialogCancel /><AlertDialogAction /></AlertDialog>"
+      }
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown menu",
+      "description": "pass `insets`",
+      "dependencies": [
+        "@rn-primitives/dropdown-menu@^1.5.2",
+        "lucide-react-native@^1.21.0",
+        "react-native-reanimated@4.5.1",
+        "react-native-screens@~4.26.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json",
+        "https://reactnativereusables.com/r/nativewind/native-only-animated-view.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/dropdown-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/dropdown-menu.tsx"
+        }
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "DropdownMenu"
+        ],
+        "api": "<DropdownMenu><DropdownMenuTrigger asChild /><DropdownMenuContent insets><DropdownMenuItem /></DropdownMenuContent></DropdownMenu>"
+      }
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context menu",
+      "description": "long-press",
+      "dependencies": [
+        "@rn-primitives/context-menu@^1.5.2",
+        "lucide-react-native@^1.21.0",
+        "react-native-reanimated@4.5.1",
+        "react-native-screens@~4.26.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json",
+        "https://reactnativereusables.com/r/nativewind/native-only-animated-view.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/context-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/context-menu.tsx"
+        }
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "ContextMenu"
+        ],
+        "api": "<ContextMenu><ContextMenuTrigger /><ContextMenuContent insets><ContextMenuItem /></ContextMenuContent></ContextMenu>"
+      }
+    },
+    {
+      "name": "sheet",
+      "type": "registry:component",
+      "title": "Sheet",
+      "description": "bottom sheet shell",
+      "dependencies": [
+        "lucide-react-native@^1.21.0",
+        "react-native-safe-area-context@~5.7.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-reduced-motion",
+        "@kit-native/lib-theme",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/sheet.tsx",
+          "type": "registry:component",
+          "target": "components/kit/sheet.tsx"
+        }
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Sheet"
+        ],
+        "api": "<Sheet open onClose title? description?>{children}</Sheet>"
+      }
+    },
+    {
+      "name": "image-tile",
+      "type": "registry:component",
+      "title": "Image tile",
+      "description": "rounded image · `seed` draws generated art when there is no `source`",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/placeholder",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/image-tile.tsx",
+          "type": "registry:component",
+          "target": "components/kit/image-tile.tsx"
+        }
+      ],
+      "categories": [
+        "media"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "ImageTile"
+        ],
+        "api": "<ImageTile source? ratio? caption? fallbackIcon? />"
+      }
+    },
+    {
+      "name": "placeholder",
+      "type": "registry:component",
+      "title": "Placeholder",
+      "description": "deterministic abstract SVG art from a `seed` · the kit ships no raster imagery",
+      "dependencies": [
+        "lucide-react-native@^1.21.0",
+        "react-native-svg@15.15.4"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-theme",
+        "@kit-native/lib-theme-context",
+        "@kit-native/lib-utils",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/placeholder.tsx",
+          "type": "registry:component",
+          "target": "components/kit/placeholder.tsx"
+        }
+      ],
+      "categories": [
+        "media"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Placeholder"
+        ],
+        "api": "<Placeholder seed ratio? palette=\"chart|mono|primary\" icon? />"
+      }
+    },
+    {
+      "name": "spot",
+      "type": "registry:component",
+      "title": "Spot",
+      "description": "an icon at illustration scale (≥64px) · EmptyState, SuccessScreen and PermissionPrimer all use it",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/spot.tsx",
+          "type": "registry:component",
+          "target": "components/kit/spot.tsx"
+        }
+      ],
+      "categories": [
+        "media"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Spot"
+        ],
+        "api": "<Spot icon size=\"md|lg|xl\" tone? shape=\"circle|square\" ring? />"
+      }
+    },
+    {
+      "name": "photo-capture",
+      "type": "registry:component",
+      "title": "PhotoCapture",
+      "description": "camera + library · falls back to a seeded `Placeholder`",
+      "dependencies": [
+        "expo-image-picker@~57.0.19",
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-native-context",
+        "@kit-native/lib-utils",
+        "@kit-native/placeholder",
+        "@kit-native/sheet",
+        "@kit-native/text",
+        "@kit-native/toast",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/photo-capture.tsx",
+          "type": "registry:component",
+          "target": "components/kit/photo-capture.tsx"
+        }
+      ],
+      "categories": [
+        "native"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "PhotoCapture"
+        ],
+        "api": "<PhotoCapture value? onChange? sources? shape=\"tile|avatar|wide\" label? seed? simulate? />"
+      }
+    },
+    {
+      "name": "code-scanner",
+      "type": "registry:component",
+      "title": "CodeScanner",
+      "description": "QR/barcode viewfinder · simulated emits a sample payload",
+      "dependencies": [
+        "expo-camera@~57.0.5",
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/button",
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-native-context",
+        "@kit-native/lib-utils",
+        "@kit-native/permission-primer",
+        "@kit-native/placeholder",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/code-scanner.tsx",
+          "type": "registry:component",
+          "target": "components/kit/code-scanner.tsx"
+        }
+      ],
+      "categories": [
+        "native"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "CodeScanner"
+        ],
+        "api": "<CodeScanner onScan types? hint? ratio? continuous? simulatedValues? simulate? />"
+      }
+    },
+    {
+      "name": "biometric-gate",
+      "type": "registry:component",
+      "title": "BiometricGate",
+      "description": "Face ID gate, or the hook for a single action · real only in a dev build",
+      "dependencies": [
+        "expo-local-authentication@~57.0.3",
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/button",
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-native-context",
+        "@kit-native/lib-utils",
+        "@kit-native/spinner",
+        "@kit-native/spot",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/biometric-gate.tsx",
+          "type": "registry:component",
+          "target": "components/kit/biometric-gate.tsx"
+        }
+      ],
+      "categories": [
+        "native"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "BiometricGate",
+          "useBiometricAuth"
+        ],
+        "api": "<BiometricGate title? subtitle? prompt? locked? onUnlock? simulate?>…</BiometricGate> · useBiometricAuth()"
+      }
+    },
+    {
+      "name": "permission-primer",
+      "type": "registry:component",
+      "title": "PermissionPrimer",
+      "description": "shown BEFORE the OS dialog · the skip is not optional",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/button",
+        "@kit-native/lib-native",
+        "@kit-native/lib-utils",
+        "@kit-native/sheet",
+        "@kit-native/spot",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/permission-primer.tsx",
+          "type": "registry:component",
+          "target": "components/kit/permission-primer.tsx"
+        }
+      ],
+      "categories": [
+        "native"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "PermissionPrimer"
+        ],
+        "api": "<PermissionPrimer capability variant=\"inline|sheet\" onAllow onSkip skipLabel? />"
+      }
+    },
+    {
+      "name": "share",
+      "type": "registry:component",
+      "title": "useShare",
+      "description": "OS share sheet · copies to the clipboard on web",
+      "dependencies": [
+        "expo-clipboard@~57.0.2"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/toast"
+      ],
+      "files": [
+        {
+          "path": "components/kit/share.ts",
+          "type": "registry:component",
+          "target": "components/kit/share.ts"
+        }
+      ],
+      "categories": [
+        "native"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "useShare"
+        ],
+        "api": "const { share } = useShare(); share({ message?, url?, title? })"
+      }
+    },
+    {
+      "name": "notify",
+      "type": "registry:component",
+      "title": "useNotify",
+      "description": "in-app banner now (`delay: 0`), real OS notification when scheduled",
+      "dependencies": [
+        "expo-notifications@~57.0.20",
+        "lucide-react-native@^1.21.0",
+        "react-native-safe-area-context@~5.7.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-native-context",
+        "@kit-native/lib-reduced-motion",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "@kit-native/toast",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/notify.tsx",
+          "type": "registry:component",
+          "target": "components/kit/notify.tsx"
+        }
+      ],
+      "categories": [
+        "native"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "useNotify",
+          "NotifyProvider"
+        ],
+        "api": "const { notify } = useNotify(); notify({ title, body?, delay?, icon? })"
+      }
+    }
+  ]
+}
