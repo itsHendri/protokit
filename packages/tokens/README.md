@@ -21,6 +21,7 @@ npx kit-tokens figma      # mirror the tokens into Figma Variables
 ```json
 {
   "source": "tokens/tokens.json",
+  "scan": ["app", "components"],
   "targets": {
     "nativewind3": { "css": "global.css", "tailwind": "tokens/generated/tailwind.theme.js" },
     "ts-theme": { "out": "lib/theme.ts", "navTheme": "expo-router/react-navigation" },
@@ -29,6 +30,8 @@ npx kit-tokens figma      # mirror the tokens into Figma Variables
   }
 }
 ```
+
+`scan` (optional) lists source folders for the text-on-tint check below.
 
 ## Targets
 
@@ -47,6 +50,14 @@ npx kit-tokens figma      # mirror the tokens into Figma Variables
 - **Contrast gate.** Every `X` / `X-foreground` pairing, body and muted text on every surface, each status
   colour used as text, and each status icon on its own tint must clear WCAG AA in both themes, or the build
   fails, names the pairing, prints the ratio, and writes nothing.
+- **Text on tints.** A status colour as text on its own tint (`text-success` on `bg-success/15`) loses
+  contrast fast: 4.09:1 with a typical green. The build works out, per colour, the strongest tint that
+  still clears AA in both themes, and writes it into `DESIGN.md` and the `llms` section
+  (`primary up to /5, …, destructive never`). With `scan` set, `build` and `check` also read every class
+  string in those folders and fail on a tone's text over a tint stronger than that, naming the file and line.
+  An element that holds only an icon (3:1) is exempt with a `kit-tokens-ignore tint-text` comment. A class
+  string has to contain both classes, so React Native's `View` > `Text` nesting is out of its reach;
+  `DESIGN.md` states the rule for that case.
 - **No drift between platforms.** Every oklch value must render back to the same 8-bit hex as the source,
   so the web theme and the native theme are the same colours.
 - **Radius scale.** `rounded-*` classes are offsets from `radius.lg`, so with the default base each class

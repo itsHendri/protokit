@@ -5,6 +5,7 @@
  * The detailed rules stay in DESIGN_SYSTEM.md; this file points there instead of repeating them.
  *   options: { out: 'DESIGN.md', name?: string, description?: string }
  */
+import { describeTintLimits, textOnTintLimits } from '../lib/contrast.mjs';
 import { group } from '../lib/resolve.mjs';
 
 const q = (s) => JSON.stringify(String(s));
@@ -119,6 +120,14 @@ hex literal or a Tailwind palette colour in UI code. Keys ending in \`-dark\` ar
 
 Every \`X\` / \`X-foreground\` pairing, muted text on every surface, and every status tone used as text
 clears WCAG AA (4.5:1) in both themes; the build refuses a palette that does not.
+
+A tone's text on that tone's own tint (\`text-success\` on \`bg-success/15\`) is a weaker pairing. With
+this palette it clears AA only for:
+
+${describeTintLimits(textOnTintLimits(ctx.colors))}.
+
+On a stronger tint, the text stays \`text-foreground\` and the tint, an icon or a dot carries the
+colour. \`kit-tokens check\` flags class strings that break this.
 
 ## Typography
 

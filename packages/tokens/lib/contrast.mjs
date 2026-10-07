@@ -63,6 +63,37 @@ export function contrastFailures(hex, mode) {
   );
 }
 
+/** Tint strengths a class can ask for (`bg-<tone>/5` … `/20`), for the text-on-tint limits below. */
+export const TEXT_TINTS = [0.05, 0.1, 0.15, 0.2];
+
+/**
+ * How strong a tint of each tone can be with that same tone's TEXT on it (`text-success` on
+ * `bg-success/15`) and still clear AA in both themes: `{ primary: 0.05, destructive: 0, … }`, where 0
+ * means never. A different pairing from 3 above (the tone on the page) and 4 (an icon, 3:1): a colour
+ * that reads fine on white loses contrast fast on its own tint. Not a gate on the palette, because the
+ * kit can always put `text-foreground` on a tint; `kit-tokens check` holds the source to these limits.
+ */
+export function textOnTintLimits(colors) {
+  const modes = ['light', 'dark'].map((mode) => Object.fromEntries(colors.map((c) => [c.name, c[mode]])));
+  const limits = {};
+  for (const tone of TONES) {
+    let max = 0;
+    for (const alpha of TEXT_TINTS) {
+      const ok = modes.every((hex) => hex[tone] && hex.background && contrast(hex[tone], blend(hex[tone], hex.background, alpha)) >= AA);
+      if (!ok) break;
+      max = alpha;
+    }
+    limits[tone] = max;
+  }
+  return limits;
+}
+
+/** `{ primary: 0.05, destructive: 0 }` → "primary up to /5, destructive never". */
+export const describeTintLimits = (limits) =>
+  Object.entries(limits)
+    .map(([tone, max]) => `${tone} ${max ? `up to /${Math.round(max * 100)}` : 'never'}`)
+    .join(', ');
+
 /** Run the gate over both modes of the resolved colours; returns the failure lines. */
 export function checkContrast(colors) {
   const of = (mode) => Object.fromEntries(colors.map((c) => [c.name, c[mode]]));

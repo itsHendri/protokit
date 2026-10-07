@@ -18,7 +18,8 @@ import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-import { checkContrast, AA } from './lib/contrast.mjs';
+import { checkContrast, AA, describeTintLimits, textOnTintLimits } from './lib/contrast.mjs';
+import { scanTintText } from './lib/scan.mjs';
 import { loadTokens } from './lib/resolve.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -69,6 +70,21 @@ export async function run(argv = process.argv.slice(2)) {
         'A brightened accent (usually the dark theme) needs dark text, not white.\n'
     );
     process.exit(1);
+  }
+
+  // The palette passes; now the source: a tone's text on its own tint, beyond what this palette allows.
+  if (config.scan?.length) {
+    const limits = textOnTintLimits(ctx.colors);
+    const problems = scanTintText(root, config.scan, limits);
+    if (problems.length) {
+      console.error(
+        `\nkit-tokens: ${problems.length} class string(s) put a tone's text on its own tint below WCAG AA (${AA}:1):\n\n${problems.join('\n')}\n\n` +
+          `This palette allows: ${describeTintLimits(limits)}.\n` +
+          'Use text-foreground on the tint (let the tint, an icon or a dot carry the colour), or a lighter tint.\n' +
+          'An element that holds only an icon may keep its tone: add a `kit-tokens-ignore tint-text` comment.\n'
+      );
+      process.exit(1);
+    }
   }
 
   const files = [];

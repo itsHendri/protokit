@@ -1,14 +1,15 @@
 // npm test -w packages/tokens — the token build's guarantees, independent of any app's brand.
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
-import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { after, test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 import { contrast, hexToOklch, hexToOklchParts, oklchPartsToHex } from '../lib/color.mjs';
-import { checkContrast, contrastFailures } from '../lib/contrast.mjs';
+import { checkContrast, contrastFailures, textOnTintLimits } from '../lib/contrast.mjs';
+import { scanTintText } from '../lib/scan.mjs';
 import { group, loadTokens, radiusCalc } from '../lib/resolve.mjs';
 
 const pkg = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -85,6 +86,49 @@ test('the gate rejects white text on an amber fill and amber ink on white', () =
   assert.ok(failures.some((f) => f.includes('warning-foreground on warning')));
   assert.ok(failures.some((f) => f.includes('text-warning on background')));
   assert.ok(contrast('#000000', '#ffffff') > 20);
+});
+
+test('text-on-tint limits: how strong a tone\'s own tint can be under its text', () => {
+  const colors = [
+    { name: 'background', light: '#ffffff', dark: '#09090b' },
+    { name: 'primary', light: '#1d4ed8', dark: '#60a5fa' }, // dark enough to carry text on light tints
+    { name: 'destructive', light: '#dc2626', dark: '#ef4444' }, // 4.83:1 on white, 4.47:1 on /5
+  ];
+  const limits = textOnTintLimits(colors);
+  assert.ok(limits.primary >= 0.15, `primary ${limits.primary}`);
+  assert.equal(limits.destructive, 0);
+});
+
+test('the source scan flags tone text on a tint the palette cannot carry', () => {
+  const root = mkdtempSync(join(tmpdir(), 'kit-tokens-scan-'));
+  temps.push(root);
+  const write = (name, body) => {
+    const file = join(root, 'components', name);
+    mkdirSync(dirname(file), { recursive: true });
+    writeFileSync(file, body);
+  };
+  write('bad.tsx', `export const A = () => <span className="bg-destructive/15 text-destructive">Overdue</span>;\n`);
+  write('fine.tsx', [
+    `export const B = () => <span className="bg-destructive/15 text-foreground">Overdue</span>;`,
+    `export const C = () => <a className="text-primary hover:bg-primary/20">Link</a>;`,
+    `// kit-tokens-ignore tint-text: icon only`,
+    `export const D = () => <span className="bg-success/15 text-success"><Check /></span>;`,
+  ].join('\n'));
+  const problems = scanTintText(root, ['components'], { primary: 0.05, success: 0.05, warning: 0.05, info: 0.15, destructive: 0 });
+  assert.equal(problems.length, 1, problems.join('\n'));
+  assert.match(problems[0], /bad\.tsx:1 {2}text-destructive on bg-destructive\/15 \(allowed: never\)/);
+});
+
+test('check fails on a flagged class string when the config asks for a scan', () => {
+  const root = appRoot();
+  const config = JSON.parse(readFileSync(join(root, 'tokens/tokens.config.json'), 'utf8'));
+  writeFileSync(join(root, 'tokens/tokens.config.json'), JSON.stringify({ ...config, scan: ['components'] }));
+  mkdirSync(join(root, 'components'), { recursive: true });
+  writeFileSync(join(root, 'components/badge.tsx'), `export const S = () => <b className="bg-destructive/20 text-destructive">Late</b>;\n`);
+  const build = runCli(['build', '--root', root]);
+  assert.equal(build.status, 1);
+  assert.match(build.stderr, /components\/badge\.tsx:1/);
+  assert.match(build.stderr, /This palette allows:/);
 });
 
 test('build writes every target, then check passes', () => {

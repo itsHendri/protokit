@@ -4,7 +4,7 @@
  *   options: { out: 'tokens/generated/llms-tokens.md' }
  */
 import { group } from '../lib/resolve.mjs';
-import { AA } from '../lib/contrast.mjs';
+import { AA, describeTintLimits, textOnTintLimits } from '../lib/contrast.mjs';
 
 export default function llms(ctx, options) {
   const rows = ctx.colors.map((c) => `| \`${c.name}\` | ${c.light} | ${c.dark} |`).join('\n');
@@ -18,6 +18,9 @@ export default function llms(ctx, options) {
 Colours are semantic names only, used as Tailwind classes (\`bg-primary\`, \`text-muted-foreground\`,
 \`border-border\`, \`bg-success/15\`). Never hex, never Tailwind palette colours. Both themes are
 required; every fill/foreground pairing clears WCAG AA (${AA}:1), enforced by \`npm run tokens:build\`.
+A tone's own text on its own tint (\`text-success\` on \`bg-success/15\`) clears AA only for these
+tints; on a stronger one, put \`text-foreground\` on the tint:
+${describeTintLimits(textOnTintLimits(ctx.colors))}.
 
 | Name | Light | Dark |
 |---|---|---|
