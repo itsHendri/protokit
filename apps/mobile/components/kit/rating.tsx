@@ -1,8 +1,7 @@
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { haptic } from '@/lib/haptics';
-import { THEME } from '@/lib/theme';
-import { useKitTheme } from '@/lib/theme-context';
+import { usePalette } from '@/lib/palette-context';
 import { cn } from '@/lib/utils';
 import { StarIcon } from 'lucide-react-native';
 import { Pressable, View } from 'react-native';
@@ -25,8 +24,7 @@ type Props = {
 const PX = { sm: 14, md: 18, lg: 28 } as const;
 
 function Star({ px, fraction }: { px: number; fraction: number }) {
-  const { scheme } = useKitTheme();
-  const filled = THEME[scheme].warning;
+  const filled = usePalette().warning;
   return (
     <View style={{ width: px, height: px }}>
       <Icon as={StarIcon} size={px} className="text-muted-foreground" strokeWidth={1.75} />

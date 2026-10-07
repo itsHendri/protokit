@@ -1,5 +1,4 @@
-import { THEME } from '@/lib/theme';
-import { useKitTheme } from '@/lib/theme-context';
+import { usePalette } from '@/lib/palette-context';
 import { ActivityIndicator, type ActivityIndicatorProps } from 'react-native';
 
 type Props = Omit<ActivityIndicatorProps, 'color'> & {
@@ -12,8 +11,7 @@ type Props = Omit<ActivityIndicatorProps, 'color'> & {
  * (a named progressbar on web); pass `accessibilityLabel` to say what is loading.
  */
 export function Spinner({ tone = 'primary', size = 'small', accessibilityLabel = 'Loading', ...props }: Props) {
-  const { scheme } = useKitTheme();
-  const colors = THEME[scheme];
+  const colors = usePalette();
   const color =
     tone === 'primary'
       ? colors.primary

@@ -23,9 +23,11 @@ const TONES = ['primary', 'success', 'warning', 'info', 'destructive'];
  * 3 and 4 are the ones that matter most for a re-brand: a colour can be a perfectly good
  * fill and still be unreadable as text, which is exactly how an amber warning gets in.
  *
- * `hex` is { name: '#rrggbb' } for one mode.
+ * `hex` is { name: '#rrggbb' } for one mode. `strict` adds tones as ink on the `muted` and `accent`
+ * surfaces too (a link in a muted panel). The theme generator always fixes for strict; the build only
+ * warns about it until every committed palette passes (see apps/mobile/BACKLOG.md).
  */
-export function contrastFailures(hex, mode) {
+export function contrastFailures(hex, mode, { strict = false } = {}) {
   const pairs = [];
   for (const name of ['primary', 'secondary', 'destructive', 'success', 'warning', 'info', 'accent', 'card', 'popover', 'muted', 'sidebar', 'sidebar-primary', 'sidebar-accent']) {
     if (hex[name] && hex[`${name}-foreground`]) pairs.push([`${name}-foreground on ${name}`, hex[`${name}-foreground`], hex[name]]);
@@ -39,7 +41,7 @@ export function contrastFailures(hex, mode) {
   const inkPairs = [];
   for (const tone of TONES) {
     if (!hex[tone]) continue;
-    for (const surface of ['background', 'card']) {
+    for (const surface of strict ? ['background', 'card', 'muted', 'accent'] : ['background', 'card']) {
       if (hex[surface]) inkPairs.push([`text-${tone} on ${surface}`, hex[tone], hex[surface]]);
     }
   }
@@ -95,7 +97,7 @@ export const describeTintLimits = (limits) =>
     .join(', ');
 
 /** Run the gate over both modes of the resolved colours; returns the failure lines. */
-export function checkContrast(colors) {
+export function checkContrast(colors, options) {
   const of = (mode) => Object.fromEntries(colors.map((c) => [c.name, c[mode]]));
-  return [...contrastFailures(of('light'), 'light'), ...contrastFailures(of('dark'), 'dark')];
+  return [...contrastFailures(of('light'), 'light', options), ...contrastFailures(of('dark'), 'dark', options)];
 }

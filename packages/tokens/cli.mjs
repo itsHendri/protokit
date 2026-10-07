@@ -72,6 +72,15 @@ export async function run(argv = process.argv.slice(2)) {
     process.exit(1);
   }
 
+  // Strict pairings (tones on muted/accent) warn for now; the theme generator already fixes for them.
+  const strict = checkContrast(ctx.colors, { strict: true }).filter((line) => !failures.includes(line));
+  if (strict.length) {
+    console.warn(
+      `kit-tokens: ${strict.length} strict pairing(s) below WCAG AA (a warning for now, a failure later):\n${strict.join('\n')}\n` +
+        'Re-apply the theme (`kit-tokens theme apply`) to have them fixed.\n'
+    );
+  }
+
   // The palette passes; now the source: a tone's text on its own tint, beyond what this palette allows.
   if (config.scan?.length) {
     const limits = textOnTintLimits(ctx.colors);

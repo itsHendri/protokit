@@ -1,6 +1,5 @@
 import { Icon } from '@/components/ui/icon';
-import { THEME } from '@/lib/theme';
-import { useKitTheme } from '@/lib/theme-context';
+import { usePalette } from '@/lib/palette-context';
 import { cn } from '@/lib/utils';
 import type { LucideIcon } from 'lucide-react-native';
 import * as React from 'react';
@@ -56,8 +55,7 @@ type Shape =
  * avatars, the art on a PromoCard.
  */
 export function Placeholder({ seed, ratio = 1, palette = 'chart', icon, className }: Props) {
-  const { scheme } = useKitTheme();
-  const colors = THEME[scheme];
+  const colors = usePalette();
 
   const shapes = React.useMemo<Shape[]>(() => {
     const rand = mulberry32(hash(seed));

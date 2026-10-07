@@ -4,8 +4,7 @@ import { HorizontalPager } from '@/components/kit/horizontal-pager';
 import { SectionHeader } from '@/components/kit/section-header';
 import { Stepper } from '@/components/kit/stepper';
 import { TabBarItem, tabIcon } from '@/components/kit/tab-bar';
-import { THEME } from '@/lib/theme';
-import { useKitTheme } from '@/lib/theme-context';
+import { usePalette } from '@/lib/palette-context';
 import { Text } from '@/components/ui/text';
 import type { ComponentType } from 'react';
 import { HouseIcon, ListIcon, SettingsIcon } from 'lucide-react-native';
@@ -13,8 +12,7 @@ import * as React from 'react';
 import { useWindowDimensions, View } from 'react-native';
 
 function TabBarDemo() {
-  const { scheme } = useKitTheme();
-  const c = THEME[scheme];
+  const c = usePalette();
   const [active, setActive] = React.useState(0);
   const tabs = [
     { label: "Home", icon: HouseIcon },
