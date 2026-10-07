@@ -90,12 +90,21 @@ export function subscribeTheme(listener: () => void) {
 
 export const currentRecipe = () => state.recipe;
 
-/** Replace the theme (or change part of it). Keeps an undo history. */
-export function setRecipe(next: RecipeInput | ((current: Recipe) => RecipeInput)) {
+let lastEdit = { key: '', at: 0 };
+
+/**
+ * Replace the theme (or change part of it). Keeps an undo history; `coalesce` folds a burst of changes to
+ * the same control (dragging the colour picker) into one undo step.
+ */
+export function setRecipe(next: RecipeInput | ((current: Recipe) => RecipeInput), { coalesce }: { coalesce?: string } = {}) {
   const input = typeof next === 'function' ? next(state.recipe) : next;
   const recipe = normalizeRecipe({ ...state.recipe, ...input, font: { ...state.recipe.font, ...input.font } });
   if (JSON.stringify(recipe) === JSON.stringify(state.recipe)) return;
-  state = { recipe, history: [...state.history, state.recipe].slice(-50), future: [] };
+  const now = Date.now();
+  const merge = !!coalesce && lastEdit.key === coalesce && now - lastEdit.at < 1000 && state.history.length > 0;
+  lastEdit = { key: coalesce ?? '', at: now };
+  const history = merge ? state.history : [...state.history, state.recipe].slice(-50);
+  state = { recipe, history, future: [] };
   persist(recipe);
   emit();
 }

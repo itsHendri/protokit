@@ -223,7 +223,7 @@ export function ThemeStudio() {
             <div className="flex items-center gap-2">
               <label className="border-border relative size-9 shrink-0 cursor-pointer overflow-hidden rounded-lg border" style={{ background: recipe.brand }} title="Pick any colour">
                 <span className="sr-only">Pick any colour</span>
-                <input type="color" value={recipe.brand} onChange={(e) => set({ brand: e.target.value })} className="absolute inset-0 size-full cursor-pointer opacity-0" />
+                <input type="color" value={recipe.brand} onChange={(e) => setRecipe({ brand: e.target.value }, { coalesce: 'brand' })} className="absolute inset-0 size-full cursor-pointer opacity-0" />
               </label>
               <input
                 aria-label="Brand colour, hex"
@@ -232,7 +232,7 @@ export function ThemeStudio() {
                 onChange={(e) => {
                   setHex(e.target.value);
                   const v = e.target.value.trim().replace(/^#?/, '#');
-                  if (/^#[0-9a-f]{6}$/i.test(v)) set({ brand: v.toLowerCase() });
+                  if (/^#[0-9a-f]{6}$/i.test(v)) setRecipe({ brand: v.toLowerCase() }, { coalesce: 'brand' });
                 }}
                 className="border-border bg-background focus-visible:ring-ring h-9 w-full rounded-lg border px-3 font-mono text-sm uppercase focus-visible:outline-none focus-visible:ring-2"
               />

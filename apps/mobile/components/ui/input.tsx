@@ -1,7 +1,10 @@
+import { useFontStyle } from '@/components/ui/text';
 import { cn } from '@/lib/utils';
 import { Platform, TextInput } from 'react-native';
 
 function Input({ className, ...props }: React.ComponentProps<typeof TextInput> & React.RefAttributes<TextInput>) {
+  // The theme's body font, like Text (a custom font is one family per weight on native).
+  const font = useFontStyle(className ?? '');
   return (
     <TextInput
       className={cn(
@@ -26,6 +29,7 @@ function Input({ className, ...props }: React.ComponentProps<typeof TextInput> &
       // A read-only field is drawn disabled, so say so (web renders readonly otherwise).
       aria-disabled={props.editable === false || undefined}
       {...props}
+      style={font ? [font, props.style] : props.style}
     />
   );
 }

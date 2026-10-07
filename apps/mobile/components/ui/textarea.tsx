@@ -1,3 +1,4 @@
+import { useFontStyle } from '@/components/ui/text';
 import { cn } from '@/lib/utils';
 import { Platform, TextInput } from 'react-native';
 
@@ -8,6 +9,8 @@ function Textarea({
   placeholderClassName,
   ...props
 }: React.ComponentProps<typeof TextInput> & React.RefAttributes<TextInput>) {
+  // The theme's body font, like Text (a custom font is one family per weight on native).
+  const font = useFontStyle(className ?? '');
   return (
     <TextInput
       className={cn(
@@ -24,6 +27,7 @@ function Textarea({
       textAlignVertical="top"
       aria-disabled={props.editable === false || undefined}
       {...props}
+      style={font ? [font, props.style] : props.style}
     />
   );
 }

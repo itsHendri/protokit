@@ -142,7 +142,7 @@ export function ThemePill() {
                 type="color"
                 tabIndex={colours ? 0 : -1}
                 value={recipe.brand}
-                onChange={(e) => setRecipe({ brand: e.target.value })}
+                onChange={(e) => setRecipe({ brand: e.target.value }, { coalesce: 'brand' })}
                 className="absolute inset-0 size-full cursor-pointer opacity-0"
               />
             </label>

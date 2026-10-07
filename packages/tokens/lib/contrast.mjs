@@ -26,10 +26,12 @@ export const TONES = ['primary', 'success', 'warning', 'info', 'destructive'];
  * `hex` is { name: '#rrggbb' } for one mode. `strict` adds tones as ink on the `muted` and `accent`
  * surfaces too (a link in a muted panel). The build and the theme generator both check strict.
  */
-export function contrastPairs(hex, mode, { strict = false } = {}) {
+export function contrastPairs(hex, mode, { strict = false, fg: only } = {}) {
   const out = [];
-  const add = (label, fgName, bgName, fg, bg, threshold) =>
-    out.push({ mode, label, fgName, bgName, fg, bg, threshold, ratio: contrast(fg, bg) });
+  // `fg`: only the pairings that token takes part in as the foreground (the theme fixer's inner loop).
+  const add = (label, fgName, bgName, fg, bg, threshold) => {
+    if (!only || fgName === only) out.push({ mode, label, fgName, bgName, fg, bg, threshold, ratio: contrast(fg, bg) });
+  };
 
   for (const name of ['primary', 'secondary', 'destructive', 'success', 'warning', 'info', 'accent', 'card', 'popover', 'muted', 'sidebar', 'sidebar-primary', 'sidebar-accent']) {
     const fg = `${name}-foreground`;

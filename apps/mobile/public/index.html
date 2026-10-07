@@ -27,7 +27,7 @@
             (mode !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
           root.classList.toggle('dark', dark);
           root.style.colorScheme = dark ? 'dark' : 'light';
-          var cached = params.get('embed') === '1' && JSON.parse(sessionStorage.getItem('kit.embed.theme') || 'null');
+          var cached = params.get('embed') === '1' && JSON.parse(sessionStorage.getItem('kit.embed.tokens') || 'null');
           var vars = cached && cached.code && cached.mobile && cached.mobile.vars;
           if (vars) {
             var block = function (selector, map) {

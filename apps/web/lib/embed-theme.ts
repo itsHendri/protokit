@@ -18,7 +18,7 @@ export type EmbedTokens = {
   fonts?: { heading?: string; body?: string };
 };
 
-export const EMBED_THEME_KEY = 'kit.embed.theme';
+export const EMBED_THEME_KEY = 'kit.embed.tokens';
 export const OVERRIDE_STYLE_ID = 'kit-theme-override';
 const FONTS_ID = 'kit-theme-fonts';
 const FAMILY = /^[A-Za-z0-9 ]{1,40}$/;

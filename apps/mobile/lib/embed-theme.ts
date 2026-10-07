@@ -28,7 +28,7 @@ const STYLE_ID = 'kit-theme-override';
 const FONTS_ID = 'kit-theme-fonts';
 const FAMILY = /^[A-Za-z0-9 ]{1,40}$/;
 /** Shared with public/index.html (pre-paint) and the docs site (apps/docs/lib/theme), which writes it. */
-export const EMBED_THEME_KEY = 'kit.embed.theme';
+export const EMBED_THEME_KEY = 'kit.embed.tokens';
 
 const kebab = (s: string) => s.replace(/([A-Z])/g, '-$1').replace(/([a-z])(\d)/g, '$1-$2').toLowerCase();
 const ALLOWED_VARS = new Set([...Object.keys(THEME.light).map((k) => `--${kebab(k)}`), '--radius', '--radius-control', '--border-width', '--icon-stroke', '--shadow-1', '--shadow-2', '--shadow-3', '--control-sm', '--control-md', '--control-lg', '--control-x']);

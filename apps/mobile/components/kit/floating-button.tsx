@@ -28,7 +28,7 @@ export function FloatingButton({ icon, label, variant = 'primary', position = 'i
       accessibilityRole="button"
       accessibilityLabel={label}
       className={cn(
-        'h-control-lg flex-row items-center justify-center gap-2 rounded-control shadow-lg active:opacity-90',
+        'h-control-lg flex-row items-center justify-center gap-2 rounded-control shadow-lg shadow-black/20 active:opacity-90',
         label ? 'px-5' : 'w-14',
         primary ? 'bg-primary' : 'bg-secondary',
         position === 'bottom-right' && 'absolute bottom-6 right-5',
