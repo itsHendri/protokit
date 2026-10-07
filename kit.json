@@ -3,7 +3,7 @@
   "name": "Protokit",
   "tagline": "Prototype kits for mobile and web that coding agents build from.",
   "repo": "https://github.com/itsHendri/protokit",
-  "siteUrl": null,
+  "siteUrl": "https://protokit-docs.empty-math-d572.workers.dev",
   "npmScope": "@itshendri",
   "registry": { "native": "@kit-native", "web": "@kit" }
 }
