@@ -1013,6 +1013,50 @@
       "install": "@kit/chat-thread-list"
     },
     {
+      "id": "sources",
+      "title": "Sources",
+      "exports": [
+        "SourceList",
+        "CitedText",
+        "stripCitations"
+      ],
+      "category": "ai",
+      "files": [
+        "components/kit/sources.tsx"
+      ],
+      "notes": "what an answer is based on · numbered chips with previews · `[n]` in text → inline citations",
+      "api": "<CitedText text=\"… [1]\" sources={[{ title, meta?, snippet?, href? }]} /><SourceList sources />",
+      "caption": "Cite whenever the answer uses the person’s data or a document. Stream the answer with stripCitations, then show CitedText and SourceList once it is complete.",
+      "aliases": [
+        "citations",
+        "references",
+        "footnotes",
+        "grounding"
+      ],
+      "install": "@kit/sources"
+    },
+    {
+      "id": "follow-up-suggestions",
+      "title": "Follow-up suggestions",
+      "exports": [
+        "FollowUpSuggestions"
+      ],
+      "category": "ai",
+      "files": [
+        "components/kit/follow-up-suggestions.tsx"
+      ],
+      "notes": "next questions under the latest answer · picking one sends it",
+      "api": "<FollowUpSuggestions suggestions={[\"…\"]} onSelect />",
+      "caption": "Two to four, phrased as the person would ask them, only under the latest answer, and hidden while the assistant is answering.",
+      "aliases": [
+        "suggested replies",
+        "quick replies",
+        "next questions",
+        "chips"
+      ],
+      "install": "@kit/follow-up-suggestions"
+    },
+    {
       "id": "streaming-text",
       "title": "Streaming text",
       "exports": [

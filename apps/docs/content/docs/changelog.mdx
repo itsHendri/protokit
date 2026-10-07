@@ -29,6 +29,9 @@ no name or state. Fixed in the kit's components, so every prototype gets them:
 - **Attachments.** ChatComposer takes files when given an `accept`: a paperclip, drag and drop, and chips to
   review and remove them before sending. Sent files show as AttachmentChips, and the assistant sample
   accepts invoices and receipts.
+- **Sources and follow-ups.** Answers can cite what they're based on: `[1]` in the text becomes a small
+  citation, and a numbered source list sits under the answer, each opening a preview. FollowUpSuggestions
+  puts two to four next questions under the latest answer. The assistant sample uses both.
 - **ToolCallCard `stopped`.** A tool call the person cancelled reads "Stopped", not a red "Failed".
 - **Accessibility gate.** Every pull request now runs axe-core (WCAG 2.1 AA) over this site and the web
   kit, in light and dark. Its first run found and fixed:

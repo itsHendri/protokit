@@ -696,6 +696,67 @@
       }
     },
     {
+      "name": "sources",
+      "type": "registry:component",
+      "title": "Sources",
+      "description": "what an answer is based on · numbered chips with previews · `[n]` in text → inline citations",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0"
+      ],
+      "registryDependencies": [
+        "popover"
+      ],
+      "files": [
+        {
+          "path": "components/kit/sources.tsx",
+          "type": "registry:component",
+          "target": "components/kit/sources.tsx"
+        }
+      ],
+      "categories": [
+        "ai"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "SourceList",
+          "CitedText",
+          "stripCitations"
+        ],
+        "api": "<CitedText text=\"… [1]\" sources={[{ title, meta?, snippet?, href? }]} /><SourceList sources />"
+      }
+    },
+    {
+      "name": "follow-up-suggestions",
+      "type": "registry:component",
+      "title": "Follow-up suggestions",
+      "description": "next questions under the latest answer · picking one sends it",
+      "dependencies": [
+        "cn@^0.4.0"
+      ],
+      "registryDependencies": [
+        "@kit/button"
+      ],
+      "files": [
+        {
+          "path": "components/kit/follow-up-suggestions.tsx",
+          "type": "registry:component",
+          "target": "components/kit/follow-up-suggestions.tsx"
+        }
+      ],
+      "categories": [
+        "ai"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "FollowUpSuggestions"
+        ],
+        "api": "<FollowUpSuggestions suggestions={[\"…\"]} onSelect />"
+      }
+    },
+    {
       "name": "streaming-text",
       "type": "registry:component",
       "title": "Streaming text",

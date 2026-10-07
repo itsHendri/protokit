@@ -30,6 +30,8 @@ import { AppShell } from '@/components/kit/app-shell';
 import { ApprovalCard } from '@/components/kit/approval-card';
 import { AttachmentChip } from '@/components/kit/attachment-chip';
 import { ChatComposer } from '@/components/kit/chat-composer';
+import { FollowUpSuggestions } from '@/components/kit/follow-up-suggestions';
+import { CitedText, SourceList } from '@/components/kit/sources';
 import { type ChatThread, ChatThreadList } from '@/components/kit/chat-thread-list';
 import { DatePicker } from '@/components/kit/date-picker';
 import { ChatMessage } from '@/components/kit/chat-message';
@@ -762,6 +764,21 @@ export const DEMOS: Record<string, ComponentType> = {
     </div>
   ),
   'chat-composer': ChatDemo,
+  sources: () => {
+    const sources = [
+      { title: 'INV-1045 · Lumen Labs', meta: 'Invoice · due 24 May · £2,310', snippet: 'Brand refresh, phase 2. Payment due within 14 days of issue.' },
+      { title: 'Payment timing by customer', meta: 'Report · Jan–Jun', snippet: 'Lumen Labs: 17 days late on average.' },
+    ];
+    return (
+      <div className="flex max-w-xl flex-col gap-3 leading-7">
+        <CitedText text="Lumen Labs owes £2,310 [1] and usually pays about two and a half weeks late [2]." sources={sources} />
+        <SourceList sources={sources} />
+      </div>
+    );
+  },
+  'follow-up-suggestions': () => (
+    <FollowUpSuggestions suggestions={['Which customers usually pay late?', 'Draft a reminder I can edit first', 'Summarise June']} onSelect={(s) => toast(`Would send: ${s}`)} />
+  ),
   'attachment-chip': () => (
     <div className="flex flex-wrap gap-2">
       <AttachmentChip file={{ name: 'INV-1047-fernway.pdf', size: 184_320, type: 'application/pdf' }} />
