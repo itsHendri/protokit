@@ -201,6 +201,14 @@ hex literal or a Tailwind palette colour in UI code. Keys ending in `-dark` are 
 Every `X` / `X-foreground` pairing, muted text on every surface, and every status tone used as text
 clears WCAG AA (4.5:1) in both themes; the build refuses a palette that does not.
 
+A tone's text on that tone's own tint (`text-success` on `bg-success/15`) is a weaker pairing. With
+this palette it clears AA only for:
+
+primary up to /5, success up to /5, warning up to /5, info up to /15, destructive never.
+
+On a stronger tint, the text stays `text-foreground` and the tint, an icon or a dot carries the
+colour. `kit-tokens check` flags class strings that break this.
+
 ## Typography
 
 System font unless a brand font is configured. Use the Text variants (h1–h4, lead, large, body,

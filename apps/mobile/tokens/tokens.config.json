@@ -1,6 +1,10 @@
 {
   "$description": "What `npm run tokens:build` writes, and where. Paths are relative to the app root. Targets are the files in @itshendri/kit-tokens/targets (nativewind3, ts-theme, figma, shadcn-web, registry-theme, design-md, llms).",
   "source": "tokens/tokens.json",
+  "scan": [
+    "app",
+    "components"
+  ],
   "targets": {
     "nativewind3": {
       "css": "global.css",
