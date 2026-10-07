@@ -44,6 +44,24 @@ function isThemeMode(value: unknown): value is ThemeMode {
   return value === 'system' || value === 'light' || value === 'dark';
 }
 
+/**
+ * The mode to render first. On web AsyncStorage is localStorage, so the saved choice can be read now
+ * and the first frame is already right; public/index.html applies the same rules before the bundle
+ * loads. Native reads storage asynchronously, below.
+ */
+function initialMode(): ThemeMode {
+  if (EMBED.theme) return EMBED.theme;
+  if (WEB && !EPHEMERAL && typeof window !== 'undefined') {
+    try {
+      const stored = window.localStorage.getItem(STORAGE_KEY);
+      if (isThemeMode(stored)) return stored;
+    } catch {
+      /* storage unavailable (e.g. private web session) — stay on system */
+    }
+  }
+  return 'system';
+}
+
 export function KitThemeProvider({ children }: { children: React.ReactNode }) {
   const { colorScheme: nativewindScheme, setColorScheme: setNativewindScheme } = useColorScheme();
   // react-native-web: prefers-color-scheme via matchMedia, live.
@@ -54,7 +72,7 @@ export function KitThemeProvider({ children }: { children: React.ReactNode }) {
     },
     [setNativewindScheme]
   );
-  const [mode, setModeState] = React.useState<ThemeMode>(EMBED.theme ?? 'system');
+  const [mode, setModeState] = React.useState<ThemeMode>(initialMode);
   // NativeWind hands out a new setColorScheme on every render, so this effect re-runs; the start-up
   // theme must be applied once, or it would undo every later change (the embed bridge's included).
   const started = React.useRef(false);
@@ -95,7 +113,10 @@ export function KitThemeProvider({ children }: { children: React.ReactNode }) {
   // A layout effect, so the class is in place before the frame that needs it is painted.
   React.useLayoutEffect(() => {
     if (!WEB || typeof document === 'undefined') return;
-    document.documentElement.classList.toggle('dark', scheme === 'dark');
+    const root = document.documentElement;
+    root.classList.toggle('dark', scheme === 'dark');
+    // Scrollbars, form controls and the page canvas follow the theme too.
+    root.style.colorScheme = scheme;
   }, [scheme]);
 
   const value = React.useMemo<ThemeContextValue>(

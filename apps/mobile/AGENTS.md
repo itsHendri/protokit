@@ -129,6 +129,9 @@ npx expo run:ios       # build + install the dev client on the simulator (needs 
   that `components/ui` relies on. Anything that moves must call `useMotion()` from
   `lib/reduced-motion.ts` — `sheet`, `toast`, `notify`, `segmented-control` and `swipe-to-confirm`
   all do; copy one of them.
+- With `web.output: "single"` the web page is `public/index.html`; `app/+html.tsx` only applies to static
+  rendering and is ignored. The inline script in `public/index.html` sets the `dark` class before the bundle loads (no light
+  flash); its rules mirror `lib/theme-context.tsx` and `lib/embed.ts`, so change all three together.
 - NativeWind classNames are **dropped on `Animated.View` on web**. Put the surface (`bg-*`, radius) on a
   plain `View` inside it, as `sheet.tsx` and `toast.tsx` do, or the panel renders transparent in the
   web preview. `sheet.tsx`, `segmented-control.tsx`, `swipe-to-confirm.tsx` and `notify.tsx` all
