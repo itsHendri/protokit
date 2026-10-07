@@ -1,5 +1,4 @@
-import { THEME } from '@/lib/theme';
-import { useKitTheme } from '@/lib/theme-context';
+import { usePalette } from '@/lib/palette-context';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -20,8 +19,7 @@ type Props = {
 
 /** Circular determinate progress — goals, storage, step completion. */
 export function ProgressRing({ value, size = 64, strokeWidth = 6, tone = 'primary', children, accessibilityLabel = 'Progress', className }: Props) {
-  const { scheme } = useKitTheme();
-  const colors = THEME[scheme];
+  const colors = usePalette();
   const r = (size - strokeWidth) / 2;
   const c = 2 * Math.PI * r;
   const pct = Math.max(0, Math.min(100, value));

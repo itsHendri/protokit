@@ -42,7 +42,8 @@ Sizing: controls are 48px tall (`h-12`): inputs, selects, default buttons; `sm` 
 
 Rules:
 - **Never a hex literal or `rgb()` in `app/`, `components/` or `prototype/`.** The only escape hatch is
-  `THEME[scheme].<name>` from `lib/theme.ts` for SVG fills and native props (charts, StatusBar).
+  `usePalette().<name>` from `lib/palette-context.tsx` for SVG fills and native props (charts, StatusBar).
+  Never read `THEME[scheme]` directly (lint rule): the palette follows a runtime theme override, THEME doesn't.
 - No Tailwind palette colours (`bg-blue-500`, `text-gray-400`). They don't follow the theme or the brand.
 - Tint a surface with an alpha of a semantic colour: `bg-primary/15`, `bg-success/15`. Text on a tint stays
   `text-foreground`: a status colour as small text on its own tint measures under 4.5:1 (success on

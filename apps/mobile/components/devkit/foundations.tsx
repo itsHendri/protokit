@@ -3,8 +3,8 @@
  * or the token value) so a designer can grab the exact name to use.
  */
 import { Text } from '@/components/ui/text';
-import { THEME, TOKENS } from '@/lib/theme';
-import { useKitTheme } from '@/lib/theme-context';
+import { usePalette } from '@/lib/palette-context';
+import { TOKENS } from '@/lib/theme';
 import { cn } from '@/lib/utils';
 import { useCopy } from './copy';
 import type { FoundationSection } from './types';
@@ -13,9 +13,9 @@ import { Pressable, View } from 'react-native';
 const kebab = (s: string) => s.replace(/([A-Z0-9])/g, '-$1').toLowerCase();
 
 function ColorTokens() {
-  const { scheme } = useKitTheme();
+  const palette = usePalette();
   const { copied, copy } = useCopy();
-  const entries = Object.entries(THEME[scheme]) as [string, string][];
+  const entries = Object.entries(palette) as [string, string][];
   return (
     <View className="w-full flex-row flex-wrap gap-3">
       {entries.map(([name, hex]) => {

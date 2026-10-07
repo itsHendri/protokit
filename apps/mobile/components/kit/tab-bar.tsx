@@ -1,7 +1,6 @@
 import { Text } from '@/components/ui/text';
 import { haptic } from '@/lib/haptics';
-import { THEME } from '@/lib/theme';
-import { useKitTheme } from '@/lib/theme-context';
+import { usePalette } from '@/lib/palette-context';
 import { cn } from '@/lib/utils';
 import type { LucideIcon } from 'lucide-react-native';
 import * as React from 'react';
@@ -32,8 +31,7 @@ export type TabBarProps = {
  */
 export function TabBar({ state, descriptors, navigation }: TabBarProps) {
   const insets = useSafeAreaInsets();
-  const { scheme } = useKitTheme();
-  const colors = THEME[scheme];
+  const colors = usePalette();
   return (
     <View className="bg-background border-border flex-row border-t" style={{ paddingBottom: Math.max(insets.bottom, 8) }} accessibilityRole="tablist">
       {state.routes.map((route, index) => {

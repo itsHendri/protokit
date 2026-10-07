@@ -1,12 +1,12 @@
 import { Text } from '@/components/ui/text';
-import { THEME, type ThemeColorName } from '@/lib/theme';
-import { useKitTheme } from '@/lib/theme-context';
+import { usePalette } from '@/lib/palette-context';
+import { type ThemeColorName } from '@/lib/theme';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
 import { View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 
-export type DonutSlice = { label: string; value: number; /** THEME colour name; defaults cycle chart1..5. */ color?: ThemeColorName };
+export type DonutSlice = { label: string; value: number; /** Palette colour name; defaults cycle chart1..5. */ color?: ThemeColorName };
 
 type Props = { data: DonutSlice[]; size?: number; strokeWidth?: number; children?: React.ReactNode; className?: string };
 
@@ -14,8 +14,7 @@ const PALETTE: ThemeColorName[] = ['chart1', 'chart2', 'chart3', 'chart4', 'char
 
 /** Ring chart. Put a total in the centre via children; pair with ChartLegend. */
 export function DonutChart({ data, size = 160, strokeWidth = 22, children, className }: Props) {
-  const { scheme } = useKitTheme();
-  const colors = THEME[scheme];
+  const colors = usePalette();
   const total = data.reduce((n, d) => n + d.value, 0) || 1;
   const r = (size - strokeWidth) / 2;
   const c = 2 * Math.PI * r;
@@ -40,8 +39,7 @@ export function DonutChart({ data, size = 160, strokeWidth = 22, children, class
 
 /** Legend rows for a DonutChart (or any series). */
 export function ChartLegend({ data, className }: { data: DonutSlice[]; className?: string }) {
-  const { scheme } = useKitTheme();
-  const colors = THEME[scheme];
+  const colors = usePalette();
   const total = data.reduce((n, d) => n + d.value, 0) || 1;
   return (
     <View className={cn('gap-2', className)}>

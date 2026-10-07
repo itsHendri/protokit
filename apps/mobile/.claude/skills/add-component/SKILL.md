@@ -31,7 +31,7 @@ Pick one:
 
 Styling rules (enforced by `qc-pass`):
 - Colours only via semantic classes (`bg-card`, `text-muted-foreground`, `border-border`, `bg-success`…).
-  Hex is allowed only through `THEME[scheme].*` from `lib/theme.ts` for SVG/native props.
+  Hex is allowed only through `usePalette().*` from `lib/palette-context.tsx` for SVG/native props.
 - Spacing on the 4-pt grid (`p-1` … `p-16`), radius `rounded-sm|md|lg|xl|2xl|full`.
 - Children of Button/Badge are `<Text>`/`<Icon>`, never bare strings.
 - Every interactive element ≥ 44×44 tap target and has an accessible label.

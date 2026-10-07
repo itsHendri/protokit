@@ -3,8 +3,8 @@ import '@/global.css';
 import { NotifyProvider } from '@/components/kit/notify';
 import { ToastProvider } from '@/components/kit/toast';
 import { NativeModeProvider } from '@/lib/native-context';
+import { PaletteProvider, useNavTheme } from '@/lib/palette-context';
 import { KitThemeProvider, useKitTheme } from '@/lib/theme-context';
-import { NAV_THEME } from '@/lib/theme';
 import { PortalHost } from '@rn-primitives/portal';
 import { Stack } from 'expo-router';
 import { ThemeProvider as NavThemeProvider } from 'expo-router/react-navigation';
@@ -26,9 +26,11 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <KitThemeProvider>
-        <NativeModeProvider>
-          <AppShell />
-        </NativeModeProvider>
+        <PaletteProvider>
+          <NativeModeProvider>
+            <AppShell />
+          </NativeModeProvider>
+        </PaletteProvider>
       </KitThemeProvider>
     </GestureHandlerRootView>
   );
@@ -36,9 +38,10 @@ export default function RootLayout() {
 
 function AppShell() {
   const { scheme } = useKitTheme();
+  const navTheme = useNavTheme();
 
   return (
-    <NavThemeProvider value={NAV_THEME[scheme]}>
+    <NavThemeProvider value={navTheme}>
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
       <ToastProvider>
         <NotifyProvider>

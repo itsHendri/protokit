@@ -1,5 +1,4 @@
-import { THEME } from '@/lib/theme';
-import { useKitTheme } from '@/lib/theme-context';
+import { usePalette } from '@/lib/palette-context';
 import * as React from 'react';
 import { type LayoutChangeEvent, PanResponder, View } from 'react-native';
 import Svg, { Circle, Defs, Line, LinearGradient, Path, Stop } from 'react-native-svg';
@@ -28,10 +27,9 @@ function toPoints(data: number[] | LinePoint[]): LinePoint[] {
   return typeof data[0] === 'number' ? (data as number[]).map((y, x) => ({ x, y })) : (data as LinePoint[]);
 }
 
-/** SVG line chart. Colours come from THEME (the one place hex is allowed: SVG props). */
+/** SVG line chart. Colours come from usePalette() (the one place hex is allowed: SVG props). */
 export function LineChart({ data, variant = 'interactive', height = 160, width: widthProp, tone = 'primary', strokeWidth = 2.5, area = false, grid, domain, onPointerChange }: Props) {
-  const { scheme } = useKitTheme();
-  const colors = THEME[scheme];
+  const colors = usePalette();
   const color = colors[tone];
   const points = React.useMemo(() => toPoints(data), [data]);
   const [measuredW, setMeasuredW] = React.useState(widthProp ?? 0);
