@@ -3,6 +3,7 @@ import { CheckIcon, SparklesIcon, XIcon } from 'lucide-react';
 import * as React from 'react';
 import { toast } from 'sonner';
 import { ApprovalCard } from '@/components/kit/approval-card';
+import { AttachmentChip, type Attachment } from '@/components/kit/attachment-chip';
 import { ChatComposer } from '@/components/kit/chat-composer';
 import { ChatMessage } from '@/components/kit/chat-message';
 import { EmptyState } from '@/components/kit/empty-state';
@@ -17,6 +18,7 @@ export type Part =
   | { id: string; kind: 'thinking' }
   | { id: string; kind: 'tool'; title: string; status: 'running' | 'done' | 'error' | 'stopped'; input?: string; output?: string }
   | { id: string; kind: 'text'; text: string; streaming: boolean }
+  | { id: string; kind: 'files'; files: Attachment[] }
   | { id: string; kind: 'ask'; step: AskStep; decision?: 'approved' | 'denied' };
 export type Turn = { id: string; role: 'user' | 'assistant'; parts: Part[] };
 
@@ -121,10 +123,15 @@ export function Conversation({ turns, setTurns }: Props) {
     }
   }
 
-  const send = (text: string) => {
+  const send = (text: string, files: File[] = []) => {
     const turnId = nextId();
-    setTurns((ts) => [...ts, { id: nextId(), role: 'user', parts: [{ id: nextId(), kind: 'text', text, streaming: false }] }, { id: turnId, role: 'assistant', parts: [] }]);
-    void start(turnId, scriptFor(text));
+    const attached = files.map((f) => ({ name: f.name, size: f.size, type: f.type }));
+    const parts: Part[] = [
+      ...(attached.length ? [{ id: nextId(), kind: 'files' as const, files: attached }] : []),
+      ...(text ? [{ id: nextId(), kind: 'text' as const, text, streaming: false }] : []),
+    ];
+    setTurns((ts) => [...ts, { id: nextId(), role: 'user', parts }, { id: turnId, role: 'assistant', parts: [] }]);
+    void start(turnId, scriptFor(text, attached.map((f) => f.name)));
   };
 
   const streamed = (turnId: string, partId: string) => {
@@ -169,6 +176,16 @@ export function Conversation({ turns, setTurns }: Props) {
                       return <ThinkingIndicator key={part.id} label="Thinking" />;
                     case 'tool':
                       return <ToolCallCard key={part.id} title={part.title} status={part.status} input={part.input} output={part.output} />;
+                    case 'files':
+                      return (
+                        <ul key={part.id} aria-label="Attached files" className="flex flex-wrap gap-2">
+                          {part.files.map((f, i) => (
+                            <li key={`${f.name}-${i}`}>
+                              <AttachmentChip file={f} />
+                            </li>
+                          ))}
+                        </ul>
+                      );
                     case 'text':
                       return part.streaming ? (
                         <StreamingText key={part.id} text={part.text} onDone={() => streamed(turn.id, part.id)} />
@@ -200,7 +217,7 @@ export function Conversation({ turns, setTurns }: Props) {
         </div>
       </div>
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-2 px-4 pb-4 sm:px-6">
-        <ChatComposer onSend={send} busy={busy} onStop={() => run.current?.abort()} placeholder="Ask about your invoices" />
+        <ChatComposer onSend={send} busy={busy} onStop={() => run.current?.abort()} placeholder="Ask about your invoices, or attach one" accept="image/*,.pdf,.csv" />
         <p className="text-muted-foreground text-center text-xs">A scripted prototype: answers come from components/assistant/script.ts.</p>
       </div>
     </div>

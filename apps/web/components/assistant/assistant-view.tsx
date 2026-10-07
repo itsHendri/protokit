@@ -29,8 +29,11 @@ export function AssistantView() {
         ts.map((t) => {
           if (t.id !== activeId) return t;
           const turns = typeof update === 'function' ? update(t.turns) : update;
-          const first = turns[0]?.parts[0];
-          const title = t.title === NEW_TITLE && first?.kind === 'text' ? first.text.slice(0, 48) : t.title;
+          const parts = turns[0]?.parts ?? [];
+          const text = parts.find((p) => p.kind === 'text');
+          const files = parts.find((p) => p.kind === 'files');
+          const named = text?.kind === 'text' ? text.text : files?.kind === 'files' ? `Read ${files.files[0].name}` : null;
+          const title = t.title === NEW_TITLE && named ? named.slice(0, 48) : t.title;
           return { ...t, turns, title };
         })
       ),

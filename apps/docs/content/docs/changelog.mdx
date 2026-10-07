@@ -9,6 +9,9 @@ description: What changed, newest first.
 
 - **Six web components.** DatePicker, Calendar, Pagination, NavigationMenu, Drawer and ChatThreadList. The
   assistant sample now keeps a history of conversations: a sidebar on desktop, a sheet on phones.
+- **Attachments.** ChatComposer takes files when given an `accept`: a paperclip, drag and drop, and chips to
+  review and remove them before sending. Sent files show as AttachmentChips, and the assistant sample
+  accepts invoices and receipts.
 - **ToolCallCard `stopped`.** A tool call the person cancelled reads "Stopped", not a red "Failed".
 - **Accessibility gate.** Every pull request now runs axe-core (WCAG 2.1 AA) over this site and the web
   kit, in light and dark. Its first run found and fixed:
