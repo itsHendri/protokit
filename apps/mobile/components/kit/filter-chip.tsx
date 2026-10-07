@@ -20,6 +20,8 @@ export function FilterChip({ label, selected, onPress, icon, disabled, className
     <Pressable
       accessibilityRole="button"
       accessibilityState={{ selected: !!selected, disabled: !!disabled }}
+      // aria-pressed is web-only (react-native-web drops accessibilityState, and a button may not carry aria-selected).
+      aria-pressed={!!selected}
       disabled={disabled}
       onPress={() => {
         haptic('selection');
