@@ -26,7 +26,7 @@ app/dashboard/, app/landing/, app/assistant/   the three samples (worked example
                         removes them, their data in components/<sample>/ and the kit home's links.
 components/ui/          shadcn/ui — add more with the add-component skill (`npx shadcn@latest add <name>`)
 components/kit/         ours: AppShell, PageHeader, StatTile, DataTable, EmptyState, DatePicker, Hero,
-                        FeatureGrid, PricingCard, ChatMessage, ChatComposer, ChatThreadList,
+                        FeatureGrid, PricingCard, ChatMessage, ChatComposer, AttachmentChip, ChatThreadList,
                         StreamingText, ThinkingIndicator, ToolCallCard, ApprovalCard
 components/devkit/      the Kitchen Sink: demos.tsx keyed by registry id
 components/site/        the kit shell's own chrome (header, theme toggle, providers) and KitChip, a

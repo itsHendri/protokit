@@ -58,7 +58,21 @@ const HELP: Step[] = [
   },
 ];
 
-export function scriptFor(message: string): Step[] {
+/** For a message with files: show the read, then say honestly that a prototype cannot read them. */
+function filesScript(names: string[]): Step[] {
+  const list = names.length === 1 ? names[0] : `${names.length} files`;
+  return [
+    { kind: 'think', ms: 500 },
+    { kind: 'tool', title: `Read ${list}`, ms: 1100, input: names.join('\n'), output: 'Prototype: the file is not really read.' },
+    {
+      kind: 'say',
+      text: `This is where I would summarise ${list}: an invoice’s customer, amount and due date, or a receipt to match against an expense. In this prototype the file is not really read, but the flow is real: attach, see the read, get the answer.`,
+    },
+  ];
+}
+
+export function scriptFor(message: string, fileNames: string[] = []): Step[] {
+  if (fileNames.length) return filesScript(fileNames);
   const m = message.toLowerCase();
   if (/overdue|late|remind|chase|owe/.test(m)) return OVERDUE;
   if (/summar|june|month|how (are|am|is)|revenue|paid/.test(m)) return SUMMARY;

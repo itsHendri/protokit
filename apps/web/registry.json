@@ -606,12 +606,13 @@
       "name": "chat-composer",
       "type": "registry:component",
       "title": "Chat composer",
-      "description": "Enter sends, Shift+Enter breaks · `busy` turns Send into Stop",
+      "description": "Enter sends, Shift+Enter breaks · `busy` turns Send into Stop · `accept` turns on attachments (paperclip, drop, chips)",
       "dependencies": [
         "cn@^0.4.0",
         "lucide-react@^1.52.0"
       ],
       "registryDependencies": [
+        "@kit/attachment-chip",
         "@kit/button",
         "textarea"
       ],
@@ -630,7 +631,38 @@
         "exports": [
           "ChatComposer"
         ],
-        "api": "<ChatComposer onSend busy? onStop? placeholder? />"
+        "api": "<ChatComposer onSend={(text, files) => …} busy? onStop? placeholder? accept? maxFiles? />"
+      }
+    },
+    {
+      "name": "attachment-chip",
+      "type": "registry:component",
+      "title": "Attachment chip",
+      "description": "a file in a conversation: icon by type, name, size · `onRemove` while composing",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0"
+      ],
+      "registryDependencies": [
+        "@kit/button"
+      ],
+      "files": [
+        {
+          "path": "components/kit/attachment-chip.tsx",
+          "type": "registry:component",
+          "target": "components/kit/attachment-chip.tsx"
+        }
+      ],
+      "categories": [
+        "ai"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "AttachmentChip",
+          "formatBytes"
+        ],
+        "api": "<AttachmentChip file={{ name, size, type? }} onRemove? />"
       }
     },
     {

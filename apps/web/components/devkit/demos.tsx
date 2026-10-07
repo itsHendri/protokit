@@ -28,6 +28,7 @@ import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 import { toast } from 'sonner';
 import { AppShell } from '@/components/kit/app-shell';
 import { ApprovalCard } from '@/components/kit/approval-card';
+import { AttachmentChip } from '@/components/kit/attachment-chip';
 import { ChatComposer } from '@/components/kit/chat-composer';
 import { type ChatThread, ChatThreadList } from '@/components/kit/chat-thread-list';
 import { DatePicker } from '@/components/kit/date-picker';
@@ -141,15 +142,22 @@ const chartData = [
 ];
 
 function ChatDemo() {
-  const [turns, setTurns] = React.useState<string[]>([]);
+  const [turns, setTurns] = React.useState<{ text: string; files: File[] }[]>([]);
   return (
     <div className="flex w-full max-w-xl flex-col gap-4">
       {turns.map((t, i) => (
         <ChatMessage key={i} role="user" initials="AM">
-          {t}
+          {t.files.length ? (
+            <span className="flex flex-wrap gap-2">
+              {t.files.map((f) => (
+                <AttachmentChip key={f.name} file={f} />
+              ))}
+            </span>
+          ) : null}
+          {t.text ? <span>{t.text}</span> : null}
         </ChatMessage>
       ))}
-      <ChatComposer onSend={(t) => setTurns((x) => [...x, t])} placeholder="Type and press Enter" />
+      <ChatComposer onSend={(text, files) => setTurns((x) => [...x, { text, files }])} accept="" placeholder="Type, attach or drop a file" />
     </div>
   );
 }
@@ -754,6 +762,13 @@ export const DEMOS: Record<string, ComponentType> = {
     </div>
   ),
   'chat-composer': ChatDemo,
+  'attachment-chip': () => (
+    <div className="flex flex-wrap gap-2">
+      <AttachmentChip file={{ name: 'INV-1047-fernway.pdf', size: 184_320, type: 'application/pdf' }} />
+      <AttachmentChip file={{ name: 'receipt-photo.jpg', size: 2_516_582, type: 'image/jpeg' }} onRemove={() => toast('Removed receipt-photo.jpg')} />
+      <AttachmentChip file={{ name: 'q2-board-report-final-final-v3.xlsx', size: 48_211 }} />
+    </div>
+  ),
   'streaming-text': StreamingDemo,
   'thinking-indicator': () => <ThinkingIndicator label="Checking your invoices" />,
   'date-picker': DatePickerDemo,
