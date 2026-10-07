@@ -141,7 +141,7 @@ export function ActionSheet({ open, onClose, title, description, items, cancelLa
           <Text className={cn('flex-1', item.destructive && 'text-destructive')}>{item.label}</Text>
         </Pressable>
       ))}
-      <Pressable accessibilityRole="button" onPress={onClose} className="bg-muted mx-5 mt-3 h-12 items-center justify-center rounded-lg active:opacity-70">
+      <Pressable accessibilityRole="button" onPress={onClose} className="bg-muted mx-5 mt-3 h-control items-center justify-center rounded-lg active:opacity-70">
         <Text className="font-semibold">{cancelLabel}</Text>
       </Pressable>
     </Sheet>

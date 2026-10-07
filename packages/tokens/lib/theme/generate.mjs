@@ -10,7 +10,7 @@
 import { fixContrast } from './fix.mjs';
 import { encodeRecipe } from './codec.mjs';
 import { fontById } from './fonts.mjs';
-import { BORDER, DEPTH, normalizeRecipe, RADIUS, STROKE } from './recipe.mjs';
+import { BORDER, DENSITY, DEPTH, normalizeRecipe, RADIUS, STROKE } from './recipe.mjs';
 import { anchorStep, brandRamp, neutralRamp } from './ramp.mjs';
 import { resolvedMap } from './refs.mjs';
 import { semanticColors } from './semantic.mjs';
@@ -47,6 +47,7 @@ export function generateTheme(input, base, { fix = true } = {}) {
   const radius = lookup(radiusValue);
   const controlRadius = recipe.controls === 'pill' ? 9999 : radiusValue;
   const font = (id) => (id === 'system' ? '' : fontById(id).family);
+  const density = DENSITY[recipe.density];
 
   return {
     recipe,
@@ -59,7 +60,9 @@ export function generateTheme(input, base, { fix = true } = {}) {
       border: { width: BORDER[recipe.border] },
       icon: { stroke: STROKE[recipe.stroke] },
       shadow: DEPTH[recipe.depth],
+      density: { scale: density.scale, control: { sm: density.sm, md: density.md, lg: density.lg, x: density.x } },
     },
+    density,
     resolved,
     radius,
     radiusControl: lookup(controlRadius),

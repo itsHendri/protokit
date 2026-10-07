@@ -6,6 +6,7 @@
   --radius-control: 9999px;
   --border-width: 1px;
   --icon-stroke: 2;
+  --density: 1;
   --shadow-1: 0px 1px 2px 0px rgba(0, 0, 0, 0.051);
   --shadow-2: 0px 4px 12px -2px rgba(0, 0, 0, 0.078);
   --shadow-3: 0px 12px 24px -6px rgba(0, 0, 0, 0.122);
@@ -101,6 +102,8 @@
   --radius-2xl: calc(var(--radius) * 2);
   --radius-control: var(--radius-control);
   --default-border-width: var(--border-width);
+  /* The theme's density scales the whole spacing scale (p-4, gap-2, h-9…). */
+  --spacing: calc(0.25rem * var(--density));
   --shadow-2xs: var(--shadow-1);
   --shadow-xs: var(--shadow-1);
   --shadow-sm: var(--shadow-1);

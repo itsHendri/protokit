@@ -26,7 +26,7 @@ export function DatePicker({ value, onChange, placeholder = 'Select a date', tit
       <Pressable
         accessibilityRole="button"
         onPress={() => setOpen(true)}
-        className={cn('border-input bg-background h-10 flex-row items-center gap-2 rounded-md border px-3 active:bg-accent', className)}>
+        className={cn('border-input bg-background h-control-sm flex-row items-center gap-2 rounded-md border px-3 active:bg-accent', className)}>
         <Icon as={CalendarIcon} size={16} className="text-muted-foreground" />
         <Text className={cn('flex-1', !value && 'text-muted-foreground')}>{value ? format(value) : placeholder}</Text>
       </Pressable>

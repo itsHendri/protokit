@@ -14,7 +14,7 @@ const SHAPE = new Set(['radius-control', 'border-width', 'icon-stroke']);
 function cssBlock(selector, tokens, shape) {
   const lines = tokens
     // Shadows are literal in tailwind.theme.js: a var() box-shadow drops the view on native.
-    .filter((t) => t.$type !== 'shadow' && !SHAPE.has(cssName(t)))
+    .filter((t) => t.$type !== 'shadow' && !SHAPE.has(cssName(t)) && !cssName(t).startsWith('density-'))
     .map((t) => {
       const name = cssName(t);
       if (isColor(t)) return `    --${name}: ${hexToHslTriplet(t.$value)};`;
@@ -23,6 +23,7 @@ function cssBlock(selector, tokens, shape) {
     });
   if (shape) {
     lines.push(`    --radius-control: ${rem(shape.control)};`, `    --border-width: ${shape.borderWidth}px;`, `    --icon-stroke: ${shape.stroke};`);
+    for (const size of ['sm', 'md', 'lg', 'x']) lines.push(`    --control-${size}: ${shape.density[size]}px;`);
   }
   return `  ${selector} {\n${lines.join('\n')}\n  }`;
 }
@@ -47,7 +48,10 @@ ${cssBlock('.dark:root', ctx.semDark)}
   // values: native can't switch a box-shadow per scheme.
   const s = ctx.shape.shadows.light;
   const boxShadow = { xs: s[1], sm: s[1], DEFAULT: s[1], md: s[2], lg: s[3], xl: s[3], '2xl': s[3] };
-  const tailwind = `// ${ctx.header}\nmodule.exports = ${JSON.stringify({ colors, borderRadius, borderWidth, boxShadow }, null, 2)};\n`;
+  // Density: control heights (h-control-sm / h-control / h-control-lg, and min-h-*) and padding (px-control-x).
+  const height = { 'control-sm': 'var(--control-sm)', control: 'var(--control-md)', 'control-lg': 'var(--control-lg)' };
+  const spacing = { 'control-x': 'var(--control-x)' };
+  const tailwind = `// ${ctx.header}\nmodule.exports = ${JSON.stringify({ colors, borderRadius, borderWidth, boxShadow, height, minHeight: height, width: height, spacing }, null, 2)};\n`;
   return [
     { path: options.css, contents: css },
     { path: options.tailwind, contents: tailwind },

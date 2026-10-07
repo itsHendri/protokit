@@ -59,5 +59,23 @@ module.exports = {
     "lg": "0px 12px 24px -6px rgba(0, 0, 0, 0.122)",
     "xl": "0px 12px 24px -6px rgba(0, 0, 0, 0.122)",
     "2xl": "0px 12px 24px -6px rgba(0, 0, 0, 0.122)"
+  },
+  "height": {
+    "control-sm": "var(--control-sm)",
+    "control": "var(--control-md)",
+    "control-lg": "var(--control-lg)"
+  },
+  "minHeight": {
+    "control-sm": "var(--control-sm)",
+    "control": "var(--control-md)",
+    "control-lg": "var(--control-lg)"
+  },
+  "width": {
+    "control-sm": "var(--control-sm)",
+    "control": "var(--control-md)",
+    "control-lg": "var(--control-lg)"
+  },
+  "spacing": {
+    "control-x": "var(--control-x)"
   }
 };

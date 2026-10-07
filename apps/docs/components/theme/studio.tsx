@@ -10,7 +10,7 @@ import {
   type RecipeInput,
 } from '@itshendri/kit-tokens/theme';
 import { Popover, PopoverContent, PopoverTrigger } from 'fumadocs-ui/components/ui/popover';
-import { MoonIcon, Redo2Icon, RotateCcwIcon, ShieldCheckIcon, SunIcon, Undo2Icon } from 'lucide-react';
+import { LockIcon, LockOpenIcon, MoonIcon, Redo2Icon, RotateCcwIcon, ShieldCheckIcon, ShuffleIcon, SunIcon, Undo2Icon } from 'lucide-react';
 import { useTheme as useSiteMode } from 'next-themes';
 import * as React from 'react';
 import { BrowserFrame } from '@/components/browser-frame';
@@ -18,7 +18,7 @@ import { PhoneFrame } from '@/components/phone-frame';
 import { ExportPanel } from '@/components/theme/export-panel';
 import { AdjustmentList, presetLabel, visibleAdjustments } from '@/components/theme/theme-pill';
 import { SWATCHES } from '@/lib/theme/swatches';
-import { redo, reset, setRecipe, themeFor, undo, useLiveTheme } from '@/lib/theme/store';
+import { redo, reset, setRecipe, shuffle, themeFor, toggleLock, undo, useLiveTheme, useLocks, type ShuffleGroup } from '@/lib/theme/store';
 
 const PHONE_SCREENS = [
   { path: '/shop', label: 'Shop' },
@@ -105,10 +105,27 @@ function Field({ label, hint, children }: { label: string; hint?: string; childr
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({ title, lock, children }: { title: string; lock?: ShuffleGroup; children: React.ReactNode }) {
+  const locks = useLocks();
+  const locked = lock ? locks.has(lock) : false;
   return (
     <section className="border-border flex flex-col gap-4 border-t px-5 py-5 first:border-t-0">
-      <h2 className="text-muted-foreground text-xs font-semibold uppercase tracking-wider">{title}</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-muted-foreground text-xs font-semibold uppercase tracking-wider">{title}</h2>
+        {lock ? (
+          <button
+            type="button"
+            onClick={() => toggleLock(lock)}
+            aria-pressed={locked}
+            aria-label={`Keep ${title.toLowerCase()} when shuffling`}
+            title={locked ? 'Locked: shuffle keeps these' : 'Lock to keep these when shuffling'}
+            className={`focus-visible:ring-ring inline-flex size-7 items-center justify-center rounded-md focus-visible:outline-none focus-visible:ring-2 ${
+              locked ? 'bg-foreground text-background' : 'text-muted-foreground hover:bg-accent hover:text-foreground'
+            }`}>
+            {locked ? <LockIcon className="size-3.5" aria-hidden /> : <LockOpenIcon className="size-3.5" aria-hidden />}
+          </button>
+        ) : null}
+      </div>
       {children}
     </section>
   );
@@ -163,7 +180,8 @@ export function ThemeStudio() {
   // Undo / redo from the keyboard (not while typing in a field).
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (!(e.metaKey || e.ctrlKey) || e.key.toLowerCase() !== 'z' || (e.target as HTMLElement).closest('input, textarea, select')) return;
+      if ((e.target as HTMLElement).closest('input, textarea, select, [contenteditable]')) return;
+      if (!(e.metaKey || e.ctrlKey) || e.key.toLowerCase() !== 'z') return;
       e.preventDefault();
       if (e.shiftKey) redo();
       else undo();
@@ -187,7 +205,7 @@ export function ThemeStudio() {
           </div>
         </Section>
 
-        <Section title="Colour">
+        <Section title="Colour" lock="colour">
           <Field label="Brand" hint={recipe.brand.toUpperCase()}>
             <div className="flex flex-wrap items-center gap-2">
               {SWATCHES.map((s) => (
@@ -240,7 +258,7 @@ export function ThemeStudio() {
           )}
         </Section>
 
-        <Section title="Type">
+        <Section title="Type" lock="type">
           {(['heading', 'body'] as const).map((role) => (
             <Field key={role} label={role === 'heading' ? 'Headings' : 'Body'}>
               <select
@@ -270,7 +288,7 @@ export function ThemeStudio() {
           </p>
         </Section>
 
-        <Section title="Shape">
+        <Section title="Shape" lock="shape">
           <Field label="Corner radius">
             <Segmented
               label="Corner radius"
@@ -297,7 +315,7 @@ export function ThemeStudio() {
           </Field>
         </Section>
 
-        <Section title="Depth, icons, density">
+        <Section title="Depth, icons, density" lock="depth">
           <Field label="Depth" hint="Cards, menus, dialogs">
             <Segmented label="Depth" value={recipe.depth} options={ORDER.depth} onChange={(depth) => set({ depth })} />
           </Field>
@@ -320,6 +338,10 @@ export function ThemeStudio() {
             </p>
           </div>
           <div className="flex items-center gap-1">
+            <button type="button" onClick={shuffle} title="Shuffle everything that isn't locked" className="border-border hover:bg-accent focus-visible:ring-ring mr-1 inline-flex h-9 items-center gap-2 rounded-full border px-3.5 text-sm font-medium focus-visible:outline-none focus-visible:ring-2">
+              <ShuffleIcon className="size-4" aria-hidden />
+              Shuffle
+            </button>
             <button type="button" onClick={undo} disabled={!canUndo} aria-label="Undo" title="Undo (⌘Z)" className="hover:bg-accent focus-visible:ring-ring inline-flex size-9 items-center justify-center rounded-full disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2">
               <Undo2Icon className="size-4" aria-hidden />
             </button>

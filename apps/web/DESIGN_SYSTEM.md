@@ -46,6 +46,7 @@ Rules:
 
 Tailwind's numeric scale on a 4-pt grid: `0 1 2 3 4 5 6 8 10 12 16` (0–64 px). Page gutters `px-4 sm:px-6
 lg:px-8`, sections `gap-8`–`gap-12`, inside cards `p-5`/`p-6`. Use `gap-*` for siblings, not margins.
+The theme's density scales the whole scale (`--spacing` × 0.875 compact, × 1.125 spacious), so stay on it.
 
 ### Radius
 

@@ -72,6 +72,8 @@ ${primitiveGroup(ctx.prim, ['radius'])}
   iconStroke: ${ctx.shape.stroke},
   /** Width of \`border\` in px. */
   borderWidth: ${ctx.shape.borderWidth},
+  /** Control heights and padding (px) for the theme's density: h-control-sm, h-control, h-control-lg, px-control-x. */
+  density: ${JSON.stringify({ sm: ctx.shape.density.sm, md: ctx.shape.density.md, lg: ctx.shape.density.lg, x: ctx.shape.density.x })},
   fontSize: {
 ${primitiveGroup(ctx.prim, ['font', 'size'])}
   },

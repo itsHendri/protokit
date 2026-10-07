@@ -23,12 +23,14 @@ function ownedValues(theme) {
   out['semantic.border.width'] = theme.semantic.border.width;
   out['semantic.icon.stroke'] = theme.semantic.icon.stroke;
   for (const [level, value] of Object.entries(theme.semantic.shadow)) out[`semantic.shadow.${level}`] = value;
+  out['semantic.density.scale'] = theme.semantic.density.scale;
+  for (const [size, value] of Object.entries(theme.semantic.density.control)) out[`semantic.density.control.${size}`] = value;
   out['primitive.font.family.heading'] = theme.fonts.heading;
   out['primitive.font.family.body'] = theme.fonts.body;
   return out;
 }
 
-const TYPES = { radius: 'number', border: 'number', icon: 'number', shadow: 'shadow', font: 'fontFamily', color: 'color' };
+const TYPES = { radius: 'number', border: 'number', icon: 'number', density: 'number', shadow: 'shadow', font: 'fontFamily', color: 'color' };
 const DESCRIPTIONS = {
   'semantic.radius.control': 'Corner radius of buttons and chips: rounded-control. 9999 = pills; otherwise the base radius.',
   'semantic.border.width': 'Width of `border` (px). border-2 and border-hairline stay explicit.',
@@ -36,6 +38,11 @@ const DESCRIPTIONS = {
   'semantic.shadow.1': 'shadow-xs / shadow-sm / shadow: controls and cards.',
   'semantic.shadow.2': 'shadow-md: raised cards and popovers.',
   'semantic.shadow.3': 'shadow-lg / shadow-xl: menus, dialogs, floating buttons.',
+  'semantic.density.scale': "Web: multiplies the spacing scale (Tailwind 4 --spacing). Mobile: see density.control.",
+  'semantic.density.control.sm': 'Mobile: small control height (h-control-sm), px.',
+  'semantic.density.control.md': 'Mobile: control height (h-control): buttons, inputs, selects, px.',
+  'semantic.density.control.lg': 'Mobile: large control height (h-control-lg), px.',
+  'semantic.density.control.x': 'Mobile: control horizontal padding (px-control-x), px.',
   'primitive.font.family.heading': 'Headings (Text h1–h4, titles). Empty = the platform system font.',
   'primitive.font.family.body': 'Everything else. Empty = the platform system font.',
 };
