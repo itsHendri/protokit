@@ -14,7 +14,8 @@ export function themeCommands(code: string, origin: string) {
       `Apply the ${kitJson.name} theme ${code} to this project. Use the apply-theme skill: it runs ` +
       `\`npx kit-tokens theme apply ${code}\` (or \`npm run theme:apply -- ${code}\` at the root of the ${kitJson.name} monorepo), ` +
       'then the qc-pass skill. Tell me which colours it adjusted for contrast and show me the Foundations screen.',
-    url: `${origin}/themes?t=${code}`,
+    // The trailing slash matches the static export, so the link needs no redirect that could drop ?t=.
+    url: `${origin}/themes/?t=${code}`,
   };
 }
 

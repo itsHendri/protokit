@@ -72,8 +72,7 @@ export function fixContrast(semantic, lookup) {
 
       // 2 and 3: move the ink until every pairing it takes part in as ink passes.
       const ink = f.fgName;
-      const asInk = (candidate) =>
-        failing(contrastPairs({ ...hex, [ink]: candidate }, mode, { strict: true }).filter((r) => r.fgName === ink)).length === 0;
+      const asInk = (candidate) => failing(contrastPairs({ ...hex, [ink]: candidate }, mode, { strict: true, fg: ink })).length === 0;
       const moved = nudge(hex[ink], away, asInk);
       if (!moved) throw new Error(`fixContrast: cannot fix ${f.label} (${mode})`);
       moveFill(ink, moved);

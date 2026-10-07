@@ -5,8 +5,11 @@
 export const STORAGE_KEY = 'protokit.theme';
 /** The site's CSS for the current theme, painted before hydration. */
 export const CSS_KEY = 'protokit.theme.css';
-/** The kits' payloads, read before paint by the embedded kits (same origin). The kits read this key too. */
-export const EMBED_KEY = 'kit.embed.theme';
+/**
+ * The kits' payloads, read before paint by the embedded kits (same origin). The kits read this key too. Not
+ * `kit.embed.theme`: the web kit keeps the frame's light/dark there.
+ */
+export const EMBED_KEY = 'kit.embed.tokens';
 export const STYLE_ID = 'protokit-theme';
 export const FONTS_ID = 'protokit-theme-fonts';
 /** The Google Fonts stylesheet for the current theme's fonts, linked before paint too. */

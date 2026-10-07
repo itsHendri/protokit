@@ -498,7 +498,8 @@
       "description": "always with `Label`",
       "dependencies": [],
       "registryDependencies": [
-        "@kit-native/lib-utils"
+        "@kit-native/lib-utils",
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -553,7 +554,8 @@
       "description": "",
       "dependencies": [],
       "registryDependencies": [
-        "@kit-native/lib-utils"
+        "@kit-native/lib-utils",
+        "@kit-native/text"
       ],
       "files": [
         {

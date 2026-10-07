@@ -78,6 +78,7 @@ const WEIGHT: Record<string, number> = {
   'font-black': 900,
 };
 const HEADINGS = new Set<TextVariant>(['h1', 'h2', 'h3', 'h4']);
+const SYSTEM_STACK = 'ui-sans-serif, system-ui, -apple-system, sans-serif';
 
 /**
  * The theme's font for this text (lib/fonts.ts). Headings (h1–h4, or a `font-heading` class) take the
@@ -85,13 +86,17 @@ const HEADINGS = new Set<TextVariant>(['h1', 'h2', 'h3', 'h4']);
  * family per weight on native (Android ignores fontWeight for it), so the weight in the classes picks the
  * family and fontWeight is reset. A live theme from the docs picker (web only) uses its Google font.
  */
-function useFontStyle(classes: string, variant: TextVariant) {
+function useFontStyle(classes: string, variant: TextVariant = 'default') {
   const live = useLiveFonts();
   if (/(^|\s)font-mono(\s|$)/.test(classes)) return undefined;
   const role = HEADINGS.has(variant) || /(^|\s)font-heading(\s|$)/.test(classes) ? 'heading' : 'body';
-  const liveFamily = live?.[role];
-  if (liveFamily) return { fontFamily: `"${liveFamily}", ui-sans-serif, system-ui, sans-serif` };
   const families = FONT_FAMILY[role];
+  if (live) {
+    // A live theme decides every role: its font, or the system font over a committed custom one.
+    const family = live[role];
+    if (family) return { fontFamily: `"${family}", ${SYSTEM_STACK}` };
+    return families ? { fontFamily: SYSTEM_STACK } : undefined;
+  }
   if (!families) return undefined;
   const weight = classes.split(/\s+/).reduce((w, c) => WEIGHT[c] ?? w, 400);
   const loaded = Object.keys(families).map(Number);
@@ -124,4 +129,4 @@ function Text({
   );
 }
 
-export { Text, TextClassContext };
+export { Text, TextClassContext, useFontStyle };

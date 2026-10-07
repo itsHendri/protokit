@@ -82,8 +82,10 @@ Weights: `font-medium` for row titles, `font-semibold` for headings/values, `fon
 ### Depth and borders
 
 `shadow-sm` (controls, cards that press), `shadow-md` (raised cards, popovers), `shadow-lg` (menus, dialogs,
-floating buttons): the theme's three elevation levels. Never a shadow colour (`shadow-black/5`): the theme
-owns it. `border` is the theme's width; `border-2` and `border-hairline` stay fixed. Icons take the theme's
+floating buttons): the theme's three elevation levels. No shadow colour (`shadow-black/5`) on surfaces: the
+theme owns it. The one exception is a thumb or a floating element that must separate on any theme (Switch,
+Slider and segmented thumbs, toasts, the floating button, KitChip): `shadow-black/20` deepens the level's
+shadow. `border` is the theme's width; `border-2` and `border-hairline` stay fixed. Icons take the theme's
 stroke; an Icon's `strokeWidth` is relative to 2.
 
 ### Motion

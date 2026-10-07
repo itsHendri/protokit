@@ -23,8 +23,8 @@ html > body[data-scroll-locked] {
 }
 
 /*
- * Selected tabs are neutral, not the brand colour: the kit's own rule (DESIGN_SYSTEM.md › Colour), and the
- * dark brand blue on the muted tab surface measures 4.04:1, under WCAG AA.
+ * Selected tabs are neutral, not the brand colour: the kit's own rule (DESIGN_SYSTEM.md › Colour). (The
+ * contrast gate now also checks the brand on muted surfaces, so any theme passes there too.)
  */
 [role='tab'][data-state='active'] {
   color: var(--color-fd-foreground);

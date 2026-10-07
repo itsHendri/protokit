@@ -52,7 +52,7 @@ export function SegmentedControl<T extends string>({ segments, value, onChange, 
           }}>
           {/* The surface lives on a plain View: NativeWind drops classNames on
               Animated.View on web, which left the thumb invisible in the preview. */}
-          <View className="bg-card h-full w-full rounded-md shadow-sm" />
+          <View className="bg-card h-full w-full rounded-md shadow-sm shadow-black/10" />
         </Animated.View>
       ) : null}
       {segments.map((seg) => {

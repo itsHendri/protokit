@@ -26,7 +26,7 @@ const LiveThemeContext = React.createContext<LiveTheme | null>(null);
 const liveTheme = (tokens: EmbedTokens | null): LiveTheme | null => {
   if (!tokens?.code) return null;
   const stroke = Number(tokens.vars?.light?.['--icon-stroke']);
-  return { code: tokens.code, stroke: stroke > 0 && stroke < 5 ? stroke : undefined, fonts: tokens.fonts };
+  return { code: tokens.code, stroke: stroke > 0 && stroke < 5 ? stroke : undefined, fonts: tokens.fonts ?? {} };
 };
 
 export function PaletteProvider({ children }: { children: React.ReactNode }) {
@@ -78,9 +78,13 @@ export const useLiveFonts = () => React.useContext(LiveThemeContext)?.fonts ?? n
 /** The theme's icon stroke width (Lucide), live override included. */
 export const useIconStroke = () => React.useContext(LiveThemeContext)?.stroke ?? TOKENS.iconStroke;
 
-/** React Navigation's fonts (header titles use `bold`) from the theme's fonts, per weight. */
-function navFonts(base: Theme['fonts']): Theme['fonts'] {
+/**
+ * React Navigation's fonts (header titles use `bold`) from the theme's fonts, per weight. A live theme from
+ * the docs picker (web only) uses its Google fonts, keeping the weights.
+ */
+function navFonts(base: Theme['fonts'], live: LiveTheme['fonts'] | null): Theme['fonts'] {
   const pick = (role: 'heading' | 'body', weight: number, fallback: Theme['fonts']['regular']) => {
+    if (live) return live[role] ? { ...fallback, fontFamily: `"${live[role]}", ui-sans-serif, system-ui, sans-serif` } : fallback;
     const family = FONT_FAMILY[role]?.[weight];
     return family ? { fontFamily: family, fontWeight: 'normal' as const } : fallback;
   };
@@ -96,10 +100,11 @@ function navFonts(base: Theme['fonts']): Theme['fonts'] {
 export function useNavTheme(): Theme {
   const { scheme } = useKitTheme();
   const palette = usePalette();
+  const liveFonts = useLiveFonts();
   return React.useMemo(
     () => ({
       ...NAV_THEME[scheme],
-      fonts: navFonts(NAV_THEME[scheme].fonts),
+      fonts: navFonts(NAV_THEME[scheme].fonts, liveFonts),
       colors: {
         background: palette.background,
         border: palette.border,
@@ -109,6 +114,6 @@ export function useNavTheme(): Theme {
         text: palette.foreground,
       },
     }),
-    [scheme, palette]
+    [scheme, palette, liveFonts]
   );
 }
