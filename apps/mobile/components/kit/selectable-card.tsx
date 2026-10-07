@@ -35,7 +35,7 @@ export function SelectableCard({ title, description, icon, detail, selected, onP
         onPress();
       }}
       className={cn(
-        'min-h-14 flex-row items-center gap-3 rounded-lg border p-4 shadow-md shadow-black/5',
+        'min-h-14 flex-row items-center gap-3 rounded-lg border p-4 shadow-md',
         selected ? 'border-primary bg-primary/5' : 'border-border bg-card active:bg-accent',
         disabled && 'opacity-50',
         className

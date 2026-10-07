@@ -41,10 +41,23 @@ module.exports = {
     "chart-5": "hsl(var(--chart-5))"
   },
   "borderRadius": {
-    "sm": "calc(var(--radius) - 4px)",
-    "md": "calc(var(--radius) - 2px)",
+    "sm": "calc(var(--radius) * 0.6)",
+    "md": "calc(var(--radius) * 0.8)",
     "lg": "var(--radius)",
-    "xl": "calc(var(--radius) + 6px)",
-    "2xl": "calc(var(--radius) + 10px)"
+    "xl": "calc(var(--radius) * 1.6)",
+    "2xl": "calc(var(--radius) * 2)",
+    "control": "var(--radius-control)"
+  },
+  "borderWidth": {
+    "DEFAULT": "var(--border-width)"
+  },
+  "boxShadow": {
+    "xs": "0px 1px 2px 0px rgba(0, 0, 0, 0.051)",
+    "sm": "0px 1px 2px 0px rgba(0, 0, 0, 0.051)",
+    "DEFAULT": "0px 1px 2px 0px rgba(0, 0, 0, 0.051)",
+    "md": "0px 4px 12px -2px rgba(0, 0, 0, 0.078)",
+    "lg": "0px 12px 24px -6px rgba(0, 0, 0, 0.122)",
+    "xl": "0px 12px 24px -6px rgba(0, 0, 0, 0.122)",
+    "2xl": "0px 12px 24px -6px rgba(0, 0, 0, 0.122)"
   }
 };

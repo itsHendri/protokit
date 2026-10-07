@@ -349,6 +349,110 @@
     },
     {
       "action": "CREATE",
+      "id": "tmp-color-sidebar",
+      "name": "color/sidebar",
+      "variableCollectionId": "tmp-collection",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {
+        "WEB": "var(--sidebar)"
+      }
+    },
+    {
+      "action": "CREATE",
+      "id": "tmp-color-sidebar-foreground",
+      "name": "color/sidebar-foreground",
+      "variableCollectionId": "tmp-collection",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {
+        "WEB": "var(--sidebar-foreground)"
+      }
+    },
+    {
+      "action": "CREATE",
+      "id": "tmp-color-sidebar-primary",
+      "name": "color/sidebar-primary",
+      "variableCollectionId": "tmp-collection",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {
+        "WEB": "var(--sidebar-primary)"
+      }
+    },
+    {
+      "action": "CREATE",
+      "id": "tmp-color-sidebar-primary-foreground",
+      "name": "color/sidebar-primary-foreground",
+      "variableCollectionId": "tmp-collection",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {
+        "WEB": "var(--sidebar-primary-foreground)"
+      }
+    },
+    {
+      "action": "CREATE",
+      "id": "tmp-color-sidebar-accent",
+      "name": "color/sidebar-accent",
+      "variableCollectionId": "tmp-collection",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {
+        "WEB": "var(--sidebar-accent)"
+      }
+    },
+    {
+      "action": "CREATE",
+      "id": "tmp-color-sidebar-accent-foreground",
+      "name": "color/sidebar-accent-foreground",
+      "variableCollectionId": "tmp-collection",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {
+        "WEB": "var(--sidebar-accent-foreground)"
+      }
+    },
+    {
+      "action": "CREATE",
+      "id": "tmp-color-sidebar-border",
+      "name": "color/sidebar-border",
+      "variableCollectionId": "tmp-collection",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {
+        "WEB": "var(--sidebar-border)"
+      }
+    },
+    {
+      "action": "CREATE",
+      "id": "tmp-color-sidebar-ring",
+      "name": "color/sidebar-ring",
+      "variableCollectionId": "tmp-collection",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {
+        "WEB": "var(--sidebar-ring)"
+      }
+    },
+    {
+      "action": "CREATE",
       "id": "tmp-color-chart-1",
       "name": "color/chart-1",
       "variableCollectionId": "tmp-collection",
@@ -475,6 +579,19 @@
       ],
       "codeSyntax": {
         "WEB": "rounded-2xl"
+      }
+    },
+    {
+      "action": "CREATE",
+      "id": "tmp-radius-control",
+      "name": "radius/control",
+      "variableCollectionId": "tmp-collection",
+      "resolvedType": "FLOAT",
+      "scopes": [
+        "CORNER_RADIUS"
+      ],
+      "codeSyntax": {
+        "WEB": "rounded-control"
       }
     },
     {
@@ -747,6 +864,58 @@
       "codeSyntax": {
         "WEB": "text-4xl"
       }
+    },
+    {
+      "action": "CREATE",
+      "id": "tmp-border-width",
+      "name": "border/width",
+      "variableCollectionId": "tmp-collection",
+      "resolvedType": "FLOAT",
+      "scopes": [
+        "STROKE_FLOAT"
+      ],
+      "codeSyntax": {
+        "WEB": "border"
+      }
+    },
+    {
+      "action": "CREATE",
+      "id": "tmp-icon-stroke",
+      "name": "icon/stroke",
+      "variableCollectionId": "tmp-collection",
+      "resolvedType": "FLOAT",
+      "scopes": [
+        "STROKE_FLOAT"
+      ],
+      "codeSyntax": {
+        "WEB": "strokeWidth"
+      }
+    },
+    {
+      "action": "CREATE",
+      "id": "tmp-font-heading",
+      "name": "font/heading",
+      "variableCollectionId": "tmp-collection",
+      "resolvedType": "STRING",
+      "scopes": [
+        "FONT_FAMILY"
+      ],
+      "codeSyntax": {
+        "WEB": "font-heading"
+      }
+    },
+    {
+      "action": "CREATE",
+      "id": "tmp-font-body",
+      "name": "font/body",
+      "variableCollectionId": "tmp-collection",
+      "resolvedType": "STRING",
+      "scopes": [
+        "FONT_FAMILY"
+      ],
+      "codeSyntax": {
+        "WEB": "font-sans"
+      }
     }
   ],
   "variableModeValues": [
@@ -884,9 +1053,9 @@
       "variableId": "tmp-color-primary",
       "modeId": "tmp-mode-dark",
       "value": {
-        "r": 0.23137254901960785,
-        "g": 0.5098039215686274,
-        "b": 0.9647058823529412,
+        "r": 0.26666666666666666,
+        "g": 0.5450980392156862,
+        "b": 1,
         "a": 1
       }
     },
@@ -1034,9 +1203,9 @@
       "variableId": "tmp-color-destructive",
       "modeId": "tmp-mode-light",
       "value": {
-        "r": 0.8627450980392157,
-        "g": 0.14901960784313725,
-        "b": 0.14901960784313725,
+        "r": 0.8509803921568627,
+        "g": 0.13333333333333333,
+        "b": 0.13725490196078433,
         "a": 1
       }
     },
@@ -1044,9 +1213,9 @@
       "variableId": "tmp-color-destructive",
       "modeId": "tmp-mode-dark",
       "value": {
-        "r": 0.9372549019607843,
-        "g": 0.26666666666666666,
-        "b": 0.26666666666666666,
+        "r": 0.984313725490196,
+        "g": 0.3137254901960784,
+        "b": 0.3058823529411765,
         "a": 1
       }
     },
@@ -1244,9 +1413,169 @@
       "variableId": "tmp-color-ring",
       "modeId": "tmp-mode-dark",
       "value": {
-        "r": 0.23137254901960785,
-        "g": 0.5098039215686274,
-        "b": 0.9647058823529412,
+        "r": 0.26666666666666666,
+        "g": 0.5450980392156862,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar",
+      "modeId": "tmp-mode-light",
+      "value": {
+        "r": 0.9803921568627451,
+        "g": 0.9803921568627451,
+        "b": 0.9803921568627451,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar",
+      "modeId": "tmp-mode-dark",
+      "value": {
+        "r": 0.09411764705882353,
+        "g": 0.09411764705882353,
+        "b": 0.10588235294117647,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar-foreground",
+      "modeId": "tmp-mode-light",
+      "value": {
+        "r": 0.03529411764705882,
+        "g": 0.03529411764705882,
+        "b": 0.043137254901960784,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar-foreground",
+      "modeId": "tmp-mode-dark",
+      "value": {
+        "r": 0.9803921568627451,
+        "g": 0.9803921568627451,
+        "b": 0.9803921568627451,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar-primary",
+      "modeId": "tmp-mode-light",
+      "value": {
+        "r": 0.1450980392156863,
+        "g": 0.38823529411764707,
+        "b": 0.9215686274509803,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar-primary",
+      "modeId": "tmp-mode-dark",
+      "value": {
+        "r": 0.26666666666666666,
+        "g": 0.5450980392156862,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar-primary-foreground",
+      "modeId": "tmp-mode-light",
+      "value": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar-primary-foreground",
+      "modeId": "tmp-mode-dark",
+      "value": {
+        "r": 0.03529411764705882,
+        "g": 0.03529411764705882,
+        "b": 0.043137254901960784,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar-accent",
+      "modeId": "tmp-mode-light",
+      "value": {
+        "r": 0.9568627450980393,
+        "g": 0.9568627450980393,
+        "b": 0.9607843137254902,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar-accent",
+      "modeId": "tmp-mode-dark",
+      "value": {
+        "r": 0.15294117647058825,
+        "g": 0.15294117647058825,
+        "b": 0.16470588235294117,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar-accent-foreground",
+      "modeId": "tmp-mode-light",
+      "value": {
+        "r": 0.09411764705882353,
+        "g": 0.09411764705882353,
+        "b": 0.10588235294117647,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar-accent-foreground",
+      "modeId": "tmp-mode-dark",
+      "value": {
+        "r": 0.9803921568627451,
+        "g": 0.9803921568627451,
+        "b": 0.9803921568627451,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar-border",
+      "modeId": "tmp-mode-light",
+      "value": {
+        "r": 0.8941176470588236,
+        "g": 0.8941176470588236,
+        "b": 0.9058823529411765,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar-border",
+      "modeId": "tmp-mode-dark",
+      "value": {
+        "r": 0.15294117647058825,
+        "g": 0.15294117647058825,
+        "b": 0.16470588235294117,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar-ring",
+      "modeId": "tmp-mode-light",
+      "value": {
+        "r": 0.1450980392156863,
+        "g": 0.38823529411764707,
+        "b": 0.9215686274509803,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "tmp-color-sidebar-ring",
+      "modeId": "tmp-mode-dark",
+      "value": {
+        "r": 0.26666666666666666,
+        "g": 0.5450980392156862,
+        "b": 1,
         "a": 1
       }
     },
@@ -1401,6 +1730,16 @@
       "value": 20
     },
     {
+      "variableId": "tmp-radius-control",
+      "modeId": "tmp-mode-light",
+      "value": 9999
+    },
+    {
+      "variableId": "tmp-radius-control",
+      "modeId": "tmp-mode-dark",
+      "value": 9999
+    },
+    {
       "variableId": "tmp-radius-full",
       "modeId": "tmp-mode-light",
       "value": 9999
@@ -1599,6 +1938,46 @@
       "variableId": "tmp-font-size-4xl",
       "modeId": "tmp-mode-dark",
       "value": 36
+    },
+    {
+      "variableId": "tmp-border-width",
+      "modeId": "tmp-mode-light",
+      "value": 1
+    },
+    {
+      "variableId": "tmp-border-width",
+      "modeId": "tmp-mode-dark",
+      "value": 1
+    },
+    {
+      "variableId": "tmp-icon-stroke",
+      "modeId": "tmp-mode-light",
+      "value": 2
+    },
+    {
+      "variableId": "tmp-icon-stroke",
+      "modeId": "tmp-mode-dark",
+      "value": 2
+    },
+    {
+      "variableId": "tmp-font-heading",
+      "modeId": "tmp-mode-light",
+      "value": "System"
+    },
+    {
+      "variableId": "tmp-font-heading",
+      "modeId": "tmp-mode-dark",
+      "value": "System"
+    },
+    {
+      "variableId": "tmp-font-body",
+      "modeId": "tmp-mode-light",
+      "value": "System"
+    },
+    {
+      "variableId": "tmp-font-body",
+      "modeId": "tmp-mode-dark",
+      "value": "System"
     }
   ]
 }

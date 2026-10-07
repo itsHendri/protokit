@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
-import { kitPayloads, siteCss } from '@/lib/theme/payload';
-import { CSS_KEY, EMBED_KEY, STYLE_ID } from '@/lib/theme/keys';
+import { fontsHref, kitPayloads, siteCss } from '@/lib/theme/payload';
+import { CSS_KEY, EMBED_KEY, FONTS_ID, FONTS_KEY, STYLE_ID } from '@/lib/theme/keys';
 import { committed, currentRecipe, startTheme, subscribeTheme, themeFor } from '@/lib/theme/store';
 import { sameRecipe } from '@itshendri/kit-tokens/theme';
 
@@ -22,6 +22,20 @@ export function ThemeRuntime() {
       } catch {
         /* storage unavailable: the frames still get the theme over postMessage */
       }
+      const href = live ? fontsHref(theme) : null;
+      let link = document.getElementById(FONTS_ID) as HTMLLinkElement | null;
+      if (!href) link?.remove();
+      else {
+        if (!link) {
+          link = Object.assign(document.createElement('link'), { id: FONTS_ID, rel: 'stylesheet' });
+          document.head.appendChild(link);
+        }
+        if (link.href !== href) link.href = href;
+      }
+      try {
+        if (href) localStorage.setItem(FONTS_KEY, href);
+        else localStorage.removeItem(FONTS_KEY);
+      } catch {}
       if (!live) {
         style?.remove();
         try {

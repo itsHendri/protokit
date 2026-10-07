@@ -69,7 +69,7 @@ export async function run(argv = process.argv.slice(2)) {
   if (command === 'theme') {
     const { themeCommand } = await import('./lib/theme-cli.mjs');
     const rebuild = ['build', '--root', root, ...(flags.config ? ['--config', flags.config] : [])];
-    return themeCommand({ positional, flags, root, sourcePath: join(root, source), build: () => run(rebuild) });
+    return themeCommand({ positional, flags, root, sourcePath: join(root, source), config, build: () => run(rebuild) });
   }
   const ctx = await loadTokens(join(root, source));
   ctx.root = root;

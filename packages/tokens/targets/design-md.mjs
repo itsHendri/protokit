@@ -6,6 +6,8 @@
  *   options: { out: 'DESIGN.md', name?: string, description?: string }
  */
 import { describeTintLimits, textOnTintLimits } from '../lib/contrast.mjs';
+import { themeFonts } from './fonts.mjs';
+import { themeStatus } from '../lib/theme/index.mjs';
 import { group } from '../lib/resolve.mjs';
 
 const q = (s) => JSON.stringify(String(s));
@@ -50,9 +52,15 @@ export default function designMd(ctx, options) {
   const colors = ctx.colors
     .flatMap((c) => [`  ${c.name}: ${q(c.light)}`, `  ${c.name}-dark: ${q(c.dark)}`])
     .join('\n');
-  const rounded = group(ctx.prim, ['radius'])
-    .map((t) => `  ${t.key}: ${px(t.value)}`)
-    .join('\n');
+  // The theme's radius: rounded-* are multiples of its base (rounded-lg); control is buttons and chips.
+  const rounded = [
+    ...ctx.radius.steps.map((s) => `  ${s.name}: ${px(Math.round(ctx.radius.base * s.scale * 10) / 10)}`),
+    `  control: ${px(Math.min(ctx.shape.control, 9999))}`,
+    `  full: ${px(9999)}`,
+  ].join('\n');
+  const fonts = themeFonts(ctx);
+  const status = themeStatus(ctx.source);
+  const fontName = (f) => (f ? f.family : 'the system font (SF / Roboto)');
   const spacing = group(ctx.prim, ['space'])
     .map((t) => `  ${q(t.key)}: ${px(t.value)}`)
     .join('\n');
@@ -77,12 +85,12 @@ components:
   button-primary:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.primary-foreground}"
-    rounded: "{rounded.full}"
+    rounded: "{rounded.control}"
     height: 48px
   button-secondary:
     backgroundColor: "{colors.secondary}"
     textColor: "{colors.secondary-foreground}"
-    rounded: "{rounded.full}"
+    rounded: "{rounded.control}"
     height: 48px
   card:
     backgroundColor: "{colors.card}"
@@ -104,8 +112,10 @@ components:
 
 A neutral, brand-agnostic base for clickable prototypes on phone and web. Calm surfaces, one brand
 colour reserved for the primary action and focus, generous spacing, and both light and dark themes
-from day one. Re-branding means editing \`tokens/tokens.json\`; everything else follows. The full
-rules and the component registry are in \`DESIGN_SYSTEM.md\` — read it before building UI.
+from day one. ${status.applied ? `The applied theme is \`${status.code}\`${status.drift.length ? ' (edited by hand since)' : ''}. ` : ''}Re-branding means applying a
+theme (\`npx kit-tokens theme apply <code>\`, codes come from the docs theme picker) or editing
+\`tokens/tokens.json\`; everything else follows. The full rules and the component registry are in
+\`DESIGN_SYSTEM.md\` — read it before building UI.
 
 ## Colors
 
@@ -131,8 +141,8 @@ colour. \`kit-tokens check\` flags class strings that break this.
 
 ## Typography
 
-System font unless a brand font is configured. Use the Text variants (h1–h4, lead, large, body,
-small, muted, code) rather than raw sizes. Medium weight for row titles, semibold for headings and
+Headings (h1–h4, titles) use ${fontName(fonts.heading)}; everything else uses ${fontName(fonts.body)}.
+Use the Text variants (h1–h4, lead, large, body, small, muted, code) rather than raw sizes. Medium weight for row titles, semibold for headings and
 values, bold only for hero amounts.
 
 ## Layout

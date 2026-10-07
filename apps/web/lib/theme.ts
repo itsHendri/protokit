@@ -114,7 +114,12 @@ export const TOKENS = {
     '2xl': 20,
     full: 9999,
     base: 10,
+    control: 9999,
   },
+  /** Lucide stroke width for icons (the Icon component's default; an explicit strokeWidth is relative to 2). */
+  iconStroke: 2,
+  /** Width of `border` in px. */
+  borderWidth: 1,
   fontSize: {
     xs: 12,
     sm: 14,
@@ -128,6 +133,8 @@ export const TOKENS = {
   fontFamily: {
     sans: "",
     mono: "Menlo",
+    heading: "",
+    body: "",
   },
   duration: {
     fast: 150,

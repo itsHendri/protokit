@@ -93,13 +93,13 @@ export function SwipeToConfirm({ label, onConfirm, confirmLabel = 'Confirmed', t
   return (
     <View
       onLayout={(e: LayoutChangeEvent) => setTrackW(e.nativeEvent.layout.width)}
-      className={cn('bg-muted w-full justify-center overflow-hidden rounded-full', disabled && 'opacity-50', className)}
+      className={cn('bg-muted w-full justify-center overflow-hidden rounded-control', disabled && 'opacity-50', className)}
       style={{ height: TRACK_H }}
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityHint="Swipe right to confirm">
       <Animated.View pointerEvents="none" style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: fillWidth }}>
-        <View className={cn('h-full w-full rounded-full', tone === 'destructive' ? 'bg-destructive/15' : 'bg-primary/15')} />
+        <View className={cn('h-full w-full rounded-control', tone === 'destructive' ? 'bg-destructive/15' : 'bg-primary/15')} />
       </Animated.View>
       <Animated.View
         pointerEvents="none"
@@ -113,7 +113,7 @@ export function SwipeToConfirm({ label, onConfirm, confirmLabel = 'Confirmed', t
       ) : null}
       <GestureDetector gesture={pan}>
         <Animated.View style={{ width: THUMB, height: THUMB, marginLeft: INSET, transform: [{ translateX }] }}>
-          <View className={cn('h-full w-full items-center justify-center rounded-full', bg)}>
+          <View className={cn('h-full w-full items-center justify-center rounded-control', bg)}>
             <Icon as={completed ? CheckIcon : ArrowRightIcon} size={24} className={fg} />
           </View>
         </Animated.View>

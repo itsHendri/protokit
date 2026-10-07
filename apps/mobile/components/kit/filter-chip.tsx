@@ -28,7 +28,7 @@ export function FilterChip({ label, selected, onPress, icon, disabled, className
         onPress?.();
       }}
       className={cn(
-        'h-9 flex-row items-center gap-1.5 rounded-full border px-3.5',
+        'h-9 flex-row items-center gap-1.5 rounded-control border px-3.5',
         selected ? 'bg-foreground border-foreground' : 'bg-background border-border active:bg-accent',
         disabled && 'opacity-50',
         className

@@ -9,6 +9,9 @@ export const CSS_KEY = 'protokit.theme.css';
 export const EMBED_KEY = 'kit.embed.theme';
 export const STYLE_ID = 'protokit-theme';
 export const FONTS_ID = 'protokit-theme-fonts';
+/** The Google Fonts stylesheet for the current theme's fonts, linked before paint too. */
+export const FONTS_KEY = 'protokit.theme.fonts';
 
 /** Inline in <head>: the last theme's CSS before first paint, so a themed site never flashes the default. */
-export const themeBootScript = `(function(){try{var c=localStorage.getItem('${CSS_KEY}');if(c){var s=document.createElement('style');s.id='${STYLE_ID}';s.textContent=c;document.head.appendChild(s)}}catch(e){}})();`;
+export const themeBootScript = `(function(){try{var c=localStorage.getItem('${CSS_KEY}');if(c){var s=document.createElement('style');s.id='${STYLE_ID}';s.textContent=c;document.head.appendChild(s)}
+var f=localStorage.getItem('${FONTS_KEY}');if(c&&f&&f.indexOf('https://fonts.googleapis.com/')===0){var l=document.createElement('link');l.id='${FONTS_ID}';l.rel='stylesheet';l.href=f;document.head.appendChild(l)}}catch(e){}})();`;

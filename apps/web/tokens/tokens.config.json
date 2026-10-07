@@ -25,6 +25,10 @@
     },
     "llms": {
       "out": "tokens/generated/llms-tokens.md"
+    },
+    "fonts": {
+      "platform": "next",
+      "out": "app/fonts.ts"
     }
   }
 }

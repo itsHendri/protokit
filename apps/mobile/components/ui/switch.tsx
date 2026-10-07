@@ -10,7 +10,7 @@ function Switch({
   return (
     <SwitchPrimitives.Root
       className={cn(
-        'flex h-8 w-16 shrink-0 flex-row items-center rounded-full border border-transparent p-px shadow-sm shadow-black/5',
+        'flex h-8 w-16 shrink-0 flex-row items-center rounded-full border border-transparent p-px shadow-sm',
         Platform.select({
           web: 'focus-visible:border-ring focus-visible:ring-ring/50 peer inline-flex outline-none transition-all focus-visible:ring-[3px] disabled:cursor-not-allowed',
         }),
@@ -23,7 +23,7 @@ function Switch({
       {...props}>
       <SwitchPrimitives.Thumb
         className={cn(
-          'bg-card size-7 rounded-full shadow-sm shadow-black/20 transition-transform',
+          'bg-card size-7 rounded-full shadow-sm transition-transform',
           Platform.select({
             web: 'pointer-events-none block ring-0',
           }),

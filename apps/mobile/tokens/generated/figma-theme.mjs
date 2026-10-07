@@ -175,6 +175,10 @@ export const NUMBERS = {
       "value": 20,
       "code": "rounded-2xl"
     },
+    "control": {
+      "value": 9999,
+      "code": "rounded-control"
+    },
     "full": {
       "value": 9999,
       "code": "rounded-full"
@@ -259,5 +263,42 @@ export const NUMBERS = {
       "value": 36,
       "code": "text-4xl"
     }
+  },
+  "border": {
+    "width": {
+      "value": 1,
+      "code": "border"
+    }
+  },
+  "icon": {
+    "stroke": {
+      "value": 2,
+      "code": "strokeWidth"
+    }
+  }
+};
+export const STRINGS = {
+  "font": {
+    "heading": {
+      "value": "System",
+      "code": "font-heading"
+    },
+    "body": {
+      "value": "System",
+      "code": "font-sans"
+    }
+  }
+};
+/** shadow-sm / -md / -lg as CSS, per mode: make them effect styles by hand (not in the Variables API). */
+export const SHADOWS = {
+  "light": {
+    "1": "0px 1px 2px 0px rgba(0, 0, 0, 0.051)",
+    "2": "0px 4px 12px -2px rgba(0, 0, 0, 0.078)",
+    "3": "0px 12px 24px -6px rgba(0, 0, 0, 0.122)"
+  },
+  "dark": {
+    "1": "0px 1px 2px 0px rgba(0, 0, 0, 0.302)",
+    "2": "0px 4px 12px -2px rgba(0, 0, 0, 0.4)",
+    "3": "0px 12px 24px -6px rgba(0, 0, 0, 0.502)"
   }
 };

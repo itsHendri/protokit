@@ -1,4 +1,5 @@
 import { TextClassContext } from '@/components/ui/text';
+import { useIconStroke } from '@/lib/palette-context';
 import { cn } from '@/lib/utils';
 import type { LucideIcon, LucideProps } from 'lucide-react-native';
 import { cssInterop } from 'nativewind';
@@ -40,15 +41,18 @@ cssInterop(IconImpl, {
  * @param {LucideIcon} as - The Lucide icon component to render.
  * @param {string} className - Utility classes to style the icon using Nativewind.
  * @param {number} size - Icon size (defaults to 14).
+ * @param {number} strokeWidth - Relative to Lucide's 2: the theme's icon stroke scales it (thin 1.5, bold 2.5).
  * @param {...LucideProps} ...props - Additional Lucide icon props passed to the "as" icon.
  */
-function Icon({ as: IconComponent, className, size = 14, ...props }: IconProps) {
+function Icon({ as: IconComponent, className, size = 14, strokeWidth = 2, ...props }: IconProps) {
   const textClass = React.useContext(TextClassContext);
+  const stroke = useIconStroke();
   return (
     <IconImpl
       as={IconComponent}
       className={cn('text-foreground', textClass, className)}
       size={size}
+      strokeWidth={(Number(strokeWidth) * stroke) / 2}
       {...props}
     />
   );

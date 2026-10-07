@@ -6,7 +6,8 @@
  *   FIGMA_TOKEN=… FIGMA_FILE_KEY=… npm run tokens:figma   # …and POSTs it to the Variables REST API
  *
  * One-way, code → Figma. The payload creates (or updates, when FIGMA_COLLECTION_ID is set) a
- * collection "Kit tokens" with two modes (Light, Dark): one COLOR variable per semantic colour and
+ * collection "Kit tokens" with two modes (Light, Dark): one COLOR variable per semantic colour, STRING
+ * variables for the theme's fonts and
  * FLOAT variables for radius, spacing and font sizes. Every variable gets WEB code syntax
  * (`var(--primary)` / `p-4`) so Dev Mode and the Figma MCP hand back the class names, not hex.
  *
@@ -25,7 +26,7 @@ if (!theme) {
   console.error('Run `npm run tokens:build` first (it emits tokens/generated/figma-theme.mjs).');
   process.exit(1);
 }
-const { COLORS, NUMBERS } = theme;
+const { COLORS, NUMBERS, STRINGS } = theme;
 
 const hexToRgba = (hex) => {
   const n = parseInt(hex.slice(1), 16);
@@ -73,7 +74,25 @@ for (const [group, entries] of Object.entries(NUMBERS)) {
       name: `${group}/${key}`,
       variableCollectionId: COLLECTION,
       resolvedType: 'FLOAT',
-      scopes: group === 'radius' ? ['CORNER_RADIUS'] : group === 'font-size' ? ['FONT_SIZE'] : ['GAP', 'WIDTH_HEIGHT'],
+      scopes:
+        group === 'radius' ? ['CORNER_RADIUS'] : group === 'font-size' ? ['FONT_SIZE'] : group === 'border' || group === 'icon' ? ['STROKE_FLOAT'] : ['GAP', 'WIDTH_HEIGHT'],
+      codeSyntax: { WEB: code },
+    });
+    payload.variableModeValues.push({ variableId: id, modeId: LIGHT, value });
+    payload.variableModeValues.push({ variableId: id, modeId: DARK, value });
+  }
+}
+
+for (const [group, entries] of Object.entries(STRINGS ?? {})) {
+  for (const [key, { value, code }] of Object.entries(entries)) {
+    const id = `tmp-${group}-${key}`;
+    payload.variables.push({
+      action: 'CREATE',
+      id,
+      name: `${group}/${key}`,
+      variableCollectionId: COLLECTION,
+      resolvedType: 'STRING',
+      scopes: ['FONT_FAMILY'],
       codeSyntax: { WEB: code },
     });
     payload.variableModeValues.push({ variableId: id, modeId: LIGHT, value });
