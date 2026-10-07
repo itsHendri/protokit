@@ -29,6 +29,8 @@ import { toast } from 'sonner';
 import { AppShell } from '@/components/kit/app-shell';
 import { ApprovalCard } from '@/components/kit/approval-card';
 import { ChatComposer } from '@/components/kit/chat-composer';
+import { type ChatThread, ChatThreadList } from '@/components/kit/chat-thread-list';
+import { DatePicker } from '@/components/kit/date-picker';
 import { ChatMessage } from '@/components/kit/chat-message';
 import { DataTable } from '@/components/kit/data-table';
 import { EmptyState } from '@/components/kit/empty-state';
@@ -57,15 +59,44 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from '@/components/ui/navigation-menu';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Progress } from '@/components/ui/progress';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -133,6 +164,99 @@ function StreamingDemo() {
         Replay
       </Button>
     </div>
+  );
+}
+
+
+function DatePickerDemo() {
+  const [due, setDue] = React.useState<Date | undefined>(new Date(2026, 6, 24));
+  const [start, setStart] = React.useState<Date | undefined>();
+  const [today] = React.useState(() => new Date(new Date().setHours(0, 0, 0, 0)));
+  return (
+    <div className="grid w-full max-w-md gap-4 sm:grid-cols-2">
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="demo-due">Due date</Label>
+        <DatePicker id="demo-due" value={due} onChange={setDue} />
+      </div>
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="demo-start">Start date</Label>
+        <DatePicker id="demo-start" value={start} onChange={setStart} placeholder="Pick a start date" disabled={(d) => d < today} />
+      </div>
+    </div>
+  );
+}
+
+function CalendarDemo() {
+  const [range, setRange] = React.useState<{ from: Date | undefined; to?: Date | undefined } | undefined>({
+    from: new Date(2026, 6, 13),
+    to: new Date(2026, 6, 17),
+  });
+  return <Calendar mode="range" selected={range} onSelect={setRange} defaultMonth={new Date(2026, 6, 1)} className="border-border rounded-xl border" />;
+}
+
+function PaginationDemo() {
+  const [page, setPage] = React.useState(3);
+  const last = 13;
+  const go = (p: number) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    setPage(Math.min(last, Math.max(1, p)));
+  };
+  const pages = [1, page - 1, page, page + 1, last].filter((p, i, a) => p >= 1 && p <= last && a.indexOf(p) === i);
+  return (
+    <div className="flex w-full flex-col items-center gap-3">
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" onClick={go(page - 1)} aria-disabled={page === 1} className={page === 1 ? 'pointer-events-none opacity-50' : undefined} />
+          </PaginationItem>
+          {pages.map((p, i) => (
+            <React.Fragment key={p}>
+              {i > 0 && p - pages[i - 1] > 1 ? (
+                <PaginationItem>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              ) : null}
+              <PaginationItem>
+                <PaginationLink href="#" isActive={p === page} onClick={go(p)}>
+                  {p}
+                </PaginationLink>
+              </PaginationItem>
+            </React.Fragment>
+          ))}
+          <PaginationItem>
+            <PaginationNext href="#" onClick={go(page + 1)} aria-disabled={page === last} className={page === last ? 'pointer-events-none opacity-50' : undefined} />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+      <p className="text-muted-foreground text-sm">
+        {(page - 1) * 10 + 1}–{Math.min(page * 10, 128)} of 128 invoices
+      </p>
+    </div>
+  );
+}
+
+const THREADS: ChatThread[] = [
+  { id: 't1', title: 'Overdue invoices this month', preview: 'Three are overdue, £4,410 in total.', group: 'Today' },
+  { id: 't2', title: 'Draft a reminder for Fernway', preview: 'Here is a friendlier version…', group: 'Today' },
+  { id: 't3', title: 'Summarise June', preview: 'You were paid £9,800 in June.', group: 'Previous 7 days' },
+  { id: 't4', title: 'Which customers pay late?', preview: 'Lumen Labs and Acme Studio, usually by 2–3 weeks.', group: 'Previous 7 days' },
+];
+
+function ThreadListDemo() {
+  const [threads, setThreads] = React.useState(THREADS);
+  const [active, setActive] = React.useState('t1');
+  return (
+    <ChatThreadList
+      className="border-border bg-sidebar w-full max-w-xs rounded-xl border p-3"
+      threads={threads}
+      activeId={active}
+      onSelect={setActive}
+      onNew={() => {
+        const id = `t${threads.length + 1}`;
+        setThreads((ts) => [{ id, title: 'New conversation', group: 'Today' }, ...ts]);
+        setActive(id);
+      }}
+    />
   );
 }
 
@@ -629,6 +753,78 @@ export const DEMOS: Record<string, ComponentType> = {
   'chat-composer': ChatDemo,
   'streaming-text': StreamingDemo,
   'thinking-indicator': () => <ThinkingIndicator label="Checking your invoices" />,
+  'date-picker': DatePickerDemo,
+  calendar: CalendarDemo,
+  'navigation-menu': () => (
+    <NavigationMenu viewport={false}>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Product</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-72 gap-1 p-1">
+              {[
+                ['Invoices', 'Send and track every invoice'],
+                ['Reminders', 'Polite nudges when payment is late'],
+                ['Reports', 'What is paid, due and overdue'],
+              ].map(([title, body]) => (
+                <li key={title}>
+                  <NavigationMenuLink href="#" className="flex flex-col items-start gap-0.5">
+                    <span className="font-medium">{title}</span>
+                    <span className="text-muted-foreground text-xs">{body}</span>
+                  </NavigationMenuLink>
+                </li>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="#" className={navigationMenuTriggerStyle()}>
+            Pricing
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="#" className={navigationMenuTriggerStyle()}>
+            Customers
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  ),
+  pagination: PaginationDemo,
+  drawer: () => (
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Button variant="outline">Filter invoices</Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <div className="mx-auto w-full max-w-sm">
+          <DrawerHeader>
+            <DrawerTitle>Filter invoices</DrawerTitle>
+            <DrawerDescription>Show only what you need to act on.</DrawerDescription>
+          </DrawerHeader>
+          <div className="flex flex-col gap-3 px-4">
+            {['Overdue', 'Due this week', 'Drafts'].map((f) => (
+              <div key={f} className="flex items-center gap-3">
+                <Checkbox id={`drawer-${f}`} defaultChecked={f === 'Overdue'} />
+                <Label htmlFor={`drawer-${f}`} className="font-normal">
+                  {f}
+                </Label>
+              </div>
+            ))}
+          </div>
+          <DrawerFooter>
+            <DrawerClose asChild>
+              <Button>Show 3 invoices</Button>
+            </DrawerClose>
+            <DrawerClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DrawerClose>
+          </DrawerFooter>
+        </div>
+      </DrawerContent>
+    </Drawer>
+  ),
+  'chat-thread-list': ThreadListDemo,
   'tool-call-card': () => (
     <div className="grid w-full max-w-xl gap-3">
       <ToolCallCard title="Searched invoices" status="done" input='{ "status": "overdue" }' output="3 invoices, £4,410 total" />

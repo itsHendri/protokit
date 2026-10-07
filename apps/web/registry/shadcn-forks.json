@@ -30,6 +30,10 @@
       "upstream": true,
       "forked": true
     },
+    "calendar": {
+      "upstream": true,
+      "forked": true
+    },
     "card": {
       "upstream": true,
       "forked": false
@@ -54,6 +58,10 @@
       "upstream": true,
       "forked": false
     },
+    "drawer": {
+      "upstream": true,
+      "forked": false
+    },
     "dropdown-menu": {
       "upstream": true,
       "forked": false
@@ -63,6 +71,14 @@
       "forked": false
     },
     "label": {
+      "upstream": true,
+      "forked": false
+    },
+    "navigation-menu": {
+      "upstream": true,
+      "forked": false
+    },
+    "pagination": {
       "upstream": true,
       "forked": false
     },

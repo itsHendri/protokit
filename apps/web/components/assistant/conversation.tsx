@@ -13,31 +13,36 @@ import { Button } from '@/components/ui/button';
 import { scriptFor, SUGGESTIONS, type Step } from './script';
 
 type AskStep = Extract<Step, { kind: 'ask' }>;
-type Part =
+export type Part =
   | { id: string; kind: 'thinking' }
   | { id: string; kind: 'tool'; title: string; status: 'running' | 'done' | 'error' | 'stopped'; input?: string; output?: string }
   | { id: string; kind: 'text'; text: string; streaming: boolean }
   | { id: string; kind: 'ask'; step: AskStep; decision?: 'approved' | 'denied' };
-type Turn = { id: string; role: 'user' | 'assistant'; parts: Part[] };
+export type Turn = { id: string; role: 'user' | 'assistant'; parts: Part[] };
 
 let seq = 0;
 const nextId = () => `t${++seq}`;
 
 class Stopped extends Error {}
 
+type Props = {
+  /** The conversation's turns. Owned by the page so they survive switching threads. */
+  turns: Turn[];
+  setTurns: React.Dispatch<React.SetStateAction<Turn[]>>;
+};
+
 /**
  * The AI conversation pattern, scripted: thinking → a tool call you can inspect → a streamed answer → an
  * approval before anything is sent. Stop works at every step.
  */
-export function Conversation() {
-  const [turns, setTurns] = React.useState<Turn[]>([]);
+export function Conversation({ turns, setTurns }: Props) {
   const [busy, setBusy] = React.useState(false);
   const run = React.useRef<AbortController | null>(null);
   const streams = React.useRef(new Map<string, () => void>());
   const scroller = React.useRef<HTMLDivElement>(null);
   const content = React.useRef<HTMLDivElement>(null);
 
-  // A new chat (the header button remounts this) or leaving the page stops whatever is running.
+  // Switching threads (the page remounts this) or leaving the page stops whatever is running.
   React.useEffect(() => () => run.current?.abort(), []);
 
   // Stay pinned to the bottom while the answer grows, unless the reader has scrolled up.

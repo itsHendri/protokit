@@ -25,9 +25,9 @@ app/<slug>/             a prototype: its own folder with its own layout.tsx (App
 app/dashboard/, app/landing/, app/assistant/   the three samples (worked examples). `npm run eject-samples`
                         removes them, their data in components/<sample>/ and the kit home's links.
 components/ui/          shadcn/ui — add more with the add-component skill (`npx shadcn@latest add <name>`)
-components/kit/         ours: AppShell, PageHeader, StatTile, DataTable, EmptyState, Hero, FeatureGrid,
-                        PricingCard, ChatMessage, ChatComposer, StreamingText, ThinkingIndicator,
-                        ToolCallCard, ApprovalCard
+components/kit/         ours: AppShell, PageHeader, StatTile, DataTable, EmptyState, DatePicker, Hero,
+                        FeatureGrid, PricingCard, ChatMessage, ChatComposer, ChatThreadList,
+                        StreamingText, ThinkingIndicator, ToolCallCard, ApprovalCard
 components/devkit/      the Kitchen Sink: demos.tsx keyed by registry id
 components/site/        the kit shell's own chrome (header, theme toggle, providers) and KitChip, a
                         prototype's way back to the kit
@@ -91,6 +91,13 @@ npm run eject-samples     # delete the dashboard, landing and assistant samples 
   tokens.css) and grep the new files for `text-white`, `bg-black`, palette colours and hex: shadcn's
   destructive variants hard-code white text, which fails AA on the dark destructive. Then
   `npm run registry:drift` and `npm run registry:build`.
+- `npx shadcn add` stops at "button.tsx already exists, overwrite?" for any component that depends on Button,
+  and closing stdin aborts it without writing. Move `components/ui/button.tsx` aside, add, then
+  `git checkout -- components/ui/button.tsx` so the kit's fork (contrast-safe destructive) comes back.
+- Nothing rendered on the server may format dates with the default locale (`toLocaleDateString()` with no
+  locale): the server and the browser disagree and hydration fails. shadcn's Calendar did this in its
+  `data-day` attribute; the kit's copy uses a fixed `YYYY-MM-DD`. Pass an explicit locale (`'en-GB'`) for
+  display.
 - Anything theme-dependent rendered on the server (an aria-label that names the current theme) mismatches on
   hydration: switch it in CSS (`dark:`) or render it after mount.
 - Kit files import each other through `@/components/kit/…`, never `./…`: the registry build refuses relative

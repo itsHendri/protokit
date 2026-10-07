@@ -188,6 +188,70 @@
       }
     },
     {
+      "name": "date-picker",
+      "type": "registry:component",
+      "title": "Date picker",
+      "description": "one date in a form · field-styled button → Calendar in a Popover · `value onChange disabled?`",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0"
+      ],
+      "registryDependencies": [
+        "@kit/button",
+        "@kit/calendar",
+        "popover"
+      ],
+      "files": [
+        {
+          "path": "components/kit/date-picker.tsx",
+          "type": "registry:component",
+          "target": "components/kit/date-picker.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "DatePicker"
+        ],
+        "api": "<DatePicker id value onChange placeholder? disabled? />"
+      }
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "a month grid (react-day-picker) · `mode` single/range/multiple · use DatePicker for a form field",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0",
+        "react-day-picker@^10.0.2"
+      ],
+      "registryDependencies": [
+        "@kit/button"
+      ],
+      "files": [
+        {
+          "path": "components/ui/calendar.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/calendar.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "Calendar",
+          "CalendarDayButton"
+        ],
+        "api": "<Calendar mode=\"single\" selected onSelect disabled? />"
+      }
+    },
+    {
       "name": "slider",
       "type": "registry:ui",
       "title": "Slider",
@@ -537,6 +601,36 @@
           "ChatComposer"
         ],
         "api": "<ChatComposer onSend busy? onStop? placeholder? />"
+      }
+    },
+    {
+      "name": "chat-thread-list",
+      "type": "registry:component",
+      "title": "Chat thread list",
+      "description": "past conversations, grouped by when · `threads activeId onSelect onNew?`",
+      "dependencies": [
+        "cn@^0.4.0",
+        "lucide-react@^1.52.0"
+      ],
+      "registryDependencies": [
+        "@kit/button"
+      ],
+      "files": [
+        {
+          "path": "components/kit/chat-thread-list.tsx",
+          "type": "registry:component",
+          "target": "components/kit/chat-thread-list.tsx"
+        }
+      ],
+      "categories": [
+        "ai"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "ChatThreadList"
+        ],
+        "api": "<ChatThreadList threads={[{id,title,preview?,group?}]} activeId onSelect onNew? />"
       }
     },
     {
