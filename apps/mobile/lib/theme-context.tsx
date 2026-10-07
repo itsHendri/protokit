@@ -2,6 +2,7 @@ import { EMBED, useEmbedBridge } from '@/lib/embed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
+import { Platform, useColorScheme as useSystemColorScheme } from 'react-native';
 
 /**
  * Kit theme mode. `system` follows the OS appearance; `light`/`dark` pin it.
@@ -18,6 +19,14 @@ export type ColorScheme = 'light' | 'dark';
 const STORAGE_KEY = 'kit.theme-mode';
 /** Embedded in the docs, or opened with ?theme=: the theme comes from the host, not from storage. */
 const EPHEMERAL = EMBED.embedded || EMBED.theme !== undefined;
+/**
+ * On web the kit, not NativeWind, decides the scheme and puts the `dark` class (tailwind.config.js
+ * `darkMode: 'class'`) on <html>, which is what switches the global.css variables. NativeWind's web
+ * `setColorScheme('system')` removes that class and never adds it back, and its system listener drops
+ * appearance changes while the tab is hidden; on a dark OS the navigation header went dark over light
+ * surfaces. Native still goes through NativeWind, which handles both.
+ */
+const WEB = Platform.OS === 'web';
 
 type ThemeContextValue = {
   /** What the user chose. */
@@ -36,7 +45,15 @@ function isThemeMode(value: unknown): value is ThemeMode {
 }
 
 export function KitThemeProvider({ children }: { children: React.ReactNode }) {
-  const { colorScheme, setColorScheme } = useColorScheme();
+  const { colorScheme: nativewindScheme, setColorScheme: setNativewindScheme } = useColorScheme();
+  // react-native-web: prefers-color-scheme via matchMedia, live.
+  const systemScheme = useSystemColorScheme();
+  const setColorScheme = React.useCallback(
+    (next: ThemeMode) => {
+      if (!WEB) setNativewindScheme(next);
+    },
+    [setNativewindScheme]
+  );
   const [mode, setModeState] = React.useState<ThemeMode>(EMBED.theme ?? 'system');
   // NativeWind hands out a new setColorScheme on every render, so this effect re-runs; the start-up
   // theme must be applied once, or it would undo every later change (the embed bridge's included).
@@ -72,7 +89,14 @@ export function KitThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEmbedBridge(setMode);
 
-  const scheme: ColorScheme = colorScheme === 'dark' ? 'dark' : 'light';
+  const rendered = WEB ? (mode === 'system' ? systemScheme : mode) : nativewindScheme;
+  const scheme: ColorScheme = rendered === 'dark' ? 'dark' : 'light';
+
+  // A layout effect, so the class is in place before the frame that needs it is painted.
+  React.useLayoutEffect(() => {
+    if (!WEB || typeof document === 'undefined') return;
+    document.documentElement.classList.toggle('dark', scheme === 'dark');
+  }, [scheme]);
 
   const value = React.useMemo<ThemeContextValue>(
     () => ({
