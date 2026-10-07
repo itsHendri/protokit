@@ -47,10 +47,10 @@ One-time, in the Cloudflare dashboard: **Workers & Pages → Create → Import a
 
 | Setting | Value |
 |---|---|
-| Root directory | `apps/docs` |
-| Build command | `npm run build` |
-| Deploy command | `npx wrangler deploy` |
-| Non-production branch deploy command | `npx wrangler versions upload` |
+| Root directory | `/` (the repo root: the lockfile lives there, and the build needs both kits) |
+| Build command | `npm ci && npm run docs:build` |
+| Deploy command | `npx wrangler deploy --config apps/docs/wrangler.jsonc` |
+| Non-production branch deploy command | `npx wrangler versions upload --config apps/docs/wrangler.jsonc` |
 | Build variables | `NODE_VERSION=24` |
 
 Every push to `main` deploys; other branches get preview URLs. Once you know the production URL, set
