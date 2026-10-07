@@ -181,6 +181,8 @@ the tables. Text between `GENERATED` markers is overwritten.
 | ChatComposer | `components/kit/chat-composer.tsx` | Enter sends, Shift+Enter breaks · `busy` turns Send into Stop · `accept` turns on attachments (paperclip, drop, chips) |
 | AttachmentChip / `formatBytes` | `components/kit/attachment-chip.tsx` | a file in a conversation: icon by type, name, size · `onRemove` while composing |
 | ChatThreadList | `components/kit/chat-thread-list.tsx` | past conversations, grouped by when · `threads activeId onSelect onNew?` |
+| SourceList / CitedText / `stripCitations` | `components/kit/sources.tsx` | what an answer is based on · numbered chips with previews · `[n]` in text → inline citations |
+| FollowUpSuggestions | `components/kit/follow-up-suggestions.tsx` | next questions under the latest answer · picking one sends it |
 | StreamingText / `useStreamingText` | `components/kit/streaming-text.tsx` | an answer arriving · all at once under reduced motion · screen readers get it once |
 | ThinkingIndicator | `components/kit/thinking-indicator.tsx` | the model is working · say what it is doing when you can |
 | ToolCallCard | `components/kit/tool-call-card.tsx` | an action the assistant took · `status` running/done/error/stopped · details collapsed |
@@ -197,7 +199,9 @@ the tables. Text between `GENERATED` markers is overwritten.
   Show work as it happens (`ThinkingIndicator`, `ToolCallCard`), stream the answer (`StreamingText`), and ask
   with an `ApprovalCard` before anything irreversible or costly (consent before consequence). Past
   conversations go in a `ChatThreadList`: a sidebar on desktop, a Sheet on small screens. When the assistant
-  can use files, give `ChatComposer` an `accept`; sent files show as `AttachmentChip`s in the user's turn. A cancelled tool
+  can use files, give `ChatComposer` an `accept`; sent files show as `AttachmentChip`s in the user's turn. An answer
+  built on the person's data or documents cites them (`CitedText` + `SourceList`); the latest answer can end
+  with `FollowUpSuggestions`. A cancelled tool
   call is `stopped`, not `error`.
 - **Forms:** a `Label` for every field, `DatePicker` for a single date, errors next to the field (`aria-invalid` + a `text-destructive`
   line), the submit button names the action.

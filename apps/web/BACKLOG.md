@@ -5,8 +5,9 @@ Durable, human- and agent-readable list of deferred work. Update when you defer 
 _Last updated: 2026-10-07_
 
 ## Components
-- **AI-UI next:** citations (an answer's sources as chips that open a preview), and suggested follow-ups under
-  an answer. (Landed: ChatThreadList, AttachmentChip + ChatComposer `accept`, ToolCallCard `stopped`.)
+- **AI-UI next:** feedback on an answer (helpful / not, with a reason), regenerate, and a model or mode picker
+  in the composer. (Landed: Sources + CitedText, FollowUpSuggestions, ChatThreadList, AttachmentChip +
+  ChatComposer `accept`, ToolCallCard `stopped`.)
 - **Gap analysis vs. shadcn blocks and Halaska's AI patterns** has not been done for the web kit; the mobile
   kit's BACKLOG has the equivalent for native.
 - **Not yet installed from shadcn:** hover-card, context-menu, input-otp, carousel, resizable, sidebar

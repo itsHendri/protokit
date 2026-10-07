@@ -6,6 +6,8 @@ import { ApprovalCard } from '@/components/kit/approval-card';
 import { AttachmentChip, type Attachment } from '@/components/kit/attachment-chip';
 import { ChatComposer } from '@/components/kit/chat-composer';
 import { ChatMessage } from '@/components/kit/chat-message';
+import { FollowUpSuggestions } from '@/components/kit/follow-up-suggestions';
+import { CitedText, type Source, SourceList, stripCitations } from '@/components/kit/sources';
 import { EmptyState } from '@/components/kit/empty-state';
 import { StreamingText } from '@/components/kit/streaming-text';
 import { ThinkingIndicator } from '@/components/kit/thinking-indicator';
@@ -17,7 +19,8 @@ type AskStep = Extract<Step, { kind: 'ask' }>;
 export type Part =
   | { id: string; kind: 'thinking' }
   | { id: string; kind: 'tool'; title: string; status: 'running' | 'done' | 'error' | 'stopped'; input?: string; output?: string }
-  | { id: string; kind: 'text'; text: string; streaming: boolean }
+  | { id: string; kind: 'text'; text: string; streaming: boolean; sources?: Source[] }
+  | { id: string; kind: 'suggest'; suggestions: string[] }
   | { id: string; kind: 'files'; files: Attachment[] }
   | { id: string; kind: 'ask'; step: AskStep; decision?: 'approved' | 'denied' };
 export type Turn = { id: string; role: 'user' | 'assistant'; parts: Part[] };
@@ -91,8 +94,10 @@ export function Conversation({ turns, setTurns }: Props) {
           streams.current.set(id, resolve);
           signal.addEventListener('abort', () => reject(new Stopped()), { once: true });
         });
-        patchTurn(turnId, (p) => [...p, { id, kind: 'text', text: step.text, streaming: true }]);
+        patchTurn(turnId, (p) => [...p, { id, kind: 'text', text: step.text, streaming: true, sources: step.sources }]);
         await finished;
+      } else if (step.kind === 'suggest') {
+        patchTurn(turnId, (p) => [...p, { id, kind: 'suggest', suggestions: step.suggestions }]);
       } else {
         patchTurn(turnId, (p) => [...p, { id, kind: 'ask', step }]);
       }
@@ -168,10 +173,15 @@ export function Conversation({ turns, setTurns }: Props) {
               }
             />
           ) : (
-            turns.map((turn) => (
+            turns.map((turn, turnIndex) => (
               <ChatMessage key={turn.id} role={turn.role} initials="AM">
                 {turn.parts.map((part) => {
                   switch (part.kind) {
+                    case 'suggest':
+                      // Only under the latest answer, and not while the assistant is still working.
+                      return turnIndex === turns.length - 1 && !busy ? (
+                        <FollowUpSuggestions key={part.id} suggestions={part.suggestions} onSelect={(s) => send(s)} />
+                      ) : null;
                     case 'thinking':
                       return <ThinkingIndicator key={part.id} label="Thinking" />;
                     case 'tool':
@@ -188,7 +198,12 @@ export function Conversation({ turns, setTurns }: Props) {
                       );
                     case 'text':
                       return part.streaming ? (
-                        <StreamingText key={part.id} text={part.text} onDone={() => streamed(turn.id, part.id)} />
+                        <StreamingText key={part.id} text={stripCitations(part.text)} onDone={() => streamed(turn.id, part.id)} />
+                      ) : part.sources?.length ? (
+                        <React.Fragment key={part.id}>
+                          <CitedText text={part.text} sources={part.sources} />
+                          <SourceList sources={part.sources} />
+                        </React.Fragment>
                       ) : (
                         <p key={part.id}>{part.text}</p>
                       );
