@@ -15,7 +15,7 @@ import { scriptFor, SUGGESTIONS, type Step } from './script';
 type AskStep = Extract<Step, { kind: 'ask' }>;
 type Part =
   | { id: string; kind: 'thinking' }
-  | { id: string; kind: 'tool'; title: string; status: 'running' | 'done' | 'error'; input?: string; output?: string }
+  | { id: string; kind: 'tool'; title: string; status: 'running' | 'done' | 'error' | 'stopped'; input?: string; output?: string }
   | { id: string; kind: 'text'; text: string; streaming: boolean }
   | { id: string; kind: 'ask'; step: AskStep; decision?: 'approved' | 'denied' };
 type Turn = { id: string; role: 'user' | 'assistant'; parts: Part[] };
@@ -104,7 +104,7 @@ export function Conversation() {
       patchTurn(turnId, (parts) => [
         ...parts
           .filter((x) => x.kind !== 'thinking')
-          .map((x) => (x.kind === 'tool' && x.status === 'running' ? { ...x, status: 'error' as const, output: 'Stopped before it finished.' } : x))
+          .map((x) => (x.kind === 'tool' && x.status === 'running' ? { ...x, status: 'stopped' as const, output: 'Stopped before it finished.' } : x))
           .map((x) => (x.kind === 'text' && x.streaming ? { ...x, streaming: false } : x)),
         { id: nextId(), kind: 'text', text: 'You stopped this answer.', streaming: false },
       ]);

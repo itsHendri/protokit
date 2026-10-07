@@ -598,7 +598,7 @@
       "name": "tool-call-card",
       "type": "registry:component",
       "title": "Tool call card",
-      "description": "an action the assistant took · `status` running/done/error · details collapsed",
+      "description": "an action the assistant took · `status` running/done/error/stopped · details collapsed",
       "dependencies": [
         "cn@^0.4.0",
         "lucide-react@^1.52.0"

@@ -634,6 +634,7 @@ export const DEMOS: Record<string, ComponentType> = {
       <ToolCallCard title="Searched invoices" status="done" input='{ "status": "overdue" }' output="3 invoices, £4,410 total" />
       <ToolCallCard title="Drafting reminder emails" status="running" />
       <ToolCallCard title="Sent reminder to Lumen Labs" status="error" output="The contact has no email address." />
+      <ToolCallCard title="Exporting June’s invoices" status="stopped" output="Stopped before it finished." />
     </div>
   ),
   'approval-card': () => (
