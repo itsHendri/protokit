@@ -9,7 +9,7 @@ import { matchesQuery } from './registry';
 import type { CategoryDef, Section } from './types';
 import { ChevronDownIcon } from 'lucide-react-native';
 import * as React from 'react';
-import { type LayoutChangeEvent, Pressable, ScrollView, View } from 'react-native';
+import { type LayoutChangeEvent, Pressable, ScrollView, type ScrollViewInstance, View } from 'react-native';
 
 type Props<Id extends string> = {
   categories: CategoryDef<Id>[];
@@ -27,7 +27,7 @@ type Props<Id extends string> = {
 export function DevKitHub<Id extends string>({ categories, sections, searchPlaceholder, focus }: Props<Id>) {
   const [query, setQuery] = React.useState('');
   const [open, setOpen] = React.useState<Id | null>(focus ?? null);
-  const scrollRef = React.useRef<ScrollView>(null);
+  const scrollRef = React.useRef<ScrollViewInstance>(null);
   const offsets = React.useRef<Record<string, number>>({});
   const [pending, setPending] = React.useState<Id | null>(focus ?? null);
   const scrollY = React.useRef(0);

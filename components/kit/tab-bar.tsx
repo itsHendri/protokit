@@ -6,7 +6,6 @@ import { cn } from '@/lib/utils';
 import type { LucideIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { type ColorValue, Pressable, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 /**
  * Minimal structural view of what Expo Router's Tabs passes to `tabBar`. Kept local so the
@@ -17,10 +16,11 @@ type IconRender = (props: { focused: boolean; color: ColorValue; size: number })
 export type TabBarProps = {
   state: { index: number; routes: Route[] };
   descriptors: Record<string, { options: { title?: string; tabBarIcon?: IconRender; tabBarAccessibilityLabel?: string; href?: string | null } }>;
-  navigation: {
+  emitter: {
     emit: (e: { type: 'tabPress' | 'tabLongPress'; target: string; canPreventDefault?: boolean }) => unknown;
-    navigate: (name: string, params?: object) => void;
   };
+  navigateToTab: (routeKey: string) => void;
+  insets: { bottom: number };
 };
 
 /**
@@ -30,8 +30,7 @@ export type TabBarProps = {
  *
  *   <Tabs tabBar={(props) => <TabBar {...props} />}>
  */
-export function TabBar({ state, descriptors, navigation }: TabBarProps) {
-  const insets = useSafeAreaInsets();
+export function TabBar({ state, descriptors, emitter, navigateToTab, insets }: TabBarProps) {
   const { scheme } = useKitTheme();
   const colors = THEME[scheme];
   return (
@@ -43,9 +42,9 @@ export function TabBar({ state, descriptors, navigation }: TabBarProps) {
         const label = options.title ?? route.name;
         const color = focused ? colors.primary : colors.mutedForeground;
         const onPress = () => {
-          const e = navigation.emit({ type: 'tabPress', target: route.key, canPreventDefault: true }) as { defaultPrevented?: boolean };
+          const e = emitter.emit({ type: 'tabPress', target: route.key, canPreventDefault: true }) as { defaultPrevented?: boolean };
           // The haptic lives in TabBarItem so custom bars get it too.
-          if (!focused && !e.defaultPrevented) navigation.navigate(route.name, route.params);
+          if (!focused && !e.defaultPrevented) navigateToTab(route.key);
         };
         return (
           <TabBarItem
@@ -55,7 +54,7 @@ export function TabBar({ state, descriptors, navigation }: TabBarProps) {
             color={color}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             onPress={onPress}
-            onLongPress={() => navigation.emit({ type: 'tabLongPress', target: route.key })}
+            onLongPress={() => emitter.emit({ type: 'tabLongPress', target: route.key })}
             icon={options.tabBarIcon?.({ focused, color, size: 24 })}
           />
         );

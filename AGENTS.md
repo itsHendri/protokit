@@ -8,7 +8,7 @@ and the hallucination guard. This file covers engineering, workflows and gotchas
 
 ## Stack
 
-- Expo SDK 57 · Expo Router (file routes in `app/`) · React Native 0.86 · React 19 · TypeScript strict
+- Expo SDK 58 · Expo Router (file routes in `app/`) · React Native 0.88 · React 19.3 · TypeScript strict
 - NativeWind 4 + Tailwind 3 — **className-only styling**. No `StyleSheet.create` for colours, no inline hex.
 - react-native-reusables in `components/ui` (shadcn for RN, owned source) · our components in `components/kit`
 - Tokens: `tokens/tokens.json` → `npm run tokens:build` → `global.css`, `lib/theme.ts`, `tokens/generated/`

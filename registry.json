@@ -128,7 +128,7 @@
       "type": "registry:lib",
       "title": "lib/haptics.ts",
       "dependencies": [
-        "expo-haptics@~57.0.3"
+        "expo-haptics@~58.0.5"
       ],
       "registryDependencies": [],
       "files": [
@@ -162,10 +162,10 @@
       "type": "registry:lib",
       "title": "lib/native.ts",
       "dependencies": [
-        "expo-device@~57.0.2",
-        "expo-image-picker@~57.0.19",
-        "expo-local-authentication@~57.0.3",
-        "expo-notifications@~57.0.20"
+        "expo-device@~58.0.5",
+        "expo-image-picker@~58.0.10",
+        "expo-local-authentication@~58.0.2",
+        "expo-notifications@~58.1.1"
       ],
       "registryDependencies": [],
       "files": [
@@ -212,7 +212,7 @@
       "type": "registry:lib",
       "title": "lib/theme.ts",
       "dependencies": [
-        "expo-router@~57.0.22"
+        "expo-router@~58.0.15"
       ],
       "registryDependencies": [],
       "files": [
@@ -339,7 +339,7 @@
       "description": "drag past 85% commits · `tone` primary/destructive · reset via `key`",
       "dependencies": [
         "lucide-react-native@^1.21.0",
-        "react-native-gesture-handler@~2.32.0"
+        "react-native-gesture-handler@~3.2.1"
       ],
       "registryDependencies": [
         "@kit-native/lib-haptics",
@@ -549,8 +549,8 @@
       "dependencies": [
         "@rn-primitives/select@^1.5.2",
         "lucide-react-native@^1.21.0",
-        "react-native-reanimated@4.5.1",
-        "react-native-screens@~4.26.0"
+        "react-native-reanimated@4.7.0",
+        "react-native-screens@~4.28.0"
       ],
       "registryDependencies": [
         "@kit-native/lib-utils",
@@ -864,7 +864,7 @@
       "title": "Slider",
       "description": "continuous/stepped · `tone`",
       "dependencies": [
-        "react-native-gesture-handler@~2.32.0"
+        "react-native-gesture-handler@~3.2.1"
       ],
       "registryDependencies": [
         "@kit-native/lib-haptics",
@@ -1021,8 +1021,8 @@
         "@rn-primitives/menubar@^1.5.2",
         "@rn-primitives/portal@~1.4.0",
         "lucide-react-native@^1.21.0",
-        "react-native-reanimated@4.5.1",
-        "react-native-screens@~4.26.0"
+        "react-native-reanimated@4.7.0",
+        "react-native-screens@~4.28.0"
       ],
       "registryDependencies": [
         "@kit-native/lib-utils",
@@ -1054,8 +1054,7 @@
       "title": "Tab bar",
       "description": "custom bottom tab bar: opaque tints, label, active dot under the label",
       "dependencies": [
-        "lucide-react-native@^1.21.0",
-        "react-native-safe-area-context@~5.7.0"
+        "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
         "@kit-native/lib-haptics",
@@ -1529,7 +1528,7 @@
       "title": "Progress ring",
       "description": "circular determinate progress",
       "dependencies": [
-        "react-native-svg@15.15.4"
+        "react-native-svg@15.15.5"
       ],
       "registryDependencies": [
         "@kit-native/lib-theme",
@@ -1589,7 +1588,7 @@
       "title": "Line chart",
       "description": "interactive/sparkline · `area` · `onPointerChange`",
       "dependencies": [
-        "react-native-svg@15.15.4"
+        "react-native-svg@15.15.5"
       ],
       "registryDependencies": [
         "@kit-native/lib-theme",
@@ -1647,7 +1646,7 @@
       "title": "Donut chart",
       "description": "ring + legend",
       "dependencies": [
-        "react-native-svg@15.15.4"
+        "react-native-svg@15.15.5"
       ],
       "registryDependencies": [
         "@kit-native/lib-theme",
@@ -1745,7 +1744,7 @@
       "description": "0–100",
       "dependencies": [
         "@rn-primitives/progress@^1.5.2",
-        "react-native-reanimated@4.5.1"
+        "react-native-reanimated@4.7.0"
       ],
       "registryDependencies": [
         "@kit-native/lib-utils"
@@ -1775,8 +1774,8 @@
       "description": "",
       "dependencies": [
         "@rn-primitives/tooltip@^1.5.2",
-        "react-native-reanimated@4.5.1",
-        "react-native-screens@~4.26.0"
+        "react-native-reanimated@4.7.0",
+        "react-native-screens@~4.28.0"
       ],
       "registryDependencies": [
         "@kit-native/lib-utils",
@@ -1808,7 +1807,7 @@
       "description": "transient · `ToastProvider` is in the root layout",
       "dependencies": [
         "lucide-react-native@^1.21.0",
-        "react-native-safe-area-context@~5.7.0"
+        "react-native-safe-area-context@~5.9.1"
       ],
       "registryDependencies": [
         "@kit-native/lib-haptics",
@@ -1966,7 +1965,7 @@
       "dependencies": [
         "@rn-primitives/accordion@^1.5.2",
         "lucide-react-native@^1.21.0",
-        "react-native-reanimated@4.5.1"
+        "react-native-reanimated@4.7.0"
       ],
       "registryDependencies": [
         "@kit-native/lib-utils",
@@ -1997,7 +1996,7 @@
       "title": "Sticky bottom bar",
       "description": "safe-area action bar under a ScrollView (`pb-32`)",
       "dependencies": [
-        "react-native-safe-area-context@~5.7.0"
+        "react-native-safe-area-context@~5.9.1"
       ],
       "registryDependencies": [
         "@kit-native/lib-utils"
@@ -2089,8 +2088,8 @@
       "dependencies": [
         "@rn-primitives/dialog@^1.5.2",
         "lucide-react-native@^1.21.0",
-        "react-native-reanimated@4.5.1",
-        "react-native-screens@~4.26.0"
+        "react-native-reanimated@4.7.0",
+        "react-native-screens@~4.28.0"
       ],
       "registryDependencies": [
         "@kit-native/lib-utils",
@@ -2122,8 +2121,8 @@
       "description": "confirmations",
       "dependencies": [
         "@rn-primitives/alert-dialog@^1.5.2",
-        "react-native-reanimated@4.5.1",
-        "react-native-screens@~4.26.0"
+        "react-native-reanimated@4.7.0",
+        "react-native-screens@~4.28.0"
       ],
       "registryDependencies": [
         "@kit-native/button",
@@ -2157,8 +2156,8 @@
       "dependencies": [
         "@rn-primitives/dropdown-menu@^1.5.2",
         "lucide-react-native@^1.21.0",
-        "react-native-reanimated@4.5.1",
-        "react-native-screens@~4.26.0"
+        "react-native-reanimated@4.7.0",
+        "react-native-screens@~4.28.0"
       ],
       "registryDependencies": [
         "@kit-native/lib-utils",
@@ -2192,8 +2191,8 @@
       "dependencies": [
         "@rn-primitives/context-menu@^1.5.2",
         "lucide-react-native@^1.21.0",
-        "react-native-reanimated@4.5.1",
-        "react-native-screens@~4.26.0"
+        "react-native-reanimated@4.7.0",
+        "react-native-screens@~4.28.0"
       ],
       "registryDependencies": [
         "@kit-native/lib-utils",
@@ -2226,7 +2225,7 @@
       "description": "bottom sheet shell",
       "dependencies": [
         "lucide-react-native@^1.21.0",
-        "react-native-safe-area-context@~5.7.0"
+        "react-native-safe-area-context@~5.9.1"
       ],
       "registryDependencies": [
         "@kit-native/lib-haptics",
@@ -2293,7 +2292,7 @@
       "description": "deterministic abstract SVG art from a `seed` · the kit ships no raster imagery",
       "dependencies": [
         "lucide-react-native@^1.21.0",
-        "react-native-svg@15.15.4"
+        "react-native-svg@15.15.5"
       ],
       "registryDependencies": [
         "@kit-native/lib-theme",
@@ -2355,7 +2354,7 @@
       "title": "PhotoCapture",
       "description": "camera + library · falls back to a seeded `Placeholder`",
       "dependencies": [
-        "expo-image-picker@~57.0.19",
+        "expo-image-picker@~58.0.10",
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
@@ -2392,7 +2391,7 @@
       "title": "CodeScanner",
       "description": "QR/barcode viewfinder · simulated emits a sample payload",
       "dependencies": [
-        "expo-camera@~57.0.5",
+        "expo-camera@~58.0.9",
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
@@ -2429,7 +2428,7 @@
       "title": "BiometricGate",
       "description": "Face ID gate, or the hook for a single action · real only in a dev build",
       "dependencies": [
-        "expo-local-authentication@~57.0.3",
+        "expo-local-authentication@~58.0.2",
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
@@ -2500,7 +2499,7 @@
       "title": "useShare",
       "description": "OS share sheet · copies to the clipboard on web",
       "dependencies": [
-        "expo-clipboard@~57.0.2"
+        "expo-clipboard@~58.0.3"
       ],
       "registryDependencies": [
         "@kit-native/lib-haptics",
@@ -2530,9 +2529,9 @@
       "title": "useNotify",
       "description": "in-app banner now (`delay: 0`), real OS notification when scheduled",
       "dependencies": [
-        "expo-notifications@~57.0.20",
+        "expo-notifications@~58.1.1",
         "lucide-react-native@^1.21.0",
-        "react-native-safe-area-context@~5.7.0"
+        "react-native-safe-area-context@~5.9.1"
       ],
       "registryDependencies": [
         "@kit-native/lib-haptics",

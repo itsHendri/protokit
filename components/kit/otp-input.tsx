@@ -1,7 +1,7 @@
 import { Text } from '@/components/ui/text';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
-import { type NativeSyntheticEvent, TextInput, type TextInputKeyPressEventData, View } from 'react-native';
+import { TextInput, type TextInputInstance, type TextInputKeyPressEvent, View } from 'react-native';
 
 type Props = {
   length?: number;
@@ -15,7 +15,7 @@ type Props = {
 
 /** N-digit one-time-code entry: auto-advances, handles paste, backspaces into the previous cell. */
 export function OtpInput({ length = 6, value, onChange, onComplete, error, autoFocus = true, className }: Props) {
-  const refs = React.useRef<(TextInput | null)[]>([]);
+  const refs = React.useRef<(TextInputInstance | null)[]>([]);
   const [focusIdx, setFocusIdx] = React.useState(autoFocus ? 0 : -1);
 
   const digits = React.useMemo(() => {
@@ -49,7 +49,7 @@ export function OtpInput({ length = 6, value, onChange, onComplete, error, autoF
     if (clean && idx < length - 1) refs.current[idx + 1]?.focus();
   };
 
-  const onKeyPress = (idx: number) => (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+  const onKeyPress = (idx: number) => (e: TextInputKeyPressEvent) => {
     if (e.nativeEvent.key === 'Backspace' && !digits[idx] && idx > 0) {
       const next = [...digits];
       next[idx - 1] = '';

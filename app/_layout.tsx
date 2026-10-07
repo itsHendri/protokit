@@ -20,7 +20,7 @@ export {
  * The kit shell is home. Without this the sample groups also match "/" and one of
  * them wins, so scanning the QR drops you into a sample instead of the kit.
  */
-export const unstable_settings = { initialRouteName: '(kit)' };
+export const unstable_settings = { anchor: '(kit)' };
 
 export default function RootLayout() {
   return (

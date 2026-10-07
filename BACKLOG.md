@@ -28,7 +28,8 @@ Present: 69 previews across 8 categories. Still missing, roughly in order of how
 - **Drawer / side menu**, **Permission prompt**, **Paywall/plan cards** (SelectableCard covers the rows).
 
 ## Upgrades to schedule
-- Expo SDK 58 (stable ~Oct 2026): native tabs at the stable path, data loaders, SSR. Run `npx expo install expo@next --fix` on a branch.
+- SDK 58 follow-ups: native tabs at the stable path, data loaders, SSR; adopt react-native-gesture-handler 3's hook API
+  (`Slider` and `SwipeToConfirm` still use the `Gesture` builder, which v3 keeps).
 - NativeWind 5 + Tailwind 4 when NativeWind 5 reaches `latest` (RC since 2026-09-13). Tokens layer survives it.
 - `@expo/ui` (SwiftUI/Compose controls) and `expo-glass-effect` — evaluate for native-feel controls after SDK 58.
 

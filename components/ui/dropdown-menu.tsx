@@ -102,10 +102,10 @@ function DropdownMenuContent({
     <DropdownMenuPrimitive.Portal hostName={portalHost}>
       <FullWindowOverlay>
         <DropdownMenuPrimitive.Overlay
-          style={Platform.select<StyleProp<ViewStyle>>({
+          style={Platform.select({
             web: overlayStyle ?? undefined,
             native: overlayStyle
-              ? StyleSheet.flatten([StyleSheet.absoluteFill, overlayStyle])
+              ? StyleSheet.flatten([StyleSheet.absoluteFill, overlayStyle as typeof StyleSheet.absoluteFill])
               : StyleSheet.absoluteFill,
           })}
           className={overlayClassName} asChild={Platform.OS !== 'web'}>

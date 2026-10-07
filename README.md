@@ -5,7 +5,7 @@ previewed live inside the app, so a designer can browse what exists, copy the ex
 build screens only from those parts. Feed it a brief or a client transcript and get a first prototype
 that already looks and feels coherent.
 
-- **Expo SDK 57** · Expo Router · React Native 0.86 · TypeScript
+- **Expo SDK 58** · Expo Router · React Native 0.88 · TypeScript
 - **react-native-reusables** (shadcn for React Native) + our own kit components, styled with **NativeWind**
 - **Design tokens** in one JSON file → CSS variables + TypeScript, light and dark
 - **Kitchen Sink** and **Foundations** screens, searchable, tap-to-copy
