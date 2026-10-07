@@ -174,7 +174,7 @@ the tables. Text between `GENERATED` markers is overwritten.
 | ChatComposer | `components/kit/chat-composer.tsx` | Enter sends, Shift+Enter breaks · `busy` turns Send into Stop |
 | StreamingText / `useStreamingText` | `components/kit/streaming-text.tsx` | an answer arriving · all at once under reduced motion · screen readers get it once |
 | ThinkingIndicator | `components/kit/thinking-indicator.tsx` | the model is working · say what it is doing when you can |
-| ToolCallCard | `components/kit/tool-call-card.tsx` | an action the assistant took · `status` running/done/error · details collapsed |
+| ToolCallCard | `components/kit/tool-call-card.tsx` | an action the assistant took · `status` running/done/error/stopped · details collapsed |
 | ApprovalCard | `components/kit/approval-card.tsx` | consent before consequence · says what changes and whether it can be undone |
 <!-- /GENERATED:registry:ai -->
 

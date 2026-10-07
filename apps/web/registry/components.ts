@@ -465,9 +465,9 @@ export const COMPONENTS: ComponentMeta[] = [
     exports: ['ToolCallCard'],
     category: 'ai',
     files: ['components/kit/tool-call-card.tsx'],
-    notes: 'an action the assistant took · `status` running/done/error · details collapsed',
+    notes: 'an action the assistant took · `status` running/done/error/stopped · details collapsed',
     api: '<ToolCallCard title status input? output? />',
-    caption: 'Name the action in words (“Searched orders”), not the function name.',
+    caption: 'Name the action in words (“Searched orders”), not the function name. A call the person cancelled is `stopped`, not `error`.',
     aliases: ['tool use', 'function call', 'action'],
   },
   {

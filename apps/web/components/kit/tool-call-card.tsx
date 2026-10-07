@@ -1,5 +1,5 @@
 'use client';
-import { CheckCircle2Icon, ChevronDownIcon, CircleAlertIcon, LoaderCircleIcon, WrenchIcon } from 'lucide-react';
+import { CheckCircle2Icon, ChevronDownIcon, CircleAlertIcon, CircleSlashIcon, LoaderCircleIcon, WrenchIcon } from 'lucide-react';
 import { cn } from 'cn';
 import * as React from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -7,7 +7,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 type Props = {
   /** What the tool does, in words: "Searched orders", not "search_orders". */
   title: string;
-  status: 'running' | 'done' | 'error';
+  /** `stopped`: the person cancelled it before it finished. Neutral, not an error. */
+  status: 'running' | 'done' | 'error' | 'stopped';
   /** The call's inputs and result, for people who want to check. Collapsed by default. */
   input?: string;
   output?: string;
@@ -18,6 +19,7 @@ const STATUS = {
   running: { icon: LoaderCircleIcon, label: 'Running', tone: 'text-muted-foreground', spin: true },
   done: { icon: CheckCircle2Icon, label: 'Done', tone: 'text-success', spin: false },
   error: { icon: CircleAlertIcon, label: 'Failed', tone: 'text-destructive', spin: false },
+  stopped: { icon: CircleSlashIcon, label: 'Stopped', tone: 'text-muted-foreground', spin: false },
 } as const;
 
 /** One action the assistant took, shown in the conversation so people can see what it did. */
