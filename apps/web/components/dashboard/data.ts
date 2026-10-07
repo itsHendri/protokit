@@ -36,12 +36,15 @@ export const MONTHLY = [
   { month: 'Jun', paid: 9800, outstanding: 4410 },
 ];
 
-/** Badge colours by status: tinted surfaces with the matching token text (AA in both themes). */
-export const STATUS_CLASS: Record<InvoiceStatus, string> = {
-  Paid: 'bg-success/15 text-success',
-  Due: 'bg-muted text-foreground',
-  Overdue: 'bg-destructive/15 text-destructive',
-  Draft: 'border-border text-muted-foreground bg-transparent',
+/**
+ * The dot colour per status, for an outline Badge. The status word stays in foreground text: a status
+ * colour as small text on its own tint measures under 4.5:1 (success 4.09, destructive 3.81).
+ */
+export const STATUS_DOT: Record<InvoiceStatus, string> = {
+  Paid: 'bg-success',
+  Due: 'bg-warning',
+  Overdue: 'bg-destructive',
+  Draft: 'bg-muted-foreground',
 };
 
 export const money = (n: number) => `£${n.toLocaleString('en-GB')}`;

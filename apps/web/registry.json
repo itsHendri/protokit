@@ -375,7 +375,7 @@
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",
-      "description": "a status or tag · tint with semantic classes (`bg-success/15 text-success`)",
+      "description": "a status or tag · a status is an outline Badge with a coloured dot (`bg-success` …), the word in foreground text",
       "dependencies": [
         "class-variance-authority@^0.7.1",
         "cn@^0.4.0",
@@ -399,6 +399,36 @@
           "badgeVariants"
         ],
         "api": "<Badge variant?>Label</Badge>"
+      }
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "inline and persistent · `variant` default/destructive",
+      "dependencies": [
+        "class-variance-authority@^0.7.1",
+        "cn@^0.4.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/alert.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/alert.tsx"
+        }
+      ],
+      "categories": [
+        "feedback"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "Alert",
+          "AlertTitle",
+          "AlertDescription"
+        ],
+        "api": "<Alert variant?><Icon /><AlertTitle /><AlertDescription /></Alert>"
       }
     },
     {

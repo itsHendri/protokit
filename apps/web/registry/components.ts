@@ -251,7 +251,7 @@ export const COMPONENTS: ComponentMeta[] = [
     exports: ['Badge', 'badgeVariants'],
     category: 'data',
     files: ['components/ui/badge.tsx'],
-    notes: 'a status or tag · tint with semantic classes (`bg-success/15 text-success`)',
+    notes: 'a status or tag · a status is an outline Badge with a coloured dot (`bg-success` …), the word in foreground text',
     api: '<Badge variant?>Label</Badge>',
     aliases: ['tag', 'pill', 'status'],
   },

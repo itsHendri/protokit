@@ -12,7 +12,7 @@
     },
     "alert": {
       "upstream": true,
-      "forked": false
+      "forked": true
     },
     "avatar": {
       "upstream": true,

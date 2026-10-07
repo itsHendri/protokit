@@ -511,7 +511,7 @@
       "files": [
         "components/ui/badge.tsx"
       ],
-      "notes": "a status or tag · tint with semantic classes (`bg-success/15 text-success`)",
+      "notes": "a status or tag · a status is an outline Badge with a coloured dot (`bg-success` …), the word in foreground text",
       "api": "<Badge variant?>Label</Badge>",
       "aliases": [
         "tag",
@@ -563,7 +563,7 @@
       ],
       "notes": "inline and persistent · `variant` default/destructive",
       "api": "<Alert variant?><Icon /><AlertTitle /><AlertDescription /></Alert>",
-      "install": "alert"
+      "install": "@kit/alert"
     },
     {
       "id": "toast",

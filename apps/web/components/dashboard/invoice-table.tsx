@@ -5,7 +5,7 @@ import { DataTable } from '@/components/kit/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { money, shortDate, STATUS_CLASS, type Invoice } from './data';
+import { money, shortDate, STATUS_DOT, type Invoice } from './data';
 import { invoiceActions } from './store';
 
 type Props = { rows: Invoice[]; caption?: string; emptyTitle?: string; actions?: boolean };
@@ -22,7 +22,13 @@ export function InvoiceTable({ rows, caption, emptyTitle, actions }: Props) {
         { key: 'id', header: 'Invoice', sortValue: (r) => r.id, cell: (r) => <span className="font-medium">{r.id}</span> },
         { key: 'customer', header: 'Customer', sortValue: (r) => r.customer },
         { key: 'due', header: 'Due', sortValue: (r) => r.due, cell: (r) => shortDate(r.due) },
-        { key: 'status', header: 'Status', sortValue: (r) => r.status, cell: (r) => <Badge className={STATUS_CLASS[r.status]}>{r.status}</Badge> },
+        { key: 'status', header: 'Status', sortValue: (r) => r.status, cell: (r) => (
+          <Badge variant="outline" className="gap-1.5">
+            <span aria-hidden className={`size-1.5 rounded-full ${STATUS_DOT[r.status]}`} />
+            {r.status}
+          </Badge>
+        ),
+      },
         { key: 'amount', header: 'Amount', align: 'right', sortValue: (r) => r.amount, cell: (r) => <span className="tabular-nums">{money(r.amount)}</span> },
         ...(actions
           ? [

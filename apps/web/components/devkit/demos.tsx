@@ -121,11 +121,14 @@ const INVOICES = [
   { id: 'INV-1044', customer: 'Lumen Labs', status: 'Overdue', amount: 2310 },
 ];
 
-const STATUS_CLASS: Record<string, string> = {
-  Paid: 'bg-success/15 text-success',
-  Due: 'bg-muted text-foreground',
-  Overdue: 'bg-destructive/15 text-destructive',
-};
+/** A status: outline Badge, coloured dot, the word in foreground text (status-coloured small text fails AA on its tint). */
+const StatusBadge = ({ dot, children }: { dot: string; children: React.ReactNode }) => (
+  <Badge variant="outline" className="gap-1.5">
+    <span aria-hidden className={`size-1.5 rounded-full ${dot}`} />
+    {children}
+  </Badge>
+);
+const STATUS_DOT: Record<string, string> = { Paid: 'bg-success', Due: 'bg-warning', Overdue: 'bg-destructive' };
 
 const chartConfig = { visitors: { label: 'Visitors', color: 'var(--chart-1)' } } satisfies ChartConfig;
 const chartData = [
@@ -444,7 +447,7 @@ export const DEMOS: Record<string, ComponentType> = {
         {
           key: 'status',
           header: 'Status',
-          cell: (r) => <Badge className={STATUS_CLASS[r.status]}>{r.status}</Badge>,
+          cell: (r) => <StatusBadge dot={STATUS_DOT[r.status]}>{r.status}</StatusBadge>,
         },
         { key: 'amount', header: 'Amount', align: 'right', sortValue: (r) => r.amount, cell: (r) => `£${r.amount.toLocaleString('en-GB')}` },
       ]}
@@ -493,8 +496,8 @@ export const DEMOS: Record<string, ComponentType> = {
       <Badge variant="secondary">Secondary</Badge>
       <Badge variant="outline">Outline</Badge>
       <Badge variant="destructive">Destructive</Badge>
-      <Badge className="bg-success/15 text-success">Paid</Badge>
-      <Badge className="bg-warning/15 text-warning">Pending</Badge>
+      <StatusBadge dot="bg-success">Paid</StatusBadge>
+      <StatusBadge dot="bg-warning">Pending</StatusBadge>
     </Row>
   ),
   avatar: () => (
