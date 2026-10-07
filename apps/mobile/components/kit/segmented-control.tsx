@@ -62,6 +62,8 @@ export function SegmentedControl<T extends string>({ segments, value, onChange, 
             key={seg.value}
             accessibilityRole="button"
             accessibilityState={{ selected: active }}
+            // aria-pressed is web-only (react-native-web drops accessibilityState, and a button may not carry aria-selected).
+            aria-pressed={active}
             onPress={() => {
               if (active) return;
               haptic('selection');

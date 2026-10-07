@@ -42,7 +42,7 @@ export function Sheet({ open, onClose, title, description, children, className }
   return (
     <Modal visible={open} transparent animationType="fade" statusBarTranslucent onRequestClose={onClose}>
       <View className="flex-1 justify-end">
-        <Pressable className="absolute inset-0 bg-black/50" onPress={onClose} accessibilityLabel="Close" />
+        <Pressable className="absolute inset-0 bg-black/50" onPress={onClose} accessibilityRole="button" accessibilityLabel="Close" />
         {/* The surface lives on a plain View: NativeWind classNames are dropped on
             Animated.View on web, which left the panel transparent in the preview. */}
         <Animated.View style={{ maxHeight: '85%', transform: [{ translateY }] }}>
@@ -90,6 +90,8 @@ export function OptionSheet<T extends string>({ open, onClose, title, options, v
             key={o.value}
             accessibilityRole="button"
             accessibilityState={{ selected }}
+            // aria-pressed is web-only (react-native-web drops accessibilityState, and a button may not carry aria-selected).
+            aria-pressed={selected}
             onPress={() => {
               haptic('selection');
               onChange(o.value);

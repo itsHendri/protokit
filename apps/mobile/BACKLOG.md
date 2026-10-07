@@ -34,13 +34,13 @@ Present: 69 previews across 8 categories. Still missing, roughly in order of how
 
 ## Known rough edges
 - **Web semantics the a11y gate does not reach yet** (2026-10-07). The docs site's gate only loads the frames it
-  embeds. Still on `accessibilityState`, which react-native-web drops: the `selected` state of FilterChip,
-  SegmentedControl, Calendar days and Sheet options (role `button`, where `aria-selected` is not allowed; they
-  want `aria-pressed` on web or a radio/tab role). On iOS, `RadioGroupItem` and `Switch` are named by their
-  Label only on web and Android (`aria-labelledby`); VoiceOver reads the Label as its own element. A
-  destructive menu item on its pressed/focused tint is 4.14:1 in light (shadcn's pattern, same in the web kit).
-  The kit-tokens contrast gate could check `X` text on `X/15`; the kit puts no status text on
-  its own tint.
+  embeds; axe over every Kitchen Sink category (light and dark) still finds, on web: Navigation › TabBar items
+  are `role="tab"` without a `tablist` parent, PagerDots puts `aria-label` on a div with no role, and two
+  horizontal scroll rows in that section are scrollable regions with nothing focusable; Feedback › `Progress` (the bar)
+  has no name. On iOS, `RadioGroupItem` and `Switch` are named by their Label only on web and Android
+  (`aria-labelledby`); VoiceOver reads the Label as its own element. A destructive menu item on its
+  pressed/focused tint is 4.14:1 in light (shadcn's pattern, same in the web kit). The kit-tokens contrast gate
+  could check `X` text on `X/15`; the kit puts no status text on its own tint.
 - **Contrast gate gap:** it checks each tone as text on `background` and `card`, not on `muted`/`accent`. In dark
   mode `primary` (brand.500) on `muted` (neutral.800) is 4.04:1. Found by Lighthouse on the docs site's tabs (fixed
   there with neutral selected tabs, the kit's own rule). Adding the pairing would need a lighter dark primary — a

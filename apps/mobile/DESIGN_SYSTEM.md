@@ -280,7 +280,8 @@ Remote push is gone from Expo Go since SDK 53.
 - ✗ A control without a name: a Switch, RadioGroupItem or Checkbox needs a `Label htmlFor` its `id`, or an
   `aria-label` (a Switch at the end of a ListRow). ✗ `accessibilityState`/`accessibilityValue` in new
   components: the web export drops them; use the `aria-*` props (`aria-checked`, `aria-selected`,
-  `aria-valuenow`), which native reads too.
+  `aria-valuenow`), which native reads too. A selected `button` (chip, segment, day) keeps
+  `accessibilityState={{ selected }}` for native and adds `aria-pressed` for web.
 
 ## Hallucination guard
 

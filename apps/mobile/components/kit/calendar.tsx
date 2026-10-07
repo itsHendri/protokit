@@ -64,6 +64,8 @@ export function Calendar({ value, onChange, className }: Props) {
                 <Pressable
                   accessibilityRole="button"
                   accessibilityState={{ selected }}
+                  // aria-pressed is web-only (react-native-web drops accessibilityState, and a button may not carry aria-selected).
+                  aria-pressed={selected}
                   accessibilityLabel={date.toDateString()}
                   onPress={() => {
                     haptic('selection');
