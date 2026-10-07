@@ -23,8 +23,8 @@ export default function HabitSettings() {
       <View className="gap-3">
         <SectionHeader title="Preferences" />
         <Card className="w-full gap-0 px-4 py-0">
-          <ListRow leading={<IconCircle as={BellIcon} />} title="Reminders" subtitle="Daily nudges for unfinished habits" trailing={<Switch checked={reminders} onCheckedChange={setReminders} />} />
-          <ListRow leading={<IconCircle as={MoonIcon} />} title="Quiet hours" subtitle="No reminders after 21:00" trailing={<Switch checked={quiet} onCheckedChange={setQuiet} />} />
+          <ListRow leading={<IconCircle as={BellIcon} />} title="Reminders" subtitle="Daily nudges for unfinished habits" trailing={<Switch aria-label="Reminders" checked={reminders} onCheckedChange={setReminders} />} />
+          <ListRow leading={<IconCircle as={MoonIcon} />} title="Quiet hours" subtitle="No reminders after 21:00" trailing={<Switch aria-label="Quiet hours" checked={quiet} onCheckedChange={setQuiet} />} />
           <ListRow leading={<IconCircle as={CalendarIcon} />} title="Week starts on" value={WEEK_START.find((w) => w.value === start)?.label} chevron onPress={() => setOpen(true)} last />
         </Card>
       </View>

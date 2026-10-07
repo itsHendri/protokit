@@ -68,7 +68,7 @@
     },
     "label": {
       "upstream": true,
-      "forked": false
+      "forked": true
     },
     "menubar": {
       "upstream": true,

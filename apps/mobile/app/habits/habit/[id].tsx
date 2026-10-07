@@ -31,7 +31,7 @@ export default function HabitDetail() {
       <Stack.Screen options={{ title: h.name }} />
       <ScrollView contentContainerClassName="gap-5 p-5 pb-32">
         <Card className="w-full items-center gap-3 px-5 py-6">
-          <ProgressRing value={pct} size={120} strokeWidth={10} tone={h.tone}>
+          <ProgressRing value={pct} size={120} strokeWidth={10} tone={h.tone} accessibilityLabel={`${h.name} today`}>
             <Text className="text-2xl font-bold">{h.today}</Text>
             <Text className="text-muted-foreground text-xs">of {h.goal}</Text>
           </ProgressRing>
@@ -52,7 +52,7 @@ export default function HabitDetail() {
               <Text className="font-medium">Reminder</Text>
               <Text className="text-muted-foreground text-sm">Daily at 8:00</Text>
             </View>
-            <Switch checked={h.reminder} onCheckedChange={(v) => habits.setReminder(h.id, v)} />
+            <Switch aria-label="Reminder" checked={h.reminder} onCheckedChange={(v) => habits.setReminder(h.id, v)} />
           </View>
           {h.goal > 1 ? (
             <View className="gap-1">
@@ -62,7 +62,7 @@ export default function HabitDetail() {
                   {h.goal} {h.unit}
                 </Text>
               </View>
-              <Slider value={h.goal} onChange={(v) => habits.setGoal(h.id, v)} min={1} max={30} step={1} tone="primary" />
+              <Slider value={h.goal} onChange={(v) => habits.setGoal(h.id, v)} min={1} max={30} step={1} tone="primary" accessibilityLabel="Daily goal" />
             </View>
           ) : null}
         </Card>

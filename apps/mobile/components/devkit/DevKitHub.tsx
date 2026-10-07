@@ -117,7 +117,7 @@ export function DevKitHub<Id extends string>({ categories, sections, searchPlace
               className="border-border border-b">
               <Pressable
                 accessibilityRole="button"
-                accessibilityState={{ expanded: isOpen }}
+                aria-expanded={isOpen}
                 onPress={() => toggle(cat.id)}
                 className={cn('min-h-16 flex-row items-center gap-3 px-5 py-3 active:bg-accent', isOpen && 'bg-muted/40')}>
                 <View className="bg-muted size-10 items-center justify-center rounded-lg">

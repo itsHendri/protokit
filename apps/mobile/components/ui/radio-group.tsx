@@ -1,3 +1,4 @@
+import { labelIdFor } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import * as RadioGroupPrimitive from '@rn-primitives/radio-group';
 import { Platform } from 'react-native';
@@ -23,6 +24,8 @@ function RadioGroupItem({
         props.disabled && 'opacity-50',
         className
       )}
+      // On web the item is a div, which `<Label htmlFor>` cannot label; point at the Label's id instead.
+      aria-labelledby={props.id ? labelIdFor(props.id) : undefined}
       {...props}>
       <RadioGroupPrimitive.Indicator className="bg-primary size-3 rounded-full" />
     </RadioGroupPrimitive.Item>

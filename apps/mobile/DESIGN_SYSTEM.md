@@ -44,7 +44,9 @@ Rules:
 - **Never a hex literal or `rgb()` in `app/`, `components/` or `prototype/`.** The only escape hatch is
   `THEME[scheme].<name>` from `lib/theme.ts` for SVG fills and native props (charts, StatusBar).
 - No Tailwind palette colours (`bg-blue-500`, `text-gray-400`). They don't follow the theme or the brand.
-- Tint a surface with an alpha of a semantic colour: `bg-primary/15`, `bg-success/15`.
+- Tint a surface with an alpha of a semantic colour: `bg-primary/15`, `bg-success/15`. Text on a tint stays
+  `text-foreground`: a status colour as small text on its own tint measures under 4.5:1 (success on
+  `success/15` 4.09, destructive 3.82). The status colour goes on the icon or a dot.
 - Selected / active states in chips and segments are **neutral** (inverted foreground), not the brand colour.
   The brand colour is for the primary action and focus.
 - Light and dark are both required. Every component is checked in both in the Kitchen Sink.
@@ -113,7 +115,7 @@ tables. Text between `GENERATED` markers is overwritten.
 | Label | `components/ui/label.tsx` | `htmlFor` · own `onPress` on native |
 | Textarea | `components/ui/textarea.tsx` | |
 | Checkbox | `components/ui/checkbox.tsx` | `checked onCheckedChange` |
-| RadioGroup | `components/ui/radio-group.tsx` | `RadioGroupItem value id` |
+| RadioGroup | `components/ui/radio-group.tsx` | `RadioGroupItem value id` · a `Label htmlFor` the same id names it |
 | Switch | `components/ui/switch.tsx` | settings on/off |
 | Select | `components/ui/select.tsx` | pass safe-area `insets` to `SelectContent` |
 | FilterChip / FilterChipRow | `components/kit/filter-chip.tsx` | neutral-active chips |
@@ -125,7 +127,7 @@ tables. Text between `GENERATED` markers is overwritten.
 | OtpInput | `components/kit/otp-input.tsx` | N-digit code, paste-aware |
 | PasswordInput | `components/kit/password-input.tsx` | Input + show/hide |
 | SelectableCard | `components/kit/selectable-card.tsx` | card as a radio/checkbox choice |
-| Slider | `components/kit/slider.tsx` | continuous/stepped · `tone` |
+| Slider | `components/kit/slider.tsx` | continuous/stepped · `tone` · `accessibilityLabel` names it |
 | DatePicker | `components/kit/date-picker.tsx` | field trigger → Calendar in a Sheet |
 | Calendar | `components/kit/calendar.tsx` | month grid |
 | RangeSelector | `components/kit/range-selector.tsx` | trackless chart range (1D·1W·1M·1Y·ALL), active is a filled disc |
@@ -180,7 +182,7 @@ App tabs and stacks are Expo Router: `app/(kit)/_layout.tsx` shows the pattern; 
 | Skeleton | `components/ui/skeleton.tsx` | |
 | Tooltip | `components/ui/tooltip.tsx` | |
 | `useToast` / ToastProvider | `components/kit/toast.tsx` | transient · `ToastProvider` is in the root layout |
-| Spinner | `components/kit/spinner.tsx` | themed ActivityIndicator |
+| Spinner | `components/kit/spinner.tsx` | themed ActivityIndicator · announced as "Loading" |
 | EmptyState | `components/kit/empty-state.tsx` | `default` / `compact` |
 | SuccessScreen | `components/kit/success-screen.tsx` | the one success template |
 <!-- /GENERATED:registry:feedback -->
@@ -275,6 +277,10 @@ Remote push is gone from Expo Go since SDK 53.
 - ✗ Modals as the default home for secondary content.
 - ✗ Brand colour on selected chips/tabs. ✗ Grey-on-grey text below 4.5:1 contrast.
 - ✗ Tap targets under 44×44. ✗ Icon-only buttons without `accessibilityLabel`.
+- ✗ A control without a name: a Switch, RadioGroupItem or Checkbox needs a `Label htmlFor` its `id`, or an
+  `aria-label` (a Switch at the end of a ListRow). ✗ `accessibilityState`/`accessibilityValue` in new
+  components: the web export drops them; use the `aria-*` props (`aria-checked`, `aria-selected`,
+  `aria-valuenow`), which native reads too.
 
 ## Hallucination guard
 

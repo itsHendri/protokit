@@ -29,7 +29,7 @@ export function RangeSelector<T extends string>({ options, value, onChange, clas
               onChange(option.value);
             }}
             accessibilityRole="tab"
-            accessibilityState={{ selected }}
+            aria-selected={selected}
             accessibilityLabel={option.label}
             className={cn(
               'h-11 flex-1 items-center justify-center rounded-full px-2 active:opacity-70',

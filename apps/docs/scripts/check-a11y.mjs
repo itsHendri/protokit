@@ -8,9 +8,9 @@
  *
  * Needs Chromium once: `npx playwright install chromium` (CI: `--with-deps`).
  *
- * Not yet checked: the mobile kit inside the phone frames (/m). React Native for Web leaves progress rings,
- * radios, sliders and selectable cards unnamed; that is fixed in apps/mobile (see its BACKLOG.md), then
- * MOBILE_FRAMES below becomes `true`.
+ * The mobile kit in the phone frames (/m) is checked too. React Native for Web only renders the `aria-*`
+ * props, not `accessibilityState`/`accessibilityValue`, so the kit's components use those; a failure in a
+ * phone frame is fixed in apps/mobile. MOBILE_FRAMES = false skips the frames while one is being fixed.
  */
 import { spawn } from 'node:child_process';
 import { join } from 'node:path';
@@ -45,7 +45,7 @@ const PAGES = [
 ];
 const SCHEMES = ['light', 'dark'];
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
-const MOBILE_FRAMES = false;
+const MOBILE_FRAMES = true;
 
 const server = spawn('npx', ['wrangler', 'dev', '--port', String(PORT), '--ip', '127.0.0.1', '--log-level', 'error'], {
   cwd: docs,

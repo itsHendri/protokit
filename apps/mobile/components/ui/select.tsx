@@ -58,6 +58,9 @@ function SelectTrigger({
         size === 'sm' && 'h-8 py-2 sm:py-1.5',
         className
       )}
+      // Radix sets aria-autocomplete for its combobox role, but rn-primitives renders role="button",
+      // where the attribute is not allowed. Clearing it here wins the Slot prop merge.
+      {...Platform.select({ web: { 'aria-autocomplete': undefined } })}
       {...props}>
       <>{children}</>
       <Icon as={ChevronDown} aria-hidden={true} className="text-muted-foreground size-4" />

@@ -93,7 +93,8 @@ export function ListRow({
     return (
       <Pressable
         accessibilityRole={select ? (select.mode === 'radio' ? 'radio' : 'checkbox') : 'button'}
-        accessibilityState={select ? { checked: select.selected, disabled: !!disabled } : { disabled: !!disabled }}
+        aria-checked={select ? select.selected : undefined}
+        aria-disabled={!!disabled}
         onPress={onPress}
         disabled={disabled}
         className={cn(base, 'active:opacity-70')}>

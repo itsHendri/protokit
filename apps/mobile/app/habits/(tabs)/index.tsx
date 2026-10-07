@@ -23,7 +23,7 @@ export default function Today() {
     <View className="bg-background flex-1">
       <ScrollView contentContainerClassName="gap-5 p-5 pb-32">
         <Card className="w-full flex-row items-center gap-5 px-5 py-5">
-          <ProgressRing value={pct} size={88} strokeWidth={8}>
+          <ProgressRing value={pct} size={88} strokeWidth={8} accessibilityLabel="Today's habits">
             <Text className="text-xl font-bold">{pct}%</Text>
           </ProgressRing>
           <View className="flex-1 gap-1">

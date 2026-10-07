@@ -95,9 +95,9 @@ function SliderDemo() {
   const [b, setB] = React.useState(3);
   return (
     <View className="w-full gap-2">
-      <Slider value={a} onChange={setA} />
+      <Slider value={a} onChange={setA} accessibilityLabel="Continuous slider" />
       <Text className="text-muted-foreground text-sm">Continuous · {Math.round(a * 100)}%</Text>
-      <Slider value={b} onChange={setB} min={0} max={10} step={1} />
+      <Slider value={b} onChange={setB} min={0} max={10} step={1} accessibilityLabel="Stepped slider" />
       <Text className="text-muted-foreground text-sm">Stepped 0–10 · {b}</Text>
     </View>
   );

@@ -1,3 +1,4 @@
+import { labelIdFor } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import * as SwitchPrimitives from '@rn-primitives/switch';
 import { Platform } from 'react-native';
@@ -17,6 +18,8 @@ function Switch({
         props.disabled && 'opacity-50',
         className
       )}
+      // On web the switch is a div, which `<Label htmlFor>` cannot label; point at the Label's id instead.
+      aria-labelledby={props.id ? labelIdFor(props.id) : undefined}
       {...props}>
       <SwitchPrimitives.Thumb
         className={cn(
