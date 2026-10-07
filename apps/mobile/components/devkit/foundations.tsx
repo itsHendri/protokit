@@ -104,21 +104,65 @@ function SpacingTokens() {
   );
 }
 
+/** Literal class names: Tailwind only generates classes it can read in the source. */
+const RADIUS_CLASS: Record<string, string> = {
+  sm: 'rounded-sm',
+  md: 'rounded-md',
+  lg: 'rounded-lg',
+  xl: 'rounded-xl',
+  '2xl': 'rounded-2xl',
+  control: 'rounded-control',
+  full: 'rounded-full',
+};
+
 function RadiusTokens() {
   const { copied, copy } = useCopy();
-  const entries = (Object.entries(TOKENS.radius) as [string, number][]).filter(([k]) => k !== 'base');
+  // rounded-sm…2xl are multiples of the theme's base radius (rounded-lg); see tokens.json › radius.
+  const px = (name: string) => {
+    if (name === 'full') return 'full';
+    if (name === 'control') return TOKENS.radius.control >= 9999 ? 'pill' : `${TOKENS.radius.control}px`;
+    const value = (TOKENS.radius.base * TOKENS.radius[name as 'sm']) / TOKENS.radius.lg;
+    return `${Math.round(value * 10) / 10}px`;
+  };
   return (
     <View className="w-full flex-row flex-wrap gap-4">
-      {entries.map(([name, px]) => (
-        <Pressable key={name} onPress={() => copy(name, `rounded-${name}`)} className="items-center gap-1">
-          <View
-            className="bg-card border-border h-14 w-14 border"
-            style={{ borderRadius: Math.min(px, 28) }}
-          />
-          <Text className="text-xs font-semibold">{copied === name ? 'Copied ✓' : `rounded-${name}`}</Text>
-          <Text className="text-muted-foreground text-xs">{px === 9999 ? 'full' : `${px}px`}</Text>
+      {Object.entries(RADIUS_CLASS).map(([name, cls]) => (
+        <Pressable key={name} onPress={() => copy(name, cls)} className="items-center gap-1">
+          <View className={cn('bg-card border-border h-14 w-14 border', cls)} />
+          <Text className="text-xs font-semibold">{copied === name ? 'Copied ✓' : cls}</Text>
+          <Text className="text-muted-foreground text-xs">{px(name)}</Text>
         </Pressable>
       ))}
+    </View>
+  );
+}
+
+/** The theme's elevation scale and border width, rendered with the classes components use. */
+function DepthTokens() {
+  const { copied, copy } = useCopy();
+  const levels = [
+    ['shadow-sm', 'Controls, cards'],
+    ['shadow-md', 'Raised cards, popovers'],
+    ['shadow-lg', 'Menus, dialogs, floating'],
+  ] as const;
+  return (
+    <View className="w-full gap-4">
+      <View className="flex-row flex-wrap gap-4">
+        {levels.map(([cls, use]) => (
+          <Pressable key={cls} onPress={() => copy(cls, cls)} className="w-[30%] min-w-[96px] flex-1 gap-2">
+            <View className={cn('bg-card border-border h-16 rounded-lg border', cls)} />
+            <Text className="text-xs font-semibold">{copied === cls ? 'Copied ✓' : cls}</Text>
+            <Text className="text-muted-foreground text-xs">{use}</Text>
+          </Pressable>
+        ))}
+      </View>
+      <Pressable onPress={() => copy('border', 'border')} className="flex-row items-center gap-3">
+        <View className="border-foreground h-10 w-16 rounded-md border" />
+        <Text className="text-sm">
+          {copied === 'border' ? 'Copied ✓' : `border · ${TOKENS.borderWidth}px`}
+          <Text className="text-muted-foreground text-sm"> (border-2 and border-hairline stay fixed)</Text>
+        </Text>
+      </Pressable>
     </View>
   );
 }
@@ -232,6 +276,14 @@ export const FOUNDATION_SECTIONS: FoundationSection[] = [
     aliases: ['rounded', 'corner', 'border radius'],
     caption: 'rounded-lg is the base (--radius); md and sm derive from it. Tap to copy.',
     Demo: RadiusTokens,
+  },
+  {
+    id: 'depth',
+    title: 'Depth & borders',
+    category: 'metrics',
+    aliases: ['shadow', 'elevation', 'border width', 'outline'],
+    caption: "shadow-sm, -md and -lg are the theme's three elevation levels; border is its border width. Tap to copy.",
+    Demo: DepthTokens,
   },
   {
     id: 'type-scale',

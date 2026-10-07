@@ -9,7 +9,8 @@
  */
 import { fixContrast } from './fix.mjs';
 import { encodeRecipe } from './codec.mjs';
-import { normalizeRecipe, RADIUS } from './recipe.mjs';
+import { fontById } from './fonts.mjs';
+import { BORDER, DEPTH, normalizeRecipe, RADIUS, STROKE } from './recipe.mjs';
 import { anchorStep, brandRamp, neutralRamp } from './ramp.mjs';
 import { resolvedMap } from './refs.mjs';
 import { semanticColors } from './semantic.mjs';
@@ -43,13 +44,27 @@ export function generateTheme(input, base, { fix = true } = {}) {
     ['light', 'dark'].map((mode) => [mode, Object.fromEntries(Object.entries(colors).map(([name, v]) => [name, lookup(v[mode])]))])
   );
 
+  const radius = lookup(radiusValue);
+  const controlRadius = recipe.controls === 'pill' ? 9999 : radiusValue;
+  const font = (id) => (id === 'system' ? '' : fontById(id).family);
+
   return {
     recipe,
     code: encodeRecipe(recipe),
     primitives: { brand, neutral },
-    semantic: { color: colors, radius: { base: radiusValue } },
+    fonts: { heading: font(recipe.font.heading), body: font(recipe.font.body) },
+    semantic: {
+      color: colors,
+      radius: { base: radiusValue, control: controlRadius },
+      border: { width: BORDER[recipe.border] },
+      icon: { stroke: STROKE[recipe.stroke] },
+      shadow: DEPTH[recipe.depth],
+    },
     resolved,
-    radius: lookup(radiusValue),
+    radius,
+    radiusControl: lookup(controlRadius),
+    borderWidth: BORDER[recipe.border],
+    stroke: STROKE[recipe.stroke],
     adjustments,
   };
 }

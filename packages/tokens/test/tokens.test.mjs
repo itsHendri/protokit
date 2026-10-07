@@ -67,11 +67,11 @@ test('oklch round-trips the sRGB corners and a deterministic sweep', () => {
 
 test('with the default base, every rounded-* class equals its primitive', () => {
   const prim = Object.fromEntries(group(ctx.prim, ['radius']).map((t) => [t.key, t.value]));
-  for (const { name, offset } of ctx.radius.steps) {
-    assert.equal(ctx.radius.base + offset, prim[name], `rounded-${name}`);
+  for (const { name, scale } of ctx.radius.steps) {
+    assert.ok(Math.abs(ctx.radius.base * scale - prim[name]) < 0.01, `rounded-${name}`);
   }
-  assert.equal(radiusCalc(0), 'var(--radius)');
-  assert.equal(radiusCalc(-4), 'calc(var(--radius) - 4px)');
+  assert.equal(radiusCalc(1), 'var(--radius)');
+  assert.equal(radiusCalc(0.6), 'calc(var(--radius) * 0.6)');
 });
 
 test('the fixture palette passes the contrast gate', () => {

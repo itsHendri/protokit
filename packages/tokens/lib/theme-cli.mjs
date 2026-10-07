@@ -8,8 +8,11 @@
  *   theme presets          list the presets and their codes
  *   theme encode <recipe.json>   print the code for a recipe file
  */
+import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+
+import { FONTS } from './theme/fonts.mjs';
 
 import {
   applyRecipe,
@@ -53,7 +56,31 @@ const describe = (recipe) => {
 };
 
 /** positional: [subcommand, arg]; flags: { force, 'dry-run', check, … } */
-export async function themeCommand({ positional, flags, root, sourcePath, build }) {
+/**
+ * An Expo app needs the theme's @expo-google-fonts packages installed (the fonts target imports them).
+ * Installs the missing ones with `npx expo install`; lists any the theme no longer uses.
+ */
+function installFonts(root, config, theme, flags) {
+  if (config.targets?.fonts?.platform !== 'expo') return;
+  const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
+  const have = new Set(Object.keys({ ...pkg.dependencies, ...pkg.devDependencies }).filter((d) => d.startsWith('@expo-google-fonts/')));
+  const ids = [theme.recipe.font.heading, theme.recipe.font.body].filter((id) => id !== 'system');
+  const need = [...new Set(ids)].map((id) => `@expo-google-fonts/${id}`);
+  const missing = need.filter((p) => !have.has(p));
+  const unused = [...have].filter((p) => !need.includes(p) && FONTS.some((f) => `@expo-google-fonts/${f.id}` === p));
+  if (missing.length) {
+    if (flags['no-install']) {
+      console.log(`\nInstall the theme's fonts: npx expo install ${missing.join(' ')}`);
+    } else {
+      console.log(`\nInstalling ${missing.join(', ')}…`);
+      const r = spawnSync('npx', ['expo', 'install', ...missing], { cwd: root, stdio: 'inherit' });
+      if (r.status !== 0) fail(`could not install ${missing.join(' ')}; run \`npx expo install ${missing.join(' ')}\` yourself, then \`npm run tokens:build\`.`);
+    }
+  }
+  if (unused.length) console.log(`\nNo longer used by the theme (remove when you like): npm uninstall ${unused.join(' ')}`);
+}
+
+export async function themeCommand({ positional, flags, root, sourcePath, config, build }) {
   const [sub = 'show', arg] = positional;
   const tokens = () => JSON.parse(readFileSync(sourcePath, 'utf8'));
 
@@ -106,6 +133,7 @@ export async function themeCommand({ positional, flags, root, sourcePath, build 
     }
     writeFileSync(sourcePath, JSON.stringify(next, null, 2) + '\n');
     console.log(`\nWrote ${sourcePath.slice(root.length + 1)}.`);
+    installFonts(root, config, theme, flags);
     await build();
     return;
   }

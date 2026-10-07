@@ -1,3 +1,5 @@
+import { FONT_FAMILY } from '@/lib/fonts';
+import { useLiveFonts } from '@/lib/palette-context';
 import { cn } from '@/lib/utils';
 import { Slot } from '@rn-primitives/slot';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -64,6 +66,39 @@ const ARIA_LEVEL: Partial<Record<TextVariant, string>> = {
 
 const TextClassContext = React.createContext<string | undefined>(undefined);
 
+const WEIGHT: Record<string, number> = {
+  'font-thin': 100,
+  'font-extralight': 200,
+  'font-light': 300,
+  'font-normal': 400,
+  'font-medium': 500,
+  'font-semibold': 600,
+  'font-bold': 700,
+  'font-extrabold': 800,
+  'font-black': 900,
+};
+const HEADINGS = new Set<TextVariant>(['h1', 'h2', 'h3', 'h4']);
+
+/**
+ * The theme's font for this text (lib/fonts.ts). Headings (h1–h4, or a `font-heading` class) take the
+ * heading font, everything else the body font; `font-mono` keeps the mono font. A custom font is one
+ * family per weight on native (Android ignores fontWeight for it), so the weight in the classes picks the
+ * family and fontWeight is reset. A live theme from the docs picker (web only) uses its Google font.
+ */
+function useFontStyle(classes: string, variant: TextVariant) {
+  const live = useLiveFonts();
+  if (/(^|\s)font-mono(\s|$)/.test(classes)) return undefined;
+  const role = HEADINGS.has(variant) || /(^|\s)font-heading(\s|$)/.test(classes) ? 'heading' : 'body';
+  const liveFamily = live?.[role];
+  if (liveFamily) return { fontFamily: `"${liveFamily}", ui-sans-serif, system-ui, sans-serif` };
+  const families = FONT_FAMILY[role];
+  if (!families) return undefined;
+  const weight = classes.split(/\s+/).reduce((w, c) => WEIGHT[c] ?? w, 400);
+  const loaded = Object.keys(families).map(Number);
+  const nearest = loaded.reduce((best, w) => (Math.abs(w - weight) < Math.abs(best - weight) ? w : best), loaded[0]);
+  return { fontFamily: families[nearest], fontWeight: 'normal' as const };
+}
+
 function Text({
   className,
   asChild = false,
@@ -76,12 +111,15 @@ function Text({
   }) {
   const textClass = React.useContext(TextClassContext);
   const Component = asChild ? Slot : RNText;
+  const classes = cn(textVariants({ variant }), textClass, className);
+  const font = useFontStyle(classes, variant ?? 'default');
   return (
     <Component
-      className={cn(textVariants({ variant }), textClass, className)}
+      className={classes}
       role={variant ? ROLE[variant] : undefined}
       aria-level={variant ? ARIA_LEVEL[variant] : undefined}
       {...props}
+      style={font ? [font, props.style] : props.style}
     />
   );
 }

@@ -42,7 +42,14 @@
             };
             var style = document.createElement('style');
             style.id = 'kit-theme-override';
-            style.textContent = block(':root:root:root', vars.light) + block('.dark:root:root:root', vars.dark);
+            style.textContent =
+              block(':root:root:root', vars.light) +
+              block('.dark:root:root:root', vars.dark) +
+              (vars.light && vars.light['--shadow-1']
+                ? '.shadow-xs,.shadow-sm,.shadow{--tw-shadow:var(--shadow-1)!important}' +
+                  '.shadow-md{--tw-shadow:var(--shadow-2)!important}' +
+                  '.shadow-lg,.shadow-xl,.shadow-2xl{--tw-shadow:var(--shadow-3)!important}'
+                : '');
             document.head.appendChild(style);
           }
         } catch (e) {

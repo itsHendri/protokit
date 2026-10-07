@@ -136,11 +136,11 @@
                 "chart-5": "hsl(var(--chart-5))"
               },
               "borderRadius": {
-                "sm": "calc(var(--radius) - 4px)",
-                "md": "calc(var(--radius) - 2px)",
+                "sm": "calc(var(--radius) * 0.6)",
+                "md": "calc(var(--radius) * 0.8)",
                 "lg": "var(--radius)",
-                "xl": "calc(var(--radius) + 6px)",
-                "2xl": "calc(var(--radius) + 10px)"
+                "xl": "calc(var(--radius) * 1.6)",
+                "2xl": "calc(var(--radius) * 2)"
               }
             }
           }
@@ -175,6 +175,20 @@
           "path": "lib/embed.ts",
           "type": "registry:lib",
           "target": "lib/embed.ts"
+        }
+      ]
+    },
+    {
+      "name": "lib-fonts",
+      "type": "registry:lib",
+      "title": "lib/fonts.ts",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "lib/fonts.ts",
+          "type": "registry:lib",
+          "target": "lib/fonts.ts"
         }
       ]
     },
@@ -241,6 +255,7 @@
       "registryDependencies": [
         "@kit-native/lib-embed",
         "@kit-native/lib-embed-theme",
+        "@kit-native/lib-fonts",
         "@kit-native/lib-theme",
         "@kit-native/lib-theme-context"
       ],
@@ -1372,6 +1387,8 @@
         "class-variance-authority@^0.7.1"
       ],
       "registryDependencies": [
+        "@kit-native/lib-fonts",
+        "@kit-native/lib-palette-context",
         "@kit-native/lib-utils"
       ],
       "files": [

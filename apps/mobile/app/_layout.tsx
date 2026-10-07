@@ -5,10 +5,14 @@ import { ToastProvider } from '@/components/kit/toast';
 import { NativeModeProvider } from '@/lib/native-context';
 import { PaletteProvider, useNavTheme } from '@/lib/palette-context';
 import { KitThemeProvider, useKitTheme } from '@/lib/theme-context';
+import { FONT_ASSETS } from '@/lib/fonts';
 import { PortalHost } from '@rn-primitives/portal';
+import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { ThemeProvider as NavThemeProvider } from 'expo-router/react-navigation';
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import * as React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export {
@@ -22,7 +26,17 @@ export {
  */
 export const unstable_settings = { initialRouteName: '(kit)' };
 
+// Hold the splash until the theme's fonts are in (lib/fonts.ts; nothing to wait for with the system font).
+SplashScreen.preventAutoHideAsync().catch(() => {});
+
 export default function RootLayout() {
+  const [fontsLoaded, fontError] = useFonts(FONT_ASSETS);
+  const ready = fontsLoaded || !!fontError;
+  React.useEffect(() => {
+    if (ready) SplashScreen.hideAsync().catch(() => {});
+  }, [ready]);
+  if (!ready) return null;
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <KitThemeProvider>

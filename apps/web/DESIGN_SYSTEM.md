@@ -50,14 +50,21 @@ lg:px-8`, sections `gap-8`–`gap-12`, inside cards `p-5`/`p-6`. Use `gap-*` for
 ### Radius
 
 <!-- GENERATED:tokens:radius -->
-`rounded-sm` 6 · `rounded-md` 8 (inputs, buttons) · `rounded-lg` 10 (cards, dialogs) · `rounded-xl` 16 (panels, tables) · `rounded-2xl` 20 (hero surfaces) · `rounded-full` (avatars, pills).
+`rounded-sm` 6 · `rounded-md` 8 (inputs) · `rounded-lg` 10 (cards, dialogs) · `rounded-xl` 16 (panels, tables) · `rounded-2xl` 20 (hero surfaces) · `rounded-control` pill (buttons) · `rounded-full` (avatars, pills).
 <!-- /GENERATED:tokens:radius -->
 
 ### Typography
 
-The system font stack unless a brand font is set. Page title `text-2xl sm:text-3xl font-semibold
+The theme's fonts (`app/fonts.ts`): h1–h4 and card titles take the heading font (`font-heading`), everything
+else the body font (`font-sans`). Page title `text-2xl sm:text-3xl font-semibold
 tracking-tight` (PageHeader does this); section titles `text-lg`/`text-xl font-semibold`; body `text-base`
 with `leading-7` for prose; helper text `text-sm text-muted-foreground`. `tabular-nums` for figures.
+
+### Depth and borders
+
+`shadow-xs`/`shadow-sm` (controls, cards), `shadow-md` (raised, popovers), `shadow-lg`/`shadow-xl` (menus,
+dialogs) are the theme's three elevation levels; `border` is its width; Lucide icons take its stroke.
+Buttons use `rounded-control` (pills, or the base radius: the theme decides).
 
 ### Motion
 

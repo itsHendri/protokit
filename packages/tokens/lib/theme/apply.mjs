@@ -19,16 +19,38 @@ function ownedValues(theme) {
   }
   for (const [name, value] of Object.entries(theme.semantic.color)) out[`semantic.color.${name}`] = value;
   out['semantic.radius.base'] = theme.semantic.radius.base;
+  out['semantic.radius.control'] = theme.semantic.radius.control;
+  out['semantic.border.width'] = theme.semantic.border.width;
+  out['semantic.icon.stroke'] = theme.semantic.icon.stroke;
+  for (const [level, value] of Object.entries(theme.semantic.shadow)) out[`semantic.shadow.${level}`] = value;
+  out['primitive.font.family.heading'] = theme.fonts.heading;
+  out['primitive.font.family.body'] = theme.fonts.body;
   return out;
 }
 
-function setPath(root, path, $value, $type) {
+const TYPES = { radius: 'number', border: 'number', icon: 'number', shadow: 'shadow', font: 'fontFamily', color: 'color' };
+const DESCRIPTIONS = {
+  'semantic.radius.control': 'Corner radius of buttons and chips: rounded-control. 9999 = pills; otherwise the base radius.',
+  'semantic.border.width': 'Width of `border` (px). border-2 and border-hairline stay explicit.',
+  'semantic.icon.stroke': "Lucide stroke width; an icon's own strokeWidth is relative to 2.",
+  'semantic.shadow.1': 'shadow-xs / shadow-sm / shadow: controls and cards.',
+  'semantic.shadow.2': 'shadow-md: raised cards and popovers.',
+  'semantic.shadow.3': 'shadow-lg / shadow-xl: menus, dialogs, floating buttons.',
+  'primitive.font.family.heading': 'Headings (Text h1–h4, titles). Empty = the platform system font.',
+  'primitive.font.family.body': 'Everything else. Empty = the platform system font.',
+};
+
+function typeOf(path) {
+  return TYPES[path.split('.')[1]] ?? 'color';
+}
+
+function setPath(root, path, $value) {
   let node = root;
   const keys = path.split('.');
   for (const key of keys.slice(0, -1)) node = node[key] ??= {};
   const leaf = keys.at(-1);
   if (node[leaf] && typeof node[leaf] === 'object' && '$value' in node[leaf]) node[leaf].$value = $value;
-  else node[leaf] = { $type, $value };
+  else node[leaf] = { $type: typeOf(path), ...(DESCRIPTIONS[path] ? { $description: DESCRIPTIONS[path] } : {}), $value };
 }
 
 /** → { tokens, theme }. `tokens` is a new object; the input is not touched. */
@@ -36,7 +58,7 @@ export function applyRecipe(tokens, recipe) {
   const theme = generateTheme(recipe, tokens);
   const out = clone(tokens);
   for (const [path, value] of Object.entries(ownedValues(theme))) {
-    setPath(out, path, value, path.startsWith('semantic.radius') ? 'number' : 'color');
+    setPath(out, path, value);
   }
   const { $extensions = {}, ...rest } = out;
   const record = { version: theme.recipe.v, code: theme.code, recipe: theme.recipe };
@@ -54,8 +76,9 @@ export function themeStatus(tokens) {
   if (!record?.recipe) return { applied: false };
   const expected = ownedValues(generateTheme(record.recipe, tokens));
   const actual = Object.fromEntries(flatten(tokens).map((t) => [t.path.join('.'), t.$value]));
+  // A path the file doesn't have yet (a newer kit-tokens owns more) is not an edit; apply adds it.
   const drift = Object.entries(expected)
-    .filter(([path, value]) => JSON.stringify(actual[path]) !== JSON.stringify(value))
+    .filter(([path, value]) => path in actual && JSON.stringify(actual[path]) !== JSON.stringify(value))
     .map(([path]) => path);
   return { applied: true, code: record.code, recipe: record.recipe, drift };
 }

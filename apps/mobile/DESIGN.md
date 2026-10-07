@@ -140,6 +140,7 @@ rounded:
   lg: 10px
   xl: 16px
   2xl: 20px
+  control: 9999px
   full: 9999px
 spacing:
   "0": 0px
@@ -157,12 +158,12 @@ components:
   button-primary:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.primary-foreground}"
-    rounded: "{rounded.full}"
+    rounded: "{rounded.control}"
     height: 48px
   button-secondary:
     backgroundColor: "{colors.secondary}"
     textColor: "{colors.secondary-foreground}"
-    rounded: "{rounded.full}"
+    rounded: "{rounded.control}"
     height: 48px
   card:
     backgroundColor: "{colors.card}"
@@ -184,8 +185,10 @@ components:
 
 A neutral, brand-agnostic base for clickable prototypes on phone and web. Calm surfaces, one brand
 colour reserved for the primary action and focus, generous spacing, and both light and dark themes
-from day one. Re-branding means editing `tokens/tokens.json`; everything else follows. The full
-rules and the component registry are in `DESIGN_SYSTEM.md` — read it before building UI.
+from day one. The applied theme is `pk1-29B3XC60003T`. Re-branding means applying a
+theme (`npx kit-tokens theme apply <code>`, codes come from the docs theme picker) or editing
+`tokens/tokens.json`; everything else follows. The full rules and the component registry are in
+`DESIGN_SYSTEM.md` — read it before building UI.
 
 ## Colors
 
@@ -211,8 +214,8 @@ colour. `kit-tokens check` flags class strings that break this.
 
 ## Typography
 
-System font unless a brand font is configured. Use the Text variants (h1–h4, lead, large, body,
-small, muted, code) rather than raw sizes. Medium weight for row titles, semibold for headings and
+Headings (h1–h4, titles) use the system font (SF / Roboto); everything else uses the system font (SF / Roboto).
+Use the Text variants (h1–h4, lead, large, body, small, muted, code) rather than raw sizes. Medium weight for row titles, semibold for headings and
 values, bold only for hero amounts.
 
 ## Layout

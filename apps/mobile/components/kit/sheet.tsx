@@ -54,7 +54,7 @@ export function Sheet({ open, onClose, title, description, children, className }
             </View>
             {title || description ? (
               <View className="gap-0.5 px-5 pb-3">
-                {title ? <Text variant="large">{title}</Text> : null}
+                {title ? <Text variant="large" className="font-heading">{title}</Text> : null}
                 {description ? <Text className="text-muted-foreground text-sm">{description}</Text> : null}
               </View>
             ) : null}

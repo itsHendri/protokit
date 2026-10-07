@@ -5,6 +5,8 @@
  */
 import { group } from '../lib/resolve.mjs';
 import { AA, describeTintLimits, textOnTintLimits } from '../lib/contrast.mjs';
+import { themeStatus } from '../lib/theme/index.mjs';
+import { themeFonts } from './fonts.mjs';
 
 export default function llms(ctx, options) {
   const rows = ctx.colors.map((c) => `| \`${c.name}\` | ${c.light} | ${c.dark} |`).join('\n');
@@ -12,6 +14,8 @@ export default function llms(ctx, options) {
     group(ctx.prim, prefix)
       .map((t) => `${t.key} ${t.value}${unit}`)
       .join(' · ');
+  const fonts = themeFonts(ctx);
+  const theme = themeStatus(ctx.source);
   const contents = `<!-- ${ctx.header} -->
 ## Tokens
 
@@ -27,7 +31,10 @@ ${describeTintLimits(textOnTintLimits(ctx.colors))}.
 ${rows}
 
 - Spacing (4-pt grid, Tailwind numeric scale): ${steps(['space'])}
-- Radius (\`rounded-*\`): ${steps(['radius'])}; base \`--radius\` = ${ctx.radius.base}px
+- Radius (\`rounded-*\`): ${ctx.radius.steps.map((s) => `${s.name} ${Math.round(ctx.radius.base * s.scale * 10) / 10}px`).join(' · ')} (multiples of \`--radius\` = ${ctx.radius.base}px); \`rounded-control\` (buttons, chips) ${ctx.shape.control >= 9999 ? 'pill' : `${ctx.shape.control}px`}
+- Depth: \`shadow-sm\` (controls, cards), \`shadow-md\` (raised, popovers), \`shadow-lg\` (menus, dialogs) are the theme's three elevation levels; no shadow colour modifiers
+- Border \`border\` ${ctx.shape.borderWidth}px · icon stroke ${ctx.shape.stroke} (an Icon's \`strokeWidth\` is relative to 2)
+- Fonts: headings ${fonts.heading?.family ?? 'system'}, body ${fonts.body?.family ?? 'system'} (applied by Text; \`font-heading\` makes any Text a heading)${theme.applied ? `\n- Theme: \`${theme.code}\` (\`npx kit-tokens theme show\`)` : ''}
 - Font sizes (\`text-*\`): ${steps(['font', 'size'])}
 - Durations: ${steps(['duration'], 'ms')}
 `;

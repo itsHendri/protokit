@@ -106,7 +106,7 @@ function ToastItem({ toast, onDismiss }: { toast: ToastState; onDismiss: () => v
   }, [translateY, motion]);
   return (
     <Animated.View style={{ transform: [{ translateY }] }} className="max-w-[90%]">
-      <Pressable onPress={onDismiss} accessibilityRole="alert" className={cn('flex-row items-center gap-2 rounded-full px-4 py-2.5 shadow-lg shadow-black/20', spec.bg)}>
+      <Pressable onPress={onDismiss} accessibilityRole="alert" className={cn('flex-row items-center gap-2 rounded-full px-4 py-2.5 shadow-lg', spec.bg)}>
         <Icon as={spec.icon} size={18} className={spec.fg} />
         <Text className={cn('font-semibold', spec.fg)} numberOfLines={2}>
           {toast.message}

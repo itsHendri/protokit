@@ -61,19 +61,28 @@ Use `gap-*` for siblings, not margins. Vary spacing to create hierarchy.
 
 ### Radius
 
-Buttons are pills (`rounded-full`); everything else uses the scale below. Raised elements that
+Buttons and chips use `rounded-control` (pills, or the base radius: the theme decides); everything else
+uses the scale below, which the theme scales from its base (`rounded-lg`). Raised elements that
 sit on a track — the SegmentedControl thumb, the Switch thumb, the Slider handle — use `bg-card`,
 not `bg-background`, so they stay white if the page surface is ever tinted.
 
 <!-- GENERATED:tokens:radius -->
-`rounded-sm` 6 · `rounded-md` 8 (inputs, buttons) · `rounded-lg` 10 (cards, sheets base) · `rounded-xl` 16 · `rounded-2xl` 20 (sheet tops, hero surfaces) · `rounded-full` (chips, avatars, dots).
+`rounded-sm` 6 · `rounded-md` 8 (inputs) · `rounded-lg` 10 (cards, sheets base) · `rounded-xl` 16 · `rounded-2xl` 20 (sheet tops, hero surfaces) · `rounded-control` pill (buttons, chips) · `rounded-full` (avatars, dots).
 <!-- /GENERATED:tokens:radius -->
 
 ### Typography
 
-System font. Use `<Text variant>` from `components/ui/text`: `h1 h2 h3 h4 lead p large small muted code blockquote`.
+The theme's fonts (`lib/fonts.ts`): h1–h4 and titles take the heading font, everything else the body font;
+add `font-heading` to make any Text a heading. Use `<Text variant>` from `components/ui/text`: `h1 h2 h3 h4 lead p large small muted code blockquote`.
 Never import `Text` from `react-native` in screens. Sizes if a variant does not fit: `text-xs sm base lg xl 2xl 3xl 4xl`.
 Weights: `font-medium` for row titles, `font-semibold` for headings/values, `font-bold` for hero amounts only.
+
+### Depth and borders
+
+`shadow-sm` (controls, cards that press), `shadow-md` (raised cards, popovers), `shadow-lg` (menus, dialogs,
+floating buttons): the theme's three elevation levels. Never a shadow colour (`shadow-black/5`): the theme
+owns it. `border` is the theme's width; `border-2` and `border-hairline` stay fixed. Icons take the theme's
+stroke; an Icon's `strokeWidth` is relative to 2.
 
 ### Motion
 

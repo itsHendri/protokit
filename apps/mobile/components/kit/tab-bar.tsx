@@ -1,6 +1,6 @@
 import { Text } from '@/components/ui/text';
 import { haptic } from '@/lib/haptics';
-import { usePalette } from '@/lib/palette-context';
+import { useIconStroke, usePalette } from '@/lib/palette-context';
 import { cn } from '@/lib/utils';
 import type { LucideIcon } from 'lucide-react-native';
 import * as React from 'react';
@@ -98,11 +98,16 @@ export function TabBarItem({ label, focused, color, icon, accessibilityLabel, on
   );
 }
 
-/** Default icon renderer for `tabBarIcon`: a lucide icon whose stroke thickens when focused. */
+/** Default icon renderer for `tabBarIcon`: a lucide icon whose stroke thickens when focused (and follows the theme's stroke). */
 export function tabIcon(icon: LucideIcon): IconRender {
-  const IconCmp = icon;
+  // Called as a function by the tab bar, not rendered as a component, so the hook lives in TabIcon.
   function TabIconRender({ focused, color, size }: { focused: boolean; color: ColorValue; size: number }) {
-    return <IconCmp color={String(color)} size={size} strokeWidth={focused ? 2.25 : 1.75} />;
+    return <TabIcon icon={icon} focused={focused} color={color} size={size} />;
   }
   return TabIconRender;
+}
+
+function TabIcon({ icon: IconCmp, focused, color, size }: { icon: LucideIcon; focused: boolean; color: ColorValue; size: number }) {
+  const stroke = useIconStroke();
+  return <IconCmp color={String(color)} size={size} strokeWidth={((focused ? 2.25 : 1.75) * stroke) / 2} />;
 }

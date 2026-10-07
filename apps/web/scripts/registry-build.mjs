@@ -94,11 +94,24 @@ for (const cat of CATEGORY_META) {
 }
 
 const tokens = JSON.parse(read('tokens/tokens.json'));
-const RADIUS_USE = { md: 'inputs, buttons', lg: 'cards, dialogs', xl: 'panels, tables', '2xl': 'hero surfaces', full: 'avatars, pills' };
-const radiusLine = Object.entries(tokens.primitive.radius)
-  .filter(([, t]) => t && typeof t === 'object' && '$value' in t)
-  .map(([k, t]) => `\`rounded-${k}\`${k === 'full' ? '' : ` ${t.$value}`}${RADIUS_USE[k] ? ` (${RADIUS_USE[k]})` : ''}`)
-  .join(' · ');
+const RADIUS_USE = { md: 'inputs', lg: 'cards, dialogs', xl: 'panels, tables', '2xl': 'hero surfaces', control: 'buttons', full: 'avatars, pills' };
+// The theme's radius: rounded-* are multiples of its base (rounded-lg), rounded-control is buttons and chips.
+const prim = Object.fromEntries(
+  Object.entries(tokens.primitive.radius)
+    .filter(([, t]) => t && typeof t === 'object' && '$value' in t)
+    .map(([k, t]) => [k, t.$value])
+);
+const resolveRadius = (v) => (typeof v === 'string' && v.startsWith('{primitive.radius.') ? prim[v.slice(18, -1)] : Number(v));
+const base = resolveRadius(tokens.semantic.radius.base.$value);
+const control = tokens.semantic.radius.control ? resolveRadius(tokens.semantic.radius.control.$value) : 9999;
+const radiusSteps = [
+  ...Object.keys(prim)
+    .filter((k) => k !== 'full')
+    .map((k) => [k, Math.round(((base * prim[k]) / prim.lg) * 10) / 10]),
+  ['control', control >= 9999 ? 'pill' : control],
+  ['full', null],
+];
+const radiusLine = radiusSteps.map(([k, v]) => `\`rounded-${k}\`${v === null ? '' : ` ${v}`}${RADIUS_USE[k] ? ` (${RADIUS_USE[k]})` : ''}`).join(' · ');
 designSystem = replaceBlock(designSystem, 'tokens:radius', radiusLine + '.', 'DESIGN_SYSTEM.md');
 
 // ---------- 3. llms.txt --------------------------------------------------------------------------

@@ -7,7 +7,19 @@ export const metadata: Metadata = { title: 'Foundations' };
 const colors = Object.keys(theme.web.cssVars.light).filter((k) => k !== 'radius');
 const fills = colors.filter((n) => !n.endsWith('-foreground'));
 /** Literal class names: Tailwind only generates classes it can read in the source. */
-const RADIUS_CLASS: Record<string, string> = { sm: 'rounded-sm', md: 'rounded-md', lg: 'rounded-lg', xl: 'rounded-xl', '2xl': 'rounded-2xl' };
+const RADIUS_CLASS: Record<string, string> = { sm: 'rounded-sm', md: 'rounded-md', lg: 'rounded-lg', xl: 'rounded-xl', '2xl': 'rounded-2xl', control: 'rounded-control' };
+/** rounded-sm…2xl are multiples of the theme's base radius (rounded-lg); rounded-control is buttons and chips. */
+const radiusPx = (k: string) =>
+  k === 'control'
+    ? TOKENS.radius.control >= 9999
+      ? 'pill'
+      : `${TOKENS.radius.control}px`
+    : `${Math.round(((TOKENS.radius.base * TOKENS.radius[k as 'sm']) / TOKENS.radius.lg) * 10) / 10}px`;
+const DEPTH: [string, string][] = [
+  ['shadow-sm', 'Controls and cards'],
+  ['shadow-md', 'Raised cards, popovers'],
+  ['shadow-lg', 'Menus, dialogs'],
+];
 const fontName = (id: string) => (id === 'system' ? 'System' : id.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' '));
 
 /** The theme tokens.json was generated from. Themes are picked on the docs site and applied with kit-tokens. */
@@ -95,17 +107,33 @@ export default function FoundationsPage() {
           Radius
         </h2>
         <ul className="flex flex-wrap gap-4">
-          {Object.entries(TOKENS.radius)
-            .filter(([k]) => k in RADIUS_CLASS)
-            .map(([k, v]) => (
-              <li key={k} className="flex flex-col items-center gap-2">
-                <div className={`bg-muted border-border size-16 border ${RADIUS_CLASS[k]}`} />
-                <code className="text-xs">
-                  rounded-{k} · {v}
-                </code>
-              </li>
-            ))}
+          {Object.keys(RADIUS_CLASS).map((k) => (
+            <li key={k} className="flex flex-col items-center gap-2">
+              <div className={`bg-muted border-border size-16 border ${RADIUS_CLASS[k]}`} />
+              <code className="text-xs">
+                rounded-{k} · {radiusPx(k)}
+              </code>
+            </li>
+          ))}
         </ul>
+      </section>
+
+      <section aria-labelledby="depth" className="flex flex-col gap-4">
+        <h2 id="depth" className="text-xl font-semibold">
+          Depth and borders
+        </h2>
+        <ul className="grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3">
+          {DEPTH.map(([cls, use]) => (
+            <li key={cls} className="flex flex-col gap-2">
+              <div className={`bg-card border-border h-20 rounded-lg border ${cls}`} />
+              <code className="text-xs">{cls}</code>
+              <span className="text-muted-foreground text-xs">{use}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="text-sm">
+          <code>border</code> is {TOKENS.borderWidth}px; icons draw at a {TOKENS.iconStroke} stroke.
+        </p>
       </section>
 
       <section aria-labelledby="spacing" className="flex flex-col gap-4">

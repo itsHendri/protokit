@@ -66,7 +66,12 @@ ${primitiveGroup(ctx.prim, ['space'])}
   radius: {
 ${primitiveGroup(ctx.prim, ['radius'])}
     base: ${ctx.radius.base},
+    control: ${ctx.shape.control},
   },
+  /** Lucide stroke width for icons (the Icon component's default; an explicit strokeWidth is relative to 2). */
+  iconStroke: ${ctx.shape.stroke},
+  /** Width of \`border\` in px. */
+  borderWidth: ${ctx.shape.borderWidth},
   fontSize: {
 ${primitiveGroup(ctx.prim, ['font', 'size'])}
   },

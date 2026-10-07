@@ -5,6 +5,7 @@
  */
 import StyleDictionary from 'style-dictionary';
 import { readFileSync } from 'node:fs';
+import { DEPTH, shadowCss } from './theme/recipe.mjs';
 
 export const MODES = ['light', 'dark'];
 
@@ -42,17 +43,18 @@ export function cssName(token) {
 }
 
 /**
- * Tailwind radius classes as offsets from primitive.radius.lg. With the default base every class
- * equals its primitive (rounded-xl = radius.xl); moving semantic.radius.base shifts the whole scale.
+ * Tailwind radius classes as multiples of primitive.radius.lg. With the default base every class equals
+ * its primitive (rounded-xl = radius.xl); moving semantic.radius.base scales the whole set, so a base
+ * of 0 makes every rounded-* square.
  */
-function radiusOffsets(prim) {
+function radiusScales(prim) {
   const steps = prim.filter((t) => t.path[1] === 'radius' && t.path.length === 3 && t.path[2] !== 'full');
   const anchor = steps.find((t) => t.path[2] === 'lg').$value;
-  return steps.map((t) => ({ name: t.path[2], offset: t.$value - anchor }));
+  return steps.map((t) => ({ name: t.path[2], scale: Number((t.$value / anchor).toFixed(4)) }));
 }
 
-export function radiusCalc(offset) {
-  return offset === 0 ? 'var(--radius)' : `calc(var(--radius) ${offset < 0 ? '-' : '+'} ${Math.abs(offset)}px)`;
+export function radiusCalc(scale) {
+  return scale === 1 ? 'var(--radius)' : `calc(var(--radius) * ${scale})`;
 }
 
 /**
@@ -60,7 +62,9 @@ export function radiusCalc(offset) {
  *   semLight / semDark   semantic tokens per mode (colours + radius), in tokens.json order
  *   prim                 primitive tokens (mode-independent)
  *   colors               [{ name, light, dark }] semantic colours as hex
- *   radius               { base: px, steps: [{ name, offset }] }
+ *   radius               { base: px, steps: [{ name, scale }] }
+ *   shape                { control: px, borderWidth: px, stroke, shadows: { light: { 1: css }, dark } }
+ *                        (a token file from before themes gets the kit's defaults)
  */
 export async function loadTokens(sourcePath) {
   const source = JSON.parse(readFileSync(sourcePath, 'utf8'));
@@ -74,9 +78,18 @@ export async function loadTokens(sourcePath) {
     .map((t) => ({ name: cssName(t), light: t.$value.toLowerCase(), dark: darkHex[cssName(t)] }));
   const radius = {
     base: semLight.find((t) => cssName(t) === 'radius').$value,
-    steps: radiusOffsets(prim),
+    steps: radiusScales(prim),
   };
-  return { source, semLight, semDark, prim, colors, radius };
+  const find = (list, name) => list.find((t) => cssName(t) === name)?.$value;
+  const shadows = (list, mode) =>
+    Object.fromEntries(['1', '2', '3'].map((level) => [level, shadowCss(find(list, `shadow-${level}`) ?? DEPTH.soft[level][mode])]));
+  const shape = {
+    control: find(semLight, 'radius-control') ?? 9999,
+    borderWidth: find(semLight, 'border-width') ?? 1,
+    stroke: find(semLight, 'icon-stroke') ?? 2,
+    shadows: { light: shadows(semLight, 'light'), dark: shadows(semDark, 'dark') },
+  };
+  return { source, semLight, semDark, prim, colors, radius, shape };
 }
 
 /** Primitive tokens under a path prefix, e.g. group(prim, ['font', 'size']) → [{ key: 'xs', value: 12 }, …]. */

@@ -36,6 +36,11 @@ export type Theme = {
   /** Base radius in px. */
   radius: number;
   adjustments: Adjustment[];
+  /** Font families by role ('' = system). */
+  fonts: { heading: string; body: string };
+  radiusControl: number;
+  borderWidth: number;
+  stroke: number;
   [key: string]: unknown;
 };
 

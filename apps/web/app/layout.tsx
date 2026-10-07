@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Providers } from '@/components/site/providers';
+import { fontVariables } from '@/app/fonts';
 import { embedBootScript } from '@/lib/embed-boot';
 import './globals.css';
 
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={fontVariables || undefined} suppressHydrationWarning>
       <head>
         {/* Before paint, so embedded pages never flash the kit chrome. */}
         <script dangerouslySetInnerHTML={{ __html: embedBootScript }} />

@@ -18,16 +18,20 @@ import { Platform } from 'react-native';
 export type ThemeHex = Partial<Record<keyof typeof THEME.light, string>>;
 export type EmbedTokens = {
   code: string | null;
+  /** Google Fonts family names by role; loaded from fonts.googleapis.com while the theme is live. */
+  fonts?: { heading?: string; body?: string };
   vars?: { light?: Record<string, string>; dark?: Record<string, string> };
   hex?: { light?: ThemeHex; dark?: ThemeHex };
 };
 
 const STYLE_ID = 'kit-theme-override';
+const FONTS_ID = 'kit-theme-fonts';
+const FAMILY = /^[A-Za-z0-9 ]{1,40}$/;
 /** Shared with public/index.html (pre-paint) and the docs site (apps/docs/lib/theme), which writes it. */
 export const EMBED_THEME_KEY = 'kit.embed.theme';
 
 const kebab = (s: string) => s.replace(/([A-Z])/g, '-$1').replace(/([a-z])(\d)/g, '$1-$2').toLowerCase();
-const ALLOWED_VARS = new Set([...Object.keys(THEME.light).map((k) => `--${kebab(k)}`), '--radius']);
+const ALLOWED_VARS = new Set([...Object.keys(THEME.light).map((k) => `--${kebab(k)}`), '--radius', '--radius-control', '--border-width', '--icon-stroke', '--shadow-1', '--shadow-2', '--shadow-3']);
 const SAFE_VALUE = /^[\w.%\s(),#/-]{1,80}$/;
 const HEX = /^#[0-9a-f]{6}$/i;
 
@@ -53,12 +57,24 @@ export function parseEmbedTokens(data: unknown): EmbedTokens | null {
   if (!d || d.type !== 'kit:tokens' || d.v !== 1) return null;
   if (d.code === null) return { code: null };
   if (typeof d.code !== 'string' || !/^pk1-[0-9A-Z]{12}$/i.test(d.code)) return null;
+  const f = (d as { fonts?: { heading?: unknown; body?: unknown } }).fonts;
+  const family = (v: unknown) => (typeof v === 'string' && FAMILY.test(v) ? v : undefined);
   return {
     code: d.code,
+    fonts: { heading: family(f?.heading), body: family(f?.body) },
     vars: { light: cleanVars(d.vars?.light), dark: cleanVars(d.vars?.dark) },
     hex: { light: cleanHex(d.hex?.light), dark: cleanHex(d.hex?.dark) },
   };
 }
+
+/**
+ * Tailwind's shadow classes carry literal values here (a var() box-shadow breaks native), so a live
+ * theme points them at its depth variables. Mirrored in public/index.html.
+ */
+export const SHADOW_RULES =
+  '.shadow-xs,.shadow-sm,.shadow{--tw-shadow:var(--shadow-1)!important}' +
+  '.shadow-md{--tw-shadow:var(--shadow-2)!important}' +
+  '.shadow-lg,.shadow-xl,.shadow-2xl{--tw-shadow:var(--shadow-3)!important}';
 
 /**
  * The stylesheet for a theme. Higher specificity than global.css (`:root`, `.dark:root`) so it wins
@@ -67,13 +83,15 @@ export function parseEmbedTokens(data: unknown): EmbedTokens | null {
 export function overrideCss(tokens: EmbedTokens): string {
   const block = (selector: string, vars: Record<string, string> = {}) =>
     `${selector}{${Object.entries(vars).map(([k, v]) => `${k}:${v};`).join('')}}`;
-  return block(':root:root:root', tokens.vars?.light) + block('.dark:root:root:root', tokens.vars?.dark);
+  const shadows = tokens.vars?.light?.['--shadow-1'] ? SHADOW_RULES : '';
+  return block(':root:root:root', tokens.vars?.light) + block('.dark:root:root:root', tokens.vars?.dark) + shadows;
 }
 
 /** Put the theme on the page (or take it off), and remember it for the next load in this tab. */
 export function applyEmbedTokens(tokens: EmbedTokens) {
   if (Platform.OS !== 'web' || typeof document === 'undefined') return;
   let style = document.getElementById(STYLE_ID);
+  applyFonts(tokens);
   if (tokens.code === null) {
     style?.remove();
   } else {
@@ -84,6 +102,24 @@ export function applyEmbedTokens(tokens: EmbedTokens) {
     }
     style.textContent = overrideCss(tokens);
   }
+}
+
+/** Load a live theme's fonts from Google Fonts (the committed theme's fonts are bundled). */
+function applyFonts(tokens: EmbedTokens) {
+  const families = [...new Set([tokens.fonts?.heading, tokens.fonts?.body].filter((f): f is string => !!f))];
+  let link = document.getElementById(FONTS_ID) as HTMLLinkElement | null;
+  if (tokens.code === null || !families.length) {
+    link?.remove();
+    return;
+  }
+  const href = `https://fonts.googleapis.com/css2?${families.map((f) => `family=${f.replace(/ /g, '+')}:wght@400;500;600;700`).join('&')}&display=swap`;
+  if (!link) {
+    link = document.createElement('link');
+    link.id = FONTS_ID;
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+  }
+  if (link.href !== href) link.href = href;
 }
 
 /** The theme cached by the docs site for this tab, so the first render already has its palette. */

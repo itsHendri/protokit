@@ -171,7 +171,7 @@ function NotificationBanner({ banner, onDismiss }: { banner: BannerState | null;
           onPress={onDismiss}
           accessibilityRole="button"
           accessibilityLabel={`Notification: ${banner.title}. Tap to dismiss.`}
-          className={cn('bg-card border-border flex-row items-center gap-3 rounded-2xl border p-3 shadow-lg shadow-black/20 active:opacity-90')}>
+          className={cn('bg-card border-border flex-row items-center gap-3 rounded-2xl border p-3 shadow-lg active:opacity-90')}>
           <View className="bg-muted size-9 items-center justify-center rounded-lg">
             <Icon as={banner.icon} size={18} className="text-foreground" />
           </View>

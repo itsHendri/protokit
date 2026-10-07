@@ -5,6 +5,9 @@
  *   'oklch'  Tailwind 4 / shadcn web (`oklch(0.546 0.2152 262.88)`) — the web kit and the docs site
  */
 import { hexToHslTriplet, hexToOklch } from '../color.mjs';
+import { shadowCss } from './recipe.mjs';
+
+export const rem = (px) => (px >= 9999 ? '9999px' : `${px / 16}rem`);
 
 const camel = (s) => s.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase());
 
@@ -13,7 +16,13 @@ export function themeVars(theme, format) {
   const convert = format === 'hsl' ? hexToHslTriplet : hexToOklch;
   const mode = (m) => {
     const vars = Object.fromEntries(Object.entries(theme.resolved[m]).map(([name, hex]) => [`--${name}`, convert(hex)]));
-    if (m === 'light') vars['--radius'] = `${theme.radius / 16}rem`;
+    if (m === 'light') {
+      vars['--radius'] = rem(theme.radius);
+      vars['--radius-control'] = rem(theme.radiusControl);
+      vars['--border-width'] = `${theme.borderWidth}px`;
+      vars['--icon-stroke'] = String(theme.stroke);
+    }
+    for (const [level, value] of Object.entries(theme.semantic.shadow)) vars[`--shadow-${level}`] = shadowCss(value[m]);
     return vars;
   };
   return { light: mode('light'), dark: mode('dark') };

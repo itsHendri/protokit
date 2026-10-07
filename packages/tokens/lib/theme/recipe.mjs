@@ -28,7 +28,48 @@ export const OPTIONS = {
 /** Base radius per option: a primitive radius step (a reference) or 0. */
 export const RADIUS = { none: 0, sm: 'sm', md: 'md', lg: 'lg', xl: 'xl', '2xl': '2xl' };
 export const STROKE = { thin: 1.5, regular: 2, bold: 2.5 };
-export const BORDER = { hairline: 0, regular: 1, heavy: 2 };
+/** px; hairline renders as one device pixel on a 2x screen. */
+export const BORDER = { hairline: 0.5, regular: 1, heavy: 2 };
+
+const s = (x, y, blur, spread, color) => ({ offsetX: x, offsetY: y, blur, spread, color });
+/**
+ * Three elevation levels per depth (DTCG shadow values, light and dark): 1 for controls and cards,
+ * 2 for raised cards and popovers, 3 for menus, dialogs and floating buttons. An empty list is no shadow.
+ * Flat keeps a faint level 3 so a menu still separates from the page.
+ */
+export const DEPTH = {
+  flat: {
+    1: { light: [], dark: [] },
+    2: { light: [], dark: [] },
+    3: { light: [s(0, 4, 12, 0, '#0000001a')], dark: [s(0, 4, 12, 0, '#00000066')] },
+  },
+  soft: {
+    1: { light: [s(0, 1, 2, 0, '#0000000d')], dark: [s(0, 1, 2, 0, '#0000004d')] },
+    2: { light: [s(0, 4, 12, -2, '#00000014')], dark: [s(0, 4, 12, -2, '#00000066')] },
+    3: { light: [s(0, 12, 24, -6, '#0000001f')], dark: [s(0, 12, 24, -6, '#00000080')] },
+  },
+  raised: {
+    1: { light: [s(0, 2, 8, -2, '#0000001f')], dark: [s(0, 2, 8, -2, '#00000066')] },
+    2: { light: [s(0, 8, 20, -6, '#0000002e')], dark: [s(0, 8, 20, -6, '#00000080')] },
+    3: { light: [s(0, 20, 40, -10, '#00000040')], dark: [s(0, 20, 40, -10, '#00000099')] },
+  },
+  hard: {
+    1: { light: [s(2, 2, 0, 0, '#09090b')], dark: [s(2, 2, 0, 0, '#fafafa')] },
+    2: { light: [s(3, 3, 0, 0, '#09090b')], dark: [s(3, 3, 0, 0, '#fafafa')] },
+    3: { light: [s(5, 5, 0, 0, '#09090b')], dark: [s(5, 5, 0, 0, '#fafafa')] },
+  },
+};
+
+/** A DTCG shadow list as CSS. */
+export const shadowCss = (list) =>
+  list.length ? list.map((x) => `${x.offsetX}px ${x.offsetY}px ${x.blur}px ${x.spread}px ${hexAlphaToRgba(x.color)}`).join(', ') : '0 0 #0000';
+
+function hexAlphaToRgba(hex) {
+  const n = parseInt(hex.slice(1, 7), 16);
+  const a = hex.length === 9 ? parseInt(hex.slice(7), 16) / 255 : 1;
+  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${Number(a.toFixed(3))})`;
+}
+
 /** Control heights (sm / md / lg) and horizontal padding per density. */
 export const DENSITY = {
   compact: { sm: 36, md: 44, lg: 52, x: 16 },

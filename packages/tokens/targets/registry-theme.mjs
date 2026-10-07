@@ -20,7 +20,7 @@ export default function registryTheme(ctx, options) {
           theme: {
             extend: {
               colors: Object.fromEntries(ctx.colors.map((c) => [c.name, `hsl(var(--${c.name}))`])),
-              borderRadius: Object.fromEntries(ctx.radius.steps.map((s) => [s.name, radiusCalc(s.offset)])),
+              borderRadius: Object.fromEntries(ctx.radius.steps.map((s) => [s.name, radiusCalc(s.scale)])),
             },
           },
         },
@@ -28,7 +28,7 @@ export default function registryTheme(ctx, options) {
     },
     web: {
       cssVars: {
-        theme: Object.fromEntries(ctx.radius.steps.map((s) => [`radius-${s.name}`, radiusCalc(s.offset)])),
+        theme: Object.fromEntries(ctx.radius.steps.map((s) => [`radius-${s.name}`, radiusCalc(s.scale)])),
         light: { radius, ...vars(hexToOklch, 'light') },
         dark: vars(hexToOklch, 'dark'),
       },
