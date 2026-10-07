@@ -122,6 +122,7 @@ tables. Text between `GENERATED` markers is overwritten.
 | SegmentedControl | `components/kit/segmented-control.tsx` | 2–4 options, animated thumb |
 | SearchField | `components/kit/search-field.tsx` | Input + search icon + clear |
 | QuantityStepper | `components/kit/quantity-stepper.tsx` | `min max step` |
+| Rating | `components/kit/rating.tsx` | stars · display (half stars, `showValue`, `count`) or input with `onChange` (44pt radio stars) |
 | AmountInput | `components/kit/amount-input.tsx` | hero money field · `editable={false}` with keypad |
 | NumericKeypad | `components/kit/numeric-keypad.tsx` | 3×4 in-app keypad, keys on `bg-muted` |
 | OtpInput | `components/kit/otp-input.tsx` | N-digit code, paste-aware |
@@ -167,6 +168,7 @@ App tabs and stacks are Expo Router: `app/(kit)/_layout.tsx` shows the pattern; 
 | PercentChange | `components/kit/percent-change.tsx` | signed % with trend icon |
 | ProgressRing | `components/kit/progress-ring.tsx` | circular determinate progress |
 | StatusDot | `components/kit/status-dot.tsx` | |
+| Timeline | `components/kit/timeline.tsx` | vertical status steps joined by a line · each `done` / `current` / `upcoming` with time and note |
 | LineChart | `components/kit/line-chart.tsx` | interactive/sparkline · `area` · `onPointerChange` |
 | BarChart | `components/kit/bar-chart.tsx` | plain Views |
 | DonutChart / ChartLegend | `components/kit/donut-chart.tsx` | ring + legend |
@@ -252,6 +254,10 @@ Remote push is gone from Expo Go since SDK 53.
   (`SectionHeader` + `Card` of `ListRow`s) → `StickyBottomBar` after the ScrollView when there is a primary action.
 - **Multi-step flow:** one route, `useState<Step>` inside, one header, one `Stepper`, one `StickyBottomBar`.
   Not one route per step.
+- **Tracking:** what already happened and what comes next (an order, a delivery, an application) is a
+  `Timeline` in a `Card`. `Stepper` is for a flow the person is filling in.
+- **Asking for a rating:** after the thing is done (an order delivered), as an input `Rating` in its own `Card`
+  with a toast to thank them. Never in the middle of a task. Show a score as a display `Rating` with the number.
 - **Pickers:** `OptionSheet` on phones; `Select` when the list is short and the field sits in a form.
 - **Confirmations:** `AlertDialog` for reversible, `SwipeToConfirm` for money or deletion.
 - **Success:** `SuccessScreen` + `StickyBottomBar` with "Done". Always.

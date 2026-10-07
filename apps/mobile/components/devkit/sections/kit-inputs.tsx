@@ -7,6 +7,7 @@ import { NumericKeypad } from '@/components/kit/numeric-keypad';
 import { OtpInput } from '@/components/kit/otp-input';
 import { PasswordInput } from '@/components/kit/password-input';
 import { QuantityStepper } from '@/components/kit/quantity-stepper';
+import { Rating } from '@/components/kit/rating';
 import { SearchField } from '@/components/kit/search-field';
 import { SegmentedControl } from '@/components/kit/segmented-control';
 import { SelectableCard } from '@/components/kit/selectable-card';
@@ -164,11 +165,26 @@ function RangeSelectorDemo() {
 }
 
 /** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+function RatingDemo() {
+  const [stars, setStars] = React.useState(0);
+  return (
+    <View className="gap-4">
+      <Rating value={4.5} showValue count={120} size="md" />
+      <View className="gap-1">
+        <Text className="font-medium">How was your order?</Text>
+        <Rating value={stars} onChange={setStars} accessibilityLabel="Rate your order" />
+        <Text className="text-muted-foreground text-sm">{stars ? `${stars} of 5` : 'Tap a star'}</Text>
+      </View>
+    </View>
+  );
+}
+
 export const KIT_INPUTS_DEMOS: Record<string, ComponentType> = {
   'filter-chip': FilterChipDemo,
   'segmented-control': SegmentedControlDemo,
   'search-field': SearchFieldDemo,
   'quantity-stepper': QuantityStepperDemo,
+  rating: RatingDemo,
   'amount-input': AmountInputDemo,
   'numeric-keypad': NumericKeypadDemo,
   'otp-input': OtpInputDemo,

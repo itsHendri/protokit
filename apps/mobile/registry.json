@@ -774,6 +774,40 @@
       }
     },
     {
+      "name": "rating",
+      "type": "registry:component",
+      "title": "Rating",
+      "description": "stars · display (half stars, `showValue`, `count`) or input with `onChange` (44pt radio stars)",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-haptics",
+        "@kit-native/lib-theme",
+        "@kit-native/lib-theme-context",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/rating.tsx",
+          "type": "registry:component",
+          "target": "components/kit/rating.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Rating"
+        ],
+        "api": "<Rating value onChange? showValue? count? size? accessibilityLabel? />"
+      }
+    },
+    {
       "name": "amount-input",
       "type": "registry:component",
       "title": "Amount input",
@@ -1651,6 +1685,37 @@
           "StatusDot"
         ],
         "api": "<StatusDot tone size />"
+      }
+    },
+    {
+      "name": "timeline",
+      "type": "registry:component",
+      "title": "Timeline",
+      "description": "vertical status steps joined by a line · each `done` / `current` / `upcoming` with time and note",
+      "dependencies": [
+        "lucide-react-native@^1.21.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/icon.json"
+      ],
+      "files": [
+        {
+          "path": "components/kit/timeline.tsx",
+          "type": "registry:component",
+          "target": "components/kit/timeline.tsx"
+        }
+      ],
+      "categories": [
+        "data"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Timeline"
+        ],
+        "api": "<Timeline items={[{ title, time?, description?, state }]} tone? />"
       }
     },
     {

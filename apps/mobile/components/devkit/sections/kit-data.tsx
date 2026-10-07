@@ -11,6 +11,7 @@ import { PercentChange } from '@/components/kit/percent-change';
 import { ProgressRing } from '@/components/kit/progress-ring';
 import { StatTile } from '@/components/kit/stat-tile';
 import { StatusDot } from '@/components/kit/status-dot';
+import { Timeline } from '@/components/kit/timeline';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Text } from '@/components/ui/text';
@@ -229,6 +230,21 @@ function ValueHeaderDemo() {
 }
 
 /** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
+function TimelineDemo() {
+  return (
+    <Card className="w-full px-4 py-4">
+      <Timeline
+        items={[
+          { title: 'Order confirmed', time: '12 Jun, 10:02', state: 'done' },
+          { title: 'Packed', time: '12 Jun, 16:40', state: 'done' },
+          { title: 'On its way', time: '13 Jun, 08:15', description: 'With the courier, arriving tomorrow', state: 'current' },
+          { title: 'Delivered', time: 'Expected 14 Jun', state: 'upcoming' },
+        ]}
+      />
+    </Card>
+  );
+}
+
 export const KIT_DATA_DEMOS: Record<string, ComponentType> = {
   'list-row': ListRowDemo,
   'icon-circle': IconCircleDemo,
@@ -238,6 +254,7 @@ export const KIT_DATA_DEMOS: Record<string, ComponentType> = {
   'avatar-group': AvatarGroupDemo,
   'progress-ring': ProgressRingDemo,
   'status-dot': StatusDotDemo,
+  timeline: TimelineDemo,
   'line-chart': LineChartDemo,
   'bar-chart': BarChartDemo,
   'donut-chart': DonutChartDemo,

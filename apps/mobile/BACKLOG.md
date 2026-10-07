@@ -15,17 +15,22 @@ _Last updated: 2026-10-07_
 - **Figma:** `kit-tokens figma` (`npm run tokens:figma`) (one-way Variables push with code syntax) and Code Connect once the component
   set is stable.
 
-## Component gap analysis (vs. Material 3, HIG, gluestack, HeroUI — 2026-09-22)
-Present: 69 previews across 8 categories. Still missing, roughly in order of how often prototypes need them:
-- **Top app bar variants** — large title, search-in-header, segmented header. Today: Expo Router headers only.
-- **Onboarding slide** (illustration + title + body) and **Coachmark/tooltip tour**.
-- **Time picker** (Calendar covers dates) and **Range slider** (two thumbs).
-- **Phone field** with country code, **Chip input** (tags), **Rating** (stars).
-- **Banner** (full-width persistent, above content) — Alert is inline; **Snackbar with action** — Toast has no action yet.
-- **Pull-to-refresh** wrapper, **Infinite list** footer loader, **Section list** with sticky headers.
-- **Carousel** with images, **Lightbox**, **Image placeholder/upload tile**, **Video/audio placeholders**.
-- **Data table**, **Timeline/status steps**, **Countdown**, **Copyable field**, **QR code**.
-- **Drawer / side menu**, **Permission prompt**, **Paywall/plan cards** (SelectableCard covers the rows).
+## Component gap analysis (vs. Material 3, HIG, gluestack, HeroUI — refreshed 2026-10-07)
+Present: 89 components across 9 categories. Already covered, so not gaps: large in-page titles
+(`ScreenHeader size="large"`), search (`SearchField`), carousels and onboarding pagers (`HorizontalPager` +
+`PagerDots`), status steps (`Timeline`), ratings (`Rating`), plan rows (`SelectableCard`), permission asks
+(`PermissionPrimer`), QR scanning (`CodeScanner`). Still missing, roughly in order of how often prototypes
+need them:
+- **Collapsing large-title and search headers** — a navigation setting rather than a component: native-stack
+  `headerLargeTitle` / `headerSearchBarOptions` (iOS). Worth a documented pattern plus a demo screen.
+- **Time picker** (Calendar covers dates) and **range slider** (two thumbs).
+- **Phone field** with country code, **chip input** (tags).
+- **Banner** (full-width, persistent, above content; Alert is inline) and **snackbar with an action** (Toast has
+  none yet).
+- **Pull-to-refresh** wrapper, **infinite list** footer loader, **section list** with sticky headers.
+- **Lightbox**, **image upload tile**, **video and audio placeholders**.
+- **Countdown**, **copyable field**, **QR code** (generating one; scanning exists).
+- **Drawer / side menu**, **coachmark / tooltip tour**.
 
 ## Upgrades to schedule
 - Expo SDK 58 (stable ~Oct 2026): native tabs at the stable path, data loaders, SSR. Run `npx expo install expo@next --fix` on a branch.
