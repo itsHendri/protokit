@@ -12,7 +12,8 @@ import { reset, setRecipe, themeFor, useLiveTheme } from '@/lib/theme/store';
 
 /** The preset a recipe came from, if it is still exactly that preset. */
 export function presetLabel(recipe: Recipe) {
-  const preset = PRESETS.find((p) => p.id === recipe.preset);
+  // A shared code carries no preset name, so a recipe that is exactly a preset is named after it.
+  const preset = PRESETS.find((p) => p.id === recipe.preset) ?? PRESETS.find((p) => sameRecipe(recipe, p.recipe));
   if (!preset) return 'Custom';
   return sameRecipe(recipe, preset.recipe) ? preset.name : `${preset.name}, edited`;
 }
@@ -62,14 +63,14 @@ export function ThemePill() {
         <Popover>
           <PopoverTrigger className={`${itemClass} hover:bg-accent px-3`} aria-label={`Preset: ${presetLabel(recipe)}`}>
             <span className="bg-primary size-3 rounded-full" aria-hidden />
-            <span className="max-w-32 truncate">{presetLabel(recipe)}</span>
+            <span className="hidden max-w-32 truncate sm:inline">{presetLabel(recipe)}</span>
             <ChevronDownIcon className="text-muted-foreground size-3.5" aria-hidden />
           </PopoverTrigger>
           <PopoverContent side="top" align="start" sideOffset={10} className="w-72 p-1.5">
             <div role="listbox" aria-label="Presets" className="flex flex-col">
               {PRESETS.map((p) => {
                 const t = themeFor(normalizeRecipe(p.recipe));
-                const selected = recipe.preset === p.id;
+                const selected = sameRecipe(recipe, p.recipe);
                 return (
                   <button
                     key={p.id}
@@ -159,7 +160,7 @@ export function ThemePill() {
 
         {adjusted.length ? (
           <Popover>
-            <PopoverTrigger className={`${itemClass} text-muted-foreground hover:bg-accent hover:text-foreground px-2.5`} aria-label={`${adjusted.length} colours adjusted for contrast`}>
+            <PopoverTrigger className={`${itemClass} text-muted-foreground hover:bg-accent hover:text-foreground px-2.5 max-sm:hidden`} aria-label={`${adjusted.length} colours adjusted for contrast`}>
               <ShieldCheckIcon className="size-4" aria-hidden />
               <span className="tabular-nums">{adjusted.length}</span>
             </PopoverTrigger>
@@ -170,7 +171,7 @@ export function ThemePill() {
         ) : null}
 
         {!isCommitted ? (
-          <button type="button" onClick={reset} className={`${itemClass} text-muted-foreground hover:bg-accent hover:text-foreground w-9`} aria-label="Back to the kit's theme">
+          <button type="button" onClick={reset} className={`${itemClass} text-muted-foreground hover:bg-accent hover:text-foreground w-9 max-sm:hidden`} aria-label="Back to the kit's theme">
             <RotateCcwIcon className="size-4" aria-hidden />
           </button>
         ) : null}
