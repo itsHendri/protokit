@@ -120,6 +120,8 @@ export const TOKENS = {
   iconStroke: 2,
   /** Width of `border` in px. */
   borderWidth: 1,
+  /** Control heights and padding (px) for the theme's density: h-control-sm, h-control, h-control-lg, px-control-x. */
+  density: {"sm":40,"md":48,"lg":56,"x":20},
   fontSize: {
     xs: 12,
     sm: 14,

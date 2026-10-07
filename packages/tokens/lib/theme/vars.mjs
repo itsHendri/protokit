@@ -21,6 +21,8 @@ export function themeVars(theme, format) {
       vars['--radius-control'] = rem(theme.radiusControl);
       vars['--border-width'] = `${theme.borderWidth}px`;
       vars['--icon-stroke'] = String(theme.stroke);
+      vars['--density'] = String(theme.density.scale);
+      for (const size of ['sm', 'md', 'lg', 'x']) vars[`--control-${size}`] = `${theme.density[size]}px`;
     }
     for (const [level, value] of Object.entries(theme.semantic.shadow)) vars[`--shadow-${level}`] = shadowCss(value[m]);
     return vars;

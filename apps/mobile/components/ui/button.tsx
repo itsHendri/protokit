@@ -40,10 +40,10 @@ const buttonVariants = cva(
         link: '',
       },
       size: {
-        default: cn('h-12 px-5 py-2 sm:h-9', Platform.select({ web: 'has-[>svg]:px-3' })),
-        sm: cn('h-10 gap-1.5 rounded-control px-4 sm:h-8', Platform.select({ web: 'has-[>svg]:px-2.5' })),
-        lg: cn('h-14 rounded-control px-6 sm:h-10', Platform.select({ web: 'has-[>svg]:px-4' })),
-        icon: 'h-12 w-12 sm:h-9 sm:w-9',
+        default: cn('h-control px-control-x py-2 sm:h-9', Platform.select({ web: 'has-[>svg]:px-3' })),
+        sm: cn('h-control-sm gap-1.5 rounded-control px-4 sm:h-8', Platform.select({ web: 'has-[>svg]:px-2.5' })),
+        lg: cn('h-control-lg rounded-control px-6 sm:h-10', Platform.select({ web: 'has-[>svg]:px-4' })),
+        icon: 'h-control w-control sm:h-9 sm:w-9',
       },
     },
     defaultVariants: {

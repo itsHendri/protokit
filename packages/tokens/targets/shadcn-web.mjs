@@ -21,7 +21,7 @@ export default function shadcnWeb(ctx, options) {
   --radius: ${rem(ctx.radius.base)};
   --radius-control: ${rem(ctx.shape.control)};
   --border-width: ${ctx.shape.borderWidth}px;
-  --icon-stroke: ${ctx.shape.stroke};
+  --icon-stroke: ${ctx.shape.stroke};${options.density === false ? '' : `\n  --density: ${ctx.shape.density.scale};`}
 ${shadows('light')}
 ${vars('light')}
 }
@@ -34,7 +34,7 @@ ${vars('dark')}
 @theme inline {
 ${ctx.radius.steps.map((s) => `  --radius-${s.name}: ${radiusCalc(s.scale)};`).join('\n')}
   --radius-control: var(--radius-control);
-  --default-border-width: var(--border-width);
+  --default-border-width: var(--border-width);${options.density === false ? '' : `\n  /* The theme's density scales the whole spacing scale (p-4, gap-2, h-9…). */\n  --spacing: calc(0.25rem * var(--density));`}
   --shadow-2xs: var(--shadow-1);
   --shadow-xs: var(--shadow-1);
   --shadow-sm: var(--shadow-1);

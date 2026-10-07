@@ -41,6 +41,7 @@ export type Theme = {
   radiusControl: number;
   borderWidth: number;
   stroke: number;
+  density: { sm: number; md: number; lg: number; x: number; scale: number };
   [key: string]: unknown;
 };
 

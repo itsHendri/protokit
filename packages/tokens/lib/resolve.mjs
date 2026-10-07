@@ -5,7 +5,7 @@
  */
 import StyleDictionary from 'style-dictionary';
 import { readFileSync } from 'node:fs';
-import { DEPTH, shadowCss } from './theme/recipe.mjs';
+import { DENSITY, DEPTH, shadowCss } from './theme/recipe.mjs';
 
 export const MODES = ['light', 'dark'];
 
@@ -63,7 +63,8 @@ export function radiusCalc(scale) {
  *   prim                 primitive tokens (mode-independent)
  *   colors               [{ name, light, dark }] semantic colours as hex
  *   radius               { base: px, steps: [{ name, scale }] }
- *   shape                { control: px, borderWidth: px, stroke, shadows: { light: { 1: css }, dark } }
+ *   shape                { control: px, borderWidth: px, stroke, shadows: { light: { 1: css }, dark },
+ *                          density: { scale, sm, md, lg, x } }
  *                        (a token file from before themes gets the kit's defaults)
  */
 export async function loadTokens(sourcePath) {
@@ -88,6 +89,10 @@ export async function loadTokens(sourcePath) {
     borderWidth: find(semLight, 'border-width') ?? 1,
     stroke: find(semLight, 'icon-stroke') ?? 2,
     shadows: { light: shadows(semLight, 'light'), dark: shadows(semDark, 'dark') },
+    density: {
+      scale: find(semLight, 'density-scale') ?? DENSITY.comfortable.scale,
+      ...Object.fromEntries(['sm', 'md', 'lg', 'x'].map((s) => [s, find(semLight, `density-control-${s}`) ?? DENSITY.comfortable[s]])),
+    },
   };
   return { source, semLight, semDark, prim, colors, radius, shape };
 }

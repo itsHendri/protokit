@@ -47,6 +47,10 @@
     --radius-control: 9999px;
     --border-width: 1px;
     --icon-stroke: 2;
+    --control-sm: 40px;
+    --control-md: 48px;
+    --control-lg: 56px;
+    --control-x: 20px;
   }
 
   .dark:root {

@@ -9,7 +9,10 @@
  * prompt or a tokens.json download).
  */
 import {
+  BRAND_RAMPS,
   decodeRecipe,
+  FONTS,
+  OPTIONS,
   generateTheme,
   normalizeRecipe,
   sameRecipe,
@@ -111,6 +114,64 @@ export function redo() {
   state = { recipe: next, history: [...state.history, state.recipe], future };
   persist(next);
   emit();
+}
+
+/** The groups of axes shuffle can change; a locked group keeps its values. */
+export type ShuffleGroup = 'colour' | 'type' | 'shape' | 'depth';
+let locks = new Set<ShuffleGroup>();
+const lockListeners = new Set<() => void>();
+export function toggleLock(group: ShuffleGroup) {
+  locks = new Set(locks);
+  if (locks.has(group)) locks.delete(group);
+  else locks.add(group);
+  lockListeners.forEach((l) => l());
+}
+export function useLocks() {
+  return React.useSyncExternalStore(
+    (l) => {
+      lockListeners.add(l);
+      return () => lockListeners.delete(l);
+    },
+    () => locks,
+    () => locks
+  );
+}
+
+const pick = <T,>(list: readonly T[]): T => list[Math.floor(Math.random() * list.length)];
+
+/** A brand colour that works as a fill: a curated 600, or a generated hue at a usable lightness. */
+function randomBrand() {
+  if (Math.random() < 0.5) return pick(Object.values(BRAND_RAMPS))['600'];
+  const h = Math.random() * 360;
+  const s = 0.55 + Math.random() * 0.35;
+  const l = 0.38 + Math.random() * 0.14;
+  const f = (n: number) => {
+    const k = (n + h / 30) % 12;
+    const c = l - s * Math.min(l, 1 - l) * Math.max(-1, Math.min(k - 3, 9 - k, 1));
+    return Math.round(c * 255).toString(16).padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+/** Headings and body that go together: the same family, or a serif/display heading over a sans body. */
+function randomFonts(): Recipe['font'] {
+  const visible = FONTS.filter((f) => !f.hidden);
+  const sans = visible.filter((f) => f.category === 'sans');
+  if (Math.random() < 0.4) {
+    const same = pick(sans).id;
+    return { heading: same, body: same };
+  }
+  return { heading: pick(visible.filter((f) => f.category !== 'sans')).id, body: pick(sans).id };
+}
+
+/** A new theme from random values for every unlocked group. */
+export function shuffle() {
+  const next: RecipeInput = { preset: undefined };
+  if (!locks.has('colour')) Object.assign(next, { brand: randomBrand(), neutral: pick(OPTIONS.neutral) });
+  if (!locks.has('type')) next.font = randomFonts();
+  if (!locks.has('shape')) Object.assign(next, { radius: pick(OPTIONS.radius), controls: pick(OPTIONS.controls), border: pick(OPTIONS.border) });
+  if (!locks.has('depth')) Object.assign(next, { depth: pick(OPTIONS.depth), stroke: pick(OPTIONS.stroke), density: pick(OPTIONS.density) });
+  setRecipe(next);
 }
 
 /** Back to the theme in tokens.json. */

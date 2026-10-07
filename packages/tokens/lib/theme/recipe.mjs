@@ -70,11 +70,14 @@ function hexAlphaToRgba(hex) {
   return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${Number(a.toFixed(3))})`;
 }
 
-/** Control heights (sm / md / lg) and horizontal padding per density. */
+/**
+ * Density: control heights (sm / md / lg) and horizontal padding on mobile, and a scale for the web kit's
+ * whole spacing scale (Tailwind 4's --spacing, the way Radix Themes' `scaling` works).
+ */
 export const DENSITY = {
-  compact: { sm: 36, md: 44, lg: 52, x: 16 },
-  comfortable: { sm: 40, md: 48, lg: 56, x: 20 },
-  spacious: { sm: 44, md: 52, lg: 60, x: 24 },
+  compact: { sm: 36, md: 44, lg: 52, x: 16, scale: 0.875 },
+  comfortable: { sm: 40, md: 48, lg: 56, x: 20, scale: 1 },
+  spacious: { sm: 44, md: 52, lg: 60, x: 24, scale: 1.125 },
 };
 
 export const DEFAULT_RECIPE = Object.freeze({

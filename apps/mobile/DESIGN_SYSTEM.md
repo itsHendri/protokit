@@ -39,7 +39,9 @@ Use the shadcn vocabulary through Tailwind classes. Each name works as `bg-`, `t
 | `border`, `input`, `ring` | hairlines, field borders, focus |
 | `chart-1` … `chart-5` | data series |
 
-Sizing: controls are 48px tall (`h-12`): inputs, selects, default buttons; `sm` buttons 40, `lg` 56. Switch 51×31, radio and checkbox 24.
+Sizing: controls follow the theme's density: `h-control` (48 by default) for inputs, selects and default
+buttons, `h-control-sm` (40) and `h-control-lg` (56), padding `px-control-x`. Never hard-code a control's height.
+Switch 51×31, radio and checkbox 24.
 
 Rules:
 - **Never a hex literal or `rgb()` in `app/`, `components/` or `prototype/`.** The only escape hatch is

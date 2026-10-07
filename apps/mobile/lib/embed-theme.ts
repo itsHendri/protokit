@@ -31,7 +31,7 @@ const FAMILY = /^[A-Za-z0-9 ]{1,40}$/;
 export const EMBED_THEME_KEY = 'kit.embed.theme';
 
 const kebab = (s: string) => s.replace(/([A-Z])/g, '-$1').replace(/([a-z])(\d)/g, '$1-$2').toLowerCase();
-const ALLOWED_VARS = new Set([...Object.keys(THEME.light).map((k) => `--${kebab(k)}`), '--radius', '--radius-control', '--border-width', '--icon-stroke', '--shadow-1', '--shadow-2', '--shadow-3']);
+const ALLOWED_VARS = new Set([...Object.keys(THEME.light).map((k) => `--${kebab(k)}`), '--radius', '--radius-control', '--border-width', '--icon-stroke', '--shadow-1', '--shadow-2', '--shadow-3', '--control-sm', '--control-md', '--control-lg', '--control-x']);
 const SAFE_VALUE = /^[\w.%\s(),#/-]{1,80}$/;
 const HEX = /^#[0-9a-f]{6}$/i;
 
