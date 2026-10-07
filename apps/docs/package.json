@@ -16,6 +16,7 @@
     "check:a11y": "node scripts/check-a11y.mjs"
   },
   "dependencies": {
+    "@itshendri/kit-tokens": "^1.0.0",
     "fumadocs-core": "16.16.2",
     "fumadocs-mdx": "15.4.6",
     "fumadocs-ui": "16.16.2",
@@ -27,7 +28,6 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
-    "@itshendri/kit-tokens": "^1.0.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/mdx": "^2.0.14",
     "@types/node": "^26.6.4",

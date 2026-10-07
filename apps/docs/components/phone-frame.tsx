@@ -1,5 +1,5 @@
 'use client';
-import { frameBase, useKitFrame } from '@/lib/frames';
+import { useKitFrame } from '@/lib/frames';
 
 /** The phone's logical viewport (iPhone 16/17), rendered at this size and scaled down to fit. */
 const VIEWPORT = { width: 390, height: 844 };
@@ -21,7 +21,7 @@ type Props = {
  * scaled into a phone outline. The theme follows the site (see useKitFrame).
  */
 export function PhoneFrame({ path, title, width = 300, viewportHeight = VIEWPORT.height, className }: Props) {
-  const { ref, src } = useKitFrame(frameBase.mobile, path);
+  const { ref, src } = useKitFrame('mobile', path);
   const scale = width / VIEWPORT.width;
   const bezel = 10;
 

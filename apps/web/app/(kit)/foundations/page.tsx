@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import theme from '@/tokens/generated/theme.registry.json';
-import { TOKENS } from '@/lib/theme';
+import { THEME_INFO, TOKENS } from '@/lib/theme';
 
 export const metadata: Metadata = { title: 'Foundations' };
 
@@ -8,6 +8,47 @@ const colors = Object.keys(theme.web.cssVars.light).filter((k) => k !== 'radius'
 const fills = colors.filter((n) => !n.endsWith('-foreground'));
 /** Literal class names: Tailwind only generates classes it can read in the source. */
 const RADIUS_CLASS: Record<string, string> = { sm: 'rounded-sm', md: 'rounded-md', lg: 'rounded-lg', xl: 'rounded-xl', '2xl': 'rounded-2xl' };
+const fontName = (id: string) => (id === 'system' ? 'System' : id.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' '));
+
+/** The theme tokens.json was generated from. Themes are picked on the docs site and applied with kit-tokens. */
+function ThemeSummary() {
+  if (!THEME_INFO) return <p className="text-muted-foreground text-sm">No theme recorded. Apply one with <code>npx kit-tokens theme apply &lt;code&gt;</code>.</p>;
+  const { recipe } = THEME_INFO;
+  const rows: [string, string][] = [
+    ['Neutral', recipe.neutral],
+    ['Radius', `${recipe.radius}${recipe.controls === 'pill' ? ' · pill controls' : ''}`],
+    ['Type', recipe.font.heading === recipe.font.body ? fontName(recipe.font.heading) : `${fontName(recipe.font.heading)} / ${fontName(recipe.font.body)}`],
+    ['Icons', `${recipe.stroke} stroke`],
+    ['Depth', recipe.depth],
+    ['Density', recipe.density],
+    ['Border', recipe.border],
+  ];
+  return (
+    <div className="border-border bg-card flex max-w-xl flex-col gap-4 rounded-xl border p-4">
+      <div className="flex items-center gap-3">
+        <span className="bg-primary border-border size-10 rounded-full border" aria-hidden />
+        <div>
+          <p className="font-semibold">
+            {THEME_INFO.name}
+            {THEME_INFO.edited ? <span className="text-muted-foreground font-normal"> (edited by hand)</span> : null}
+          </p>
+          <code className="text-muted-foreground text-xs">{THEME_INFO.code}</code>
+        </div>
+      </div>
+      <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-1.5 text-sm">
+        {rows.map(([label, value]) => (
+          <div key={label} className="contents">
+            <dt className="text-muted-foreground">{label}</dt>
+            <dd>{value}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="text-muted-foreground text-xs">
+        Pick and preview themes on the docs site (/themes), then apply one: <code>npx kit-tokens theme apply &lt;code&gt;</code>.
+      </p>
+    </div>
+  );
+}
 
 /** The design tokens, rendered with the live CSS variables so they follow the theme. */
 export default function FoundationsPage() {
@@ -19,6 +60,13 @@ export default function FoundationsPage() {
           From tokens/tokens.json. Use the class names (<code>bg-primary</code>, <code>p-4</code>, <code>rounded-lg</code>), never the values.
         </p>
       </header>
+
+      <section aria-labelledby="theme" className="flex flex-col gap-4">
+        <h2 id="theme" className="text-xl font-semibold">
+          Theme
+        </h2>
+        <ThemeSummary />
+      </section>
 
       <section aria-labelledby="colour" className="flex flex-col gap-4">
         <h2 id="colour" className="text-xl font-semibold">

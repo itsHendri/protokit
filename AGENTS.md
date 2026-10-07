@@ -40,6 +40,6 @@ kit.json        The kit's name and addresses, read by the generators.
 
 ## Skills
 
-The mobile kit's skills (`add-component`, `qc-pass`, `transcript-to-prototype`) live in
+The mobile kit's skills (`add-component`, `apply-theme`, `qc-pass`, `transcript-to-prototype`) live in
 `apps/mobile/.claude/skills` and travel with the app. Claude Code loads them once a file under
 `apps/mobile` is opened, or start Claude from `apps/mobile`.

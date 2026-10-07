@@ -26,7 +26,7 @@ export const COLORS = {
   },
   "primary": {
     "light": "#2563eb",
-    "dark": "#3b82f6"
+    "dark": "#448bff"
   },
   "primary-foreground": {
     "light": "#ffffff",
@@ -57,8 +57,8 @@ export const COLORS = {
     "dark": "#fafafa"
   },
   "destructive": {
-    "light": "#dc2626",
-    "dark": "#ef4444"
+    "light": "#d92223",
+    "dark": "#fb504e"
   },
   "destructive-foreground": {
     "light": "#ffffff",
@@ -98,7 +98,7 @@ export const COLORS = {
   },
   "ring": {
     "light": "#2563eb",
-    "dark": "#3b82f6"
+    "dark": "#448bff"
   },
   "sidebar": {
     "light": "#fafafa",
@@ -110,7 +110,7 @@ export const COLORS = {
   },
   "sidebar-primary": {
     "light": "#2563eb",
-    "dark": "#3b82f6"
+    "dark": "#448bff"
   },
   "sidebar-primary-foreground": {
     "light": "#ffffff",
@@ -130,7 +130,7 @@ export const COLORS = {
   },
   "sidebar-ring": {
     "light": "#2563eb",
-    "dark": "#3b82f6"
+    "dark": "#448bff"
   },
   "chart-1": {
     "light": "#3b82f6",

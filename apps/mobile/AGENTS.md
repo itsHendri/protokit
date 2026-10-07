@@ -29,7 +29,7 @@ components/shop/, components/habits/  sample data + stores. Go with `npm run eje
 lib/                    theme.ts (generated), theme-context, embed (docs iframe mode), haptics, utils(cn)
 tokens/                 tokens.json (edit), tokens.config.json (outputs), generated/ — built by `kit-tokens` (@itshendri/kit-tokens)
 DESIGN.md, llms.txt     GENERATED agent-facing summaries (tokens:build, registry:build)
-.claude/skills/         add-component, qc-pass, transcript-to-prototype
+.claude/skills/         add-component, apply-theme, qc-pass, transcript-to-prototype
 .claude/launch.json     preview configs: kit-web (port 8090) and kit-ios (port 8091)
 ```
 
@@ -90,9 +90,12 @@ npx expo run:ios       # build + install the dev client on the simulator (needs 
   installed, or Expo Go signed into the owning account/org (Expo Go on iOS requires login since SDK 57).
 - **Web link for clients:** `npm run export:web && eas deploy` → immutable preview URL. `web.output` is `single`
   so deep links resolve.
-- **Re-brand:** edit `tokens/tokens.json` (colours, radius), rebuild — `tokens:build` refuses to emit a
-  palette where any `X`/`X-foreground` pairing or muted text falls below 4.5:1, and prints the ratio; set `name`/`slug`/`scheme` in
-  `app.json` and `APP_ID` in `.env.local`; add a brand font with the `expo-font` config plugin; replace `assets/images/*`.
+- **Re-brand:** pick a theme on the docs site (theme bar or `/themes`) and apply its code with the `apply-theme`
+  skill: `npx kit-tokens theme apply <pk1-code|preset>` (in the monorepo, `npm run theme:apply -- <code>` at the
+  root). It rewrites only the theme's paths in `tokens/tokens.json` (colours, radius, fonts, depth, density, border,
+  icon stroke), fixes contrast itself and records the recipe (`kit-tokens theme show`). Editing tokens.json by hand
+  still works: `tokens:build` refuses any pairing below 4.5:1 and prints the ratio. Then set `name`/`slug`/`scheme`
+  in `app.json` and `APP_ID` in `.env.local`, and replace `assets/images/*`.
 
 ## Agent tooling
 

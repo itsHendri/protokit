@@ -16,7 +16,7 @@ colors:
   popover-foreground: "#09090b"
   popover-foreground-dark: "#fafafa"
   primary: "#2563eb"
-  primary-dark: "#3b82f6"
+  primary-dark: "#448bff"
   primary-foreground: "#ffffff"
   primary-foreground-dark: "#09090b"
   secondary: "#f4f4f5"
@@ -31,8 +31,8 @@ colors:
   accent-dark: "#27272a"
   accent-foreground: "#18181b"
   accent-foreground-dark: "#fafafa"
-  destructive: "#dc2626"
-  destructive-dark: "#ef4444"
+  destructive: "#d92223"
+  destructive-dark: "#fb504e"
   destructive-foreground: "#ffffff"
   destructive-foreground-dark: "#09090b"
   success: "#15803d"
@@ -52,13 +52,13 @@ colors:
   input: "#e4e4e7"
   input-dark: "#27272a"
   ring: "#2563eb"
-  ring-dark: "#3b82f6"
+  ring-dark: "#448bff"
   sidebar: "#fafafa"
   sidebar-dark: "#18181b"
   sidebar-foreground: "#09090b"
   sidebar-foreground-dark: "#fafafa"
   sidebar-primary: "#2563eb"
-  sidebar-primary-dark: "#3b82f6"
+  sidebar-primary-dark: "#448bff"
   sidebar-primary-foreground: "#ffffff"
   sidebar-primary-foreground-dark: "#09090b"
   sidebar-accent: "#f4f4f5"
@@ -68,7 +68,7 @@ colors:
   sidebar-border: "#e4e4e7"
   sidebar-border-dark: "#27272a"
   sidebar-ring: "#2563eb"
-  sidebar-ring-dark: "#3b82f6"
+  sidebar-ring-dark: "#448bff"
   chart-1: "#3b82f6"
   chart-1-dark: "#60a5fa"
   chart-2: "#22c55e"
@@ -192,7 +192,7 @@ rules and the component registry are in `DESIGN_SYSTEM.md` — read it before bu
 Semantic names only (the shadcn vocabulary), each usable as `bg-`, `text-` and `border-`. Never a
 hex literal or a Tailwind palette colour in UI code. Keys ending in `-dark` are the dark theme.
 
-- **Primary (#2563eb / dark #3b82f6):** the single most important action, links and focus.
+- **Primary (#2563eb / dark #448bff):** the single most important action, links and focus.
 - **Background (#ffffff) and Card (#ffffff):** the page canvas and raised surfaces.
 - **Muted foreground (#52525b):** helper text, captions, placeholders.
 - **Destructive, Success, Warning, Info:** status only, each with its own `-foreground`.
@@ -204,7 +204,7 @@ clears WCAG AA (4.5:1) in both themes; the build refuses a palette that does not
 A tone's text on that tone's own tint (`text-success` on `bg-success/15`) is a weaker pairing. With
 this palette it clears AA only for:
 
-primary up to /5, success up to /5, warning up to /5, info up to /15, destructive never.
+primary up to /5, success up to /5, warning up to /5, info up to /15, destructive up to /5.
 
 On a stronger tint, the text stays `text-foreground` and the tint, an icon or a dot carries the
 colour. `kit-tokens check` flags class strings that break this.

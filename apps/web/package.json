@@ -19,6 +19,7 @@
     "lint": "eslint .",
     "tokens:build": "kit-tokens build",
     "tokens:check": "kit-tokens check",
+    "theme": "kit-tokens theme",
     "tokens:figma": "kit-tokens figma",
     "registry:build": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/registry-build.mjs",
     "registry:drift": "node scripts/shadcn-drift.mjs",

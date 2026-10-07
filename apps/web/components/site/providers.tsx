@@ -4,11 +4,13 @@ import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import * as React from 'react';
 import { allowedOrigins, type EmbedScheme, readEmbed } from '@/lib/embed';
+import { applyEmbedTokens, parseEmbedTokens } from '@/lib/embed-theme';
 
 /**
  * next-themes (class on <html>, system by default) plus the docs-site embed bridge. An embedded or
  * ?theme= session pins the theme with `forcedTheme`, held in state so the host's `kit:theme` messages can
- * move it, and uses its own storage key so the visitor's saved choice is never touched.
+ * move it, and uses its own storage key so the visitor's saved choice is never touched. The bridge also
+ * takes the docs picker's live theme (`kit:tokens`, lib/embed-theme.ts).
  */
 export function Providers({ children }: { children: React.ReactNode }) {
   const [embed] = React.useState(readEmbed);
@@ -36,6 +38,11 @@ function EmbedBridge({ onTheme }: { onTheme: (scheme: EmbedScheme) => void }) {
       if (!origins.includes(event.origin)) return;
       const data = event.data as { type?: unknown; value?: unknown } | null;
       if (data?.type === 'kit:theme' && (data.value === 'light' || data.value === 'dark')) onTheme(data.value);
+      const tokens = parseEmbedTokens(event.data);
+      if (tokens) {
+        applyEmbedTokens(tokens);
+        window.parent.postMessage({ type: 'kit:applied', code: tokens.code }, event.origin);
+      }
     };
     window.addEventListener('message', onMessage);
     for (const origin of origins) window.parent.postMessage({ type: 'kit:ready' }, origin);

@@ -66,6 +66,51 @@
         "apps/docs"
       ],
       "port": 8788
+    },
+    {
+      "name": "kit-web-embed",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "EXPO_PUBLIC_EMBED_ORIGINS=http://localhost:3000",
+        "npm",
+        "exec",
+        "-w",
+        "apps/mobile",
+        "--",
+        "expo",
+        "start",
+        "--web",
+        "--port",
+        "8090"
+      ],
+      "port": 8090
+    },
+    {
+      "name": "web-dev-embed",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "NEXT_PUBLIC_EMBED_ORIGINS=http://localhost:3000",
+        "npm",
+        "run",
+        "dev",
+        "-w",
+        "apps/web"
+      ],
+      "port": 3100
+    },
+    {
+      "name": "docs-dev-live",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "NEXT_PUBLIC_KIT_WEB_URL=http://localhost:8090",
+        "NEXT_PUBLIC_WEB_KIT_URL=http://localhost:3100",
+        "npm",
+        "run",
+        "dev",
+        "-w",
+        "apps/docs"
+      ],
+      "port": 3000
     }
   ]
 }

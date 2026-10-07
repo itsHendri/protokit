@@ -4,6 +4,16 @@
  *   options: { out: 'lib/theme.ts', navTheme?: 'expo-router/react-navigation' | false }
  */
 import { camel, group } from '../lib/resolve.mjs';
+import { presetById, sameRecipe, themeStatus } from '../lib/theme/index.mjs';
+
+/** The applied theme, for a read-only summary in the app (Foundations). */
+function themeInfo(source) {
+  const status = themeStatus(source);
+  if (!status.applied) return 'null';
+  const preset = presetById(status.recipe.preset ?? '');
+  const name = preset && sameRecipe(preset.recipe, status.recipe) ? preset.name : 'Custom';
+  return JSON.stringify({ code: status.code, name, edited: status.drift.length > 0, recipe: status.recipe }, null, 2);
+}
 
 function colorObject(colors, mode) {
   return colors.map((c) => `    ${camel(c.name)}: '${c[mode]}',`).join('\n');
@@ -70,6 +80,29 @@ ${primitiveGroup(ctx.prim, ['duration'])}
 ${primitiveGroup(ctx.prim, ['easing'])}
   },
 } as const;
+
+/** The theme tokens.json was generated from (\`kit-tokens theme apply\`), or null. \`edited\`: theme tokens
+ *  were changed by hand since. */
+export const THEME_INFO: ThemeInfo | null = ${themeInfo(ctx.source)};
+
+export type ThemeInfo = {
+  code: string;
+  name: string;
+  edited: boolean;
+  recipe: {
+    v: number;
+    brand: string;
+    neutral: string;
+    radius: string;
+    controls: string;
+    font: { heading: string; body: string };
+    stroke: string;
+    depth: string;
+    density: string;
+    border: string;
+    preset?: string;
+  };
+};
 ${
   nav
     ? `

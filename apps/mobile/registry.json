@@ -25,7 +25,7 @@
           "muted-foreground": "240 5.2% 33.9%",
           "accent": "240 4.8% 95.9%",
           "accent-foreground": "240 5.9% 10%",
-          "destructive": "0 72.2% 50.6%",
+          "destructive": "359.7 72.9% 49.2%",
           "destructive-foreground": "0 0% 100%",
           "success": "142.4 71.8% 29.2%",
           "success-foreground": "0 0% 100%",
@@ -57,7 +57,7 @@
           "card-foreground": "0 0% 98%",
           "popover": "240 5.9% 10%",
           "popover-foreground": "0 0% 98%",
-          "primary": "217.2 91.2% 59.8%",
+          "primary": "217.2 100% 63.3%",
           "primary-foreground": "240 10% 3.9%",
           "secondary": "240 3.7% 15.9%",
           "secondary-foreground": "0 0% 98%",
@@ -65,7 +65,7 @@
           "muted-foreground": "240 5% 64.9%",
           "accent": "240 3.7% 15.9%",
           "accent-foreground": "0 0% 98%",
-          "destructive": "0 84.2% 60.2%",
+          "destructive": "0.7 95.6% 64.5%",
           "destructive-foreground": "240 10% 3.9%",
           "success": "142.1 70.6% 45.3%",
           "success-foreground": "240 10% 3.9%",
@@ -75,15 +75,15 @@
           "info-foreground": "240 10% 3.9%",
           "border": "240 3.7% 15.9%",
           "input": "240 3.7% 15.9%",
-          "ring": "217.2 91.2% 59.8%",
+          "ring": "217.2 100% 63.3%",
           "sidebar": "240 5.9% 10%",
           "sidebar-foreground": "0 0% 98%",
-          "sidebar-primary": "217.2 91.2% 59.8%",
+          "sidebar-primary": "217.2 100% 63.3%",
           "sidebar-primary-foreground": "240 10% 3.9%",
           "sidebar-accent": "240 3.7% 15.9%",
           "sidebar-accent-foreground": "0 0% 98%",
           "sidebar-border": "240 3.7% 15.9%",
-          "sidebar-ring": "217.2 91.2% 59.8%",
+          "sidebar-ring": "217.2 100% 63.3%",
           "chart-1": "213.1 93.9% 67.8%",
           "chart-2": "141.9 69.2% 58%",
           "chart-3": "43.3 96.4% 56.3%",
@@ -146,6 +146,23 @@
           }
         }
       }
+    },
+    {
+      "name": "lib-embed-theme",
+      "type": "registry:lib",
+      "title": "lib/embed-theme.ts",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-embed",
+        "@kit-native/lib-theme"
+      ],
+      "files": [
+        {
+          "path": "lib/embed-theme.ts",
+          "type": "registry:lib",
+          "target": "lib/embed-theme.ts"
+        }
+      ]
     },
     {
       "name": "lib-embed",
@@ -211,6 +228,27 @@
           "path": "lib/native.ts",
           "type": "registry:lib",
           "target": "lib/native.ts"
+        }
+      ]
+    },
+    {
+      "name": "lib-palette-context",
+      "type": "registry:lib",
+      "title": "lib/palette-context.tsx",
+      "dependencies": [
+        "expo-router@~57.0.22"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-embed",
+        "@kit-native/lib-embed-theme",
+        "@kit-native/lib-theme",
+        "@kit-native/lib-theme-context"
+      ],
+      "files": [
+        {
+          "path": "lib/palette-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/palette-context.tsx"
         }
       ]
     },
@@ -783,8 +821,7 @@
       ],
       "registryDependencies": [
         "@kit-native/lib-haptics",
-        "@kit-native/lib-theme",
-        "@kit-native/lib-theme-context",
+        "@kit-native/lib-palette-context",
         "@kit-native/lib-utils",
         "@kit-native/text",
         "https://reactnativereusables.com/r/nativewind/icon.json"
@@ -1163,8 +1200,7 @@
       ],
       "registryDependencies": [
         "@kit-native/lib-haptics",
-        "@kit-native/lib-theme",
-        "@kit-native/lib-theme-context",
+        "@kit-native/lib-palette-context",
         "@kit-native/lib-utils",
         "@kit-native/text"
       ],
@@ -1636,8 +1672,7 @@
         "react-native-svg@15.15.4"
       ],
       "registryDependencies": [
-        "@kit-native/lib-theme",
-        "@kit-native/lib-theme-context",
+        "@kit-native/lib-palette-context",
         "@kit-native/lib-utils"
       ],
       "files": [
@@ -1727,8 +1762,7 @@
         "react-native-svg@15.15.4"
       ],
       "registryDependencies": [
-        "@kit-native/lib-theme",
-        "@kit-native/lib-theme-context"
+        "@kit-native/lib-palette-context"
       ],
       "files": [
         {
@@ -1785,8 +1819,8 @@
         "react-native-svg@15.15.4"
       ],
       "registryDependencies": [
+        "@kit-native/lib-palette-context",
         "@kit-native/lib-theme",
-        "@kit-native/lib-theme-context",
         "@kit-native/lib-utils",
         "@kit-native/text"
       ],
@@ -1979,8 +2013,7 @@
       "description": "themed ActivityIndicator · announced as \"Loading\"",
       "dependencies": [],
       "registryDependencies": [
-        "@kit-native/lib-theme",
-        "@kit-native/lib-theme-context"
+        "@kit-native/lib-palette-context"
       ],
       "files": [
         {
@@ -2431,8 +2464,7 @@
         "react-native-svg@15.15.4"
       ],
       "registryDependencies": [
-        "@kit-native/lib-theme",
-        "@kit-native/lib-theme-context",
+        "@kit-native/lib-palette-context",
         "@kit-native/lib-utils",
         "https://reactnativereusables.com/r/nativewind/icon.json"
       ],

@@ -1,6 +1,8 @@
 'use client';
 import { useTheme } from 'next-themes';
 import * as React from 'react';
+import { kitPayloads } from '@/lib/theme/payload';
+import { useLiveTheme } from '@/lib/theme/store';
 
 /**
  * Where each kit's web build lives. Production: /m and /w on this site (same origin, built by
@@ -16,9 +18,13 @@ export const frameBase = {
 /**
  * An embedded kit page whose theme follows this site. The first load passes `theme=` in the URL; later
  * changes go over postMessage (`kit:theme`) once the kit has said `kit:ready`, so toggling never reloads
- * it. Both kits speak the same protocol.
+ * it. The live theme from the picker goes the same way (`kit:tokens`, in the kit's own format); on this
+ * site's origin the kit has already painted it from sessionStorage (see components/theme/theme-runtime).
+ * Both kits speak the same protocol.
  */
-export function useKitFrame(base: string, path: string) {
+export function useKitFrame(kind: 'mobile' | 'web', path: string) {
+  const base = frameBase[kind];
+  const { theme: liveTheme, isCommitted } = useLiveTheme();
   const { resolvedTheme } = useTheme();
   const theme = resolvedTheme === 'dark' ? 'dark' : 'light';
   const ref = React.useRef<HTMLIFrameElement>(null);
@@ -45,6 +51,13 @@ export function useKitFrame(base: string, path: string) {
     if (!ready || !target) return;
     target.postMessage({ type: 'kit:theme', value: theme }, new URL(base, window.location.href).origin);
   }, [base, ready, theme]);
+
+  React.useEffect(() => {
+    const target = ref.current?.contentWindow;
+    if (!ready || !target) return;
+    const payload = kitPayloads(liveTheme, !isCommitted)[kind];
+    target.postMessage({ type: 'kit:tokens', v: 1, ...payload }, new URL(base, window.location.href).origin);
+  }, [base, kind, ready, liveTheme, isCommitted]);
 
   return { ref, src };
 }

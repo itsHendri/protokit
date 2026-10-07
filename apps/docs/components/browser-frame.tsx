@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import { frameBase, useKitFrame } from '@/lib/frames';
+import { useKitFrame } from '@/lib/frames';
 
 type Props = {
   /** A web kit route with its query, e.g. `/components?section=data-table` or `/dashboard`. */
@@ -20,7 +20,7 @@ type Props = {
  * dashboard keeps its desktop layout in a narrow column. The theme follows the site (see useKitFrame).
  */
 export function BrowserFrame({ path, title, viewport = { width: 1280, height: 800 }, address, className }: Props) {
-  const { ref, src } = useKitFrame(frameBase.web, path);
+  const { ref, src } = useKitFrame('web', path);
   const box = React.useRef<HTMLDivElement>(null);
   const [width, setWidth] = React.useState(0);
 
