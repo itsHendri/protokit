@@ -21,5 +21,7 @@ npm cannot create a package through trusted publishing, so `1.0.0` goes up from 
    requests" (the Version Packages PR needs it).
 6. GitHub repo → Settings → Secrets and variables → Actions → Variables: add `RELEASES_ENABLED` = `true`.
    Until then the release workflow skips, so main stays green.
+7. Remove the "Not yet: copying a single kit" notes: `git grep -n "not published yet"` finds them (README,
+   the docs site's install and web pages, install.md).
 
 Provenance statements are added automatically once the repository is public.

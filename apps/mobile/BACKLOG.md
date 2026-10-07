@@ -2,7 +2,23 @@
 
 Durable, human- and agent-readable list of deferred work. Update when you defer or finish something.
 
-_Last updated: 2026-10-06_
+_Last updated: 2026-10-07_
+
+## Accessibility on the web export (found by the docs site's axe check, 2026-10-07)
+`apps/docs/scripts/check-a11y.mjs` skips the phone frames (`MOBILE_FRAMES = false`) until these are fixed.
+Run it with `MOBILE_FRAMES = true` to reproduce:
+- **Unnamed progress:** the Habits progress ring and a Button's loading spinner render `role="progressbar"`
+  with no name (`aria-progressbar-name`). Give them an `accessibilityLabel`.
+- **Radio items without names:** Kitchen Sink › Inputs `#ks-radio-*` (`aria-toggle-field-name`). The Label
+  next to each item is not associated on web.
+- **Sliders without names** (`aria-input-field-name`): the slider thumbs need `accessibilityLabel`.
+- **Selectable cards** (`aria-required-attr`): a role that needs `aria-checked`/`aria-selected` is missing it.
+- **A disallowed ARIA attribute** on a pressable in Inputs (`aria-allowed-attr`).
+- **Contrast:** the Shop search field and the Kitchen Sink email field (placeholder text), and a disabled
+  button's label, in light mode.
+- **Status text on its own tint:** the web kit found `text-success` on `bg-success/15` measures 4.09:1 and
+  `text-destructive` on `bg-destructive/15` 3.81:1. Check the mobile kit's tinted badges the same way;
+  the kit-tokens contrast gate could check `X` on `X/15` too.
 
 ## Deferred by decision
 - **Scenario system** (several prototypes in one install with a picker and web `/scenarios` index). One prototype per

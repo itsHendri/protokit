@@ -24,3 +24,11 @@ html > body[data-scroll-locked] {
 [role='tab'][data-state='active'] {
   color: var(--color-fd-foreground);
 }
+
+/*
+ * The same rule for the active item in the sidebar, the top nav and the table of contents: Fumadocs colours
+ * it with the brand blue on a blue tint, which measures 4.32:1 (light) and 4.27:1 (dark).
+ */
+a[data-active='true'][href] {
+  color: var(--color-fd-foreground);
+}

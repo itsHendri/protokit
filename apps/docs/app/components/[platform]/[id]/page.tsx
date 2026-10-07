@@ -39,7 +39,7 @@ const PREVIEWED_ELSEWHERE: Record<Platform, Record<string, string>> = {
     'kit-chip': 'Scaffolding, not a product component: the floating “Back to kit” pill in the sample apps.',
   },
   web: {
-    label: 'Label is shown with every field in Inputs & forms.',
+    label: 'Label is shown with every field in Inputs & selection.',
     'scroll-area': 'Used inside Command, Select and Sheet rather than on its own.',
   },
 };

@@ -5,12 +5,53 @@ description: What changed, newest first.
 
 ## October 2026
 
-- **Monorepo.** The kit moved to `apps/mobile` in the [protokit](https://github.com/itsHendri/protokit)
-  repository, next to this site. Each app still works on its own when copied out.
+### Web kit components and checks
+
+- **Six web components.** DatePicker, Calendar, Pagination, NavigationMenu, Drawer and ChatThreadList. The
+  assistant sample now keeps a history of conversations: a sidebar on desktop, a sheet on phones.
+- **ToolCallCard `stopped`.** A tool call the person cancelled reads "Stopped", not a red "Failed".
+- **Accessibility gate.** Every pull request now runs axe-core (WCAG 2.1 AA) over this site and the web
+  kit, in light and dark. Its first run found and fixed:
+  - Status badges in a colour on their own tint (under 4.5:1). They are now an outline badge with a
+    coloured dot.
+  - The destructive alert's text at 90% opacity.
+  - A slider handle with no name.
+  - Filter tabs pointing at panels that don't exist.
+  - Brand-blue active links in this site's navigation.
+  - An unlabelled GitHub icon.
+
+  The mobile kit's frames are not checked yet; their findings are in its backlog.
+- **Calendar hydration fix.** shadcn's Calendar wrote locale-formatted dates into its markup, so server and
+  browser disagreed. The kit's copy uses `YYYY-MM-DD`.
+
+### The live site
+
+- **Live** at [protokit-docs.empty-math-d572.workers.dev](https://protokit-docs.empty-math-d572.workers.dev),
+  deployed by Cloudflare on every push to `main`. Pull requests get their own preview URL, and a PR that
+  breaks the site's build cannot merge.
+- `install.md`, `llms.txt` and the install guide use full links to this site.
+- The [repository](https://github.com/itsHendri/protokit) is public.
+
+### Web kit
+
+- **[Web kit](/docs/web).** Next.js, Tailwind 4 and shadcn/ui on the same tokens as the mobile kit: app
+  shells, data tables, stat tiles, heroes, pricing, and AI chat with streaming, tool calls and approvals.
+  It has the same registry, skills and contrast gate as the mobile kit.
+- **[Sample apps](/screens).** One made-up product, Northwind, built three ways: a dashboard, a landing page
+  and an AI assistant. `npm run eject-samples` removes them; CI checks that it still does, for both kits.
+- **This site covers both kits.** Component pages live at `/components/mobile/…` and `/components/web/…`,
+  web components run live in a browser frame, and search, `llms.txt` and `install.md` include both.
+- **One brand.** `npm run tokens:sync` copies the mobile kit's `tokens.json` to the web kit; CI fails if they
+  differ.
+
+### Foundations
+
+- **Monorepo.** The kit moved to `apps/mobile` in the protokit repository, next to this site. Each app still
+  works on its own when copied out.
 - **`@itshendri/kit-tokens`.** The token build is a package: one `tokens.json` to NativeWind, Tailwind 4 /
-  shadcn, TypeScript, Figma and `DESIGN.md`, with the WCAG AA gate.
+  shadcn, TypeScript, Figma and `DESIGN.md`, with the WCAG AA gate. Not on npm yet.
 - **Registry as data.** One list of components generates `DESIGN_SYSTEM.md`, `llms.txt`, a shadcn registry
   and the component pages here.
-- **Embed mode.** The kit's web build can run inside a page (these phone frames) and follows the page's
-  theme.
-- **Public and MIT licensed.**
+- **Embed mode.** The kits' web builds run inside a page (these phone and browser frames) and follow the
+  page's theme.
+- **MIT licensed.**
