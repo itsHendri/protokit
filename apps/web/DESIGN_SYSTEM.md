@@ -36,7 +36,9 @@ The shadcn vocabulary through Tailwind classes; each works as `bg-`, `text-`, `b
 Rules:
 - **No hex, `rgb()` or Tailwind palette colours (`bg-blue-500`, `text-white`) in `app/` or `components/`.**
   The one exception is the modal scrim, `bg-black/50`, in the shadcn overlays.
-- Tint a surface with an alpha of a semantic colour: `bg-primary/10`, `bg-success/15 text-success`.
+- Tint a surface with an alpha of a semantic colour: `bg-primary/10`, `bg-success/15`. Text on a tint stays
+  `text-foreground`: a status colour as small text on its own tint measures under 4.5:1 (success 4.09,
+  destructive 3.81). A status badge is an outline Badge with a coloured dot.
 - Selected / active states (tabs, segmented controls, nav items) are **neutral**, not the brand colour.
 - Light and dark are both required.
 
@@ -122,7 +124,7 @@ the tables. Text between `GENERATED` markers is overwritten.
 | Table / TableHeader / TableBody / TableRow / TableHead / TableCell / TableCaption | `components/ui/table.tsx` | the primitive under DataTable; use it directly for small static tables |
 | StatTile | `components/kit/stat-tile.tsx` | one KPI with a signed change · `invert` when down is good |
 | ChartContainer / ChartTooltip / ChartTooltipContent / ChartLegend / ChartLegendContent | `components/ui/chart.tsx` | Recharts with the theme · series colours from `var(--chart-1)`…`--chart-5` |
-| Badge / `badgeVariants` | `components/ui/badge.tsx` | a status or tag · tint with semantic classes (`bg-success/15 text-success`) |
+| Badge / `badgeVariants` | `components/ui/badge.tsx` | a status or tag · a status is an outline Badge with a coloured dot (`bg-success` …), the word in foreground text |
 | Avatar / AvatarImage / AvatarFallback | `components/ui/avatar.tsx` | image with initials fallback |
 | Separator | `components/ui/separator.tsx` | a hairline between groups · prefer spacing |
 <!-- /GENERATED:registry:data -->
