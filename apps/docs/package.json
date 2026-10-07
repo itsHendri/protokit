@@ -12,7 +12,8 @@
     "preview": "wrangler dev --port 8788",
     "typecheck": "next typegen && tsc --noEmit",
     "check": "kit-tokens check",
-    "check:links": "node scripts/check-links.mjs"
+    "check:links": "node scripts/check-links.mjs",
+    "check:a11y": "node scripts/check-a11y.mjs"
   },
   "dependencies": {
     "fumadocs-core": "16.16.2",
@@ -25,12 +26,14 @@
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@itshendri/kit-tokens": "^1.0.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/mdx": "^2.0.14",
     "@types/node": "^26.6.4",
     "@types/react": "~19.2.10",
     "@types/react-dom": "~19.2.3",
+    "playwright": "^1.63.0",
     "postcss": "^8.5.28",
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.3",

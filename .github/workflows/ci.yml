@@ -162,7 +162,7 @@ jobs:
         run: npm run eject-samples && ${{ matrix['after-eject'] }}
 
   # The docs site: tokens, generated content, both kits' exports (mobile under /m, web under /w), both
-  # registries under /r, the static Next export, then every internal link and the TypeScript.
+  # registries under /r, the static Next export, then every internal link, accessibility and the TypeScript.
   docs:
     runs-on: ubuntu-latest
     defaults:
@@ -184,6 +184,13 @@ jobs:
 
       - name: Internal links resolve
         run: npm run check:links
+
+      # WCAG 2.1 AA with axe-core, every key page in light and dark, the web kit's frames included.
+      - name: Chromium for the accessibility check
+        run: npx playwright install --with-deps chromium
+
+      - name: Accessibility (axe, light and dark)
+        run: npm run check:a11y
 
       - name: Typecheck
         run: npm run typecheck
