@@ -46,10 +46,6 @@ need them:
   (`aria-labelledby`); VoiceOver reads the Label as its own element. A destructive menu item on its
   pressed/focused tint is 4.14:1 in light (shadcn's pattern, same in the web kit). The kit-tokens contrast gate
   could check `X` text on `X/15`; the kit puts no status text on its own tint.
-- **Contrast gate gap:** it checks each tone as text on `background` and `card`, not on `muted`/`accent`. In dark
-  mode `primary` (brand.500) on `muted` (neutral.800) is 4.04:1. Found by Lighthouse on the docs site's tabs (fixed
-  there with neutral selected tabs, the kit's own rule). Adding the pairing would need a lighter dark primary — a
-  brand decision.
 - `Sheet` exit is a plain fade (RN Modal); a slide-out needs a mounted-state dance the React Compiler rules dislike.
 - Haptics/blur only verified on the simulator; feel on a physical device still to confirm.
 - Web `Select`/`DropdownMenu` positioning relies on rn-primitives portals; check on narrow viewports.

@@ -34,7 +34,7 @@ components/site/        the kit shell's own chrome (header, theme toggle, provid
 registry/               components.ts: what the kit ships → DESIGN_SYSTEM.md tables, llms.txt, registry.json
 hooks/, lib/            use-reduced-motion · embed (docs iframe mode) · theme.ts (generated)
 DESIGN.md, llms.txt     GENERATED agent-facing summaries
-.claude/skills/         add-component, qc-pass, transcript-to-prototype
+.claude/skills/         add-component, apply-theme, qc-pass, transcript-to-prototype
 ```
 
 ## Commands
@@ -81,8 +81,10 @@ npm run eject-samples     # delete the dashboard, landing and assistant samples 
 - **Static export:** `KIT_WEB_EXPORT=1 KIT_WEB_BASE_PATH=/w npm run build` writes `out/` under a sub-path
   (how the docs site embeds the kit).
 - **Share a link:** deploy to any Next host (Vercel, Cloudflare via OpenNext) or a static export.
-- **Re-brand:** edit `tokens/tokens.json` (in the monorepo: `apps/mobile/tokens/tokens.json`, then
-  `npm run tokens:sync` at the root), run `npm run tokens:build`.
+- **Re-brand:** pick a theme on the docs site (theme bar or `/themes`) and apply its code with the `apply-theme`
+  skill: `npx kit-tokens theme apply <pk1-code|preset>` (in the monorepo, `npm run theme:apply -- <code>` at the
+  root, so both kits stay one brand). Editing tokens.json by hand still works (in the monorepo:
+  `apps/mobile/tokens/tokens.json`, then `npm run tokens:sync`), then `npm run tokens:build`.
 
 ## Gotchas
 

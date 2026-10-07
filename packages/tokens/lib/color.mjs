@@ -51,20 +51,28 @@ export function hexToOklchParts(hex) {
   return [L, C < 1e-4 ? 0 : C, H];
 }
 
-/** [L, C, H] → 8-bit sRGB hex (clamped). */
-export function oklchPartsToHex([L, C, H]) {
+function oklchToLinearRgb([L, C, H]) {
   const hr = (H * Math.PI) / 180;
   const A = C * Math.cos(hr);
   const B = C * Math.sin(hr);
   const l = (L + 0.3963377774 * A + 0.2158037573 * B) ** 3;
   const m = (L - 0.1055613458 * A - 0.0638541728 * B) ** 3;
   const s = (L - 0.0894841775 * A - 1.291485548 * B) ** 3;
-  const rgb = [
+  return [
     4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
     -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
     -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s,
   ];
-  return toHex(rgb.map((c) => Math.round(Math.min(1, Math.max(0, fromLinear(c))) * 255)));
+}
+
+/** [L, C, H] → 8-bit sRGB hex (clamped). */
+export function oklchPartsToHex(parts) {
+  return toHex(oklchToLinearRgb(parts).map((c) => Math.round(Math.min(1, Math.max(0, fromLinear(c))) * 255)));
+}
+
+/** Whether [L, C, H] lies inside sRGB (no channel clipped). */
+export function inGamut(parts, epsilon = 1e-4) {
+  return oklchToLinearRgb(parts).every((c) => c >= -epsilon && c <= 1 + epsilon);
 }
 
 const fixed = (x, d) => Number(x.toFixed(d));

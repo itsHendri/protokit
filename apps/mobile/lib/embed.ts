@@ -11,6 +11,7 @@ import { Platform } from 'react-native';
  *
  * The host page keeps the theme in step with postMessage (web only):
  *   host → kit   { type: 'kit:theme', value: 'light' | 'dark' }
+ *   host → kit   { type: 'kit:tokens', … }   a live theme from the docs picker (lib/embed-theme.ts)
  *   kit → host   { type: 'kit:ready' }   once mounted
  * Messages are accepted from this page's own origin (the docs site serves the export under /m) and from
  * the origins in EXPO_PUBLIC_EMBED_ORIGINS (comma-separated, for a docs dev server on another port).
@@ -30,7 +31,7 @@ function readInitial(): EmbedState {
 /** Latched once, at startup. */
 export const EMBED: EmbedState = readInitial();
 
-function allowedOrigins(): string[] {
+export function allowedOrigins(): string[] {
   // String(): apps without Node's types see `process.env` as untyped.
   const extra = String(process.env.EXPO_PUBLIC_EMBED_ORIGINS ?? '')
     .split(',')
@@ -39,13 +40,35 @@ function allowedOrigins(): string[] {
   return typeof window === 'undefined' ? extra : [window.location.origin, ...extra];
 }
 
+export const isAllowedOrigin = (origin: string) => allowedOrigins().includes(origin);
+
+const listening = () => EMBED.embedded && Platform.OS === 'web' && typeof window !== 'undefined' && window.parent !== window;
+
+/**
+ * Listens for one message type from the host page. Register listeners in components below
+ * KitThemeProvider: their effects run before its useEmbedBridge posts `kit:ready`, so nothing the host
+ * sends in reply is missed. `onMessage` must be stable.
+ */
+export function useEmbedMessage(type: string, onMessage: (data: unknown, origin: string) => void) {
+  React.useEffect(() => {
+    if (!listening()) return;
+    const origins = allowedOrigins();
+    const handler = (event: MessageEvent) => {
+      if (!origins.includes(event.origin)) return;
+      if ((event.data as { type?: unknown } | null)?.type === type) onMessage(event.data, event.origin);
+    };
+    window.addEventListener('message', handler);
+    return () => window.removeEventListener('message', handler);
+  }, [type, onMessage]);
+}
+
 /**
  * Listens for `kit:theme` from the host page and tells it `kit:ready`. No-op unless embedded on web.
  * `onTheme` must be stable (wrap it in useCallback).
  */
 export function useEmbedBridge(onTheme: (scheme: EmbedScheme) => void) {
   React.useEffect(() => {
-    if (!EMBED.embedded || Platform.OS !== 'web' || typeof window === 'undefined' || window.parent === window) return;
+    if (!listening()) return;
     const origins = allowedOrigins();
     const onMessage = (event: MessageEvent) => {
       if (!origins.includes(event.origin)) return;

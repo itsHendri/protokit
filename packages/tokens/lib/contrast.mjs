@@ -6,12 +6,12 @@
 import { blend, contrast } from './color.mjs';
 
 export const AA = 4.5; // WCAG 2.1 AA, normal text. Kit labels are 16px — not "large text".
-const AA_NON_TEXT = 3; // WCAG 1.4.11, icons and other meaningful non-text.
+export const AA_NON_TEXT = 3; // WCAG 1.4.11, icons and other meaningful non-text.
 
 /** The alpha values the kit actually tints with (bg-<tone>/10 etc). */
 const TINTS = [0.1, 0.15, 0.2];
 /** Tones that get used as ink — text-<tone> and coloured icons — not just as fills. */
-const TONES = ['primary', 'success', 'warning', 'info', 'destructive'];
+export const TONES = ['primary', 'success', 'warning', 'info', 'destructive'];
 
 /**
  * Every way the kit puts one token against another:
@@ -24,45 +24,45 @@ const TONES = ['primary', 'success', 'warning', 'info', 'destructive'];
  * fill and still be unreadable as text, which is exactly how an amber warning gets in.
  *
  * `hex` is { name: '#rrggbb' } for one mode. `strict` adds tones as ink on the `muted` and `accent`
- * surfaces too (a link in a muted panel). The theme generator always fixes for strict; the build only
- * warns about it until every committed palette passes (see apps/mobile/BACKLOG.md).
+ * surfaces too (a link in a muted panel). The build and the theme generator both check strict.
  */
-export function contrastFailures(hex, mode, { strict = false } = {}) {
-  const pairs = [];
+export function contrastPairs(hex, mode, { strict = false } = {}) {
+  const out = [];
+  const add = (label, fgName, bgName, fg, bg, threshold) =>
+    out.push({ mode, label, fgName, bgName, fg, bg, threshold, ratio: contrast(fg, bg) });
+
   for (const name of ['primary', 'secondary', 'destructive', 'success', 'warning', 'info', 'accent', 'card', 'popover', 'muted', 'sidebar', 'sidebar-primary', 'sidebar-accent']) {
-    if (hex[name] && hex[`${name}-foreground`]) pairs.push([`${name}-foreground on ${name}`, hex[`${name}-foreground`], hex[name]]);
+    const fg = `${name}-foreground`;
+    if (hex[name] && hex[fg]) add(`${fg} on ${name}`, fg, name, hex[fg], hex[name], AA);
   }
   for (const surface of ['background', 'card', 'muted']) {
-    if (hex['muted-foreground'] && hex[surface]) pairs.push([`muted-foreground on ${surface}`, hex['muted-foreground'], hex[surface]]);
-    if (hex.foreground && hex[surface]) pairs.push([`foreground on ${surface}`, hex.foreground, hex[surface]]);
+    if (hex['muted-foreground'] && hex[surface]) add(`muted-foreground on ${surface}`, 'muted-foreground', surface, hex['muted-foreground'], hex[surface], AA);
+    if (hex.foreground && hex[surface]) add(`foreground on ${surface}`, 'foreground', surface, hex.foreground, hex[surface], AA);
   }
 
   // A tone used as ink rather than as a fill.
-  const inkPairs = [];
   for (const tone of TONES) {
     if (!hex[tone]) continue;
     for (const surface of strict ? ['background', 'card', 'muted', 'accent'] : ['background', 'card']) {
-      if (hex[surface]) inkPairs.push([`text-${tone} on ${surface}`, hex[tone], hex[surface]]);
+      if (hex[surface]) add(`text-${tone} on ${surface}`, tone, surface, hex[tone], hex[surface], AA);
     }
   }
 
   // A tone's icon on that tone's own tint — Alert, IconCircle, SwipeToConfirm.
-  const tintPairs = [];
   for (const tone of TONES) {
     if (!hex[tone] || !hex.background) continue;
     for (const alpha of TINTS) {
-      tintPairs.push([`${tone} icon on ${tone}/${alpha * 100}`, hex[tone], blend(hex[tone], hex.background, alpha)]);
+      add(`${tone} icon on ${tone}/${alpha * 100}`, tone, `${tone}/${alpha * 100}`, hex[tone], blend(hex[tone], hex.background, alpha), AA_NON_TEXT);
     }
   }
+  return out;
+}
 
-  const check = (list, threshold) =>
-    list
-      .map(([label, fg, bg]) => ({ label, fg, bg, ratio: contrast(fg, bg), threshold }))
-      .filter((r) => r.ratio < threshold);
-
-  return [...check(pairs, AA), ...check(inkPairs, AA), ...check(tintPairs, AA_NON_TEXT)].map(
-    (r) => `  ${mode.padEnd(5)} ${r.label.padEnd(36)} ${r.ratio.toFixed(2)} / ${r.threshold}  (${r.fg} on ${r.bg})`
-  );
+/** The failing pairings as report lines. */
+export function contrastFailures(hex, mode, options) {
+  return contrastPairs(hex, mode, options)
+    .filter((r) => r.ratio < r.threshold)
+    .map((r) => `  ${mode.padEnd(5)} ${r.label.padEnd(36)} ${r.ratio.toFixed(2)} / ${r.threshold}  (${r.fg} on ${r.bg})`);
 }
 
 /** Tint strengths a class can ask for (`bg-<tone>/5` … `/20`), for the text-on-tint limits below. */

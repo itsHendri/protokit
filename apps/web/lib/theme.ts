@@ -21,7 +21,7 @@ export const THEME = {
     mutedForeground: '#52525b',
     accent: '#f4f4f5',
     accentForeground: '#18181b',
-    destructive: '#dc2626',
+    destructive: '#d92223',
     destructiveForeground: '#ffffff',
     success: '#15803d',
     successForeground: '#ffffff',
@@ -53,7 +53,7 @@ export const THEME = {
     cardForeground: '#fafafa',
     popover: '#18181b',
     popoverForeground: '#fafafa',
-    primary: '#3b82f6',
+    primary: '#448bff',
     primaryForeground: '#09090b',
     secondary: '#27272a',
     secondaryForeground: '#fafafa',
@@ -61,7 +61,7 @@ export const THEME = {
     mutedForeground: '#a1a1aa',
     accent: '#27272a',
     accentForeground: '#fafafa',
-    destructive: '#ef4444',
+    destructive: '#fb504e',
     destructiveForeground: '#09090b',
     success: '#22c55e',
     successForeground: '#09090b',
@@ -71,15 +71,15 @@ export const THEME = {
     infoForeground: '#09090b',
     border: '#27272a',
     input: '#27272a',
-    ring: '#3b82f6',
+    ring: '#448bff',
     sidebar: '#18181b',
     sidebarForeground: '#fafafa',
-    sidebarPrimary: '#3b82f6',
+    sidebarPrimary: '#448bff',
     sidebarPrimaryForeground: '#09090b',
     sidebarAccent: '#27272a',
     sidebarAccentForeground: '#fafafa',
     sidebarBorder: '#27272a',
-    sidebarRing: '#3b82f6',
+    sidebarRing: '#448bff',
     chart1: '#60a5fa',
     chart2: '#4ade80',
     chart3: '#fbbf24',
@@ -140,3 +140,46 @@ export const TOKENS = {
     exit: [0.4,0,1,1],
   },
 } as const;
+
+/** The theme tokens.json was generated from (`kit-tokens theme apply`), or null. `edited`: theme tokens
+ *  were changed by hand since. */
+export const THEME_INFO: ThemeInfo | null = {
+  "code": "pk1-29B3XC60003T",
+  "name": "Default",
+  "edited": false,
+  "recipe": {
+    "v": 1,
+    "brand": "#2563eb",
+    "neutral": "zinc",
+    "radius": "lg",
+    "controls": "pill",
+    "font": {
+      "heading": "system",
+      "body": "system"
+    },
+    "stroke": "regular",
+    "depth": "soft",
+    "density": "comfortable",
+    "border": "regular",
+    "preset": "default"
+  }
+};
+
+export type ThemeInfo = {
+  code: string;
+  name: string;
+  edited: boolean;
+  recipe: {
+    v: number;
+    brand: string;
+    neutral: string;
+    radius: string;
+    controls: string;
+    font: { heading: string; body: string };
+    stroke: string;
+    depth: string;
+    density: string;
+    border: string;
+    preset?: string;
+  };
+};

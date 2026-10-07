@@ -1,4 +1,15 @@
 {
   "title": "Docs",
-  "pages": ["index", "install", "mobile", "web", "---Design system---", "foundations", "patterns", "---Project---", "changelog"]
+  "pages": [
+    "index",
+    "install",
+    "mobile",
+    "web",
+    "---Design system---",
+    "foundations",
+    "themes",
+    "patterns",
+    "---Project---",
+    "changelog"
+  ]
 }

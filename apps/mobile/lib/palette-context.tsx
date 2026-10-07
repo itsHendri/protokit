@@ -1,3 +1,5 @@
+import { useEmbedMessage } from '@/lib/embed';
+import { applyEmbedTokens, cachedEmbedTokens, parseEmbedTokens, reportApplied, type EmbedTokens } from '@/lib/embed-theme';
 import { NAV_THEME, THEME, type ThemeColorName } from '@/lib/theme';
 import { useKitTheme, type ColorScheme } from '@/lib/theme-context';
 import type { Theme } from 'expo-router/react-navigation';
@@ -9,45 +11,52 @@ import * as React from 'react';
  * reaches every consumer.
  *
  * The values default to the generated THEME (tokens/tokens.json). An override replaces some or all of
- * them at runtime; only the docs site's theme picker sets one, in an embedded session (lib/embed.ts).
- * The CSS variables behind the classNames are overridden separately, so both stay in step.
+ * them at runtime; only the docs site's theme picker sets one, in an embedded session (lib/embed-theme.ts),
+ * together with the CSS variables behind the classNames, so both stay in step.
  */
 export type Palette = Record<ThemeColorName, string>;
 export type PaletteOverride = Partial<Record<ColorScheme, Partial<Palette>>>;
 
-type PaletteContextValue = {
-  palette: Palette;
-  setOverride: (override: PaletteOverride | null) => void;
-};
-
-const PaletteContext = React.createContext<PaletteContextValue | null>(null);
+const PaletteContext = React.createContext<Palette | null>(null);
+/** The code of a live theme from the docs picker, when one is showing (embedded web only). */
+const LiveCodeContext = React.createContext<string | null>(null);
 
 export function PaletteProvider({ children }: { children: React.ReactNode }) {
   const { scheme } = useKitTheme();
-  const [override, setOverride] = React.useState<PaletteOverride | null>(null);
+  const [override, setOverride] = React.useState<PaletteOverride | null>(() => cachedEmbedTokens()?.hex ?? null);
+  const [liveCode, setLiveCode] = React.useState<string | null>(() => cachedEmbedTokens()?.code ?? null);
+
+  // The docs picker's live theme (web export in a phone frame only).
+  const onTokens = React.useCallback((data: unknown, origin: string) => {
+    const tokens: EmbedTokens | null = parseEmbedTokens(data);
+    if (!tokens) return;
+    applyEmbedTokens(tokens);
+    setOverride(tokens.code === null ? null : (tokens.hex ?? null));
+    setLiveCode(tokens.code);
+    reportApplied(tokens.code, origin);
+  }, []);
+  useEmbedMessage('kit:tokens', onTokens);
+
   const palette = React.useMemo<Palette>(
     () => ({ ...THEME[scheme], ...override?.[scheme] }),
     [scheme, override]
   );
-  const value = React.useMemo(() => ({ palette, setOverride }), [palette]);
-  return <PaletteContext.Provider value={value}>{children}</PaletteContext.Provider>;
-}
-
-function usePaletteContext(): PaletteContextValue {
-  const ctx = React.useContext(PaletteContext);
-  if (!ctx) throw new Error('usePalette must be used inside <PaletteProvider>');
-  return ctx;
+  return (
+    <PaletteContext.Provider value={palette}>
+      <LiveCodeContext.Provider value={liveCode}>{children}</LiveCodeContext.Provider>
+    </PaletteContext.Provider>
+  );
 }
 
 /** Semantic colours as hex for the scheme on screen, override included. */
 export function usePalette(): Palette {
-  return usePaletteContext().palette;
+  const palette = React.useContext(PaletteContext);
+  if (!palette) throw new Error('usePalette must be used inside <PaletteProvider>');
+  return palette;
 }
 
-/** Replace the runtime override (null clears it). */
-export function useSetPaletteOverride(): PaletteContextValue['setOverride'] {
-  return usePaletteContext().setOverride;
-}
+/** The code of the docs picker's live theme, if one is on screen instead of the committed theme. */
+export const useLiveThemeCode = () => React.useContext(LiveCodeContext);
 
 /** The React Navigation theme, built from the palette so headers and tab bars follow an override. */
 export function useNavTheme(): Theme {

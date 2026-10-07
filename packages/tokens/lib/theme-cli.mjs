@@ -1,0 +1,114 @@
+/**
+ * `kit-tokens theme …` — commit a theme from the docs picker into tokens.json.
+ *
+ *   theme apply <code|preset|recipe.json> [--dry-run] [--force]
+ *        write the theme into tokens.json (only the paths a theme owns) and rebuild
+ *   theme show [--check]   the applied theme, its code and any hand edits since (drift)
+ *                          --check: exit 1 if the recorded theme no longer reproduces (CI)
+ *   theme presets          list the presets and their codes
+ *   theme encode <recipe.json>   print the code for a recipe file
+ */
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+import {
+  applyRecipe,
+  decodeRecipe,
+  encodeRecipe,
+  fontById,
+  isThemeCode,
+  normalizeRecipe,
+  presetById,
+  PRESETS,
+  themeStatus,
+} from './theme/index.mjs';
+
+const fail = (message, code = 1) => {
+  console.error(`kit-tokens theme: ${message}`);
+  process.exit(code);
+};
+
+function readRecipe(arg, root) {
+  if (!arg) fail('say which theme: a code (pk1-…), a preset name or a recipe .json', 2);
+  if (isThemeCode(arg)) {
+    try {
+      return decodeRecipe(arg);
+    } catch (error) {
+      fail(error.message);
+    }
+  }
+  const preset = presetById(arg.toLowerCase());
+  if (preset) return normalizeRecipe({ ...preset.recipe, preset: preset.id });
+  const file = join(root, arg);
+  if (arg.endsWith('.json') && existsSync(file)) return normalizeRecipe(JSON.parse(readFileSync(file, 'utf8')));
+  fail(`"${arg}" is not a theme code, a preset (${PRESETS.map((p) => p.id).join(', ')}) or a recipe file`, 2);
+}
+
+const describe = (recipe) => {
+  const font = (id) => fontById(id)?.family ?? id;
+  return [
+    `brand ${recipe.brand} · neutral ${recipe.neutral} · radius ${recipe.radius} · controls ${recipe.controls}`,
+    `type ${font(recipe.font.heading)} / ${font(recipe.font.body)} · stroke ${recipe.stroke} · depth ${recipe.depth} · density ${recipe.density} · border ${recipe.border}`,
+  ].join('\n  ');
+};
+
+/** positional: [subcommand, arg]; flags: { force, 'dry-run', check, … } */
+export async function themeCommand({ positional, flags, root, sourcePath, build }) {
+  const [sub = 'show', arg] = positional;
+  const tokens = () => JSON.parse(readFileSync(sourcePath, 'utf8'));
+
+  if (sub === 'presets') {
+    for (const p of PRESETS) console.log(`${p.id.padEnd(12)} ${encodeRecipe(p.recipe)}  ${p.description}`);
+    return;
+  }
+
+  if (sub === 'encode') {
+    console.log(encodeRecipe(readRecipe(arg, root)));
+    return;
+  }
+
+  if (sub === 'show') {
+    const status = themeStatus(tokens());
+    if (!status.applied) {
+      console.log('No theme recorded in tokens.json. Apply one with `kit-tokens theme apply <code|preset>`.');
+      if (flags.check) process.exit(0);
+      return;
+    }
+    const name = status.recipe.preset ? ` (${presetById(status.recipe.preset)?.name ?? status.recipe.preset})` : '';
+    console.log(`Theme ${status.code}${name}\n  ${describe(status.recipe)}`);
+    if (status.drift.length) {
+      console.log(`\nEdited by hand since it was applied (${status.drift.length}):\n${status.drift.map((p) => `  ${p}`).join('\n')}`);
+      if (flags.check) fail('tokens.json no longer matches its recorded theme. Re-apply it, or apply with --force to record the edits away.');
+    }
+    return;
+  }
+
+  if (sub === 'apply') {
+    const recipe = readRecipe(arg, root);
+    const current = tokens();
+    const status = themeStatus(current);
+    const blocked = !status.applied
+      ? 'tokens.json has no theme recorded, so applying one would overwrite its brand and neutral ramps, semantic colours and radius ' +
+        'without knowing whether they were customised. Re-run with --force to go ahead.'
+      : status.drift.length
+        ? `these theme tokens were edited by hand since ${status.code} was applied:\n${status.drift.map((p) => `  ${p}`).join('\n')}\nRe-run with --force to overwrite them.`
+        : null;
+    if (blocked && !flags.force && !flags['dry-run']) fail(blocked);
+    const { tokens: next, theme } = applyRecipe(current, recipe);
+    console.log(`Theme ${theme.code}${recipe.preset ? ` (${presetById(recipe.preset)?.name})` : ''}\n  ${describe(theme.recipe)}`);
+    if (theme.adjustments.length) {
+      console.log(`\nAdjusted for contrast (WCAG AA), hue kept:`);
+      for (const a of theme.adjustments) console.log(`  ${a.mode.padEnd(5)} ${a.token.padEnd(28)} ${a.from} → ${a.to}`);
+    }
+    if (flags['dry-run']) {
+      console.log(`\n--dry-run: nothing written.${blocked && !flags.force ? `\nNote: ${blocked}` : ''}`);
+      return;
+    }
+    writeFileSync(sourcePath, JSON.stringify(next, null, 2) + '\n');
+    console.log(`\nWrote ${sourcePath.slice(root.length + 1)}.`);
+    await build();
+    return;
+  }
+
+  fail(`unknown command "theme ${sub}". Use apply, show, presets or encode.`, 2);
+}

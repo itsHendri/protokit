@@ -10,6 +10,8 @@
       start shows a white page first. Mirrors KitThemeProvider (lib/theme-context.tsx) and lib/embed.ts:
       ?theme= wins, an embedded page ignores the saved choice, otherwise the saved `kit.theme-mode`,
       otherwise the OS. Keep the three in step.
+      An embedded page also paints the docs picker's live theme, cached in sessionStorage by the docs site
+      (same origin); the checks and the selectors mirror lib/embed-theme.ts.
     -->
     <script>
       (function () {
@@ -25,6 +27,24 @@
             (mode !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
           root.classList.toggle('dark', dark);
           root.style.colorScheme = dark ? 'dark' : 'light';
+          var cached = params.get('embed') === '1' && JSON.parse(sessionStorage.getItem('kit.embed.theme') || 'null');
+          var vars = cached && cached.code && cached.mobile && cached.mobile.vars;
+          if (vars) {
+            var block = function (selector, map) {
+              var css = '';
+              for (var name in map || {}) {
+                var value = String(map[name]);
+                if (/^--[a-z0-9-]{1,40}$/.test(name) && /^[\w.%\s(),#/-]{1,80}$/.test(value) && !/url/i.test(value)) {
+                  css += name + ':' + value + ';';
+                }
+              }
+              return selector + '{' + css + '}';
+            };
+            var style = document.createElement('style');
+            style.id = 'kit-theme-override';
+            style.textContent = block(':root:root:root', vars.light) + block('.dark:root:root:root', vars.dark);
+            document.head.appendChild(style);
+          }
         } catch (e) {
           /* storage or matchMedia unavailable: the app sets the theme when it mounts */
         }

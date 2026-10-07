@@ -26,6 +26,7 @@
     "tokens:figma": "kit-tokens figma",
     "dev:client": "expo start -c",
     "tokens:check": "kit-tokens check",
+    "theme": "kit-tokens theme",
     "registry:build": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/registry-build.mjs",
     "registry:drift": "node scripts/rnr-drift.mjs",
     "registry:dist": "npx -y shadcn@4.21.3 build registry.json --output dist/r/native",

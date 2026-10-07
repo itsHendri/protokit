@@ -110,7 +110,7 @@ Colours are semantic names only, used as Tailwind classes (`bg-primary`, `text-m
 required; every fill/foreground pairing clears WCAG AA (4.5:1), enforced by `npm run tokens:build`.
 A tone's own text on its own tint (`text-success` on `bg-success/15`) clears AA only for these
 tints; on a stronger one, put `text-foreground` on the tint:
-primary up to /5, success up to /5, warning up to /5, info up to /15, destructive never.
+primary up to /5, success up to /5, warning up to /5, info up to /15, destructive up to /5.
 
 | Name | Light | Dark |
 |---|---|---|
@@ -120,7 +120,7 @@ primary up to /5, success up to /5, warning up to /5, info up to /15, destructiv
 | `card-foreground` | #09090b | #fafafa |
 | `popover` | #ffffff | #18181b |
 | `popover-foreground` | #09090b | #fafafa |
-| `primary` | #2563eb | #3b82f6 |
+| `primary` | #2563eb | #448bff |
 | `primary-foreground` | #ffffff | #09090b |
 | `secondary` | #f4f4f5 | #27272a |
 | `secondary-foreground` | #18181b | #fafafa |
@@ -128,7 +128,7 @@ primary up to /5, success up to /5, warning up to /5, info up to /15, destructiv
 | `muted-foreground` | #52525b | #a1a1aa |
 | `accent` | #f4f4f5 | #27272a |
 | `accent-foreground` | #18181b | #fafafa |
-| `destructive` | #dc2626 | #ef4444 |
+| `destructive` | #d92223 | #fb504e |
 | `destructive-foreground` | #ffffff | #09090b |
 | `success` | #15803d | #22c55e |
 | `success-foreground` | #ffffff | #09090b |
@@ -138,15 +138,15 @@ primary up to /5, success up to /5, warning up to /5, info up to /15, destructiv
 | `info-foreground` | #ffffff | #09090b |
 | `border` | #e4e4e7 | #27272a |
 | `input` | #e4e4e7 | #27272a |
-| `ring` | #2563eb | #3b82f6 |
+| `ring` | #2563eb | #448bff |
 | `sidebar` | #fafafa | #18181b |
 | `sidebar-foreground` | #09090b | #fafafa |
-| `sidebar-primary` | #2563eb | #3b82f6 |
+| `sidebar-primary` | #2563eb | #448bff |
 | `sidebar-primary-foreground` | #ffffff | #09090b |
 | `sidebar-accent` | #f4f4f5 | #27272a |
 | `sidebar-accent-foreground` | #18181b | #fafafa |
 | `sidebar-border` | #e4e4e7 | #27272a |
-| `sidebar-ring` | #2563eb | #3b82f6 |
+| `sidebar-ring` | #2563eb | #448bff |
 | `chart-1` | #3b82f6 | #60a5fa |
 | `chart-2` | #22c55e | #4ade80 |
 | `chart-3` | #f59e0b | #fbbf24 |

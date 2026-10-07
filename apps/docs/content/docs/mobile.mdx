@@ -34,14 +34,15 @@ Set `name`, `slug` and `scheme` in `app.json`, and the bundle identifier as `APP
 
 ### Re-brand it
 
-Edit `tokens/tokens.json`: the brand ramp, the semantic colours and the base radius. Then:
+Pick a theme on this site (the bar at the bottom, or the [theme studio](/themes)), then apply its code:
 
 ```bash
-npm run tokens:build
+npx kit-tokens theme apply pk1-XXXXXXXXXXXX
 ```
 
-The build refuses any palette that falls below WCAG AA and names the pairing that failed. Add a brand font
-with the `expo-font` config plugin and set `primitive.font.family.sans`.
+It rewrites the theme's part of `tokens/tokens.json`, installs its fonts and rebuilds. See [Themes](/docs/themes).
+To edit `tokens/tokens.json` by hand instead, run `npm run tokens:build` after: it refuses any palette that
+falls below WCAG AA and names the pairing that failed.
 
 </Step>
 <Step>

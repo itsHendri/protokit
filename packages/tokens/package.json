@@ -24,6 +24,10 @@
   },
   "exports": {
     ".": "./cli.mjs",
+    "./theme": {
+      "types": "./lib/theme/index.d.mts",
+      "default": "./lib/theme/index.mjs"
+    },
     "./lib/*": "./lib/*.mjs",
     "./targets/*": "./targets/*.mjs",
     "./package.json": "./package.json"

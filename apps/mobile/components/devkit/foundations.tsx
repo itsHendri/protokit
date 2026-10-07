@@ -3,14 +3,64 @@
  * or the token value) so a designer can grab the exact name to use.
  */
 import { Text } from '@/components/ui/text';
-import { usePalette } from '@/lib/palette-context';
-import { TOKENS } from '@/lib/theme';
+import { usePalette, useLiveThemeCode } from '@/lib/palette-context';
+import { THEME_INFO, TOKENS } from '@/lib/theme';
 import { cn } from '@/lib/utils';
 import { useCopy } from './copy';
 import type { FoundationSection } from './types';
 import { Pressable, View } from 'react-native';
 
 const kebab = (s: string) => s.replace(/([A-Z0-9])/g, '-$1').toLowerCase();
+
+const FONT_NAMES: Record<string, string> = { system: 'System' };
+const fontName = (id: string) => FONT_NAMES[id] ?? id.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
+
+/** The theme tokens.json was generated from, read-only. Themes are picked on the docs site and applied with kit-tokens. */
+function ThemeSummary() {
+  const live = useLiveThemeCode();
+  const { copied, copy } = useCopy();
+  if (!THEME_INFO) {
+    return <Text className="text-muted-foreground text-sm">No theme recorded. Apply one with `npx kit-tokens theme apply &lt;code&gt;`.</Text>;
+  }
+  const info = THEME_INFO;
+  const { recipe } = info;
+  const rows: [string, string][] = [
+    ['Neutral', recipe.neutral],
+    ['Radius', `${recipe.radius}${recipe.controls === 'pill' ? ' · pill controls' : ''}`],
+    ['Type', recipe.font.heading === recipe.font.body ? fontName(recipe.font.heading) : `${fontName(recipe.font.heading)} / ${fontName(recipe.font.body)}`],
+    ['Icons', `${recipe.stroke} stroke`],
+    ['Depth', recipe.depth],
+    ['Density', recipe.density],
+    ['Border', recipe.border],
+  ];
+  return (
+    <View className="w-full gap-3">
+      <Pressable onPress={() => copy('code', info.code)} className="flex-row items-center gap-3">
+        <View className="border-border size-10 rounded-full border" style={{ backgroundColor: recipe.brand }} />
+        <View className="flex-1">
+          <Text className="font-semibold">
+            {info.name}
+            {info.edited ? ' (edited by hand)' : ''}
+          </Text>
+          <Text className="text-muted-foreground font-mono text-xs">{copied === 'code' ? 'Copied ✓' : info.code}</Text>
+        </View>
+      </Pressable>
+      <View className="border-border rounded-lg border">
+        {rows.map(([label, value], i) => (
+          <View key={label} className={cn('flex-row justify-between px-3 py-2', i > 0 && 'border-border border-t')}>
+            <Text className="text-muted-foreground text-sm">{label}</Text>
+            <Text className="text-sm">{value}</Text>
+          </View>
+        ))}
+      </View>
+      {live ? (
+        <Text className="text-muted-foreground text-xs">
+          Previewing {live} from the docs theme picker. The values below follow it; the summary above is what tokens.json holds.
+        </Text>
+      ) : null}
+    </View>
+  );
+}
 
 function ColorTokens() {
   const palette = usePalette();
@@ -151,6 +201,14 @@ function Easings() {
 }
 
 export const FOUNDATION_SECTIONS: FoundationSection[] = [
+  {
+    id: 'theme',
+    title: 'Theme',
+    category: 'color',
+    aliases: ['preset', 'brand', 'theme code', 'recipe'],
+    caption: 'Pick and preview themes on the docs site (/themes), then apply one: npx kit-tokens theme apply <code>. Tap to copy the code.',
+    Demo: ThemeSummary,
+  },
   {
     id: 'colors',
     title: 'Semantic colours',

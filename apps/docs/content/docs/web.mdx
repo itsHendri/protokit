@@ -39,15 +39,15 @@ Set `name` in `package.json`, and the title and description in `app/layout.tsx`.
 
 ### Re-brand it
 
-Edit `tokens/tokens.json`: the brand ramp, the semantic colours and the base radius. Then:
+Pick a theme on this site (the bar at the bottom, or the [theme studio](/themes)), then apply its code:
 
 ```bash
-npm run tokens:build
+npx kit-tokens theme apply pk1-XXXXXXXXXXXX
 ```
 
-The build writes `app/tokens.css` (Tailwind 4 and shadcn variables, in oklch), refuses any palette that
-falls below WCAG AA and names the pairing that failed. In the monorepo, edit
-`apps/mobile/tokens/tokens.json` instead and run `npm run tokens:sync`: one brand file drives both kits.
+In the monorepo, run `npm run theme:apply -- pk1-…` at the root instead: one theme drives both kits. See
+[Themes](/docs/themes). To edit `tokens/tokens.json` by hand, run `npm run tokens:build` after: it writes
+`app/tokens.css` (Tailwind 4 and shadcn variables, in oklch) and refuses any palette below WCAG AA.
 
 </Step>
 <Step>
