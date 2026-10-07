@@ -8,5 +8,8 @@
     "directory": "./out",
     "not_found_handling": "404-page",
     "html_handling": "auto-trailing-slash"
-  }
+  },
+  // Branch previews (Workers Builds runs `wrangler preview` for non-main branches). Empty on purpose:
+  // previews reuse the assets settings above.
+  "previews": {}
 }
