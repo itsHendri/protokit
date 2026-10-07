@@ -35,6 +35,8 @@ const PAGES = [
   '/docs/web/',
   '/docs/patterns/',
   '/docs/foundations/',
+  '/docs/themes/',
+  '/themes/',
   '/w/',
   '/w/components/',
   '/w/dashboard/',

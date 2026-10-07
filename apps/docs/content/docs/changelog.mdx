@@ -5,6 +5,27 @@ description: What changed, newest first.
 
 ## October 2026
 
+### Themes
+
+Pick a theme on this site and watch both kits change, live, then commit it with one code. See
+[Themes](/docs/themes).
+
+- **The theme bar** sits at the bottom of every page: a preset, a brand colour, light or dark, how many
+  colours were adjusted for contrast, and **Use theme**. The whole site and every live phone and browser
+  frame follow it.
+- **The [theme studio](/themes)** has every control next to a live phone and browser: eight personality
+  presets, any brand colour, a neutral, heading and body fonts from 14 Google families, radius, pill or
+  matching buttons, border weight, depth (flat, soft, raised, hard), icon stroke and density. Undo, and a
+  shuffle that keeps what you lock.
+- **Contrast fixes itself.** A colour that fails WCAG AA keeps its hue and moves the least lightness it needs;
+  the bar lists each change. The contrast gate also checks brand and status colours on muted surfaces now,
+  which brightened the dark theme's blue a little.
+- **Use a theme** with a `pk1-` code: `npm run theme:apply -- <code>` in the repo, `npx kit-tokens theme apply
+  <code>` in a copied-out kit, a prompt for your coding agent (both kits have an `apply-theme` skill), a share
+  link, or a tokens.json download. Each kit's Foundations page shows the applied theme.
+- In the kits, buttons and chips use `rounded-control`, controls `h-control`, and shadows the theme's three
+  levels; the web kit's buttons are pills by default now, like the mobile kit's.
+
 ### Mobile kit: Timeline and Rating
 
 - **Timeline.** Vertical status steps joined by a line, each done, current or upcoming, with a time and a

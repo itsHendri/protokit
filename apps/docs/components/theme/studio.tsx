@@ -196,11 +196,11 @@ export function ThemeStudio() {
       {ALL_FONTS ? <link rel="stylesheet" href={ALL_FONTS} /> : null}
       {PRESET_FONTS ? <link rel="stylesheet" href={PRESET_FONTS} /> : null}
 
-      <aside aria-label="Theme controls" className="border-border bg-card/40 w-full shrink-0 border-b lg:sticky lg:top-14 lg:h-[calc(100dvh-3.5rem)] lg:w-[360px] lg:overflow-y-auto lg:border-b-0 lg:border-r">
+      <aside aria-label="Theme controls" className="border-border bg-card/40 order-2 w-full shrink-0 border-t lg:order-1 lg:border-t-0 lg:sticky lg:top-14 lg:h-[calc(100dvh-3.5rem)] lg:w-[360px] lg:overflow-y-auto lg:border-b-0 lg:border-r">
         <Section title="Presets">
           <div className="grid grid-cols-2 gap-2">
             {PRESETS.map((p) => (
-              <PresetCard key={p.id} id={p.id} name={p.name} recipe={p.recipe} selected={recipe.preset === p.id && sameRecipe(recipe, p.recipe)} />
+              <PresetCard key={p.id} id={p.id} name={p.name} recipe={p.recipe} selected={sameRecipe(recipe, p.recipe)} />
             ))}
           </div>
         </Section>
@@ -262,6 +262,7 @@ export function ThemeStudio() {
           {(['heading', 'body'] as const).map((role) => (
             <Field key={role} label={role === 'heading' ? 'Headings' : 'Body'}>
               <select
+                aria-label={role === 'heading' ? 'Heading font' : 'Body font'}
                 value={recipe.font[role]}
                 onChange={(e) => set({ font: { [role]: e.target.value } as Recipe['font'] })}
                 className="border-border bg-background focus-visible:ring-ring h-9 w-full rounded-lg border px-2.5 text-sm focus-visible:outline-none focus-visible:ring-2"
@@ -328,7 +329,8 @@ export function ThemeStudio() {
         </Section>
       </aside>
 
-      <main className="flex min-w-0 flex-1 flex-col gap-8 px-4 py-6 sm:px-8">
+      {/* On a phone the title, the export and the previews come first; the controls follow. */}
+      <main className="order-1 flex min-w-0 flex-1 flex-col gap-8 px-4 py-6 sm:px-8 lg:order-2">
         <header className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex flex-col gap-1">
             <h1 className="text-2xl font-semibold tracking-tight">Theme studio</h1>
