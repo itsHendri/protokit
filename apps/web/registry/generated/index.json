@@ -10,12 +10,12 @@
     {
       "id": "inputs",
       "label": "Inputs & selection",
-      "blurb": "Fields, choices, pickers"
+      "blurb": "Fields, choices, dates, pickers"
     },
     {
       "id": "navigation",
       "label": "Navigation",
-      "blurb": "Tabs, breadcrumbs, app shell, command"
+      "blurb": "App shell, tabs, menus, breadcrumbs, pagination, command"
     },
     {
       "id": "data",
@@ -35,7 +35,7 @@
     {
       "id": "overlays",
       "label": "Overlays",
-      "blurb": "Dialogs, sheets, popovers, tooltips"
+      "blurb": "Dialogs, sheets, drawers, popovers, tooltips"
     },
     {
       "id": "marketing",
@@ -45,7 +45,7 @@
     {
       "id": "ai",
       "label": "AI product",
-      "blurb": "Chat, streaming, tool calls, approvals"
+      "blurb": "Chat, history, streaming, tool calls, approvals"
     }
   ],
   "components": [
@@ -223,6 +223,48 @@
       "install": "select"
     },
     {
+      "id": "date-picker",
+      "title": "Date picker",
+      "exports": [
+        "DatePicker"
+      ],
+      "category": "inputs",
+      "files": [
+        "components/kit/date-picker.tsx"
+      ],
+      "notes": "one date in a form · field-styled button → Calendar in a Popover · `value onChange disabled?`",
+      "api": "<DatePicker id value onChange placeholder? disabled? />",
+      "caption": "The placeholder says what the date is for (“Pick a due date”). Block days that cannot be chosen with `disabled` instead of erroring after.",
+      "aliases": [
+        "date",
+        "calendar input",
+        "due date",
+        "deadline"
+      ],
+      "install": "@kit/date-picker"
+    },
+    {
+      "id": "calendar",
+      "title": "Calendar",
+      "exports": [
+        "Calendar",
+        "CalendarDayButton"
+      ],
+      "category": "inputs",
+      "files": [
+        "components/ui/calendar.tsx"
+      ],
+      "notes": "a month grid (react-day-picker) · `mode` single/range/multiple · use DatePicker for a form field",
+      "api": "<Calendar mode=\"single\" selected onSelect disabled? />",
+      "caption": "On its own for booking and availability views; inside a form, use DatePicker.",
+      "aliases": [
+        "month",
+        "date range",
+        "availability"
+      ],
+      "install": "@kit/calendar"
+    },
+    {
       "id": "slider",
       "title": "Slider",
       "exports": [
@@ -278,6 +320,32 @@
       "install": "tabs"
     },
     {
+      "id": "navigation-menu",
+      "title": "Navigation menu",
+      "exports": [
+        "NavigationMenu",
+        "NavigationMenuList",
+        "NavigationMenuItem",
+        "NavigationMenuTrigger",
+        "NavigationMenuContent",
+        "NavigationMenuLink",
+        "navigationMenuTriggerStyle"
+      ],
+      "category": "navigation",
+      "files": [
+        "components/ui/navigation-menu.tsx"
+      ],
+      "notes": "a marketing site’s top nav with dropdown panels · not for app navigation (AppShell)",
+      "api": "<NavigationMenu><NavigationMenuList><NavigationMenuItem><NavigationMenuTrigger /><NavigationMenuContent /></NavigationMenuItem></NavigationMenuList></NavigationMenu>",
+      "caption": "For marketing pages with grouped links. Hide it behind a Sheet on small screens; it does not collapse on its own.",
+      "aliases": [
+        "mega menu",
+        "top nav",
+        "header menu"
+      ],
+      "install": "navigation-menu"
+    },
+    {
       "id": "breadcrumb",
       "title": "Breadcrumb",
       "exports": [
@@ -295,6 +363,32 @@
       "notes": "where a detail page sits · the last item is the current page",
       "api": "<Breadcrumb><BreadcrumbList><BreadcrumbItem><BreadcrumbLink href /></BreadcrumbItem>…</BreadcrumbList></Breadcrumb>",
       "install": "breadcrumb"
+    },
+    {
+      "id": "pagination",
+      "title": "Pagination",
+      "exports": [
+        "Pagination",
+        "PaginationContent",
+        "PaginationItem",
+        "PaginationLink",
+        "PaginationPrevious",
+        "PaginationNext",
+        "PaginationEllipsis"
+      ],
+      "category": "navigation",
+      "files": [
+        "components/ui/pagination.tsx"
+      ],
+      "notes": "pages of a long list or table · Previous/Next + page links · `isActive` on the current page",
+      "api": "<Pagination><PaginationContent><PaginationItem><PaginationPrevious href /></PaginationItem>…</PaginationContent></Pagination>",
+      "caption": "Under a DataTable with more rows than fit. Say where the person is (“21–30 of 128”) next to it.",
+      "aliases": [
+        "pages",
+        "next page",
+        "paging"
+      ],
+      "install": "pagination"
     },
     {
       "id": "command",
@@ -696,6 +790,33 @@
       "install": "sheet"
     },
     {
+      "id": "drawer",
+      "title": "Drawer",
+      "exports": [
+        "Drawer",
+        "DrawerTrigger",
+        "DrawerContent",
+        "DrawerHeader",
+        "DrawerTitle",
+        "DrawerDescription",
+        "DrawerFooter",
+        "DrawerClose"
+      ],
+      "category": "overlays",
+      "files": [
+        "components/ui/drawer.tsx"
+      ],
+      "notes": "a bottom sheet you can drag down (vaul) · mobile-first quick actions and filters",
+      "api": "<Drawer><DrawerTrigger asChild /><DrawerContent><DrawerHeader><DrawerTitle /></DrawerHeader>…<DrawerFooter /></DrawerContent></Drawer>",
+      "caption": "Phone-sized web flows: filters, a quick form, a share menu. On desktop use Dialog or Sheet.",
+      "aliases": [
+        "bottom sheet",
+        "action sheet",
+        "swipe"
+      ],
+      "install": "drawer"
+    },
+    {
       "id": "popover",
       "title": "Popover",
       "exports": [
@@ -844,6 +965,27 @@
         "message box"
       ],
       "install": "@kit/chat-composer"
+    },
+    {
+      "id": "chat-thread-list",
+      "title": "Chat thread list",
+      "exports": [
+        "ChatThreadList"
+      ],
+      "category": "ai",
+      "files": [
+        "components/kit/chat-thread-list.tsx"
+      ],
+      "notes": "past conversations, grouped by when · `threads activeId onSelect onNew?`",
+      "api": "<ChatThreadList threads={[{id,title,preview?,group?}]} activeId onSelect onNew? />",
+      "caption": "Beside the conversation on desktop, in a Sheet on small screens. Title threads by their topic, not “New chat”.",
+      "aliases": [
+        "history",
+        "conversations",
+        "chat sidebar",
+        "threads"
+      ],
+      "install": "@kit/chat-thread-list"
     },
     {
       "id": "streaming-text",

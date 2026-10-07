@@ -97,6 +97,8 @@ the tables. Text between `GENERATED` markers is overwritten.
 | RadioGroup / RadioGroupItem | `components/ui/radio-group.tsx` | pick exactly one · `RadioGroupItem value id` |
 | Switch | `components/ui/switch.tsx` | a setting that applies at once (no Save button) |
 | Select / SelectTrigger / SelectValue / SelectContent / SelectItem | `components/ui/select.tsx` | one of 5–15 options in a form; fewer → RadioGroup, more → Command |
+| DatePicker | `components/kit/date-picker.tsx` | one date in a form · field-styled button → Calendar in a Popover · `value onChange disabled?` |
+| Calendar / CalendarDayButton | `components/ui/calendar.tsx` | a month grid (react-day-picker) · `mode` single/range/multiple · use DatePicker for a form field |
 | Slider | `components/ui/slider.tsx` | a value on a range · two thumbs for a range |
 <!-- /GENERATED:registry:inputs -->
 
@@ -106,7 +108,9 @@ the tables. Text between `GENERATED` markers is overwritten.
 |---|---|---|
 | AppShell | `components/kit/app-shell.tsx` | sidebar of 4–8 destinations on desktop, a sheet on mobile · active item follows the URL |
 | Tabs / TabsList / TabsTrigger / TabsContent | `components/ui/tabs.tsx` | switch views of the same thing in place; not page navigation |
+| NavigationMenu / NavigationMenuList / NavigationMenuItem / NavigationMenuTrigger / NavigationMenuContent / NavigationMenuLink / `navigationMenuTriggerStyle` | `components/ui/navigation-menu.tsx` | a marketing site’s top nav with dropdown panels · not for app navigation (AppShell) |
 | Breadcrumb / BreadcrumbList / BreadcrumbItem / BreadcrumbLink / BreadcrumbPage / BreadcrumbSeparator | `components/ui/breadcrumb.tsx` | where a detail page sits · the last item is the current page |
+| Pagination / PaginationContent / PaginationItem / PaginationLink / PaginationPrevious / PaginationNext / PaginationEllipsis | `components/ui/pagination.tsx` | pages of a long list or table · Previous/Next + page links · `isActive` on the current page |
 | Command / CommandDialog / CommandInput / CommandList / CommandEmpty / CommandGroup / CommandItem | `components/ui/command.tsx` | search-as-you-type list · `CommandDialog` for a ⌘K palette |
 <!-- /GENERATED:registry:navigation -->
 
@@ -152,6 +156,7 @@ the tables. Text between `GENERATED` markers is overwritten.
 | Dialog / DialogTrigger / DialogContent / DialogHeader / DialogTitle / DialogDescription / DialogFooter / DialogClose | `components/ui/dialog.tsx` | a short task on top of the page (an edit form) |
 | AlertDialog / AlertDialogTrigger / AlertDialogContent / AlertDialogAction / AlertDialogCancel | `components/ui/alert-dialog.tsx` | confirm something destructive · name the action on the button |
 | Sheet / SheetTrigger / SheetContent / SheetHeader / SheetTitle / SheetDescription / SheetFooter | `components/ui/sheet.tsx` | a side panel: filters, a record’s details, mobile navigation · `side` |
+| Drawer / DrawerTrigger / DrawerContent / DrawerHeader / DrawerTitle / DrawerDescription / DrawerFooter / DrawerClose | `components/ui/drawer.tsx` | a bottom sheet you can drag down (vaul) · mobile-first quick actions and filters |
 | Popover / PopoverTrigger / PopoverContent | `components/ui/popover.tsx` | a small panel anchored to a control |
 | DropdownMenu / DropdownMenuTrigger / DropdownMenuContent / DropdownMenuItem / DropdownMenuLabel / DropdownMenuSeparator | `components/ui/dropdown-menu.tsx` | actions on a thing (row menu, account menu) · `variant="destructive"` items last |
 | Tooltip / TooltipTrigger / TooltipContent | `components/ui/tooltip.tsx` | names an icon button · never the only place information lives |
@@ -172,6 +177,7 @@ the tables. Text between `GENERATED` markers is overwritten.
 |---|---|---|
 | ChatMessage | `components/kit/chat-message.tsx` | one turn · user = bubble on the right, assistant = plain text on the left |
 | ChatComposer | `components/kit/chat-composer.tsx` | Enter sends, Shift+Enter breaks · `busy` turns Send into Stop |
+| ChatThreadList | `components/kit/chat-thread-list.tsx` | past conversations, grouped by when · `threads activeId onSelect onNew?` |
 | StreamingText / `useStreamingText` | `components/kit/streaming-text.tsx` | an answer arriving · all at once under reduced motion · screen readers get it once |
 | ThinkingIndicator | `components/kit/thinking-indicator.tsx` | the model is working · say what it is doing when you can |
 | ToolCallCard | `components/kit/tool-call-card.tsx` | an action the assistant took · `status` running/done/error/stopped · details collapsed |
@@ -186,8 +192,10 @@ the tables. Text between `GENERATED` markers is overwritten.
   (`Accordion`) → a closing call to action. One promise, one primary action, repeated at the end.
 - **AI conversation:** `ChatMessage`s in a centred column (`max-w-3xl`), `ChatComposer` pinned at the bottom.
   Show work as it happens (`ThinkingIndicator`, `ToolCallCard`), stream the answer (`StreamingText`), and ask
-  with an `ApprovalCard` before anything irreversible or costly (consent before consequence).
-- **Forms:** a `Label` for every field, errors next to the field (`aria-invalid` + a `text-destructive`
+  with an `ApprovalCard` before anything irreversible or costly (consent before consequence). Past
+  conversations go in a `ChatThreadList`: a sidebar on desktop, a Sheet on small screens. A cancelled tool
+  call is `stopped`, not `error`.
+- **Forms:** a `Label` for every field, `DatePicker` for a single date, errors next to the field (`aria-invalid` + a `text-destructive`
   line), the submit button names the action.
 - **Confirmations:** `AlertDialog` for destructive actions, its button says what happens. `toast()` for
   done-and-undo.
