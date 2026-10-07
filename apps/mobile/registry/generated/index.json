@@ -404,6 +404,27 @@
       "install": "@kit-native/quantity-stepper"
     },
     {
+      "id": "rating",
+      "title": "Rating",
+      "exports": [
+        "Rating"
+      ],
+      "category": "inputs",
+      "files": [
+        "components/kit/rating.tsx"
+      ],
+      "notes": "stars · display (half stars, `showValue`, `count`) or input with `onChange` (44pt radio stars)",
+      "api": "<Rating value onChange? showValue? count? size? accessibilityLabel? />",
+      "caption": "Show a score with the number beside it; ask for one after something is done (an order delivered), not in the middle of a task.",
+      "aliases": [
+        "stars",
+        "review",
+        "score",
+        "feedback"
+      ],
+      "install": "@kit-native/rating"
+    },
+    {
       "id": "amount-input",
       "title": "Amount input",
       "exports": [
@@ -1022,6 +1043,27 @@
         "presence"
       ],
       "install": "@kit-native/status-dot"
+    },
+    {
+      "id": "timeline",
+      "title": "Timeline",
+      "exports": [
+        "Timeline"
+      ],
+      "category": "data",
+      "files": [
+        "components/kit/timeline.tsx"
+      ],
+      "notes": "vertical status steps joined by a line · each `done` / `current` / `upcoming` with time and note",
+      "api": "<Timeline items={[{ title, time?, description?, state }]} tone? />",
+      "caption": "For what already happened and what comes next (an order, a delivery, an application). A flow the person is filling in uses Stepper.",
+      "aliases": [
+        "status steps",
+        "tracking",
+        "history",
+        "progress"
+      ],
+      "install": "@kit-native/timeline"
     },
     {
       "id": "line-chart",

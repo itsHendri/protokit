@@ -1,5 +1,6 @@
 import { ImageTile } from '@/components/kit/image-tile';
 import { QuantityStepper } from '@/components/kit/quantity-stepper';
+import { Rating } from '@/components/kit/rating';
 import { SegmentedControl } from '@/components/kit/segmented-control';
 import { StickyBottomBar } from '@/components/kit/sticky-bottom-bar';
 import { useToast } from '@/components/kit/toast';
@@ -7,10 +8,8 @@ import { iconFor, money, productById, PRODUCTS, shop } from '@/components/shop/s
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { StarIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 
@@ -38,10 +37,7 @@ export default function ProductDetail() {
             <Badge variant="secondary">
               <Text>{p.category}</Text>
             </Badge>
-            <View className="flex-row items-center gap-1">
-              <Icon as={StarIcon} size={14} className="text-warning" />
-              <Text className="text-muted-foreground text-sm">{p.rating} · 120 reviews</Text>
-            </View>
+            <Rating value={p.rating} showValue count={120} />
           </View>
           <Text variant="h3">{p.name}</Text>
           <Text className="text-2xl font-semibold">{money(p.price)}</Text>
