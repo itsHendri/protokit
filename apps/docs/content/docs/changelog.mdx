@@ -39,6 +39,10 @@ no name or state. Fixed in the kit's components, so every prototype gets them:
   - Filter tabs pointing at panels that don't exist.
   - Brand-blue active links in this site's navigation.
   - An unlabelled GitHub icon.
+- **Text on tints.** The token build works out, per status colour, the strongest tint its own text can sit
+  on and still clear AA: with today's palette, primary, success and warning up to 5%, info up to 15%,
+  destructive never. Both kits' `DESIGN.md` list the limits, and `kit-tokens check` fails on a class string
+  that goes past them, naming the file and line.
 - **Calendar hydration fix.** shadcn's Calendar wrote locale-formatted dates into its markup, so server and
   browser disagreed. The kit's copy uses `YYYY-MM-DD`.
 
