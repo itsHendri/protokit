@@ -4,22 +4,6 @@ Durable, human- and agent-readable list of deferred work. Update when you defer 
 
 _Last updated: 2026-10-07_
 
-## Accessibility on the web export (found by the docs site's axe check, 2026-10-07)
-`apps/docs/scripts/check-a11y.mjs` skips the phone frames (`MOBILE_FRAMES = false`) until these are fixed.
-Run it with `MOBILE_FRAMES = true` to reproduce:
-- **Unnamed progress:** the Habits progress ring and a Button's loading spinner render `role="progressbar"`
-  with no name (`aria-progressbar-name`). Give them an `accessibilityLabel`.
-- **Radio items without names:** Kitchen Sink › Inputs `#ks-radio-*` (`aria-toggle-field-name`). The Label
-  next to each item is not associated on web.
-- **Sliders without names** (`aria-input-field-name`): the slider thumbs need `accessibilityLabel`.
-- **Selectable cards** (`aria-required-attr`): a role that needs `aria-checked`/`aria-selected` is missing it.
-- **A disallowed ARIA attribute** on a pressable in Inputs (`aria-allowed-attr`).
-- **Contrast:** the Shop search field and the Kitchen Sink email field (placeholder text), and a disabled
-  button's label, in light mode.
-- **Status text on its own tint:** the web kit found `text-success` on `bg-success/15` measures 4.09:1 and
-  `text-destructive` on `bg-destructive/15` 3.81:1. Check the mobile kit's tinted badges the same way;
-  the kit-tokens contrast gate could check `X` on `X/15` too.
-
 ## Deferred by decision
 - **Scenario system** (several prototypes in one install with a picker and web `/scenarios` index). One prototype per
   clone for now; the kit shell is a route group so it can be hidden later.
@@ -49,6 +33,14 @@ Present: 69 previews across 8 categories. Still missing, roughly in order of how
 - `@expo/ui` (SwiftUI/Compose controls) and `expo-glass-effect` — evaluate for native-feel controls after SDK 58.
 
 ## Known rough edges
+- **Web semantics the a11y gate does not reach yet** (2026-10-07). The docs site's gate only loads the frames it
+  embeds. Still on `accessibilityState`, which react-native-web drops: the `selected` state of FilterChip,
+  SegmentedControl, Calendar days and Sheet options (role `button`, where `aria-selected` is not allowed; they
+  want `aria-pressed` on web or a radio/tab role). On iOS, `RadioGroupItem` and `Switch` are named by their
+  Label only on web and Android (`aria-labelledby`); VoiceOver reads the Label as its own element. A
+  destructive menu item on its pressed/focused tint is 4.14:1 in light (shadcn's pattern, same in the web kit).
+  The kit-tokens contrast gate could check `X` text on `X/15`; the kit puts no status text on
+  its own tint.
 - **Contrast gate gap:** it checks each tone as text on `background` and `card`, not on `muted`/`accent`. In dark
   mode `primary` (brand.500) on `muted` (neutral.800) is 4.04:1. Found by Lighthouse on the docs site's tabs (fixed
   there with neutral selected tabs, the kit's own rule). Adding the pairing would need a lighter dark primary — a

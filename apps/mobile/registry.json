@@ -466,6 +466,34 @@
       }
     },
     {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "`htmlFor` · own `onPress` on native",
+      "dependencies": [
+        "@rn-primitives/label@^1.5.2"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/label.tsx"
+        }
+      ],
+      "categories": [
+        "inputs"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Label"
+        ]
+      }
+    },
+    {
       "name": "textarea",
       "type": "registry:ui",
       "title": "Textarea",
@@ -527,11 +555,12 @@
       "name": "radio-group",
       "type": "registry:ui",
       "title": "Radio group",
-      "description": "`RadioGroupItem value id`",
+      "description": "`RadioGroupItem value id` · a `Label htmlFor` the same id names it",
       "dependencies": [
         "@rn-primitives/radio-group@^1.5.2"
       ],
       "registryDependencies": [
+        "@kit-native/label",
         "@kit-native/lib-utils"
       ],
       "files": [
@@ -561,6 +590,7 @@
         "@rn-primitives/switch@^1.5.2"
       ],
       "registryDependencies": [
+        "@kit-native/label",
         "@kit-native/lib-utils"
       ],
       "files": [
@@ -902,7 +932,7 @@
       "name": "slider",
       "type": "registry:component",
       "title": "Slider",
-      "description": "continuous/stepped · `tone`",
+      "description": "continuous/stepped · `tone` · `accessibilityLabel` names it",
       "dependencies": [
         "react-native-gesture-handler@~2.32.0"
       ],
@@ -925,7 +955,7 @@
         "exports": [
           "Slider"
         ],
-        "api": "<Slider value onChange min max step? tone? onChangeComplete? />"
+        "api": "<Slider value onChange min max step? tone? onChangeComplete? accessibilityLabel />"
       }
     },
     {
@@ -1591,7 +1621,7 @@
         "exports": [
           "ProgressRing"
         ],
-        "api": "<ProgressRing value size? tone?>{centre}</ProgressRing>"
+        "api": "<ProgressRing value size? tone? accessibilityLabel?>{centre}</ProgressRing>"
       }
     },
     {
@@ -1881,7 +1911,7 @@
       "name": "spinner",
       "type": "registry:component",
       "title": "Spinner",
-      "description": "themed ActivityIndicator",
+      "description": "themed ActivityIndicator · announced as \"Loading\"",
       "dependencies": [],
       "registryDependencies": [
         "@kit-native/lib-theme",
@@ -1902,7 +1932,7 @@
         "exports": [
           "Spinner"
         ],
-        "api": "<Spinner size=\"small|large\" tone=\"primary|foreground|muted\" />"
+        "api": "<Spinner size=\"small|large\" tone=\"primary|foreground|muted\" accessibilityLabel? />"
       }
     },
     {

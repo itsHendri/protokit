@@ -229,7 +229,7 @@
       ],
       "notes": "`htmlFor` · own `onPress` on native",
       "preview": false,
-      "install": "https://reactnativereusables.com/r/nativewind/label.json"
+      "install": "@kit-native/label"
     },
     {
       "id": "textarea",
@@ -278,7 +278,7 @@
       "files": [
         "components/ui/radio-group.tsx"
       ],
-      "notes": "`RadioGroupItem value id`",
+      "notes": "`RadioGroupItem value id` · a `Label htmlFor` the same id names it",
       "api": "<RadioGroup value onValueChange><RadioGroupItem value id /></RadioGroup>",
       "aliases": [
         "single choice",
@@ -517,8 +517,8 @@
       "files": [
         "components/kit/slider.tsx"
       ],
-      "notes": "continuous/stepped · `tone`",
-      "api": "<Slider value onChange min max step? tone? onChangeComplete? />",
+      "notes": "continuous/stepped · `tone` · `accessibilityLabel` names it",
+      "api": "<Slider value onChange min max step? tone? onChangeComplete? accessibilityLabel />",
       "aliases": [
         "range",
         "drag",
@@ -995,7 +995,7 @@
         "components/kit/progress-ring.tsx"
       ],
       "notes": "circular determinate progress",
-      "api": "<ProgressRing value size? tone?>{centre}</ProgressRing>",
+      "api": "<ProgressRing value size? tone? accessibilityLabel?>{centre}</ProgressRing>",
       "aliases": [
         "circular progress",
         "goal",
@@ -1219,8 +1219,8 @@
       "files": [
         "components/kit/spinner.tsx"
       ],
-      "notes": "themed ActivityIndicator",
-      "api": "<Spinner size=\"small|large\" tone=\"primary|foreground|muted\" />",
+      "notes": "themed ActivityIndicator · announced as \"Loading\"",
+      "api": "<Spinner size=\"small|large\" tone=\"primary|foreground|muted\" accessibilityLabel? />",
       "aliases": [
         "loading",
         "activity indicator"

@@ -5,6 +5,23 @@ description: What changed, newest first.
 
 ## October 2026
 
+### The mobile kit passes the accessibility gate
+
+The gate now checks the mobile kit inside the phone frames too. React Native for Web renders the `aria-*`
+props and ignores `accessibilityState` and `accessibilityValue`, so on the web export several controls had
+no name or state. Fixed in the kit's components, so every prototype gets them:
+
+- **Named progress.** `Spinner` is announced as "Loading" and `ProgressRing` takes `accessibilityLabel`
+  (default "Progress"), with its value on web.
+- **Sliders** require `accessibilityLabel` and report their value on web.
+- **Radios and switches** are named by their `Label`: a `Label htmlFor="x"` gets the id `x-label`, and a
+  `RadioGroupItem` or `Switch` with `id="x"` points at it with `aria-labelledby`.
+- **Selection state** on web: `SelectableCard` and selectable `ListRow`s set `aria-checked`, tabs
+  `aria-selected`.
+- **Inputs:** placeholders measured 2.5:1 on web (a CSS reset coloured the empty field gray-400); they are
+  `muted-foreground` now, and a read-only `Input` or `Textarea` is announced as disabled.
+- **Select** no longer carries an `aria-autocomplete` its button role does not allow.
+
 ### Web kit components and checks
 
 - **Six web components.** DatePicker, Calendar, Pagination, NavigationMenu, Drawer and ChatThreadList. The
@@ -19,8 +36,6 @@ description: What changed, newest first.
   - Filter tabs pointing at panels that don't exist.
   - Brand-blue active links in this site's navigation.
   - An unlabelled GitHub icon.
-
-  The mobile kit's frames are not checked yet; their findings are in its backlog.
 - **Calendar hydration fix.** shadcn's Calendar wrote locale-formatted dates into its markup, so server and
   browser disagreed. The kit's copy uses `YYYY-MM-DD`.
 

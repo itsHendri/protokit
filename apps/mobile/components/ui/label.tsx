@@ -2,8 +2,14 @@ import { cn } from '@/lib/utils';
 import * as LabelPrimitive from '@rn-primitives/label';
 import { Platform } from 'react-native';
 
+/** The id a Label gets from `htmlFor`, so a control that `<label for>` cannot reach on web can name itself. */
+export function labelIdFor(id: string) {
+  return `${id}-label`;
+}
+
 function Label({
   className,
+  nativeID,
   onPress,
   onLongPress,
   onPressIn,
@@ -31,6 +37,7 @@ function Label({
           Platform.select({ web: 'leading-none' }),
           className
         )}
+        nativeID={nativeID ?? (props.htmlFor ? labelIdFor(props.htmlFor) : undefined)}
         {...props}
       />
     </LabelPrimitive.Root>

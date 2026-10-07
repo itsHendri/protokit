@@ -24,7 +24,11 @@ export function SelectableCard({ title, description, icon, detail, selected, onP
   return (
     <Pressable
       accessibilityRole={mode === 'radio' ? 'radio' : 'checkbox'}
-      accessibilityState={{ selected, checked: selected, disabled }}
+      // react-native-web renders the aria-* props and ignores accessibilityState; native merges both.
+      // `selected` stays native-only: aria-selected is not allowed on a radio or checkbox.
+      accessibilityState={{ selected }}
+      aria-checked={selected}
+      aria-disabled={disabled}
       disabled={disabled}
       onPress={() => {
         haptic('selection');

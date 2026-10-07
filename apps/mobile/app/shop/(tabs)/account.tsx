@@ -31,7 +31,7 @@ export default function Account() {
         <Card className="w-full gap-0 px-4 py-0">
           <ListRow leading={<IconCircle as={MapPinIcon} />} title="Addresses" subtitle="12 Orchard Lane, Cape Town" chevron onPress={() => toast.info('Not part of the sample')} />
           <ListRow leading={<IconCircle as={CreditCardIcon} />} title="Payment methods" subtitle="Visa ending 4242" chevron onPress={() => toast.info('Not part of the sample')} />
-          <ListRow leading={<IconCircle as={BellIcon} />} title="Promotions" subtitle="Occasional offers by email" trailing={<Switch checked={promos} onCheckedChange={setPromos} />} last />
+          <ListRow leading={<IconCircle as={BellIcon} />} title="Promotions" subtitle="Occasional offers by email" trailing={<Switch aria-label="Promotions" checked={promos} onCheckedChange={setPromos} />} last />
         </Card>
       </View>
     </ScrollView>

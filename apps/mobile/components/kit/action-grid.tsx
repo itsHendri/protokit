@@ -38,7 +38,7 @@ export function ActionGrid({ items, className }: Props) {
           disabled={item.disabled}
           accessibilityRole="button"
           accessibilityLabel={item.label}
-          accessibilityState={{ disabled: !!item.disabled }}
+          aria-disabled={!!item.disabled}
           className={cn('flex-1 items-center gap-2 active:opacity-70', item.disabled && 'opacity-50')}>
           <View className="bg-muted aspect-square w-full items-center justify-center rounded-full">
             <Icon as={item.icon} size={24} className="text-foreground" />

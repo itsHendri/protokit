@@ -79,7 +79,7 @@ export function TabBarItem({ label, focused, color, icon, accessibilityLabel, on
   return (
     <Pressable
       accessibilityRole="tab"
-      accessibilityState={{ selected: focused }}
+      aria-selected={focused}
       accessibilityLabel={accessibilityLabel ?? label}
       onPress={
         onPress

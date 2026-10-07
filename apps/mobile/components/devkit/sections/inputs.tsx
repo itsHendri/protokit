@@ -108,8 +108,8 @@ function SwitchDemo() {
   };
   return (
     <View className="flex-row items-center gap-3">
-      <Switch checked={checked} onCheckedChange={flip} id="ks-switch" nativeID="ks-switch" />
-      <Label nativeID="ks-switch" htmlFor="ks-switch" onPress={() => flip(!checked)}>
+      <Switch checked={checked} onCheckedChange={flip} id="ks-switch" />
+      <Label htmlFor="ks-switch" onPress={() => flip(!checked)}>
         Notifications
       </Label>
     </View>

@@ -14,6 +14,8 @@ type Props = {
   tone?: 'primary' | 'destructive' | 'warning';
   disabled?: boolean;
   onChangeComplete?: (final: number) => void;
+  /** What it sets, e.g. "Daily goal". A slider has no visible name of its own. */
+  accessibilityLabel: string;
   className?: string;
 };
 
@@ -23,7 +25,7 @@ const THUMB = 28;
  * Continuous or stepped slider on a native pan gesture, so horizontal drags are claimed
  * by the slider instead of the navigator's swipe-back or a parent ScrollView.
  */
-export function Slider({ value, onChange, min = 0, max = 1, step = 0, tone = 'primary', disabled, onChangeComplete, className }: Props) {
+export function Slider({ value, onChange, min = 0, max = 1, step = 0, tone = 'primary', disabled, onChangeComplete, accessibilityLabel, className }: Props) {
   const [width, setWidth] = React.useState(0);
   const range = max - min;
   const usableW = Math.max(0, width - THUMB);
@@ -94,8 +96,12 @@ export function Slider({ value, onChange, min = 0, max = 1, step = 0, tone = 'pr
       <View
         onLayout={(e: LayoutChangeEvent) => setWidth(e.nativeEvent.layout.width)}
         accessibilityRole="adjustable"
-        accessibilityState={{ disabled }}
-        accessibilityValue={{ min: 0, max: 100, now: Math.round(ratio * 100), text: `${clamp(value)}` }}
+        aria-label={accessibilityLabel}
+        aria-disabled={disabled}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(ratio * 100)}
+        aria-valuetext={`${clamp(value)}`}
         accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
         onAccessibilityAction={(e) => (e.nativeEvent.actionName === 'increment' ? adjustBy(1) : adjustBy(-1))}
         className={cn('h-12 justify-center', disabled && 'opacity-50', className)}>
