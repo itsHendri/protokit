@@ -21,10 +21,12 @@
     },
     "design-md": {
       "out": "DESIGN.md",
-      "name": "Prototype Kit (web)"
+      "name": "Prototype Kit (web)",
+      "buttonRadius": "md"
     },
     "llms": {
-      "out": "tokens/generated/llms-tokens.md"
+      "out": "tokens/generated/llms-tokens.md",
+      "controlRadius": false
     },
     "fonts": {
       "platform": "next",

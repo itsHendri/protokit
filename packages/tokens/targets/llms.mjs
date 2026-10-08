@@ -31,7 +31,7 @@ ${describeTintLimits(textOnTintLimits(ctx.colors))}.
 ${rows}
 
 - Spacing (4-pt grid, Tailwind numeric scale): ${steps(['space'])}
-- Radius (\`rounded-*\`): ${ctx.radius.steps.map((s) => `${s.name} ${Math.round(ctx.radius.base * s.scale * 10) / 10}px`).join(' · ')} (multiples of \`--radius\` = ${ctx.radius.base}px); \`rounded-control\` (buttons, chips) ${ctx.shape.control >= 9999 ? 'pill' : `${ctx.shape.control}px`}
+- Radius (\`rounded-*\`): ${ctx.radius.steps.map((s) => `${s.name} ${Math.round(ctx.radius.base * s.scale * 10) / 10}px`).join(' · ')} (multiples of \`--radius\` = ${ctx.radius.base}px)${options.controlRadius === false ? '; buttons use \`rounded-md\`' : `; \`rounded-control\` (buttons, chips) ${ctx.shape.control >= 9999 ? 'pill' : `${ctx.shape.control}px`}`}
 - Depth: \`shadow-sm\` (controls, cards), \`shadow-md\` (raised, popovers), \`shadow-lg\` (menus, dialogs) are the theme's three elevation levels; no shadow colour modifiers on surfaces (thumbs and floating elements may add \`shadow-black/20\`)
 - Border \`border\` ${ctx.shape.borderWidth}px · icon stroke ${ctx.shape.stroke} (an Icon's \`strokeWidth\` is relative to 2)
 - Fonts: headings ${fonts.heading?.family ?? 'system'}, body ${fonts.body?.family ?? 'system'} (applied by Text; \`font-heading\` makes any Text a heading)${theme.applied ? `\n- Theme: \`${theme.code}\` (\`npx kit-tokens theme show\`)` : ''}

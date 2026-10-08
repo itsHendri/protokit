@@ -32,7 +32,7 @@ function ownedValues(theme) {
 
 const TYPES = { radius: 'number', border: 'number', icon: 'number', density: 'number', shadow: 'shadow', font: 'fontFamily', color: 'color' };
 const DESCRIPTIONS = {
-  'semantic.radius.control': 'Corner radius of buttons and chips: rounded-control. 9999 = pills; otherwise the base radius.',
+  'semantic.radius.control': 'Corner radius of mobile buttons and chips: rounded-control. 9999 = pills; otherwise the base radius.',
   'semantic.border.width': 'Width of `border` (px). border-2 and border-hairline stay explicit.',
   'semantic.icon.stroke': "Lucide stroke width; an icon's own strokeWidth is relative to 2.",
   'semantic.shadow.1': 'shadow-xs / shadow-sm / shadow: controls and cards.',

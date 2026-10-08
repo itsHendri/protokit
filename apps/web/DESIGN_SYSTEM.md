@@ -51,7 +51,7 @@ The theme's density scales the whole scale (`--spacing` × 0.875 compact, × 1.1
 ### Radius
 
 <!-- GENERATED:tokens:radius -->
-`rounded-sm` 6 · `rounded-md` 8 (inputs) · `rounded-lg` 10 (cards, dialogs) · `rounded-xl` 16 (panels, tables) · `rounded-2xl` 20 (hero surfaces) · `rounded-control` pill (buttons) · `rounded-full` (avatars, pills).
+`rounded-sm` 6 · `rounded-md` 8 (inputs, buttons) · `rounded-lg` 10 (cards, dialogs) · `rounded-xl` 16 (panels, tables) · `rounded-2xl` 20 (hero surfaces) · `rounded-full` (avatars, pills).
 <!-- /GENERATED:tokens:radius -->
 
 ### Typography
@@ -65,7 +65,7 @@ with `leading-7` for prose; helper text `text-sm text-muted-foreground`. `tabula
 
 `shadow-xs`/`shadow-sm` (controls, cards), `shadow-md` (raised, popovers), `shadow-lg`/`shadow-xl` (menus,
 dialogs) are the theme's three elevation levels; `border` is its width; Lucide icons take its stroke.
-Buttons use `rounded-control` (pills, or the base radius: the theme decides).
+Buttons follow the radius scale (`rounded-md`); the theme's pill setting is for the mobile kit.
 
 ### Motion
 
