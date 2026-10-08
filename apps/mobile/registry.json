@@ -364,6 +364,71 @@
       }
     },
     {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "pressed two-state button",
+      "dependencies": [
+        "@rn-primitives/toggle@^1.5.2",
+        "class-variance-authority@^0.7.1"
+      ],
+      "registryDependencies": [
+        "@kit-native/icon",
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/ui/toggle.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/toggle.tsx"
+        }
+      ],
+      "categories": [
+        "actions"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Toggle"
+        ],
+        "api": "<Toggle pressed onPressedChange><ToggleIcon as={…} /></Toggle>"
+      }
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "Toggle group",
+      "description": "`type` single/multiple",
+      "dependencies": [
+        "@rn-primitives/toggle-group@^1.5.2",
+        "class-variance-authority@^0.7.1"
+      ],
+      "registryDependencies": [
+        "@kit-native/icon",
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "@kit-native/toggle"
+      ],
+      "files": [
+        {
+          "path": "components/ui/toggle-group.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/toggle-group.tsx"
+        }
+      ],
+      "categories": [
+        "actions"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "ToggleGroup"
+        ],
+        "api": "<ToggleGroup type=\"single|multiple\" value onValueChange><ToggleGroupItem value … /></ToggleGroup>"
+      }
+    },
+    {
       "name": "floating-button",
       "type": "registry:component",
       "title": "Floating button",
@@ -372,9 +437,9 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -403,9 +468,9 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -435,11 +500,11 @@
         "react-native-gesture-handler@~2.32.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-reduced-motion",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -468,10 +533,10 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -585,8 +650,8 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
-        "@kit-native/lib-utils",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/icon",
+        "@kit-native/lib-utils"
       ],
       "files": [
         {
@@ -678,9 +743,9 @@
         "react-native-screens@~4.26.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-utils",
         "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json",
         "https://reactnativereusables.com/r/nativewind/native-only-animated-view.json"
       ],
       "files": [
@@ -710,10 +775,10 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -774,9 +839,9 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/input",
-        "@kit-native/lib-utils",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/lib-utils"
       ],
       "files": [
         {
@@ -805,10 +870,10 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -837,11 +902,11 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-palette-context",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -870,10 +935,10 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -902,10 +967,10 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -962,9 +1027,9 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/input",
-        "@kit-native/lib-utils",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/lib-utils"
       ],
       "files": [
         {
@@ -993,10 +1058,10 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -1056,10 +1121,10 @@
       ],
       "registryDependencies": [
         "@kit-native/calendar",
+        "@kit-native/icon",
         "@kit-native/lib-utils",
         "@kit-native/sheet",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -1088,10 +1153,10 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -1183,9 +1248,9 @@
         "react-native-screens@~4.26.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-utils",
         "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json",
         "https://reactnativereusables.com/r/nativewind/native-only-animated-view.json"
       ],
       "files": [
@@ -1508,9 +1573,9 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -1568,8 +1633,8 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
-        "@kit-native/lib-utils",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/icon",
+        "@kit-native/lib-utils"
       ],
       "files": [
         {
@@ -1628,10 +1693,10 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-utils",
         "@kit-native/percent-change",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -1660,9 +1725,9 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -1750,9 +1815,9 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -1871,10 +1936,10 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -1904,9 +1969,9 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -1999,12 +2064,12 @@
         "react-native-safe-area-context@~5.7.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-reduced-motion",
         "@kit-native/lib-theme",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -2062,10 +2127,10 @@
       ],
       "registryDependencies": [
         "@kit-native/button",
+        "@kit-native/icon",
         "@kit-native/lib-utils",
         "@kit-native/spot",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -2156,9 +2221,9 @@
         "react-native-reanimated@4.5.1"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -2216,11 +2281,11 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-utils",
         "@kit-native/placeholder",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -2280,8 +2345,8 @@
         "react-native-screens@~4.26.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-utils",
-        "https://reactnativereusables.com/r/nativewind/icon.json",
         "https://reactnativereusables.com/r/nativewind/native-only-animated-view.json"
       ],
       "files": [
@@ -2337,6 +2402,39 @@
       }
     },
     {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "A small anchored panel for a quick edit or extra detail next to its trigger.",
+      "dependencies": [
+        "@rn-primitives/popover@^1.5.2",
+        "react-native-reanimated@4.5.1",
+        "react-native-screens@~4.26.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/native-only-animated-view.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/popover.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/popover.tsx"
+        }
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Popover"
+        ],
+        "api": "<Popover><PopoverTrigger asChild /><PopoverContent side /></Popover>"
+      }
+    },
+    {
       "name": "dropdown-menu",
       "type": "registry:ui",
       "title": "Dropdown menu",
@@ -2348,9 +2446,9 @@
         "react-native-screens@~4.26.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-utils",
         "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json",
         "https://reactnativereusables.com/r/nativewind/native-only-animated-view.json"
       ],
       "files": [
@@ -2383,9 +2481,9 @@
         "react-native-screens@~4.26.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-utils",
         "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json",
         "https://reactnativereusables.com/r/nativewind/native-only-animated-view.json"
       ],
       "files": [
@@ -2407,6 +2505,39 @@
       }
     },
     {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover card",
+      "description": "Opens on press on native.",
+      "dependencies": [
+        "@rn-primitives/hover-card@^1.5.2",
+        "react-native-reanimated@4.5.1",
+        "react-native-screens@~4.26.0"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text",
+        "https://reactnativereusables.com/r/nativewind/native-only-animated-view.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/hover-card.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/hover-card.tsx"
+        }
+      ],
+      "categories": [
+        "overlays"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "HoverCard"
+        ],
+        "api": "<HoverCard><HoverCardTrigger asChild /><HoverCardContent insets /></HoverCard>"
+      }
+    },
+    {
       "name": "sheet",
       "type": "registry:component",
       "title": "Sheet",
@@ -2416,12 +2547,12 @@
         "react-native-safe-area-context@~5.7.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-reduced-motion",
         "@kit-native/lib-theme",
         "@kit-native/lib-utils",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -2442,6 +2573,38 @@
       }
     },
     {
+      "name": "icon",
+      "type": "registry:ui",
+      "title": "Icon",
+      "description": "lucide wrapper",
+      "dependencies": [
+        "lucide-react-native@^1.21.0",
+        "nativewind@^4.2.6"
+      ],
+      "registryDependencies": [
+        "@kit-native/lib-palette-context",
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/ui/icon.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/icon.tsx"
+        }
+      ],
+      "categories": [
+        "media"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Icon"
+        ],
+        "api": "<Icon as={LucideIcon} size? className=\"text-…\" />"
+      }
+    },
+    {
       "name": "image-tile",
       "type": "registry:component",
       "title": "Image tile",
@@ -2450,10 +2613,10 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-utils",
         "@kit-native/placeholder",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -2483,9 +2646,9 @@
         "react-native-svg@15.15.4"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-palette-context",
-        "@kit-native/lib-utils",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/lib-utils"
       ],
       "files": [
         {
@@ -2514,8 +2677,8 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
-        "@kit-native/lib-utils",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/icon",
+        "@kit-native/lib-utils"
       ],
       "files": [
         {
@@ -2545,14 +2708,14 @@
         "lucide-react-native@^1.21.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-native-context",
         "@kit-native/lib-utils",
         "@kit-native/placeholder",
         "@kit-native/sheet",
         "@kit-native/text",
-        "@kit-native/toast",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/toast"
       ],
       "files": [
         {
@@ -2583,13 +2746,13 @@
       ],
       "registryDependencies": [
         "@kit-native/button",
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-native-context",
         "@kit-native/lib-utils",
         "@kit-native/permission-primer",
         "@kit-native/placeholder",
-        "@kit-native/text",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/text"
       ],
       "files": [
         {
@@ -2721,13 +2884,13 @@
         "react-native-safe-area-context@~5.7.0"
       ],
       "registryDependencies": [
+        "@kit-native/icon",
         "@kit-native/lib-haptics",
         "@kit-native/lib-native-context",
         "@kit-native/lib-reduced-motion",
         "@kit-native/lib-utils",
         "@kit-native/text",
-        "@kit-native/toast",
-        "https://reactnativereusables.com/r/nativewind/icon.json"
+        "@kit-native/toast"
       ],
       "files": [
         {

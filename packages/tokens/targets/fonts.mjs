@@ -38,7 +38,7 @@ function expo(ctx, fonts) {
   const family = (f) => (f ? `{ ${f.weights.map((w) => `${w}: '${name(f, w)}'`).join(', ')} }` : 'null');
   return `// ${ctx.header}
 ${imports.join('\n')}${imports.length ? '\n' : ''}
-/** Font files for expo-font's useFonts (app/_layout.tsx). Empty when the theme uses the system font. */
+/** Font files for useFonts from expo-font (app/_layout.tsx). Empty when the theme uses the system font. */
 export const FONT_ASSETS = ${assets.length ? `{ ${assets.join(', ')} }` : '{}'};
 
 /**
