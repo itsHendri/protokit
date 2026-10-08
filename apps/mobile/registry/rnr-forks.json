@@ -56,11 +56,11 @@
     },
     "hover-card": {
       "upstream": true,
-      "forked": false
+      "forked": true
     },
     "icon": {
       "upstream": true,
-      "forked": false
+      "forked": true
     },
     "input": {
       "upstream": true,
@@ -80,7 +80,7 @@
     },
     "popover": {
       "upstream": true,
-      "forked": false
+      "forked": true
     },
     "progress": {
       "upstream": true,
@@ -120,11 +120,11 @@
     },
     "toggle-group": {
       "upstream": true,
-      "forked": false
+      "forked": true
     },
     "toggle": {
       "upstream": true,
-      "forked": false
+      "forked": true
     },
     "tooltip": {
       "upstream": true,

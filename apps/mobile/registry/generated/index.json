@@ -90,7 +90,7 @@
         "pressed",
         "two-state button"
       ],
-      "install": "https://reactnativereusables.com/r/nativewind/toggle.json"
+      "install": "@kit-native/toggle"
     },
     {
       "id": "toggle-group",
@@ -109,7 +109,7 @@
         "segmented",
         "multi select buttons"
       ],
-      "install": "https://reactnativereusables.com/r/nativewind/toggle-group.json"
+      "install": "@kit-native/toggle-group"
     },
     {
       "id": "floating-button",
@@ -1485,7 +1485,7 @@
         "bubble",
         "anchored"
       ],
-      "install": "https://reactnativereusables.com/r/nativewind/popover.json"
+      "install": "@kit-native/popover"
     },
     {
       "id": "dropdown-menu",
@@ -1541,7 +1541,7 @@
         "preview",
         "profile card"
       ],
-      "install": "https://reactnativereusables.com/r/nativewind/hover-card.json"
+      "install": "@kit-native/hover-card"
     },
     {
       "id": "sheet",
@@ -1619,7 +1619,7 @@
         "glyph",
         "symbol"
       ],
-      "install": "https://reactnativereusables.com/r/nativewind/icon.json"
+      "install": "@kit-native/icon"
     },
     {
       "id": "image-tile",
