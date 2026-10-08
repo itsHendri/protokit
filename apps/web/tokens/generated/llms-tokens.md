@@ -50,7 +50,7 @@ primary up to /5, success up to /5, warning up to /5, info up to /15, destructiv
 | `chart-5` | #0ea5e9 | #38bdf8 |
 
 - Spacing (4-pt grid, Tailwind numeric scale): 0 0px · 1 4px · 2 8px · 3 12px · 4 16px · 5 20px · 6 24px · 8 32px · 10 40px · 12 48px · 16 64px
-- Radius (`rounded-*`): sm 6px · md 8px · lg 10px · xl 16px · 2xl 20px (multiples of `--radius` = 10px); `rounded-control` (buttons, chips) pill
+- Radius (`rounded-*`): sm 6px · md 8px · lg 10px · xl 16px · 2xl 20px (multiples of `--radius` = 10px); buttons use `rounded-md`
 - Depth: `shadow-sm` (controls, cards), `shadow-md` (raised, popovers), `shadow-lg` (menus, dialogs) are the theme's three elevation levels; no shadow colour modifiers on surfaces (thumbs and floating elements may add `shadow-black/20`)
 - Border `border` 1px · icon stroke 2 (an Icon's `strokeWidth` is relative to 2)
 - Fonts: headings system, body system (applied by Text; `font-heading` makes any Text a heading)

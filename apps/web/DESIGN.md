@@ -158,12 +158,12 @@ components:
   button-primary:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.primary-foreground}"
-    rounded: "{rounded.control}"
+    rounded: "{rounded.md}"
     height: 48px
   button-secondary:
     backgroundColor: "{colors.secondary}"
     textColor: "{colors.secondary-foreground}"
-    rounded: "{rounded.control}"
+    rounded: "{rounded.md}"
     height: 48px
   card:
     backgroundColor: "{colors.card}"

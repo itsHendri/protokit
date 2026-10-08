@@ -47,6 +47,8 @@ function typography(prim) {
 
 export default function designMd(ctx, options) {
   const name = options.name ?? 'Prototype Kit';
+  // Which radius buttons use: 'control' (the theme's pill setting, the mobile kit) or a scale step (web: 'md').
+  const buttons = options.buttonRadius ?? 'control';
   const description =
     options.description ?? 'Brand-agnostic prototype kit: shadcn semantics, light and dark, WCAG AA enforced at build time.';
   const colors = ctx.colors
@@ -85,12 +87,12 @@ components:
   button-primary:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.primary-foreground}"
-    rounded: "{rounded.control}"
+    rounded: "{rounded.${buttons}}"
     height: 48px
   button-secondary:
     backgroundColor: "{colors.secondary}"
     textColor: "{colors.secondary-foreground}"
-    rounded: "{rounded.control}"
+    rounded: "{rounded.${buttons}}"
     height: 48px
   card:
     backgroundColor: "{colors.card}"

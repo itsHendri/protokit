@@ -46,7 +46,7 @@ const LABELS: Record<string, string> = {
   lg: 'L',
   xl: 'XL',
   '2xl': '2XL',
-  pill: 'Pill buttons',
+  pill: 'Pills',
   match: 'Follow radius',
   thin: 'Thin',
   regular: 'Regular',
@@ -308,8 +308,8 @@ export function ThemeStudio() {
               )}
             />
           </Field>
-          <Field label="Buttons and chips">
-            <Segmented label="Buttons and chips" value={recipe.controls} options={ORDER.controls} onChange={(controls) => set({ controls })} />
+          <Field label="Mobile buttons and chips" hint="Web buttons follow the radius">
+            <Segmented label="Mobile buttons and chips" value={recipe.controls} options={ORDER.controls} onChange={(controls) => set({ controls })} />
           </Field>
           <Field label="Border">
             <Segmented label="Border" value={recipe.border} options={ORDER.border} onChange={(border) => set({ border })} />
