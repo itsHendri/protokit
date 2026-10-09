@@ -91,7 +91,7 @@ export function TypeScale({ sample = 'Getting paid, on time' }: { sample?: strin
       {SCALE.map(([name, size, line]) => (
         <li key={name} className="border-border flex items-baseline gap-4 border-b py-2 last:border-b-0">
           <span className="text-muted-foreground w-24 shrink-0 font-mono text-xs">
-            text-{name} <span className="opacity-70">{Math.round(size * scale * 10) / 10}</span>
+            text-{name} {Math.round(size * scale * 10) / 10}
           </span>
           <span
             className={`min-w-0 truncate ${size >= 20 ? 'font-heading font-semibold tracking-tight' : 'font-sans'}`}
@@ -168,7 +168,7 @@ export function PaletteSpecimen() {
       {PALETTE.map(([name, bg, fg]) => (
         <div key={name} className={`border-border flex h-20 flex-col justify-between rounded-lg border p-2.5 ${bg} ${fg}`}>
           <span className="text-xs font-medium">{name}</span>
-          <span className="font-mono text-[11px] uppercase opacity-90">{theme.resolved[mode][name]}</span>
+          <span className="font-mono text-[11px] uppercase">{theme.resolved[mode][name]}</span>
         </div>
       ))}
     </div>

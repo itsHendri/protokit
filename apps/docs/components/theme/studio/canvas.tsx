@@ -315,7 +315,7 @@ export function ViewSwitcher({
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <span className="font-mono opacity-70 max-sm:hidden">0{i + 1}</span>
+            <span className="font-mono max-sm:hidden">0{i + 1}</span>
             {v.label}
           </button>
         ))}

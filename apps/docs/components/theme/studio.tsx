@@ -50,7 +50,8 @@ export function ThemeStudio() {
       <InvertedSchemeStyle />
       <h1 className="sr-only">Theme studio</h1>
 
-      <div className="order-1 min-w-0 px-4 pb-24 pt-6 sm:px-6 lg:h-full lg:overflow-y-auto lg:pl-[19rem] lg:pr-6">
+      {/* Focusable: it scrolls on its own from lg up, so the keyboard needs to reach it. */}
+      <div tabIndex={0} role="region" aria-label="Preview" className="focus-visible:ring-ring order-1 min-w-0 px-4 pb-24 pt-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset sm:px-6 lg:h-full lg:overflow-y-auto lg:pl-[19rem] lg:pr-6">
         <Canvas view={view} />
       </div>
 
