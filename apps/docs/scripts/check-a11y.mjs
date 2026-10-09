@@ -40,6 +40,9 @@ const PAGES = [
   '/docs/foundations/',
   '/docs/themes/',
   '/themes/',
+  '/themes/?view=mobile',
+  '/themes/?view=web',
+  '/themes/?view=typeset',
   '/w/',
   '/w/components/',
   '/w/dashboard/',
@@ -116,7 +119,7 @@ for (const scheme of SCHEMES) {
   const context = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
   const page = await context.newPage();
   const bars = [];
-  for (const path of PAGES.filter((p) => !p.startsWith('/w/'))) {
+  for (const path of PAGES.filter((p) => !p.startsWith('/w/') && !p.includes('?'))) {
     await page.goto(`${BASE}${path}`, { waitUntil: 'domcontentloaded' });
     const bar = await page.evaluate(() => {
       const logo = document.querySelector('header a[href="/"]')?.getBoundingClientRect();
