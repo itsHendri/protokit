@@ -16,7 +16,7 @@ const FOR: Record<string, string> = {
 
 export default function ComponentsIndex() {
   return (
-    <DocsPage full>
+    <DocsPage full className="*:mx-auto *:w-full">
       <DocsTitle>Components</DocsTitle>
       <DocsDescription>
         {totalComponents} components across two kits on one set of tokens. Each kit’s list is the whole kit: an agent
