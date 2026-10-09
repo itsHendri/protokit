@@ -25,7 +25,7 @@ export default async function PlatformComponents(props: PageProps<'/components/[
   if (!isPlatform(platform)) notFound();
   const k = kits[platform];
   return (
-    <DocsPage full>
+    <DocsPage full className="*:mx-auto *:w-full">
       <DocsTitle>{k.label} components</DocsTitle>
       <DocsDescription>
         {k.components.length} components in {k.categories.length} categories, {k.previewed.length} of them previewed live. {k.stack}.

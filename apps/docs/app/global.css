@@ -8,6 +8,11 @@
 @source '../components';
 @source '../lib';
 
+/* One content width for the full-width pages (home, screens), under a full-bleed top bar. */
+@theme {
+  --container-site: 72rem;
+}
+
 html {
   scrollbar-gutter: stable;
 }

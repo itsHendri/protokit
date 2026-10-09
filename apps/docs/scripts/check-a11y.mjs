@@ -11,6 +11,9 @@
  * The mobile kit in the phone frames (/m) is checked too. React Native for Web only renders the `aria-*`
  * props, not `accessibilityState`/`accessibilityValue`, so the kit's components use those; a failure in a
  * phone frame is fixed in apps/mobile. MOBILE_FRAMES = false skips the frames while one is being fixed.
+ *
+ * It also checks the top bar is the same on every site page at 1920px (wider than Fumadocs' 97rem layout
+ * width, where the notebook grid used to inset it): same width, logo at the same x. See lib/layout.shared.tsx.
  */
 import { spawn } from 'node:child_process';
 import { join } from 'node:path';
@@ -98,6 +101,35 @@ for (const scheme of SCHEMES) {
     console.log(`${violations.length ? '✗' : '✓'} ${scheme.padEnd(5)} ${path}${violations.length ? `  (${violations.map((v) => v.id).join(', ')})` : ''}`);
     await page.close();
   }
+  await context.close();
+}
+
+// The top bar never moves between sections: full width, logo in the same place, on every site page.
+{
+  const context = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
+  const page = await context.newPage();
+  const bars = [];
+  for (const path of PAGES.filter((p) => !p.startsWith('/w/'))) {
+    await page.goto(`${BASE}${path}`, { waitUntil: 'domcontentloaded' });
+    const bar = await page.evaluate(() => {
+      const logo = document.querySelector('header a[href="/"]')?.getBoundingClientRect();
+      return { width: document.querySelector('header')?.getBoundingClientRect().width, x: logo?.x };
+    });
+    bars.push({ path, ...bar });
+  }
+  const [first] = bars;
+  for (const b of bars) {
+    if (b.width !== first.width || b.x !== first.x) {
+      failures.push({
+        path: b.path,
+        scheme: 'any',
+        rule: 'top-bar',
+        help: `the top bar moved: width ${b.width}px, logo at x=${b.x} (${first.path}: ${first.width}px, x=${first.x})`,
+        nodes: [],
+      });
+    }
+  }
+  console.log(`${bars.some((b) => b.width !== first.width || b.x !== first.x) ? '✗' : '✓'} top bar identical on ${bars.length} pages at 1920px`);
   await context.close();
 }
 

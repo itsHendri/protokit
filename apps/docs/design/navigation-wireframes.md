@@ -64,3 +64,9 @@ Docs sidebar groups: **Get started** (How it works, Install, Mobile kit, Web kit
   sidebar drawer, fed by `links` with `on: 'menu'` (sections, Get started), above the tree.
 - The theme bar sits at z-30, under drawers and menus.
 - Screens' Mobile / Web chips stick under the bar; they have no active state yet (deferred).
+- The bar is full width on every page, like ui.shadcn.com. The notebook layout's own grid put the header in its
+  middle three columns, which stop at `--fd-layout-width` (97rem), so above ~1550px the bar was inset on Docs and
+  Components and full-bleed elsewhere. `notebookContainerProps` (`lib/layout.shared.tsx`) overrides the grid: the
+  header row spans every column, the outer gutters are 0px (sidebar flush left), and each `DocsPage` centres its
+  article (`*:mx-auto *:w-full`). The full-width pages share one content width, `max-w-site` (72rem, `global.css`).
+  `scripts/check-a11y.mjs` fails if the bar's width or the logo's x differ between pages at 1920px.

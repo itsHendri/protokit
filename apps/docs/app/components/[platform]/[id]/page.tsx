@@ -67,7 +67,7 @@ export default async function ComponentPage(props: PageProps<'/components/[platf
     ) : null;
 
   return (
-    <DocsPage full>
+    <DocsPage full className="*:mx-auto *:w-full">
       <DocsTitle>{c.title}</DocsTitle>
       <DocsDescription>
         <InlineMd text={c.notes || c.caption || ''} />
