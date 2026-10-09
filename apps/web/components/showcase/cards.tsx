@@ -284,15 +284,13 @@ function ArticleCard() {
 export function ShowcaseCards() {
   return (
     <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 2xl:columns-4 [&>*]:mb-4 [&>*]:break-inside-avoid">
-      <div className="grid grid-cols-2 gap-4">
-        <StatTile label="Paid this month" value="£25,300" delta={8.2} deltaLabel="vs May" />
-        <StatTile label="Overdue" value="£3,270" delta={-26} deltaLabel="vs May" invert />
-      </div>
+      <StatTile label="Paid this month" value="£25,300" delta={8.2} deltaLabel="vs May" />
       <NewInvoiceCard />
       <RevenueCard />
       <AssistantCard />
       <InvoicesCard />
       <TeamCard />
+      <StatTile label="Overdue" value="£3,270" delta={-26} deltaLabel="vs May" invert />
       <ApprovalCard
         title="Send 2 reminder emails"
         description="They go out now from billing@northwind.co. You can’t unsend them."
