@@ -62,7 +62,8 @@ export function fixContrast(semantic, lookup) {
           continue;
         }
         const label = lookup(best.ref);
-        const dir = contrast(label, '#000000') > contrast(label, '#ffffff') ? 1 : -1; // light label → darker fill
+        // A light label (it reads on black) needs a darker fill; a dark label a lighter one.
+        const dir = contrast(label, '#000000') > contrast(label, '#ffffff') ? -1 : 1;
         const moved = nudge(hex[f.bgName], dir, (c) => contrast(label, c) >= f.threshold);
         if (!moved) throw new Error(`fixContrast: cannot fix ${f.label} (${mode})`);
         set(f.fgName, best.ref);

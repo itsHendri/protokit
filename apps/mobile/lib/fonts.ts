@@ -7,7 +7,8 @@ export const FONT_ASSETS = {};
  * The family expo-font registers for each role and weight (null: the system font). Android does not pick a
  * weight of a custom font from fontWeight, so components/ui/text.tsx sets the family per weight.
  */
-export const FONT_FAMILY: Record<'heading' | 'body', Record<number, string> | null> = {
+export const FONT_FAMILY: Record<'heading' | 'body' | 'mono', Record<number, string> | null> = {
   heading: null,
   body: null,
+  mono: null,
 };

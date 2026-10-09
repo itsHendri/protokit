@@ -32,7 +32,7 @@ const fail = (message, code = 1) => {
 };
 
 function readRecipe(arg, root) {
-  if (!arg) fail('say which theme: a code (pk1-…), a preset name or a recipe .json', 2);
+  if (!arg) fail('say which theme: a code (pk1-… or pk2-…), a preset name or a recipe .json', 2);
   if (isThemeCode(arg)) {
     try {
       return decodeRecipe(arg);
@@ -47,11 +47,17 @@ function readRecipe(arg, root) {
   fail(`"${arg}" is not a theme code, a preset (${PRESETS.map((p) => p.id).join(', ')}) or a recipe file`, 2);
 }
 
-const describe = (recipe) => {
-  const font = (id) => fontById(id)?.family ?? id;
+const describe = (input) => {
+  // A recipe recorded by an older kit-tokens has no typeset: it gets the defaults.
+  const recipe = normalizeRecipe(input);
+  const font = (id) => {
+    const f = fontById(id);
+    return f?.system ? (f.category === 'mono' ? 'system mono' : 'system') : (f?.family ?? id);
+  };
   return [
     `brand ${recipe.brand} · neutral ${recipe.neutral} · radius ${recipe.radius} · controls ${recipe.controls}`,
     `type ${font(recipe.font.heading)} / ${font(recipe.font.body)} · stroke ${recipe.stroke} · depth ${recipe.depth} · density ${recipe.density} · border ${recipe.border}`,
+    `typeset ${recipe.size}px · leading ${recipe.leading} · flow ${recipe.flow} · measure ${recipe.measure}ch · mono ${font(recipe.font.mono)}`,
   ].join('\n  ');
 };
 
@@ -64,7 +70,7 @@ function installFonts(root, config, theme, flags) {
   if (config.targets?.fonts?.platform !== 'expo') return;
   const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
   const have = new Set(Object.keys({ ...pkg.dependencies, ...pkg.devDependencies }).filter((d) => d.startsWith('@expo-google-fonts/')));
-  const ids = [theme.recipe.font.heading, theme.recipe.font.body].filter((id) => id !== 'system');
+  const ids = Object.values(theme.recipe.font).filter((id) => !fontById(id)?.system);
   const need = [...new Set(ids)].map((id) => `@expo-google-fonts/${id}`);
   const missing = need.filter((p) => !have.has(p));
   const unused = [...have].filter((p) => !need.includes(p) && FONTS.some((f) => `@expo-google-fonts/${f.id}` === p));
