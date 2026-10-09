@@ -27,10 +27,12 @@ function ownedValues(theme) {
   for (const [size, value] of Object.entries(theme.semantic.density.control)) out[`semantic.density.control.${size}`] = value;
   out['primitive.font.family.heading'] = theme.fonts.heading;
   out['primitive.font.family.body'] = theme.fonts.body;
+  out['primitive.font.family.mono'] = theme.fonts.mono;
+  for (const [key, value] of Object.entries(theme.semantic.type)) out[`semantic.type.${key}`] = value;
   return out;
 }
 
-const TYPES = { radius: 'number', border: 'number', icon: 'number', density: 'number', shadow: 'shadow', font: 'fontFamily', color: 'color' };
+const TYPES = { radius: 'number', border: 'number', icon: 'number', density: 'number', type: 'number', shadow: 'shadow', font: 'fontFamily', color: 'color' };
 const DESCRIPTIONS = {
   'semantic.radius.control': 'Corner radius of mobile buttons and chips: rounded-control. 9999 = pills; otherwise the base radius.',
   'semantic.border.width': 'Width of `border` (px). border-2 and border-hairline stay explicit.',
@@ -45,6 +47,11 @@ const DESCRIPTIONS = {
   'semantic.density.control.x': 'Mobile: control horizontal padding (px-control-x), px.',
   'primitive.font.family.heading': 'Headings (Text h1–h4, titles). Empty = the platform system font.',
   'primitive.font.family.body': 'Everything else. Empty = the platform system font.',
+  'primitive.font.family.mono': 'Code and figures (font-mono). Menlo = the platform monospace font.',
+  'semantic.type.size': 'Typeset: body text size (px). Every text size (text-xs…4xl) scales by size / 16.',
+  'semantic.type.leading': "Typeset: line height of running text (× size); the text sizes' line heights scale by leading / 1.75.",
+  'semantic.type.flow': 'Typeset: space between blocks of long-form text (Prose), em.',
+  'semantic.type.measure': 'Typeset: the longest line of long-form text (Prose), characters.',
 };
 
 function typeOf(path) {

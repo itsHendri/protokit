@@ -15,7 +15,7 @@ export type EmbedTokens = {
   code: string | null;
   vars?: { light: Record<string, string>; dark: Record<string, string> };
   /** Google Fonts family names by role; loaded from fonts.googleapis.com while the theme is live. */
-  fonts?: { heading?: string; body?: string };
+  fonts?: { heading?: string; body?: string; mono?: string };
 };
 
 export const EMBED_THEME_KEY = 'kit.embed.tokens';
@@ -23,9 +23,14 @@ export const OVERRIDE_STYLE_ID = 'kit-theme-override';
 const FONTS_ID = 'kit-theme-fonts';
 const FAMILY = /^[A-Za-z0-9 ]{1,40}$/;
 const SANS = 'ui-sans-serif, system-ui, sans-serif';
+const MONO = 'ui-monospace, SFMono-Regular, Menlo, monospace';
+/** A theme code: pk1- and 12 characters (the default typeset), or pk2- and 16. */
+const THEME_CODE = /^(pk1-[0-9A-Z]{12}|pk2-[0-9A-Z]{16})$/i;
+/** The typeset's variables (kit-tokens' typeVars): app/tokens.css scales text-xs…4xl by them. */
+const TYPE_VARS = ['--type-scale', '--leading-factor', '--typeset-leading', '--typeset-flow', '--typeset-measure'];
 
 const kebab = (s: string) => s.replace(/([A-Z])/g, '-$1').replace(/([a-z])(\d)/g, '$1-$2').toLowerCase();
-const ALLOWED_VARS = new Set([...Object.keys(THEME.light).map((k) => `--${kebab(k)}`), '--radius', '--radius-control', '--border-width', '--icon-stroke', '--shadow-1', '--shadow-2', '--shadow-3', '--density']);
+const ALLOWED_VARS = new Set([...Object.keys(THEME.light).map((k) => `--${kebab(k)}`), '--radius', '--radius-control', '--border-width', '--icon-stroke', '--shadow-1', '--shadow-2', '--shadow-3', '--density', ...TYPE_VARS]);
 const SAFE_VALUE = /^[\w.%\s(),#/-]{1,80}$/;
 
 function cleanVars(map: unknown): Record<string, string> {
@@ -41,13 +46,13 @@ export function parseEmbedTokens(data: unknown): EmbedTokens | null {
   const d = data as { type?: unknown; v?: unknown; code?: unknown; vars?: { light?: unknown; dark?: unknown } } | null;
   if (!d || d.type !== 'kit:tokens' || d.v !== 1) return null;
   if (d.code === null) return { code: null };
-  if (typeof d.code !== 'string' || !/^pk1-[0-9A-Z]{12}$/i.test(d.code)) return null;
-  const f = (d as { fonts?: { heading?: unknown; body?: unknown } }).fonts;
+  if (typeof d.code !== 'string' || !THEME_CODE.test(d.code)) return null;
+  const f = (d as { fonts?: { heading?: unknown; body?: unknown; mono?: unknown } }).fonts;
   const family = (v: unknown) => (typeof v === 'string' && FAMILY.test(v) ? v : undefined);
   return {
     code: d.code,
     vars: { light: cleanVars(d.vars?.light), dark: cleanVars(d.vars?.dark) },
-    fonts: { heading: family(f?.heading), body: family(f?.body) },
+    fonts: { heading: family(f?.heading), body: family(f?.body), mono: family(f?.mono) },
   };
 }
 
@@ -70,12 +75,13 @@ export function applyEmbedTokens(tokens: EmbedTokens) {
   const fontVars = {
     '--kit-font-body': tokens.fonts?.body ? `"${tokens.fonts.body}", ${SANS}` : SANS,
     '--kit-font-heading': tokens.fonts?.heading ? `"${tokens.fonts.heading}", ${SANS}` : 'var(--kit-font-body)',
+    '--kit-font-mono': tokens.fonts?.mono ? `"${tokens.fonts.mono}", ${MONO}` : MONO,
   };
   style.textContent = block(':root:root:root', { ...tokens.vars.light, ...fontVars }) + block('.dark:root:root:root', tokens.vars.dark);
 }
 
 function applyFonts(tokens: EmbedTokens) {
-  const families = [...new Set([tokens.fonts?.heading, tokens.fonts?.body].filter((f): f is string => !!f))];
+  const families = [...new Set([tokens.fonts?.heading, tokens.fonts?.body, tokens.fonts?.mono].filter((f): f is string => !!f))];
   let link = document.getElementById(FONTS_ID) as HTMLLinkElement | null;
   if (tokens.code === null || !families.length) {
     link?.remove();

@@ -60,6 +60,18 @@ const LABELS: Record<string, string> = {
   spacious: 'Spacious',
   hairline: 'Hairline',
   heavy: 'Heavy',
+  '14': '14',
+  '15': '15',
+  '16': '16',
+  '18': '18',
+  tight: 'Tight',
+  normal: 'Regular',
+  relaxed: 'Relaxed',
+  loose: 'Loose',
+  '60': '60ch',
+  '70': '70ch',
+  '80': '80ch',
+  '90': '90ch',
 };
 /** Order for the segmented controls (the codec's option order is append-only, not display order). */
 const ORDER: { [K in keyof typeof OPTIONS]: (typeof OPTIONS)[K] } = {
@@ -70,6 +82,10 @@ const ORDER: { [K in keyof typeof OPTIONS]: (typeof OPTIONS)[K] } = {
   depth: ['flat', 'soft', 'raised', 'hard'],
   density: ['compact', 'comfortable', 'spacious'],
   border: ['hairline', 'regular', 'heavy'],
+  size: ['14', '15', '16', '18'],
+  leading: ['tight', 'normal', 'relaxed'],
+  flow: ['tight', 'normal', 'loose'],
+  measure: ['60', '70', '80', '90'],
 };
 
 /** A row of mutually exclusive choices (a radio group). */
@@ -131,7 +147,11 @@ function Section({ title, lock, children }: { title: string; lock?: ShuffleGroup
   );
 }
 
-const fontFamily = (id: string) => (id === 'system' ? 'ui-sans-serif, system-ui, sans-serif' : `"${FONTS.find((f) => f.id === id)?.family}", ui-sans-serif, system-ui`);
+const fontFamily = (id: string) => {
+  const font = FONTS.find((f) => f.id === id);
+  if (font?.system) return font.category === 'mono' ? 'ui-monospace, SFMono-Regular, Menlo, monospace' : 'ui-sans-serif, system-ui, sans-serif';
+  return `"${font?.family}", ${font?.category === 'mono' ? 'ui-monospace' : 'ui-sans-serif, system-ui'}`;
+};
 
 /** Every preset's fonts, so the gallery cards render in their own type. */
 const PRESET_FONTS = googleFontsHref(PRESETS.flatMap((p) => [p.recipe.font?.heading ?? 'system', p.recipe.font?.body ?? 'system']));
@@ -258,7 +278,7 @@ export function ThemeStudio() {
           )}
         </Section>
 
-        <Section title="Type" lock="type">
+        <Section title="Type and typeset" lock="type">
           {(['heading', 'body'] as const).map((role) => (
             <Field key={role} label={role === 'heading' ? 'Headings' : 'Body'}>
               <select
@@ -279,6 +299,32 @@ export function ThemeStudio() {
               </select>
             </Field>
           ))}
+          <Field label="Mono" hint="Code and figures">
+            <select
+              aria-label="Mono font"
+              value={recipe.font.mono}
+              onChange={(e) => set({ font: { mono: e.target.value } as Recipe['font'] })}
+              className="border-border bg-background focus-visible:ring-ring h-9 w-full rounded-lg border px-2.5 text-sm focus-visible:outline-none focus-visible:ring-2"
+              style={{ fontFamily: fontFamily(recipe.font.mono) }}>
+              {FONTS.filter((f) => f.category === 'mono' && !f.hidden).map((f) => (
+                <option key={f.id} value={f.id}>
+                  {f.system ? 'System mono (SF Mono / Menlo)' : f.family}
+                </option>
+              ))}
+            </select>
+          </Field>
+          <Field label="Size" hint="Body text, px">
+            <Segmented label="Text size" value={recipe.size} options={ORDER.size} onChange={(size) => set({ size })} />
+          </Field>
+          <Field label="Leading" hint="Line height">
+            <Segmented label="Leading" value={recipe.leading} options={ORDER.leading} onChange={(leading) => set({ leading })} />
+          </Field>
+          <Field label="Flow" hint="Space between paragraphs">
+            <Segmented label="Flow" value={recipe.flow} options={ORDER.flow} onChange={(flow) => set({ flow })} />
+          </Field>
+          <Field label="Measure" hint="Longest line">
+            <Segmented label="Measure" value={recipe.measure} options={ORDER.measure} onChange={(measure) => set({ measure })} />
+          </Field>
           <p className="border-border rounded-lg border p-3" aria-hidden>
             <span className="block text-lg font-semibold leading-tight" style={{ fontFamily: fontFamily(recipe.font.heading) }}>
               Weekly check-in

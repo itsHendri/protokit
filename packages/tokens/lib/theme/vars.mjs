@@ -11,6 +11,15 @@ export const rem = (px) => (px >= 9999 ? '9999px' : `${px / 16}rem`);
 
 const camel = (s) => s.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase());
 
+/** The typeset's variables (both formats): text sizes and line heights scale with the first two. */
+export const typeVars = (type) => ({
+  '--type-scale': String(type.scale),
+  '--leading-factor': String(type.leadingFactor),
+  '--typeset-leading': String(type.leading),
+  '--typeset-flow': `${type.flow}em`,
+  '--typeset-measure': `${type.measure}ch`,
+});
+
 /** { light: { '--primary': '…', '--radius': '0.625rem' }, dark: { … } } */
 export function themeVars(theme, format) {
   const convert = format === 'hsl' ? hexToHslTriplet : hexToOklch;
@@ -23,6 +32,7 @@ export function themeVars(theme, format) {
       vars['--icon-stroke'] = String(theme.stroke);
       vars['--density'] = String(theme.density.scale);
       for (const size of ['sm', 'md', 'lg', 'x']) vars[`--control-${size}`] = `${theme.density[size]}px`;
+      Object.assign(vars, typeVars(theme.type));
     }
     for (const [level, value] of Object.entries(theme.semantic.shadow)) vars[`--shadow-${level}`] = shadowCss(value[m]);
     return vars;

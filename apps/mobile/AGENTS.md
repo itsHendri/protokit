@@ -91,9 +91,9 @@ npx expo run:ios       # build + install the dev client on the simulator (needs 
 - **Web link for clients:** `npm run export:web && eas deploy` → immutable preview URL. `web.output` is `single`
   so deep links resolve.
 - **Re-brand:** pick a theme on the docs site (theme bar or `/themes`) and apply its code with the `apply-theme`
-  skill: `npx kit-tokens theme apply <pk1-code|preset>` (in the monorepo, `npm run theme:apply -- <code>` at the
+  skill: `npx kit-tokens theme apply <theme-code|preset>` (in the monorepo, `npm run theme:apply -- <code>` at the
   root). It rewrites only the theme's paths in `tokens/tokens.json` (colours, radius, fonts, depth, density, border,
-  icon stroke), fixes contrast itself and records the recipe (`kit-tokens theme show`). Editing tokens.json by hand
+  icon stroke, typeset), fixes contrast itself and records the recipe (`kit-tokens theme show`). Editing tokens.json by hand
   still works: `tokens:build` refuses any pairing below 4.5:1 and prints the ratio. Then set `name`/`slug`/`scheme`
   in `app.json` and `APP_ID` in `.env.local`, and replace `assets/images/*`.
 

@@ -122,6 +122,7 @@ export const TOKENS = {
   borderWidth: 1,
   /** Control heights and padding (px) for the theme's density: h-control-sm, h-control, h-control-lg, px-control-x. */
   density: {"sm":40,"md":48,"lg":56,"x":20},
+  /** The type scale at 16px; the theme's typeset multiplies it (text-* classes are already scaled). */
   fontSize: {
     xs: 12,
     sm: 14,
@@ -132,6 +133,9 @@ export const TOKENS = {
     '3xl': 30,
     '4xl': 36,
   },
+  /** The typeset: body size (px) and its scale, running-text leading and its factor on the text sizes' line
+   *  heights, and Prose's flow (em between blocks) and measure (characters per line). */
+  typeset: {"size":16,"scale":1,"leading":1.75,"leadingFactor":1,"flow":1.25,"measure":70},
   fontFamily: {
     sans: "",
     mono: "Menlo",

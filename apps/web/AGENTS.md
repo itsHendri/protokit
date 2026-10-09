@@ -82,7 +82,7 @@ npm run eject-samples     # delete the dashboard, landing and assistant samples 
   (how the docs site embeds the kit).
 - **Share a link:** deploy to any Next host (Vercel, Cloudflare via OpenNext) or a static export.
 - **Re-brand:** pick a theme on the docs site (theme bar or `/themes`) and apply its code with the `apply-theme`
-  skill: `npx kit-tokens theme apply <pk1-code|preset>` (in the monorepo, `npm run theme:apply -- <code>` at the
+  skill: `npx kit-tokens theme apply <theme-code|preset>` (in the monorepo, `npm run theme:apply -- <code>` at the
   root, so both kits stay one brand). Editing tokens.json by hand still works (in the monorepo:
   `apps/mobile/tokens/tokens.json`, then `npm run tokens:sync`), then `npm run tokens:build`.
 
