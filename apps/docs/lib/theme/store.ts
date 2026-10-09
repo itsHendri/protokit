@@ -89,7 +89,29 @@ export function subscribeTheme(listener: () => void) {
   };
 }
 
-export const currentRecipe = () => state.recipe;
+/**
+ * A hover preview: the studio's pickers show a value on the site and in the frames before it is picked.
+ * Not persisted and not in the undo history; `previewRecipe(null)` ends it.
+ */
+let preview: Recipe | null = null;
+let previewTimer: ReturnType<typeof setTimeout> | undefined;
+export function previewRecipe(input: RecipeInput | null) {
+  clearTimeout(previewTimer);
+  const apply = () => {
+    const next = input ? normalizeRecipe({ ...state.recipe, ...input, font: { ...state.recipe.font, ...input.font } }) : null;
+    if (JSON.stringify(next) === JSON.stringify(preview)) return;
+    preview = next;
+    state = { ...state };
+    emit();
+  };
+  // Leaving is immediate; entering waits a beat, so sweeping across a list doesn't re-theme every row.
+  if (input) previewTimer = setTimeout(apply, 80);
+  else apply();
+}
+export const isPreviewing = () => preview !== null;
+
+/** The theme on screen: the hover preview while there is one, else the recipe. */
+export const currentRecipe = () => preview ?? state.recipe;
 
 let lastEdit = { key: '', at: 0 };
 
@@ -105,6 +127,7 @@ export function setRecipe(next: RecipeInput | ((current: Recipe) => RecipeInput)
   const merge = !!coalesce && lastEdit.key === coalesce && now - lastEdit.at < 1000 && state.history.length > 0;
   lastEdit = { key: coalesce ?? '', at: now };
   const history = merge ? state.history : [...state.history, state.recipe].slice(-50);
+  preview = null;
   state = { recipe, history, future: [] };
   persist(recipe);
   emit();
@@ -126,14 +149,18 @@ export function redo() {
   emit();
 }
 
-/** The groups of axes shuffle can change; a locked group keeps its values. */
-export type ShuffleGroup = 'colour' | 'type' | 'shape' | 'depth';
-let locks = new Set<ShuffleGroup>();
+/**
+ * What shuffle may change, one key per control row in the studio: a locked row keeps its value. Fonts lock
+ * one role at a time; the rest are recipe axes.
+ */
+export const LOCK_KEYS = ['brand', 'neutral', 'heading', 'body', 'mono', 'size', 'leading', 'flow', 'measure', 'radius', 'controls', 'border', 'depth', 'stroke', 'density'] as const;
+export type LockKey = (typeof LOCK_KEYS)[number];
+let locks = new Set<LockKey>();
 const lockListeners = new Set<() => void>();
-export function toggleLock(group: ShuffleGroup) {
+export function toggleLock(key: LockKey) {
   locks = new Set(locks);
-  if (locks.has(group)) locks.delete(group);
-  else locks.add(group);
+  if (locks.has(key)) locks.delete(key);
+  else locks.add(key);
   lockListeners.forEach((l) => l());
 }
 export function useLocks() {
@@ -178,16 +205,21 @@ function randomFonts(): Recipe['font'] {
   return { heading: pick(visible.filter((f) => f.category === 'serif' || f.category === 'display')).id, body: pick(sans).id, mono };
 }
 
-/** A new theme from random values for every unlocked group. */
+/** A new theme from random values for every unlocked row. */
 export function shuffle() {
+  const free = (key: LockKey) => !locks.has(key);
   const next: RecipeInput = { preset: undefined };
-  if (!locks.has('colour')) Object.assign(next, { brand: randomBrand(), neutral: pick(OPTIONS.neutral) });
-  if (!locks.has('type')) {
-    next.font = randomFonts();
-    Object.assign(next, { size: pick(OPTIONS.size), leading: pick(OPTIONS.leading), flow: pick(OPTIONS.flow), measure: pick(OPTIONS.measure) });
+  if (free('brand')) next.brand = randomBrand();
+  if (free('neutral')) next.neutral = pick(OPTIONS.neutral);
+  const fonts = randomFonts();
+  next.font = {
+    ...(free('heading') ? { heading: fonts.heading } : {}),
+    ...(free('body') ? { body: fonts.body } : {}),
+    ...(free('mono') ? { mono: fonts.mono } : {}),
+  } as Recipe['font'];
+  for (const key of ['size', 'leading', 'flow', 'measure', 'radius', 'controls', 'border', 'depth', 'stroke', 'density'] as const) {
+    if (free(key)) Object.assign(next, { [key]: pick(OPTIONS[key] as readonly string[]) });
   }
-  if (!locks.has('shape')) Object.assign(next, { radius: pick(OPTIONS.radius), controls: pick(OPTIONS.controls), border: pick(OPTIONS.border) });
-  if (!locks.has('depth')) Object.assign(next, { depth: pick(OPTIONS.depth), stroke: pick(OPTIONS.stroke), density: pick(OPTIONS.density) });
   setRecipe(next);
 }
 
@@ -217,10 +249,12 @@ export function themeFor(recipe: Recipe): Theme {
 /** The current theme, generated. */
 export function useLiveTheme(): { recipe: Recipe; theme: Theme; isCommitted: boolean; canUndo: boolean; canRedo: boolean } {
   const s = useThemeState();
+  // `recipe` is what is picked (the controls show it); `theme` is what is on screen (a hover preview).
+  const shown = preview ?? s.recipe;
   return {
     recipe: s.recipe,
-    theme: themeFor(s.recipe),
-    isCommitted: sameRecipe(s.recipe, committed),
+    theme: themeFor(shown),
+    isCommitted: sameRecipe(shown, committed),
     canUndo: s.history.length > 0,
     canRedo: s.future.length > 0,
   };

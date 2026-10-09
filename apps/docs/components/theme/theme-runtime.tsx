@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { fontsHref, kitPayloads, siteCss } from '@/lib/theme/payload';
 import { CSS_KEY, EMBED_KEY, FONTS_ID, FONTS_KEY, STYLE_ID } from '@/lib/theme/keys';
-import { committed, currentRecipe, startTheme, subscribeTheme, themeFor } from '@/lib/theme/store';
+import { committed, currentRecipe, isPreviewing, startTheme, subscribeTheme, themeFor } from '@/lib/theme/store';
 import { sameRecipe } from '@itshendri/kit-tokens/theme';
 
 /**
@@ -16,9 +16,11 @@ export function ThemeRuntime() {
       const recipe = currentRecipe();
       const theme = themeFor(recipe);
       const live = !sameRecipe(recipe, committed);
+      // A hover preview changes the page, not what the next page load paints.
+      const keep = !isPreviewing();
       let style = document.getElementById(STYLE_ID);
       try {
-        sessionStorage.setItem(EMBED_KEY, JSON.stringify(kitPayloads(theme, live)));
+        if (keep) sessionStorage.setItem(EMBED_KEY, JSON.stringify(kitPayloads(theme, live)));
       } catch {
         /* storage unavailable: the frames still get the theme over postMessage */
       }
@@ -33,13 +35,15 @@ export function ThemeRuntime() {
         if (link.href !== href) link.href = href;
       }
       try {
-        if (href) localStorage.setItem(FONTS_KEY, href);
+        if (!keep) {
+          /* previewing */
+        } else if (href) localStorage.setItem(FONTS_KEY, href);
         else localStorage.removeItem(FONTS_KEY);
       } catch {}
       if (!live) {
         style?.remove();
         try {
-          localStorage.removeItem(CSS_KEY);
+          if (keep) localStorage.removeItem(CSS_KEY);
         } catch {}
         return;
       }
@@ -51,7 +55,7 @@ export function ThemeRuntime() {
       }
       if (style.textContent !== css) style.textContent = css;
       try {
-        localStorage.setItem(CSS_KEY, css);
+        if (keep) localStorage.setItem(CSS_KEY, css);
       } catch {}
     };
     startTheme();
