@@ -738,6 +738,17 @@ export const COMPONENTS: ComponentMeta[] = [
     aliases: ['small print', 'legal', 'disclosure', 'terms', 'learn more'],
   },
   {
+    id: 'prose',
+    title: 'Prose',
+    exports: ['Prose'],
+    category: 'layout',
+    files: ['components/kit/prose.tsx'],
+    notes: "long-form text (articles, help, onboarding copy) at the theme's typeset: flow, measure, leading",
+    api: '<Prose><Text variant="h3" /><Text variant="p" />…</Prose>',
+    caption: 'Paragraphs are `Text variant="p"`; the flow is the only spacing between blocks. Text only inside.',
+    aliases: ['typography', 'article', 'rich text', 'typeset', 'body copy'],
+  },
+  {
     id: 'dialog',
     title: 'Dialog',
     exports: ['Dialog'],

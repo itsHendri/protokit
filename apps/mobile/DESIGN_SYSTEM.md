@@ -214,6 +214,7 @@ App tabs and stacks are Expo Router: `app/(kit)/_layout.tsx` shows the pattern; 
 | StickyBottomBar | `components/kit/sticky-bottom-bar.tsx` | safe-area action bar under a ScrollView (`pb-32`) |
 | PromoCard | `components/kit/promo-card.tsx` | tinted offer/nudge card · circular arrow CTA, dismiss X, generated art · one per screen |
 | Footnote | `components/kit/footnote.tsx` | small print / disclosure, last in the scroll |
+| Prose | `components/kit/prose.tsx` | long-form text (articles, help, onboarding copy) at the theme's typeset: flow, measure, leading |
 <!-- /GENERATED:registry:layout -->
 
 ### Overlays
