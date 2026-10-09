@@ -2334,6 +2334,34 @@
       }
     },
     {
+      "name": "prose",
+      "type": "registry:component",
+      "title": "Prose",
+      "description": "long-form text (articles, help, onboarding copy) at the theme's typeset: flow, measure, leading",
+      "dependencies": [],
+      "registryDependencies": [
+        "@kit-native/lib-utils",
+        "@kit-native/text"
+      ],
+      "files": [
+        {
+          "path": "components/kit/prose.tsx",
+          "type": "registry:component",
+          "target": "components/kit/prose.tsx"
+        }
+      ],
+      "categories": [
+        "layout"
+      ],
+      "docs": "Run `npx expo install --fix` afterwards so Expo SDK packages match your SDK. Needs the kit theme (`@kit-native/theme`) and `KitThemeProvider` from `@kit-native/lib-theme-context` at the root.",
+      "meta": {
+        "exports": [
+          "Prose"
+        ],
+        "api": "<Prose><Text variant=\"h3\" /><Text variant=\"p\" />…</Prose>"
+      }
+    },
+    {
       "name": "dialog",
       "type": "registry:ui",
       "title": "Dialog",

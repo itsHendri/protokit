@@ -146,7 +146,8 @@ colour. \`kit-tokens check\` flags class strings that break this.
 
 Headings (h1–h4, titles) use ${fontName(fonts.heading)}; everything else uses ${fontName(fonts.body)}; code and
 figures (\`font-mono\`) use ${fonts.mono ? fonts.mono.family : 'the system monospace font'}. Typeset: body text ${ctx.type.size}px (every
-\`text-*\` size scales with it), running text leading ${ctx.type.leading}.
+\`text-*\` size scales with it), running text leading ${ctx.type.leading}. Long-form text (articles, help, rendered
+markdown) goes in \`Prose\`: ${ctx.type.flow}em between blocks, lines up to ${ctx.type.measure} characters.
 Use the Text variants (h1–h4, lead, large, body, small, muted, code) rather than raw sizes. Medium weight for row titles, semibold for headings and
 values, bold only for hero amounts.
 

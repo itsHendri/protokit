@@ -505,6 +505,33 @@
       }
     },
     {
+      "name": "prose",
+      "type": "registry:component",
+      "title": "Prose",
+      "description": "long-form text (articles, docs, rendered markdown) at the theme's typeset: measure, leading, flow",
+      "dependencies": [
+        "cn@^0.4.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/kit/prose.tsx",
+          "type": "registry:component",
+          "target": "components/kit/prose.tsx"
+        }
+      ],
+      "categories": [
+        "layout"
+      ],
+      "docs": "Needs the kit theme (`@kit/theme`) and a next-themes ThemeProvider (attribute=\"class\") at the root.",
+      "meta": {
+        "exports": [
+          "Prose"
+        ],
+        "api": "<Prose as?=\"div|article|section\">{html}</Prose>"
+      }
+    },
+    {
       "name": "hero",
       "type": "registry:component",
       "title": "Hero",

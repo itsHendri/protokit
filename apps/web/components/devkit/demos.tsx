@@ -40,6 +40,7 @@ import { EmptyState } from '@/components/kit/empty-state';
 import { FeatureGrid } from '@/components/kit/feature-grid';
 import { Hero } from '@/components/kit/hero';
 import { PageHeader } from '@/components/kit/page-header';
+import { Prose } from '@/components/kit/prose';
 import { PricingCard } from '@/components/kit/pricing-card';
 import { StatTile } from '@/components/kit/stat-tile';
 import { StreamingText } from '@/components/kit/streaming-text';
@@ -589,6 +590,30 @@ export const DEMOS: Record<string, ComponentType> = {
         </>
       }
     />
+  ),
+  prose: () => (
+    <Prose as="article">
+      <h2>Getting paid faster</h2>
+      <p>
+        Most invoices are paid within <strong>14 days</strong> when they go out the day the work ends. Late ones
+        tend to share a cause: the client could not find the right person to approve them.
+      </p>
+      <ul>
+        <li>Send from the project, so the invoice names the work.</li>
+        <li>
+          Add a purchase order number in the <code>reference</code> field.
+        </li>
+        <li>Turn on reminders at 7 and 14 days.</li>
+      </ul>
+      <blockquote>We cut our average wait from 31 days to 12 by sending on the last day of the project.</blockquote>
+      <h3>Exporting</h3>
+      <p>
+        Export every invoice as CSV from <a href="#prose">Settings › Billing</a>, or from the command line:
+      </p>
+      <pre>
+        <code>northwind invoices export --since 2026-01-01</code>
+      </pre>
+    </Prose>
   ),
   card: () => (
     <Card className="w-full max-w-sm">

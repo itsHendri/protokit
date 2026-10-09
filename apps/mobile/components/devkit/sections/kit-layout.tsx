@@ -1,5 +1,6 @@
 import { Footnote } from '@/components/kit/footnote';
 import { PromoCard } from '@/components/kit/promo-card';
+import { Prose } from '@/components/kit/prose';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 import * as React from 'react';
@@ -56,9 +57,28 @@ function FootnoteDemo() {
   );
 }
 
+function ProseDemo() {
+  return (
+    <Prose>
+      <Text variant="h3">Building the habit</Text>
+      <Text variant="p">
+        Most streaks break on the third day, not the first. Pick one small thing you can do even on a bad day, and
+        attach it to something you already do.
+      </Text>
+      <Text variant="blockquote">“Two minutes counts. Showing up is the habit; the rest follows.”</Text>
+      <Text variant="h4">When you miss a day</Text>
+      <Text variant="p">
+        Never miss twice. Log the miss, keep the streak history, and set tomorrow’s reminder with{' '}
+        <Text variant="code">Remind me at 8:00</Text>.
+      </Text>
+    </Prose>
+  );
+}
+
 /** Kitchen Sink demos, keyed by the component id in registry/components.ts. */
 export const KIT_LAYOUT_DEMOS: Record<string, ComponentType> = {
   'sticky-bottom-bar': StickyBottomBarDemo,
   'promo-card': PromoCardDemo,
   'footnote': FootnoteDemo,
+  prose: ProseDemo,
 };
