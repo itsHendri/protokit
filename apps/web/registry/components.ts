@@ -337,6 +337,17 @@ export const COMPONENTS: ComponentMeta[] = [
     aliases: ['title', 'heading'],
   },
   {
+    id: 'prose',
+    title: 'Prose',
+    exports: ['Prose'],
+    category: 'layout',
+    files: ['components/kit/prose.tsx'],
+    notes: "long-form text (articles, docs, rendered markdown) at the theme's typeset: measure, leading, flow",
+    api: '<Prose as?="div|article|section">{html}</Prose>',
+    caption: 'Wrap text, not layout: headings, paragraphs, lists, quotes, code and tables. No cards or buttons inside.',
+    aliases: ['typography', 'article', 'markdown', 'rich text', 'typeset'],
+  },
+  {
     id: 'card',
     title: 'Card',
     exports: ['Card', 'CardHeader', 'CardTitle', 'CardDescription', 'CardAction', 'CardContent', 'CardFooter'],

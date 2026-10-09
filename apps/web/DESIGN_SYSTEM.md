@@ -153,6 +153,7 @@ the tables. Text between `GENERATED` markers is overwritten.
 | Component | Path | Notes |
 |---|---|---|
 | PageHeader | `components/kit/page-header.tsx` | title, description and actions · one per page, first in the content |
+| Prose | `components/kit/prose.tsx` | long-form text (articles, docs, rendered markdown) at the theme's typeset: measure, leading, flow |
 | Card / CardHeader / CardTitle / CardDescription / CardAction / CardContent / CardFooter | `components/ui/card.tsx` | a raised surface for one group · never nest cards |
 | Accordion / AccordionItem / AccordionTrigger / AccordionContent | `components/ui/accordion.tsx` | FAQs and long optional detail |
 | Collapsible / CollapsibleTrigger / CollapsibleContent | `components/ui/collapsible.tsx` | one show/hide region |
