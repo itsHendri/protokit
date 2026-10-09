@@ -34,8 +34,18 @@ the whole kit.
 
 ## Type
 
-The system font unless a brand font is set. Screens use the `Text` variants (`h1`–`h4`, `lead`, `large`,
-`p`, `small`, `muted`, `code`) rather than raw sizes.
+Three faces (heading, body and mono) and a **typeset**: the body text size, which every `text-*` size scales
+with, the leading of running text, and for long-form text the flow (space between blocks) and measure (the
+longest line). The specimen below is the live theme: pick another in the theme bar and it changes.
+
+<TypeSpecimen />
+
+Screens use the `Text` variants (`h1`–`h4`, `lead`, `large`, `p`, `small`, `muted`, `code`) on mobile and
+the `text-*` classes on the web rather than raw sizes. Long-form text (an article, help, a rendered answer)
+goes in `Prose`, which applies the flow and the measure. The kits' own Foundations show the scale as they
+render it:
+
+<PhoneFrame path="/foundations?open=type" title="Mobile kit typography, live" width={300} />
 
 ## Motion
 
