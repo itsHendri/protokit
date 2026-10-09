@@ -29,7 +29,8 @@ import tokensJson from '../../../mobile/tokens/tokens.json';
 export const base = tokensJson as unknown as TokensJson;
 const status = themeStatus(base);
 /** The theme the kits ship with right now. */
-export const committed: Recipe = status.applied ? status.recipe : normalizeRecipe();
+// normalizeRecipe: a recipe recorded before the typeset gets its defaults.
+export const committed: Recipe = normalizeRecipe(status.applied ? status.recipe : {});
 
 
 type State = { recipe: Recipe; history: Recipe[]; future: Recipe[] };
