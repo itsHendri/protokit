@@ -5,6 +5,7 @@
  * can tell which theme is applied, and whether anyone has hand-edited it since (drift).
  */
 import { generateTheme } from './generate.mjs';
+import { normalizeRecipe } from './recipe.mjs';
 import { flatten } from './refs.mjs';
 
 export const THEME_EXTENSION = 'dev.protokit.theme';
@@ -94,5 +95,6 @@ export function themeStatus(tokens) {
   const drift = Object.entries(expected)
     .filter(([path, value]) => path in actual && JSON.stringify(actual[path]) !== JSON.stringify(value))
     .map(([path]) => path);
-  return { applied: true, code: record.code, recipe: record.recipe, drift };
+  // Normalised: a recipe recorded by an older kit-tokens gets the axes it didn't have (the typeset).
+  return { applied: true, code: record.code, recipe: normalizeRecipe(record.recipe), drift };
 }
