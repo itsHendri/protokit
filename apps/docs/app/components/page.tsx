@@ -1,5 +1,5 @@
 import { ArrowRightIcon } from 'lucide-react';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/notebook/page';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { kit, kits, PLATFORMS, totalComponents } from '@/lib/kit';

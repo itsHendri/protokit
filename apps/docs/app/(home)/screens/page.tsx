@@ -35,10 +35,19 @@ export default function ScreensPage() {
           the real app running in the browser: scroll, click and type in it. They follow this site&apos;s theme.
         </p>
       </header>
+      {/* Jump to either half; sticks under the top bar (apps/docs/design/navigation-wireframes.md). */}
+      <nav aria-label="Platforms" className="bg-fd-background/80 sticky top-14 z-20 -mx-1 -my-12 flex gap-2 px-1 py-3 backdrop-blur-sm">
+        <a href="#mobile" className="border-border hover:bg-accent rounded-full border px-3.5 py-1 text-sm font-medium">
+          Mobile · {MOBILE.length}
+        </a>
+        <a href="#web" className="border-border hover:bg-accent rounded-full border px-3.5 py-1 text-sm font-medium">
+          Web · {WEB.length}
+        </a>
+      </nav>
 
-      <section aria-labelledby="mobile" className="flex flex-col gap-8">
+      <section aria-labelledby="mobile" className="flex scroll-mt-32 flex-col gap-8">
         <div className="flex flex-col gap-2">
-          <h2 id="mobile" className="text-2xl font-semibold tracking-tight">
+          <h2 id="mobile" className="scroll-mt-32 text-2xl font-semibold tracking-tight">
             Mobile
           </h2>
           <p className="text-muted-foreground text-sm">
@@ -62,9 +71,9 @@ export default function ScreensPage() {
         </ul>
       </section>
 
-      <section aria-labelledby="web" className="flex flex-col gap-8">
+      <section aria-labelledby="web" className="flex scroll-mt-32 flex-col gap-8">
         <div className="flex flex-col gap-2">
-          <h2 id="web" className="text-2xl font-semibold tracking-tight">
+          <h2 id="web" className="scroll-mt-32 text-2xl font-semibold tracking-tight">
             Web
           </h2>
           <p className="text-muted-foreground text-sm">
