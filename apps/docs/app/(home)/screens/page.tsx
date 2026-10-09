@@ -27,7 +27,7 @@ const WEB = [
 
 export default function ScreensPage() {
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-16 px-4 py-12 sm:px-6 md:py-16">
+    <main className="mx-auto flex w-full max-w-site flex-col gap-16 px-4 py-12 md:px-6 md:py-16">
       <header className="flex max-w-3xl flex-col gap-3">
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Screens</h1>
         <p className="text-muted-foreground text-lg leading-8">

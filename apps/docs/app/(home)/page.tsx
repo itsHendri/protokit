@@ -29,7 +29,7 @@ const GUARDRAILS = [
 
 export default function HomePage() {
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-24 px-4 py-12 sm:px-6 md:py-20">
+    <main className="mx-auto flex w-full max-w-site flex-col gap-24 px-4 py-12 md:px-6 md:py-20">
       {/* Hero */}
       <section className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_auto]">
         <div className="flex flex-col gap-6">
