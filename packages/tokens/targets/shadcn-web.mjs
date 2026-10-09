@@ -4,12 +4,28 @@
  *   app/globals.css →  @import "tailwindcss";  @import "./tokens.css";
  * Same tokens, same contrast gate as the native CSS; colours are converted with a round-trip check.
  *   options: { out: 'tokens/generated/web.css' }
+ *            density: false   leave the spacing scale alone (the docs site)
+ *            typeset: false   leave the text sizes alone (the docs site keeps its reading sizes)
  */
 import { hexToOklch } from '../lib/color.mjs';
-import { radiusCalc } from '../lib/resolve.mjs';
+import { group, radiusCalc } from '../lib/resolve.mjs';
+import { TEXT_LINE_HEIGHT } from '../lib/theme/recipe.mjs';
+import { typeVars } from '../lib/theme/vars.mjs';
 
 const rem = (px) => (px >= 9999 ? '9999px' : `${px / 16}rem`);
 const SYSTEM_SANS = "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif";
+const SYSTEM_MONO = 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+
+/** Tailwind's text-xs…4xl from the primitive sizes, scaled by the typeset (sizes and line heights). */
+function textScale(ctx) {
+  const sizes = group(ctx.prim, ['font', 'size']).filter(({ key }) => key in TEXT_LINE_HEIGHT);
+  return sizes
+    .map(({ key, value }) => {
+      // Exact ratios, as Tailwind writes them (calc(1 / 0.75)), so the default typeset changes nothing.
+      return `  --text-${key}: calc(${value / 16}rem * var(--type-scale));\n  --text-${key}--line-height: calc(${TEXT_LINE_HEIGHT[key]} / ${value} * var(--leading-factor));`;
+    })
+    .join('\n');
+}
 
 export default function shadcnWeb(ctx, options) {
   const vars = (mode) => ctx.colors.map((c) => `  --${c.name}: ${hexToOklch(c[mode])};`).join('\n');
@@ -21,7 +37,9 @@ export default function shadcnWeb(ctx, options) {
   --radius: ${rem(ctx.radius.base)};
   --radius-control: ${rem(ctx.shape.control)};
   --border-width: ${ctx.shape.borderWidth}px;
-  --icon-stroke: ${ctx.shape.stroke};${options.density === false ? '' : `\n  --density: ${ctx.shape.density.scale};`}
+  --icon-stroke: ${ctx.shape.stroke};${options.density === false ? '' : `\n  --density: ${ctx.shape.density.scale};`}${
+    options.typeset === false ? '' : '\n' + Object.entries(typeVars(ctx.type)).map(([k, v]) => `  ${k}: ${v};`).join('\n')
+  }
 ${shadows('light')}
 ${vars('light')}
 }
@@ -44,6 +62,9 @@ ${ctx.radius.steps.map((s) => `  --radius-${s.name}: ${radiusCalc(s.scale)};`).j
   --shadow-2xl: var(--shadow-3);
   --font-sans: var(--kit-font-body, ${SYSTEM_SANS});
   --font-heading: var(--kit-font-heading, var(--kit-font-body, ${SYSTEM_SANS}));
+  --font-mono: var(--kit-font-mono, ${SYSTEM_MONO});${
+    options.typeset === false ? '' : `\n  /* The theme's typeset scales every text size and its line height (text-sm, text-base…). */\n${textScale(ctx)}`
+  }
 ${ctx.colors.map((c) => `  --color-${c.name}: var(--${c.name});`).join('\n')}
 }
 

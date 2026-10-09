@@ -7,6 +7,11 @@
   --border-width: 1px;
   --icon-stroke: 2;
   --density: 1;
+  --type-scale: 1;
+  --leading-factor: 1;
+  --typeset-leading: 1.75;
+  --typeset-flow: 1.25em;
+  --typeset-measure: 70ch;
   --shadow-1: 0px 1px 2px 0px rgba(0, 0, 0, 0.051);
   --shadow-2: 0px 4px 12px -2px rgba(0, 0, 0, 0.078);
   --shadow-3: 0px 12px 24px -6px rgba(0, 0, 0, 0.122);
@@ -113,6 +118,24 @@
   --shadow-2xl: var(--shadow-3);
   --font-sans: var(--kit-font-body, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif);
   --font-heading: var(--kit-font-heading, var(--kit-font-body, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif));
+  --font-mono: var(--kit-font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+  /* The theme's typeset scales every text size and its line height (text-sm, text-base…). */
+  --text-xs: calc(0.75rem * var(--type-scale));
+  --text-xs--line-height: calc(16 / 12 * var(--leading-factor));
+  --text-sm: calc(0.875rem * var(--type-scale));
+  --text-sm--line-height: calc(20 / 14 * var(--leading-factor));
+  --text-base: calc(1rem * var(--type-scale));
+  --text-base--line-height: calc(24 / 16 * var(--leading-factor));
+  --text-lg: calc(1.125rem * var(--type-scale));
+  --text-lg--line-height: calc(28 / 18 * var(--leading-factor));
+  --text-xl: calc(1.25rem * var(--type-scale));
+  --text-xl--line-height: calc(28 / 20 * var(--leading-factor));
+  --text-2xl: calc(1.5rem * var(--type-scale));
+  --text-2xl--line-height: calc(32 / 24 * var(--leading-factor));
+  --text-3xl: calc(1.875rem * var(--type-scale));
+  --text-3xl--line-height: calc(36 / 30 * var(--leading-factor));
+  --text-4xl: calc(2.25rem * var(--type-scale));
+  --text-4xl--line-height: calc(40 / 36 * var(--leading-factor));
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

@@ -3,6 +3,9 @@
  * into primitives, semantic tokens and CSS variables; the codec (codec.mjs) packs it into a short code.
  *
  * Every option list is APPEND-ONLY: codes store an option's index. Add new options at the end.
+ *
+ * The typeset (font.mono, size, leading, flow, measure) came later. A recipe without it gets the defaults,
+ * which are what the kits always had, and a theme with the default typeset still encodes as a pk1 code.
  */
 import { FONTS } from './fonts.mjs';
 
@@ -23,13 +26,51 @@ export const OPTIONS = {
   density: ['comfortable', 'compact', 'spacious'],
   /** Border width of cards, inputs and outlines. */
   border: ['regular', 'hairline', 'heavy'],
+  /** Typeset: the body text size (px). Every text size scales with it (text-xs…4xl). */
+  size: ['16', '14', '15', '18'],
+  /** Typeset: line height of running text; the text sizes' own line heights scale with it. */
+  leading: ['normal', 'tight', 'relaxed'],
+  /** Typeset: the space between blocks of long-form text (Prose). */
+  flow: ['normal', 'tight', 'loose'],
+  /** Typeset: the longest line of long-form text (Prose), in characters. */
+  measure: ['70', '60', '80', '90'],
 };
+
+/** The recipe keys that make up the typeset, besides font.mono. */
+export const TYPESET_KEYS = ['size', 'leading', 'flow', 'measure'];
 
 /** Base radius per option: a primitive radius step (a reference) or 0. */
 export const RADIUS = { none: 0, sm: 'sm', md: 'md', lg: 'lg', xl: 'xl', '2xl': '2xl' };
 export const STROKE = { thin: 1.5, regular: 2, bold: 2.5 };
 /** px; hairline renders as one device pixel on a 2x screen. */
 export const BORDER = { hairline: 0.5, regular: 1, heavy: 2 };
+/** Line height of running text (× size). 1.75 = leading-7 at 16px, what the kits' paragraphs always had. */
+export const LEADING = { tight: 1.6, normal: 1.75, relaxed: 1.9 };
+/** Space between blocks of long-form text, in em. */
+export const FLOW = { tight: 1, normal: 1.25, loose: 2 };
+/**
+ * Line height (px) of each text size at 16px: Tailwind's defaults (3 and 4 agree). The typeset scales both;
+ * text-5xl and up keep Tailwind's (line height 1).
+ */
+export const TEXT_LINE_HEIGHT = { xs: 16, sm: 20, base: 24, lg: 28, xl: 28, '2xl': 32, '3xl': 36, '4xl': 40 };
+
+/** The default typeset as tokens (semantic.type), for a token file from before the typeset. */
+export const TYPE = { size: 16, leading: LEADING.normal, flow: FLOW.normal, measure: 70 };
+
+/**
+ * The typeset as the numbers the targets use: every text size scales by size / 16, every text size's line
+ * height by leading / 1.75 (so the default typeset is exactly Tailwind's scale), and long-form text (Prose)
+ * gets the leading, flow (em) and measure (ch) as they are.
+ */
+export const typeScale = ({ size, leading, flow, measure }) => ({
+  size,
+  scale: Number((size / 16).toFixed(4)),
+  leading,
+  leadingFactor: Number((leading / 1.75).toFixed(4)),
+  flow,
+  measure,
+});
+
 
 const s = (x, y, blur, spread, color) => ({ offsetX: x, offsetY: y, blur, spread, color });
 /**
@@ -86,14 +127,21 @@ export const DEFAULT_RECIPE = Object.freeze({
   neutral: 'zinc',
   radius: 'lg',
   controls: 'pill',
-  font: Object.freeze({ heading: 'system', body: 'system' }),
+  font: Object.freeze({ heading: 'system', body: 'system', mono: 'system-mono' }),
   stroke: 'regular',
   depth: 'soft',
   density: 'comfortable',
   border: 'regular',
+  size: '16',
+  leading: 'normal',
+  flow: 'normal',
+  measure: '70',
 });
 
 const HEX = /^#[0-9a-f]{6}$/;
+
+/** Does the recipe use the default typeset (what every pk1 code means)? */
+export const defaultTypeset = (r) => r.font.mono === DEFAULT_RECIPE.font.mono && TYPESET_KEYS.every((k) => r[k] === DEFAULT_RECIPE[k]);
 
 /** Fill in defaults, normalise, and throw on anything invalid. Returns a new, plain recipe. */
 export function normalizeRecipe(input = {}) {
@@ -102,12 +150,32 @@ export function normalizeRecipe(input = {}) {
   r.brand = String(r.brand).toLowerCase();
   if (!HEX.test(r.brand)) throw new Error(`Recipe brand must be a 6-digit hex colour, got "${input.brand}"`);
   for (const [key, list] of Object.entries(OPTIONS)) {
+    if (typeof r[key] === 'number') r[key] = String(r[key]);
     if (!list.includes(r[key])) throw new Error(`Recipe ${key} must be one of ${list.join(', ')}; got "${r[key]}"`);
   }
-  for (const role of ['heading', 'body']) {
-    if (!FONTS.some((f) => f.id === r.font[role])) throw new Error(`Unknown ${role} font "${r.font[role]}"`);
+  for (const role of ['heading', 'body', 'mono']) {
+    const font = FONTS.find((f) => f.id === r.font[role]);
+    if (!font) throw new Error(`Unknown ${role} font "${r.font[role]}"`);
+    // The system fonts belong to their role: System for heading and body, System mono for mono.
+    if (font.system && (font.category === 'mono') !== (role === 'mono')) throw new Error(`"${font.id}" can't be the ${role} font`);
+    if (role === 'mono' && font.category !== 'mono') throw new Error(`The mono font must be a mono font; "${font.id}" is ${font.category}`);
   }
-  const out = { v: r.v, brand: r.brand, neutral: r.neutral, radius: r.radius, controls: r.controls, font: { heading: r.font.heading, body: r.font.body }, stroke: r.stroke, depth: r.depth, density: r.density, border: r.border };
+  const out = {
+    v: r.v,
+    brand: r.brand,
+    neutral: r.neutral,
+    radius: r.radius,
+    controls: r.controls,
+    font: { heading: r.font.heading, body: r.font.body, mono: r.font.mono },
+    stroke: r.stroke,
+    depth: r.depth,
+    density: r.density,
+    border: r.border,
+    size: r.size,
+    leading: r.leading,
+    flow: r.flow,
+    measure: r.measure,
+  };
   if (input.preset) out.preset = String(input.preset);
   return out;
 }

@@ -74,9 +74,13 @@ ${primitiveGroup(ctx.prim, ['radius'])}
   borderWidth: ${ctx.shape.borderWidth},
   /** Control heights and padding (px) for the theme's density: h-control-sm, h-control, h-control-lg, px-control-x. */
   density: ${JSON.stringify({ sm: ctx.shape.density.sm, md: ctx.shape.density.md, lg: ctx.shape.density.lg, x: ctx.shape.density.x })},
+  /** The type scale at 16px; the theme's typeset multiplies it (text-* classes are already scaled). */
   fontSize: {
 ${primitiveGroup(ctx.prim, ['font', 'size'])}
   },
+  /** The typeset: body size (px) and its scale, running-text leading and its factor on the text sizes' line
+   *  heights, and Prose's flow (em between blocks) and measure (characters per line). */
+  typeset: ${JSON.stringify(ctx.type)},
   fontFamily: {
 ${primitiveGroup(ctx.prim, ['font', 'family'])}
   },

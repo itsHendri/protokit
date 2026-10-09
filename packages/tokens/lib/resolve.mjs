@@ -5,7 +5,7 @@
  */
 import StyleDictionary from 'style-dictionary';
 import { readFileSync } from 'node:fs';
-import { DENSITY, DEPTH, shadowCss } from './theme/recipe.mjs';
+import { DENSITY, DEPTH, shadowCss, TYPE, typeScale } from './theme/recipe.mjs';
 
 export const MODES = ['light', 'dark'];
 
@@ -66,6 +66,8 @@ export function radiusCalc(scale) {
  *   shape                { control: px, borderWidth: px, stroke, shadows: { light: { 1: css }, dark },
  *                          density: { scale, sm, md, lg, x } }
  *                        (a token file from before themes gets the kit's defaults)
+ *   type                 { size, scale, leading, leadingFactor, flow, measure } (semantic.type; defaults
+ *                          for a token file from before the typeset)
  */
 export async function loadTokens(sourcePath) {
   const source = JSON.parse(readFileSync(sourcePath, 'utf8'));
@@ -94,7 +96,8 @@ export async function loadTokens(sourcePath) {
       ...Object.fromEntries(['sm', 'md', 'lg', 'x'].map((s) => [s, find(semLight, `density-control-${s}`) ?? DENSITY.comfortable[s]])),
     },
   };
-  return { source, semLight, semDark, prim, colors, radius, shape };
+  const type = typeScale(Object.fromEntries(Object.entries(TYPE).map(([key, value]) => [key, find(semLight, `type-${key}`) ?? value])));
+  return { source, semLight, semDark, prim, colors, radius, shape, type };
 }
 
 /** Primitive tokens under a path prefix, e.g. group(prim, ['font', 'size']) → [{ key: 'xs', value: 12 }, …]. */

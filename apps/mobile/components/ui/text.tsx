@@ -27,7 +27,7 @@ const textVariants = cva(
         ),
         h3: cn('text-2xl font-semibold tracking-tight', Platform.select({ web: 'scroll-m-20' })),
         h4: cn('text-xl font-semibold tracking-tight', Platform.select({ web: 'scroll-m-20' })),
-        p: 'mt-3 leading-7 sm:mt-6',
+        p: 'mt-3 leading-prose sm:mt-6',
         blockquote: 'mt-4 border-l-2 pl-3 italic sm:mt-6 sm:pl-6',
         code: cn(
           'bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold'
@@ -79,23 +79,25 @@ const WEIGHT: Record<string, number> = {
 };
 const HEADINGS = new Set<TextVariant>(['h1', 'h2', 'h3', 'h4']);
 const SYSTEM_STACK = 'ui-sans-serif, system-ui, -apple-system, sans-serif';
+const MONO_STACK = 'ui-monospace, SFMono-Regular, Menlo, monospace';
 
 /**
  * The theme's font for this text (lib/fonts.ts). Headings (h1–h4, or a `font-heading` class) take the
- * heading font, everything else the body font; `font-mono` keeps the mono font. A custom font is one
+ * heading font, `font-mono` the mono font, everything else the body font. A custom font is one
  * family per weight on native (Android ignores fontWeight for it), so the weight in the classes picks the
  * family and fontWeight is reset. A live theme from the docs picker (web only) uses its Google font.
  */
 function useFontStyle(classes: string, variant: TextVariant = 'default') {
   const live = useLiveFonts();
-  if (/(^|\s)font-mono(\s|$)/.test(classes)) return undefined;
-  const role = HEADINGS.has(variant) || /(^|\s)font-heading(\s|$)/.test(classes) ? 'heading' : 'body';
+  const mono = /(^|\s)font-mono(\s|$)/.test(classes);
+  const role = mono ? 'mono' : HEADINGS.has(variant) || /(^|\s)font-heading(\s|$)/.test(classes) ? 'heading' : 'body';
   const families = FONT_FAMILY[role];
   if (live) {
     // A live theme decides every role: its font, or the system font over a committed custom one.
     const family = live[role];
-    if (family) return { fontFamily: `"${family}", ${SYSTEM_STACK}` };
-    return families ? { fontFamily: SYSTEM_STACK } : undefined;
+    const stack = mono ? MONO_STACK : SYSTEM_STACK;
+    if (family) return { fontFamily: `"${family}", ${stack}` };
+    return families ? { fontFamily: stack } : undefined;
   }
   if (!families) return undefined;
   const weight = classes.split(/\s+/).reduce((w, c) => WEIGHT[c] ?? w, 400);

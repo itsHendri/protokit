@@ -13,20 +13,21 @@ import { group } from '../lib/resolve.mjs';
 const q = (s) => JSON.stringify(String(s));
 const px = (n) => `${n}px`;
 
-/** The Text variants of components/ui/text.tsx, as typography tokens. */
-function typography(prim) {
-  const size = Object.fromEntries(group(prim, ['font', 'size']).map((t) => [t.key, t.value]));
+/** The Text variants of components/ui/text.tsx, as typography tokens, at the theme's typeset. */
+function typography(prim, type) {
+  const size = Object.fromEntries(group(prim, ['font', 'size']).map((t) => [t.key, Math.round(t.value * type.scale * 10) / 10]));
   const families = Object.fromEntries(group(prim, ['font', 'family']).map((t) => [t.key, t.value]));
-  const sans = families.sans || 'system-ui';
+  const heading = families.heading || families.sans || 'system-ui';
+  const sans = families.body || families.sans || 'system-ui';
   const mono = families.mono || 'monospace';
   const levels = [
-    ['h1', sans, size['4xl'], 800, 1.1, '-0.025em'],
-    ['h2', sans, size['3xl'], 600, 1.2, '-0.025em'],
-    ['h3', sans, size['2xl'], 600, 1.25, '-0.025em'],
-    ['h4', sans, size.xl, 600, 1.3, '-0.025em'],
+    ['h1', heading, size['4xl'], 800, 1.1, '-0.025em'],
+    ['h2', heading, size['3xl'], 600, 1.2, '-0.025em'],
+    ['h3', heading, size['2xl'], 600, 1.25, '-0.025em'],
+    ['h4', heading, size.xl, 600, 1.3, '-0.025em'],
     ['lead', sans, size.xl, 400, 1.4],
     ['large', sans, size.lg, 600, 1.4],
-    ['body', sans, size.base, 400, 1.75],
+    ['body', sans, size.base, 400, type.leading],
     ['small', sans, size.sm, 500, 1],
     ['muted', sans, size.sm, 400, 1.4],
     ['code', mono, size.sm, 600, 1.4],
@@ -78,7 +79,7 @@ description: ${q(description)}
 colors:
 ${colors}
 typography:
-${typography(ctx.prim)}
+${typography(ctx.prim, ctx.type)}
 rounded:
 ${rounded}
 spacing:
@@ -143,7 +144,9 @@ colour. \`kit-tokens check\` flags class strings that break this.
 
 ## Typography
 
-Headings (h1–h4, titles) use ${fontName(fonts.heading)}; everything else uses ${fontName(fonts.body)}.
+Headings (h1–h4, titles) use ${fontName(fonts.heading)}; everything else uses ${fontName(fonts.body)}; code and
+figures (\`font-mono\`) use ${fonts.mono ? fonts.mono.family : 'the system monospace font'}. Typeset: body text ${ctx.type.size}px (every
+\`text-*\` size scales with it), running text leading ${ctx.type.leading}.
 Use the Text variants (h1–h4, lead, large, body, small, muted, code) rather than raw sizes. Medium weight for row titles, semibold for headings and
 values, bold only for hero amounts.
 
