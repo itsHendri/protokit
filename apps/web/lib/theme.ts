@@ -168,12 +168,17 @@ export const THEME_INFO: ThemeInfo | null = {
     "controls": "pill",
     "font": {
       "heading": "system",
-      "body": "system"
+      "body": "system",
+      "mono": "system-mono"
     },
     "stroke": "regular",
     "depth": "soft",
     "density": "comfortable",
     "border": "regular",
+    "size": "16",
+    "leading": "normal",
+    "flow": "normal",
+    "measure": "70",
     "preset": "default"
   }
 };
