@@ -46,7 +46,23 @@ function EmbedBridge({ onTheme }: { onTheme: (scheme: EmbedScheme) => void }) {
     };
     window.addEventListener('message', onMessage);
     for (const origin of origins) window.parent.postMessage({ type: 'kit:ready' }, origin);
-    return () => window.removeEventListener('message', onMessage);
+    // ?autosize=1: report the content's height so the host can size the frame to it (no inner scroll).
+    let observer: ResizeObserver | undefined;
+    const content = document.querySelector('[data-autosize]');
+    if (content && new URLSearchParams(window.location.search).get('autosize') === '1') {
+      let last = 0;
+      observer = new ResizeObserver(() => {
+        const height = Math.ceil(content.getBoundingClientRect().height);
+        if (height === last) return;
+        last = height;
+        for (const origin of origins) window.parent.postMessage({ type: 'kit:size', height }, origin);
+      });
+      observer.observe(content);
+    }
+    return () => {
+      window.removeEventListener('message', onMessage);
+      observer?.disconnect();
+    };
   }, [onTheme]);
   return null;
 }

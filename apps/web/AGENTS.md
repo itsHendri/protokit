@@ -24,6 +24,9 @@ app/(kit)/              the kit shell: Home (/) · Components (/components, the 
 app/<slug>/             a prototype: its own folder with its own layout.tsx (AppShell, a marketing layout…)
 app/dashboard/, app/landing/, app/assistant/   the three samples (worked examples). `npm run eject-samples`
                         removes them, their data in components/<sample>/ and the kit home's links.
+app/showcase/           the showcase: registry components in a masonry, and /showcase/typeset (long-form Prose
+                        beside components). The docs home page and theme studio frame it; not a sample to copy.
+components/showcase/    its mock data, cards and typeset fixtures (kept by eject-samples)
 components/ui/          shadcn/ui — add more with the add-component skill (`npx shadcn@latest add <name>`)
 components/kit/         ours: AppShell, PageHeader, StatTile, DataTable, EmptyState, DatePicker, Hero,
                         FeatureGrid, PricingCard, ChatMessage, ChatComposer, AttachmentChip, ChatThreadList,
@@ -75,7 +78,8 @@ npm run eject-samples     # delete the dashboard, landing and assistant samples 
 - **Preview:** `npm run dev`, or the `web-dev` launch config. Deep link a component:
   `/components?section=<id>`.
 - **Embedding (the docs site's browser frames):** `?embed=1` hides everything with the `kit-chrome` class
-  for the session (inside a frame); `?theme=light|dark` pins the theme without saving it. The host syncs the
+  for the session (inside a frame); `?theme=light|dark` pins the theme without saving it; `?autosize=1` posts
+  `{ type: 'kit:size', height }` for the page's `[data-autosize]` element (the showcase) so the host can size the frame. The host syncs the
   theme with `{ type: 'kit:theme', value }`; the kit answers `{ type: 'kit:ready' }`. Same origin plus
   `NEXT_PUBLIC_EMBED_ORIGINS`. See `lib/embed.ts` and `lib/embed-boot.ts`.
 - **Static export:** `KIT_WEB_EXPORT=1 KIT_WEB_BASE_PATH=/w npm run build` writes `out/` under a sub-path
