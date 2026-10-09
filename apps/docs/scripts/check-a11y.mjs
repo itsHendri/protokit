@@ -47,6 +47,8 @@ const PAGES = [
   '/w/dashboard/settings/',
   '/w/landing/',
   '/w/assistant/',
+  '/w/showcase/',
+  '/w/showcase/typeset/',
 ];
 const SCHEMES = ['light', 'dark'];
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];

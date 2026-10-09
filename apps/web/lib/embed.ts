@@ -8,10 +8,13 @@ import { EMBED_STORAGE } from '@/lib/embed-boot';
  *
  *   ?embed=1            hide the kit chrome (anything with the `kit-chrome` class: header, nav, back link)
  *   ?theme=light|dark   start in that theme and never persist it
+ *   ?autosize=1         report the height of the page's [data-autosize] element (the showcase), so the
+ *                       host can make the frame exactly that tall
  *
  * The host keeps the theme in step with postMessage, same contract as the mobile kit:
  *   host → kit   { type: 'kit:theme', value: 'light' | 'dark' }
  *   kit → host   { type: 'kit:ready' }
+ *                { type: 'kit:size', height }   (with ?autosize=1, whenever the content's height changes)
  * Accepted from this page's own origin and NEXT_PUBLIC_EMBED_ORIGINS (comma-separated).
  */
 export type EmbedScheme = 'light' | 'dark';
