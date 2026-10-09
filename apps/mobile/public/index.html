@@ -40,6 +40,20 @@
               }
               return selector + '{' + css + '}';
             };
+            // TYPE_RULES in lib/embed-theme.ts: the text classes follow the live typeset.
+            var typeRules = function () {
+              var sizes = [['xs', 0.75, 1], ['sm', 0.875, 1.25], ['base', 1, 1.5], ['lg', 1.125, 1.75], ['xl', 1.25, 1.75], ['2xl', 1.5, 2], ['3xl', 1.875, 2.25], ['4xl', 2.25, 2.5]];
+              var css = '';
+              for (var i = 0; i < sizes.length; i++) {
+                var c = '.text-' + sizes[i][0];
+                css += c + c + '{font-size:calc(' + sizes[i][1] + 'rem*var(--type-scale))}' +
+                  c + ':not([class*="leading-"]){line-height:calc(' + sizes[i][2] + 'rem*var(--type-scale)*var(--leading-factor))}';
+              }
+              return css +
+                '.leading-prose.leading-prose{line-height:calc(1rem*var(--type-scale)*var(--typeset-leading))}' +
+                '.gap-flow.gap-flow,.max-w-measure.max-w-measure{font-size:calc(1rem*var(--type-scale))}' +
+                '.gap-flow.gap-flow{gap:var(--typeset-flow)}.max-w-measure.max-w-measure{max-width:var(--typeset-measure)}';
+            };
             var style = document.createElement('style');
             style.id = 'kit-theme-override';
             style.textContent =
@@ -49,7 +63,8 @@
                 ? '.shadow-xs,.shadow-sm,.shadow{--tw-shadow:var(--shadow-1)!important}' +
                   '.shadow-md{--tw-shadow:var(--shadow-2)!important}' +
                   '.shadow-lg,.shadow-xl,.shadow-2xl{--tw-shadow:var(--shadow-3)!important}'
-                : '');
+                : '') +
+              (vars.light && vars.light['--type-scale'] ? typeRules() : '');
             document.head.appendChild(style);
           }
         } catch (e) {

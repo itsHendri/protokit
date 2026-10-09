@@ -3,14 +3,14 @@
  * the browser for the live picker, the CLI runs it to commit a theme into tokens.json.
  *
  *   generateTheme(recipe, base)  base = the app's tokens.json (status ramps, radius steps come from it)
- *     → { recipe, code, primitives, semantic, resolved, radius, adjustments }
+ *     → { recipe, code, primitives, semantic, resolved, radius, type, adjustments }
  *
  * Status colours (success, warning, danger, info) are not themed in v1; they come from `base`.
  */
 import { fixContrast } from './fix.mjs';
 import { encodeRecipe } from './codec.mjs';
 import { fontById } from './fonts.mjs';
-import { BORDER, DENSITY, DEPTH, normalizeRecipe, RADIUS, STROKE } from './recipe.mjs';
+import { BORDER, DENSITY, DEPTH, FLOW, LEADING, normalizeRecipe, RADIUS, STROKE, typeScale } from './recipe.mjs';
 import { anchorStep, brandRamp, neutralRamp } from './ramp.mjs';
 import { resolvedMap } from './refs.mjs';
 import { semanticColors } from './semantic.mjs';
@@ -46,14 +46,22 @@ export function generateTheme(input, base, { fix = true } = {}) {
 
   const radius = lookup(radiusValue);
   const controlRadius = recipe.controls === 'pill' ? 9999 : radiusValue;
+  // Heading and body: '' is the platform font. Mono: system-mono is Menlo, what tokens.json always had.
   const font = (id) => (id === 'system' ? '' : fontById(id).family);
   const density = DENSITY[recipe.density];
+  const size = Number(recipe.size);
+  const type = {
+    size,
+    leading: LEADING[recipe.leading],
+    flow: FLOW[recipe.flow],
+    measure: Number(recipe.measure),
+  };
 
   return {
     recipe,
     code: encodeRecipe(recipe),
     primitives: { brand, neutral },
-    fonts: { heading: font(recipe.font.heading), body: font(recipe.font.body) },
+    fonts: { heading: font(recipe.font.heading), body: font(recipe.font.body), mono: font(recipe.font.mono) },
     semantic: {
       color: colors,
       radius: { base: radiusValue, control: controlRadius },
@@ -61,8 +69,10 @@ export function generateTheme(input, base, { fix = true } = {}) {
       icon: { stroke: STROKE[recipe.stroke] },
       shadow: DEPTH[recipe.depth],
       density: { scale: density.scale, control: { sm: density.sm, md: density.md, lg: density.lg, x: density.x } },
+      type,
     },
     density,
+    type: typeScale(type),
     resolved,
     radius,
     radiusControl: lookup(controlRadius),

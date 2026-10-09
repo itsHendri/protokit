@@ -4,9 +4,10 @@
  *   options: { css: 'global.css', tailwind: 'tokens/generated/tailwind.theme.js' }
  */
 import { hexToHslTriplet } from '../lib/color.mjs';
-import { cssName, isColor, radiusCalc } from '../lib/resolve.mjs';
+import { cssName, group, isColor, radiusCalc } from '../lib/resolve.mjs';
+import { TEXT_LINE_HEIGHT } from '../lib/theme/recipe.mjs';
 
-const rem = (px) => (px >= 9999 ? '9999px' : `${px / 16}rem`);
+const rem = (px) => (px >= 9999 ? '9999px' : `${Number((px / 16).toFixed(4))}rem`);
 
 /** Shape variables come from ctx.shape, which has defaults for a token file from before themes. */
 const SHAPE = new Set(['radius-control', 'border-width', 'icon-stroke']);
@@ -14,7 +15,7 @@ const SHAPE = new Set(['radius-control', 'border-width', 'icon-stroke']);
 function cssBlock(selector, tokens, shape) {
   const lines = tokens
     // Shadows are literal in tailwind.theme.js: a var() box-shadow drops the view on native.
-    .filter((t) => t.$type !== 'shadow' && !SHAPE.has(cssName(t)) && !cssName(t).startsWith('density-'))
+    .filter((t) => t.$type !== 'shadow' && !SHAPE.has(cssName(t)) && !/^(density|type)-/.test(cssName(t)))
     .map((t) => {
       const name = cssName(t);
       if (isColor(t)) return `    --${name}: ${hexToHslTriplet(t.$value)};`;
@@ -50,8 +51,18 @@ ${cssBlock('.dark:root', ctx.semDark)}
   const boxShadow = { xs: s[1], sm: s[1], DEFAULT: s[1], md: s[2], lg: s[3], xl: s[3], '2xl': s[3] };
   // Density: control heights (h-control-sm / h-control / h-control-lg, and min-h-*) and padding (px-control-x).
   const height = { 'control-sm': 'var(--control-sm)', control: 'var(--control-md)', 'control-lg': 'var(--control-lg)' };
-  const spacing = { 'control-x': 'var(--control-x)' };
-  const tailwind = `// ${ctx.header}\nmodule.exports = ${JSON.stringify({ colors, borderRadius, borderWidth, boxShadow, height, minHeight: height, width: height, spacing }, null, 2)};\n`;
+  // The typeset, literal (native has no runtime theme): text-xs…4xl and their line heights scaled, and
+  // Prose's leading-prose, gap-flow and max-w-measure (native has no ch: half the text size per character).
+  const { scale, leadingFactor, size, leading, flow, measure } = ctx.type;
+  const fontSize = Object.fromEntries(
+    group(ctx.prim, ['font', 'size'])
+      .filter(({ key }) => key in TEXT_LINE_HEIGHT)
+      .map(({ key, value }) => [key, [rem(value * scale), { lineHeight: rem(TEXT_LINE_HEIGHT[key] * scale * leadingFactor) }]])
+  );
+  const lineHeight = { prose: rem(size * leading) };
+  const spacing = { 'control-x': 'var(--control-x)', flow: rem(size * flow) };
+  const maxWidth = { measure: rem(measure * size * 0.5) };
+  const tailwind = `// ${ctx.header}\nmodule.exports = ${JSON.stringify({ colors, borderRadius, borderWidth, boxShadow, height, minHeight: height, width: height, spacing, fontSize, lineHeight, maxWidth }, null, 2)};\n`;
   return [
     { path: options.css, contents: css },
     { path: options.tailwind, contents: tailwind },

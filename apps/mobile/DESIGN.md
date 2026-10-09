@@ -214,7 +214,9 @@ colour. `kit-tokens check` flags class strings that break this.
 
 ## Typography
 
-Headings (h1–h4, titles) use the system font (SF / Roboto); everything else uses the system font (SF / Roboto).
+Headings (h1–h4, titles) use the system font (SF / Roboto); everything else uses the system font (SF / Roboto); code and
+figures (`font-mono`) use the system monospace font. Typeset: body text 16px (every
+`text-*` size scales with it), running text leading 1.75.
 Use the Text variants (h1–h4, lead, large, body, small, muted, code) rather than raw sizes. Medium weight for row titles, semibold for headings and
 values, bold only for hero amounts.
 

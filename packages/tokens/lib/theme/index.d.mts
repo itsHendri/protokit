@@ -7,6 +7,10 @@ export type Stroke = 'regular' | 'thin' | 'bold';
 export type Depth = 'soft' | 'flat' | 'raised' | 'hard';
 export type Density = 'comfortable' | 'compact' | 'spacious';
 export type Border = 'regular' | 'hairline' | 'heavy';
+export type Size = '16' | '14' | '15' | '18';
+export type Leading = 'normal' | 'tight' | 'relaxed';
+export type Flow = 'normal' | 'tight' | 'loose';
+export type Measure = '70' | '60' | '80' | '90';
 export type Mode = 'light' | 'dark';
 
 export type Recipe = {
@@ -15,11 +19,15 @@ export type Recipe = {
   neutral: Neutral;
   radius: Radius;
   controls: Controls;
-  font: { heading: string; body: string };
+  font: { heading: string; body: string; mono: string };
   stroke: Stroke;
   depth: Depth;
   density: Density;
   border: Border;
+  size: Size;
+  leading: Leading;
+  flow: Flow;
+  measure: Measure;
   preset?: string;
 };
 export type RecipeInput = Partial<Omit<Recipe, 'font'>> & { font?: Partial<Recipe['font']> };
@@ -36,8 +44,10 @@ export type Theme = {
   /** Base radius in px. */
   radius: number;
   adjustments: Adjustment[];
-  /** Font families by role ('' = system). */
-  fonts: { heading: string; body: string };
+  /** Font families by role ('' = system; mono 'Menlo' = the platform monospace). */
+  fonts: { heading: string; body: string; mono: string };
+  /** The typeset: size (px), scale (size / 16), leading, leadingFactor (leading / 1.75), flow (em), measure (ch). */
+  type: TypeScale;
   radiusControl: number;
   borderWidth: number;
   stroke: number;
@@ -45,7 +55,8 @@ export type Theme = {
   [key: string]: unknown;
 };
 
-export type Font = { id: string; family: string; category: 'sans' | 'serif' | 'display'; weights: number[]; expoPrefix?: string; hidden?: boolean };
+export type TypeScale = { size: number; scale: number; leading: number; leadingFactor: number; flow: number; measure: number };
+export type Font = { id: string; family: string; category: 'sans' | 'serif' | 'display' | 'mono'; weights: number[]; expoPrefix?: string; hidden?: boolean; system?: boolean };
 export type Preset = { id: string; name: string; description: string; recipe: RecipeInput };
 export type ThemeStatus = { applied: false } | { applied: true; code: string; recipe: Recipe; drift: string[] };
 export type TokensJson = Record<string, unknown> & { primitive: Record<string, unknown>; semantic: Record<string, unknown> };
@@ -60,7 +71,14 @@ export const OPTIONS: {
   depth: Depth[];
   density: Density[];
   border: Border[];
+  size: Size[];
+  leading: Leading[];
+  flow: Flow[];
+  measure: Measure[];
 };
+export const TYPESET_KEYS: ['size', 'leading', 'flow', 'measure'];
+export const LEADING: Record<Leading, number>;
+export const FLOW: Record<Flow, number>;
 export const FONTS: Font[];
 export const PRESETS: Preset[];
 export const BRAND_RAMPS: Record<string, Record<string, string>>;
@@ -75,6 +93,8 @@ export function isThemeCode(value: unknown): boolean;
 export function fontById(id: string): Font | undefined;
 export function googleFontsHref(ids: string[]): string | null;
 export function presetById(id: string): Preset | undefined;
+export function defaultTypeset(recipe: Recipe): boolean;
+export function typeVars(type: TypeScale): Record<string, string>;
 export function themeVars(theme: Theme, format: 'hsl' | 'oklch'): Record<Mode, Record<string, string>>;
 export function themeHex(theme: Theme): Record<Mode, Record<string, string>>;
 export function themeCss(theme: Theme, options?: { format?: 'hsl' | 'oklch'; light?: string; dark?: string }): string;

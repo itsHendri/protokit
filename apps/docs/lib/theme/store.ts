@@ -162,22 +162,29 @@ function randomBrand() {
   return `#${f(0)}${f(8)}${f(4)}`;
 }
 
-/** Headings and body that go together: the same family, or a serif/display heading over a sans body. */
+/**
+ * Headings and body that go together (the same family, or a serif/display heading over a sans body), and a
+ * mono font.
+ */
 function randomFonts(): Recipe['font'] {
   const visible = FONTS.filter((f) => !f.hidden);
   const sans = visible.filter((f) => f.category === 'sans');
+  const mono = pick(visible.filter((f) => f.category === 'mono')).id;
   if (Math.random() < 0.4) {
     const same = pick(sans).id;
-    return { heading: same, body: same };
+    return { heading: same, body: same, mono };
   }
-  return { heading: pick(visible.filter((f) => f.category !== 'sans')).id, body: pick(sans).id };
+  return { heading: pick(visible.filter((f) => f.category === 'serif' || f.category === 'display')).id, body: pick(sans).id, mono };
 }
 
 /** A new theme from random values for every unlocked group. */
 export function shuffle() {
   const next: RecipeInput = { preset: undefined };
   if (!locks.has('colour')) Object.assign(next, { brand: randomBrand(), neutral: pick(OPTIONS.neutral) });
-  if (!locks.has('type')) next.font = randomFonts();
+  if (!locks.has('type')) {
+    next.font = randomFonts();
+    Object.assign(next, { size: pick(OPTIONS.size), leading: pick(OPTIONS.leading), flow: pick(OPTIONS.flow), measure: pick(OPTIONS.measure) });
+  }
   if (!locks.has('shape')) Object.assign(next, { radius: pick(OPTIONS.radius), controls: pick(OPTIONS.controls), border: pick(OPTIONS.border) });
   if (!locks.has('depth')) Object.assign(next, { depth: pick(OPTIONS.depth), stroke: pick(OPTIONS.stroke), density: pick(OPTIONS.density) });
   setRecipe(next);

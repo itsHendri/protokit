@@ -1,10 +1,10 @@
 /**
- * The theme's fonts (primitive.font.family.heading / body), as code that loads them:
+ * The theme's fonts (primitive.font.family.heading / body / mono), as code that loads them:
  *   options: { platform: 'expo', out: 'lib/fonts.ts' }   @expo-google-fonts imports, one per weight, and
  *            the family name expo-font registers for each role and weight (FONT_FAMILY)
- *   options: { platform: 'next', out: 'app/fonts.ts' }   next/font/google, exposing --kit-font-heading and
- *            --kit-font-body (app/tokens.css maps them to font-sans / font-heading)
- * An empty family is the platform's system font: nothing to load.
+ *   options: { platform: 'next', out: 'app/fonts.ts' }   next/font/google, exposing --kit-font-heading,
+ *            --kit-font-body and --kit-font-mono (app/tokens.css maps them to font-heading / font-sans / font-mono)
+ * An empty family (heading, body) or Menlo (mono) is the platform's own font: nothing to load.
  *
  * Only fonts from the curated list (lib/theme/fonts.mjs) are supported; kit-tokens theme apply installs
  * the @expo-google-fonts packages they need (see expoPackages).
@@ -14,17 +14,17 @@ import { group } from '../lib/resolve.mjs';
 
 const SUFFIX = { 400: 'Regular', 500: 'Medium', 600: 'SemiBold', 700: 'Bold' };
 
-/** The theme's fonts: { heading, body }, each a FONTS entry or null (system). */
+/** The theme's fonts: { heading, body, mono }, each a FONTS entry or null (the platform's font). */
 export function themeFonts(ctx) {
   const families = Object.fromEntries(group(ctx.prim, ['font', 'family']).map(({ key, value }) => [key, value]));
   const pick = (role) => {
     const family = families[role];
     if (!family) return null;
     const font = FONTS.find((f) => f.family === family);
-    if (!font) throw new Error(`fonts: "${family}" (font.family.${role}) is not in the curated font list; pick one of ${FONTS.slice(1).map((f) => f.family).join(', ')}`);
-    return font;
+    if (!font) throw new Error(`fonts: "${family}" (font.family.${role}) is not in the curated font list; pick one of ${FONTS.filter((f) => !f.system).map((f) => f.family).join(', ')}`);
+    return font.system ? null : font;
   };
-  return { heading: pick('heading'), body: pick('body') };
+  return { heading: pick('heading'), body: pick('body'), mono: pick('mono') };
 }
 
 /** The npm packages an Expo app needs for these fonts. */
@@ -45,9 +45,10 @@ export const FONT_ASSETS = ${assets.length ? `{ ${assets.join(', ')} }` : '{}'};
  * The family expo-font registers for each role and weight (null: the system font). Android does not pick a
  * weight of a custom font from fontWeight, so components/ui/text.tsx sets the family per weight.
  */
-export const FONT_FAMILY: Record<'heading' | 'body', Record<number, string> | null> = {
+export const FONT_FAMILY: Record<'heading' | 'body' | 'mono', Record<number, string> | null> = {
   heading: ${family(fonts.heading)},
   body: ${family(fonts.body)},
+  mono: ${family(fonts.mono)},
 };
 `;
 }
@@ -55,10 +56,10 @@ export const FONT_FAMILY: Record<'heading' | 'body', Record<number, string> | nu
 const nextName = (f) => f.family.replace(/ /g, '_');
 
 function next(ctx, fonts) {
-  const { heading, body } = fonts;
-  if (!heading && !body) {
+  const { heading, body, mono } = fonts;
+  if (!heading && !body && !mono) {
     return `// ${ctx.header}
-/** The theme uses the system font: no font variables (app/tokens.css falls back to the system stack). */
+/** The theme uses the system fonts: no font variables (app/tokens.css falls back to the system stacks). */
 export const fontVariables = '';
 `;
   }
@@ -66,6 +67,7 @@ export const fontVariables = '';
   if (body) roles.push(['body', body]);
   // The same family for both roles loads once; --kit-font-heading falls back to the body font.
   if (heading && heading.id !== body?.id) roles.push(['heading', heading]);
+  if (mono) roles.push(['mono', mono]);
   const loaders = [...new Set(roles.map(([, f]) => nextName(f)))];
   return `// ${ctx.header}
 import { ${loaders.join(', ')} } from 'next/font/google';
@@ -77,7 +79,7 @@ ${roles
   )
   .join('\n')}
 
-/** Put on <html>: defines --kit-font-${roles.map(([r]) => r).join(' and --kit-font-')}, which app/tokens.css maps to font-sans and font-heading. */
+/** Put on <html>: defines --kit-font-${roles.map(([r]) => r).join(' and --kit-font-')}, which app/tokens.css maps to font-sans, font-heading and font-mono. */
 export const fontVariables = [${roles.map(([role]) => `${role}.variable`).join(', ')}].join(' ');
 `;
 }
