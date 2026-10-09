@@ -194,11 +194,15 @@ export type ThemeInfo = {
     neutral: string;
     radius: string;
     controls: string;
-    font: { heading: string; body: string };
+    font: { heading: string; body: string; mono: string };
     stroke: string;
     depth: string;
     density: string;
     border: string;
+    size: string;
+    leading: string;
+    flow: string;
+    measure: string;
     preset?: string;
   };
 };
