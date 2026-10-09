@@ -54,7 +54,7 @@ export function ThemePill() {
   const dark = resolvedTheme === 'dark';
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-4 z-40 flex justify-center px-4 print:hidden">
+    <div className="pointer-events-none fixed inset-x-0 bottom-4 z-30 flex justify-center px-4 print:hidden">
       <div
         ref={bar}
         role="toolbar"
